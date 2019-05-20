@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Bootloader\RouteBootloader;
+use App\Bootloader\RoutesBootloader;
 use Spiral\Bootloader;
 use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader\MonologBootloader;
@@ -45,26 +45,25 @@ class App extends Kernel
         Bootloader\Database\MigrationsBootloader::class,
         Bootloader\Cycle\CycleBootloader::class,
 
-        // Views and view localization
+        // Views and view translation
         Bootloader\Views\ViewsBootloader::class,
         Bootloader\Views\TranslatedCacheBootloader::class,
 
         // Jobs and Queue
         Bootloader\Jobs\JobsBootloader::class,
+
+        // Extensions and bridges
+        MonologBootloader::class,
+        TwigBootloader::class,
+
+        // Framework commands
+        Bootloader\CommandBootloader::class
     ];
 
     /*
      * Application specific services and extensions.
      */
     protected const APP = [
-        // Extensions and bridges
-        MonologBootloader::class,
-        TwigBootloader::class,
-
-        // Routing
-        RouteBootloader::class,
-
-        // Framework commands
-        Bootloader\CommandBootloader::class
+        RoutesBootloader::class,
     ];
 }

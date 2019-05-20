@@ -17,7 +17,7 @@ use Spiral\Router\RouterInterface;
 use Spiral\Router\Target\Action;
 use Spiral\Router\Target\Namespaced;
 
-class RouteBootloader extends Bootloader
+class RoutesBootloader extends Bootloader
 {
     /**
      * @param RouterInterface $router
