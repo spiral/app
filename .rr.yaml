@@ -4,7 +4,7 @@ http:
   workers:
     command: "php app.php"
     pool:
-      numWorkers: 4
+      numWorkers: 1
       maxJobs:    1
 
 # serve static files

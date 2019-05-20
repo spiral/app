@@ -45,6 +45,10 @@ class App extends Kernel
         Bootloader\Database\MigrationsBootloader::class,
         Bootloader\Cycle\CycleBootloader::class,
 
+        // Views and view localization
+        Bootloader\Views\ViewsBootloader::class,
+        Bootloader\Views\TranslatedCacheBootloader::class,
+
         // Jobs and Queue
         Bootloader\Jobs\JobsBootloader::class,
     ];
