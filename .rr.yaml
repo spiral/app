@@ -1,0 +1,22 @@
+# http service configuration.
+http:
+  address: 0.0.0.0:8080
+  workers:
+    command: "php app.php"
+    pool:
+      numWorkers: 4
+      maxJobs:    1
+
+# serve static files
+static:
+  dir: "public"
+  forbid: [".php", ".htaccess"]
+
+# control the max memory usage
+limit:
+  services:
+    http.maxMemory: 100
+
+# application environment
+env:
+  DEBUG: true
