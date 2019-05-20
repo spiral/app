@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace App\Bootloader;
 
+use App\Controller\HomeController;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Router\Route;
 use Spiral\Router\RouteInterface;
 use Spiral\Router\RouterInterface;
+use Spiral\Router\Target\Action;
 use Spiral\Router\Target\Namespaced;
 
 class RouteBootloader extends Bootloader
@@ -22,6 +24,12 @@ class RouteBootloader extends Bootloader
      */
     public function boot(RouterInterface $router)
     {
+        // named route
+        $router->addRoute(
+            'index',
+            new Route('/index', new Action(HomeController::class, 'index'))
+        );
+
         // fallback (default) route
         $router->setDefault($this->defaultRoute());
     }
@@ -33,6 +41,7 @@ class RouteBootloader extends Bootloader
      */
     protected function defaultRoute(): RouteInterface
     {
+        // handle all /controller/action like urls
         $route = new Route('/[<controller>[/<action>]]', new Namespaced('App\\Controller'));
 
         return $route->withDefaults([
