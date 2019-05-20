@@ -42,7 +42,10 @@ class RouteBootloader extends Bootloader
     protected function defaultRoute(): RouteInterface
     {
         // handle all /controller/action like urls
-        $route = new Route('/[<controller>[/<action>]]', new Namespaced('App\\Controller'));
+        $route = new Route(
+            '/[<controller>[/<action>]]',
+            new Namespaced('App\\Controller')
+        );
 
         return $route->withDefaults([
             'controller' => 'home',
