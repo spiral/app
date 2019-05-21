@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Spiral\Core\Container\SingletonInterface;
 use Spiral\Views\ViewsInterface;
 
-class HomeController
+class HomeController implements SingletonInterface
 {
     /** @var ViewsInterface */
     private $views;
