@@ -17,7 +17,7 @@ return [
     'drivers'   => [
         'runtime' => [
             'driver'     => Driver\SQLite\SQLiteDriver::class,
-            'connection' => 'sqlite::memory:',
+            'connection' => 'sqlite:' . directory('runtime') . 'runtime.db',
             'profiling'  => true,
         ],
     ]

@@ -3,9 +3,19 @@ http:
   address: 0.0.0.0:8080
   workers:
     command: "php app.php"
-    pool:
-      numWorkers: 1
-      maxJobs:    1
+
+# queue and jobs
+jobs:
+  dispatch:
+    app-job-*.pipeline: "local"
+
+  pipelines:
+    local.broker: "ephemeral"
+
+  consume: ["local"]
+
+  workers:
+    command: "php app.php"
 
 # serve static files
 static:
@@ -19,4 +29,4 @@ limit:
 
 # application environment
 env:
-  DEBUG: true
+  DEBUG: false

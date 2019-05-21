@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Bootloader\LoggingBootloader;
 use App\Bootloader\RoutesBootloader;
 use Spiral\Bootloader;
 use Spiral\Framework\Kernel;
@@ -29,6 +30,7 @@ class App extends Kernel
 
         // Security and validation
         Bootloader\Security\EncrypterBootloader::class,
+        Bootloader\Security\ValidationBootloader::class,
         Bootloader\Security\FiltersBootloader::class,
         Bootloader\Security\RbacBootloader::class,
 
@@ -65,5 +67,6 @@ class App extends Kernel
      */
     protected const APP = [
         RoutesBootloader::class,
+        LoggingBootloader::class
     ];
 }
