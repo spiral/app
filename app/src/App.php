@@ -12,9 +12,10 @@ namespace App;
 use App\Bootloader\LoggingBootloader;
 use App\Bootloader\RoutesBootloader;
 use Spiral\Bootloader;
+use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
-use Spiral\Monolog\Bootloader\MonologBootloader;
-use Spiral\Twig\Bootloader\TwigBootloader;
+use Spiral\Monolog\Bootloader as Monolog;
+use Spiral\Twig\Bootloader as Twig;
 
 class App extends Kernel
 {
@@ -23,6 +24,9 @@ class App extends Kernel
      * within system container on application start.
      */
     protected const LOAD = [
+        // Environment configuration
+        DotEnv\DotenvBootloader::class,
+
         // Core Services
         Bootloader\DebugBootloader::class,
         Bootloader\SnapshotsBootloader::class,
@@ -42,9 +46,11 @@ class App extends Kernel
         Bootloader\Http\CsrfBootloader::class,
         Bootloader\Http\PaginationBootloader::class,
 
-        // Databases and ORM
+        // Databases
         Bootloader\Database\DatabaseBootloader::class,
         Bootloader\Database\MigrationsBootloader::class,
+
+        // ORM
         Bootloader\Cycle\CycleBootloader::class,
 
         // Views and view translation
@@ -55,8 +61,8 @@ class App extends Kernel
         Bootloader\Jobs\JobsBootloader::class,
 
         // Extensions and bridges
-        MonologBootloader::class,
-        TwigBootloader::class,
+        Monolog\MonologBootloader::class,
+        Twig\TwigBootloader::class,
 
         // Framework commands
         Bootloader\CommandBootloader::class

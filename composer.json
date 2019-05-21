@@ -30,7 +30,8 @@
     "cycle/annotated": "^1.0",
     "cycle/migrations": "^1.0",
     "spiral/monolog-bridge": "^1.0",
-    "spiral/twig-bridge": "^1.0"
+    "spiral/twig-bridge": "^1.0",
+    "spiral/dotenv-bridge": "^1.0"
   },
   "scripts": {
     "post-install-cmd": [
