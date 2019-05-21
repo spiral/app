@@ -26,7 +26,3 @@ static:
 limit:
   services:
     http.maxMemory: 100
-
-# application environment
-env:
-  DEBUG: false
