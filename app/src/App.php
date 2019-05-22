@@ -73,6 +73,6 @@ class App extends Kernel
      */
     protected const APP = [
         RoutesBootloader::class,
-        LoggingBootloader::class
+        LoggingBootloader::class,
     ];
 }
