@@ -41,7 +41,9 @@ class HomeController implements SingletonInterface
      */
     public function ping(QueueInterface $queue): string
     {
-        $queue->push(new PingJob(['value' => 'hello world']));
+        $queue->push(new PingJob([
+            'value' => 'hello world'
+        ]));
 
         return 'OK';
     }
