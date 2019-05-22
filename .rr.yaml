@@ -16,6 +16,7 @@ jobs:
 
   workers:
     command: "php app.php"
+    pool.numWorkers: 2
 
 # serve static files
 static:
