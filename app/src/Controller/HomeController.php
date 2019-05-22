@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Job\PingJob;
+use App\Job\Ping;
 use Spiral\Core\Container\SingletonInterface;
 use Spiral\Jobs\QueueInterface;
 use Spiral\Views\ViewsInterface;
@@ -41,7 +41,7 @@ class HomeController implements SingletonInterface
      */
     public function ping(QueueInterface $queue): string
     {
-        $queue->push(new PingJob([
+        $queue->push(new Ping([
             'value' => 'hello world'
         ]));
 

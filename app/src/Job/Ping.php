@@ -14,7 +14,7 @@ use Spiral\Jobs\AbstractJob;
 /**
  * (QueueInterface)->push(new PingJob("value"));
  */
-class PingJob extends AbstractJob
+class Ping extends AbstractJob
 {
     /**
      * @param string $id
