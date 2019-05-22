@@ -8,12 +8,9 @@ http:
 jobs:
   dispatch:
     app-job-*.pipeline: "local"
-
   pipelines:
     local.broker: "ephemeral"
-
   consume: ["local"]
-
   workers:
     command: "php app.php"
     pool.numWorkers: 2
