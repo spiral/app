@@ -39,7 +39,7 @@ class App extends Kernel
         Bootloader\Security\RbacBootloader::class,
 
         // HTTP extensions
-        Bootloader\Http\MvcBootloader::class,
+        Bootloader\Http\RouterBootloader::class,
         Bootloader\Http\ErrorHandlerBootloader::class,
         Bootloader\Http\CookiesBootloader::class,
         Bootloader\Http\SessionBootloader::class,
