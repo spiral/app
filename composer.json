@@ -34,6 +34,9 @@
     "spiral/dotenv-bridge": "^1.0"
   },
   "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.sample', '.env');\""
+    ],
     "post-install-cmd": [
       "php app.php configure -vv"
     ]
