@@ -57,7 +57,7 @@ class App extends Kernel
         Bootloader\Views\ViewsBootloader::class,
         Bootloader\Views\TranslatedCacheBootloader::class,
 
-        // Jobs and Queue
+        // Additional dispatchers
         Bootloader\Jobs\JobsBootloader::class,
 
         // Extensions and bridges
