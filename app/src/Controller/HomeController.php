@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Job\Ping;
-use Spiral\Core\Container\SingletonInterface;
 use Spiral\Jobs\QueueInterface;
 use Spiral\Views\ViewsInterface;
 
-class HomeController implements SingletonInterface
+class HomeController
 {
     /** @var ViewsInterface */
     private $views;
