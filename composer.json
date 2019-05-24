@@ -35,16 +35,11 @@
     "spiral/dotenv-bridge": "^1.0"
   },
   "scripts": {
-    "install-spiral": [
+    "post-create-project-cmd": [
+      "php -r \"copy('.env.sample', '.env');\"",
       "php app.php encrypt:key -m .env",
       "php app.php configure -vv",
       "vendor/bin/spiral get-binary"
-    ],
-    "post-root-package-install": [
-      "php -r \"copy('.env.sample', '.env');\""
-    ],
-    "post-install-cmd": [
-      "@install-spiral"
     ]
   },
   "autoload": {
