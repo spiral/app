@@ -16,7 +16,7 @@ Server Requirements
 --------
 Make sure that your server is configured with following PHP version and extensions:
 * PHP 7.1+
-* mb-string Extension
+* MbString Extension
 * PDO Extension with desired database drivers
 
 Application Bundle
