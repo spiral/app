@@ -12,5 +12,42 @@ Spiral is an open-source (MIT) micro-framework core that uses a set of open-sour
 
 <br/>
 
-## Installation
-TBD
+Server Requirements
+--------
+Make sure that your server is configured with following PHP version and extensions:
+* PHP 7.1+
+* mb-string Extension
+* PDO Extension with desired database drivers
+
+
+Installation
+--------
+```
+composer create-project spiral/app
+```
+
+> Application server will be downloaded automatically.
+
+Once application is installed you can ensure that it was configured properly by executing:
+
+```
+$ php ./app.php configure
+```
+
+To start application server execute:
+
+```
+$ ./spiral serve -v -d
+```
+
+On Windows:
+
+```$xslt
+$ spiral.exe serve -v -d
+```
+
+Read more about application server configuration [here](https://roadrunner.dev/docs).
+
+License:
+--------
+MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Spiral Scout](https://spiralscout.com).
