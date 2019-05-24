@@ -36,7 +36,7 @@ class App extends Kernel
         Bootloader\Security\EncrypterBootloader::class,
         Bootloader\Security\ValidationBootloader::class,
         Bootloader\Security\FiltersBootloader::class,
-        Bootloader\Security\RbacBootloader::class,
+        Bootloader\Security\GuardBootloader::class,
 
         // HTTP extensions
         Bootloader\Http\RouterBootloader::class,
