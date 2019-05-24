@@ -24,7 +24,7 @@ Application Bundle
 Application bundle includes following components:
 * High-Performance HTTP, HTTP/2 server based on [RoadRunner](https://roadrunner.dev)
 * Console commands via symfony/console
-* Queue support for AMQP, Beanstalk, Amazon SQS
+* Queue support for AMQP, Beanstalk, Amazon SQS, in-Memory
 * Twig template engine
 * Translation support by symfony/translation
 * Security, validation, filter models
