@@ -25,7 +25,6 @@ Application bundle includes following components:
 * Translation support by symfony/translation
 * Security, validation, filter models
 * PSR-7 HTTP pipeline, session, encrypted cookies
-* queue support for AMQP, Beanstalk, Amazon SQS
 * DBAL and migrations support
 * [Cycle DataMapper ORM](https://github.com/cycle)
 
