@@ -39,7 +39,7 @@
       "php -r \"copy('.env.sample', '.env');\"",
       "php app.php encrypt:key -m .env",
       "php app.php configure -vv",
-      "vendor/bin/spiral get-binary"
+      "spiral get-binary"
     ]
   },
   "autoload": {
