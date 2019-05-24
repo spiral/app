@@ -11,7 +11,6 @@ Spiral is an open-source (MIT) micro-framework core that uses a set of open-sour
 [Website](https://spiral-framework.com) | <b>[App Skeleton](https://github.com/spiral/app)</b> ([cli](https://github.com/spiral/app-cli), [grpc](https://github.com/spiral/app-grpc)) | [Documentation (v1.0.0)](https://github.com/spiral/guide) | [Twitter](https://twitter.com/spiralphp) | [CHANGELOG](/CHANGELOG.md) | [Contributing](https://github.com/spiral/guide/blob/master/contributing.md)
 
 <br/>
-
 Server Requirements
 --------
 Make sure that your server is configured with following PHP version and extensions:
