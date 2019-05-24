@@ -60,7 +60,7 @@ $ spiral.exe serve -v -d
 
 Application will be available on `http://localhost:8080`.
 
-Read more about application server configuration [here](https://roadrunner.dev/docs).
+> Read more about application server configuration [here](https://roadrunner.dev/docs).
 
 License:
 --------
