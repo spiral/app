@@ -19,7 +19,6 @@ Make sure that your server is configured with following PHP version and extensio
 * mb-string Extension
 * PDO Extension with desired database drivers
 
-
 Installation
 --------
 ```
