@@ -24,7 +24,8 @@ Application bundle includes following components:
 * Twig template engine
 * Translation support by symfony/translation
 * Security, validation, filter models
-* PSR-7 HTTP pipeline, session, * queue support for AMQP, Beanstalk, Amazon SQS
+* PSR-7 HTTP pipeline, session, encrypted cookies
+* queue support for AMQP, Beanstalk, Amazon SQS
 * DBAL and migrations support
 * [Cycle DataMapper ORM](https://github.com/cycle)
 
