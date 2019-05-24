@@ -36,7 +36,8 @@
   },
   "scripts": {
     "post-root-package-install": [
-      "php -r \"copy('.env.sample', '.env');\""
+      "php -r \"copy('.env.sample', '.env');\"",
+      "vendor/bin/spiral get-binary"
     ],
     "post-install-cmd": [
       "php app.php encrypt:key -m .env",
