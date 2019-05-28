@@ -26,6 +26,7 @@ Application bundle includes following components:
 * Security, validation, filter models
 * PSR-7 HTTP pipeline, session, encrypted cookies
 * DBAL and migrations support
+* Monolog, DotEnv
 * [Cycle DataMapper ORM](https://github.com/cycle)
 
 Installation
