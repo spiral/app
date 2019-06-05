@@ -35,7 +35,7 @@ Installation
 composer create-project spiral/app
 ```
 
-> Application server will be downloaded automatically.
+> Application server will be downloaded automatically (`php-curl` and `php-zip` required).
 
 Once application is installed you can ensure that it was configured properly by executing:
 
