@@ -15,6 +15,7 @@ use Spiral\Bootloader;
 use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
+use Spiral\Nyholm\Bootloader as Nyholm;
 use Spiral\Twig\Bootloader as Twig;
 
 class App extends Kernel
@@ -39,6 +40,7 @@ class App extends Kernel
         Bootloader\Security\GuardBootloader::class,
 
         // HTTP extensions
+        Nyholm\NyholmBootloader::class,
         Bootloader\Http\RouterBootloader::class,
         Bootloader\Http\ErrorHandlerBootloader::class,
         Bootloader\Http\CookiesBootloader::class,
