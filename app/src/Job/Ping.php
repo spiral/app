@@ -12,7 +12,7 @@ namespace App\Job;
 use Spiral\Jobs\AbstractJob;
 
 /**
- * (QueueInterface)->push(new PingJob("value"));
+ * (QueueInterface)->push(new PingJob(["value"=>"my value"]));
  */
 class Ping extends AbstractJob
 {
