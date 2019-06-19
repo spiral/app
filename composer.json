@@ -28,14 +28,14 @@
     "spiral/filters": "^1.2",
     "spiral/database": "^2.3",
     "spiral/migrations": "^2.0",
-    "cycle/orm": "^1.0",
-    "cycle/proxy-factory": "^1.0",
-    "cycle/annotated": "^1.0",
-    "cycle/migrations": "^1.0",
     "spiral/monolog-bridge": "^1.0",
     "spiral/twig-bridge": "^1.0",
     "spiral/dotenv-bridge": "^1.0",
-    "spiral/nyholm-bridge": "^1.0"
+    "spiral/nyholm-bridge": "^1.0",
+    "cycle/orm": "^1.0",
+    "cycle/proxy-factory": "^1.0",
+    "cycle/annotated": "^1.0",
+    "cycle/migrations": "^1.0"
   },
   "scripts": {
     "post-create-project-cmd": [
