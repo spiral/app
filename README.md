@@ -11,7 +11,7 @@ Spiral Framework is an open-source (MIT) micro-framework core that speeds up the
 Server Requirements
 --------
 Make sure that your server is configured with following PHP version and extensions:
-* PHP 7.1+
+* PHP 7.1+, 64bit
 * MbString Extension
 * PDO Extension with desired database drivers
 
