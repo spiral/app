@@ -54,6 +54,8 @@ class App extends Kernel
 
         // ORM
         Bootloader\Cycle\CycleBootloader::class,
+        Bootloader\Cycle\ProxiesBootloader::class,
+        Bootloader\Cycle\AnnotatedBootloader::class,
 
         // Views and view translation
         Bootloader\Views\ViewsBootloader::class,
