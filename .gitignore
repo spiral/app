@@ -1,7 +1,6 @@
 .idea
 vendor
 runtime
-composer.lock
 rr*
 spiral*
 .env
