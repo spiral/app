@@ -34,7 +34,7 @@
     "spiral/nyholm-bridge": "^1.0",
     "cycle/orm": "^1.0",
     "cycle/proxy-factory": "^1.0",
-    "cycle/annotated": "^1.0",
+    "cycle/annotated": "^2.0",
     "cycle/migrations": "^1.0"
   },
   "scripts": {
