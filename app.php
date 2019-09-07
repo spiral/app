@@ -11,10 +11,9 @@ mb_internal_encoding('UTF-8');
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 'stderr');
 
-//Composer
 require __DIR__ . '/vendor/autoload.php';
 
-//Initiating shared container, bindings, directories and etc
+// initiate shared container, bindings, directories and etc
 $app = \App\App::init(['root' => __DIR__]);
 
 if ($app != null) {
