@@ -4,9 +4,6 @@ http:
 
   workers:
     command: "php app.php"
-    pool:
-      numWorkers: 1
-      maxJobs: 1
 
 # queue and jobs
 jobs:
