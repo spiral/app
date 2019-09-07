@@ -31,7 +31,15 @@ class HomeController
      */
     public function index(): string
     {
-        return $this->views->render('home');
+        return $this->views->render('home.dark.php');
+    }
+
+    /**
+     * Example of exception page.
+     */
+    public function exception()
+    {
+        echo $undefined;
     }
 
     /**
@@ -40,8 +48,8 @@ class HomeController
      */
     public function ping(QueueInterface $queue): string
     {
-        return $queue->push(new Ping([
+        return sprintf("Job ID: %s", $queue->push(new Ping([
             'value' => 'hello world'
-        ]));
+        ])));
     }
 }

@@ -29,7 +29,7 @@
     "spiral/database": "^2.3",
     "spiral/migrations": "^2.0",
     "spiral/monolog-bridge": "^1.0",
-    "spiral/twig-bridge": "^1.0",
+    "spiral/stempler-bridge": "^1.0",
     "spiral/dotenv-bridge": "^1.0",
     "spiral/nyholm-bridge": "^1.0",
     "cycle/orm": "^1.0",

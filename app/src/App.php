@@ -16,7 +16,7 @@ use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
 use Spiral\Nyholm\Bootloader as Nyholm;
-use Spiral\Twig\Bootloader as Twig;
+use Spiral\Stempler\Bootloader as Stempler;
 
 class App extends Kernel
 {
@@ -66,7 +66,7 @@ class App extends Kernel
 
         // Extensions and bridges
         Monolog\MonologBootloader::class,
-        Twig\TwigBootloader::class,
+        Stempler\StemplerBootloader::class,
 
         // Framework commands
         Bootloader\CommandBootloader::class

@@ -14,7 +14,7 @@ use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Router\Route;
 use Spiral\Router\RouteInterface;
 use Spiral\Router\RouterInterface;
-use Spiral\Router\Target\Action;
+use Spiral\Router\Target\Controller;
 use Spiral\Router\Target\Namespaced;
 
 class RoutesBootloader extends Bootloader
@@ -26,8 +26,8 @@ class RoutesBootloader extends Bootloader
     {
         // named route
         $router->addRoute(
-            'index',
-            new Route('/index', new Action(HomeController::class, 'index'))
+            'html',
+            new Route('/<action>.html', new Controller(HomeController::class))
         );
 
         // fallback (default) route
