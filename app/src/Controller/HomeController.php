@@ -48,8 +48,8 @@ class HomeController
      */
     public function ping(QueueInterface $queue): string
     {
-        return sprintf("Job ID: %s", $queue->push(new Ping([
-            'value' => 'hello world'
-        ])));
+        return sprintf("Job ID: %s", $queue->push(
+            new Ping(['value' => 'hello world'])
+        ));
     }
 }
