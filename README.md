@@ -12,17 +12,17 @@ Server Requirements
 --------
 Make sure that your server is configured with following PHP version and extensions:
 * PHP 7.2+, 64bit
-* **mb-string** extension
+* *mb-string* extension
 * PDO Extension with desired database drivers
 
 Application Bundle
 --------
-Application bundle includes following components:
+Application bundle includes the following components:
 * High-Performance HTTP, HTTP/2 server based on [RoadRunner](https://roadrunner.dev)
-* Console commands via symfony/console
+* Console commands via Symfony/Console
+* Translation support by Symfony/Translation
 * Queue support for AMQP, Beanstalk, Amazon SQS, in-Memory
 * Stempler template engine
-* Translation support by symfony/translation
 * Security, validation, filter models
 * PSR-7 HTTP pipeline, session, encrypted cookies
 * DBAL and migrations support
@@ -38,7 +38,7 @@ composer create-project spiral/app
 
 > Application server will be downloaded automatically (`php-curl` and `php-zip` required).
 
-Once application is installed you can ensure that it was configured properly by executing:
+Once the application is installed you can ensure that it was configured properly by executing:
 
 ```
 $ php ./app.php configure
