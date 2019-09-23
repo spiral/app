@@ -9,18 +9,18 @@ declare(strict_types=1);
 
 namespace App\Job;
 
-use Spiral\Jobs\AbstractJob;
+use Spiral\Jobs\JobHandler;
 
 /**
- * (QueueInterface)->push(new PingJob(["value"=>"my value"]));
+ * (QueueInterface)->push(PingJob::class, ["value"=>"my value"]);
  */
-class Ping extends AbstractJob
+class Ping extends JobHandler
 {
     /**
      * @param string $id
      * @param string $value
      */
-    public function do(string $id, string $value)
+    public function invoke(string $id, string $value)
     {
         // do something
         error_log("pong by {$id}, value `{$value}`");

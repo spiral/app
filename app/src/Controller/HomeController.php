@@ -10,21 +10,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Job\Ping;
-use Spiral\Jobs\QueueInterface;
-use Spiral\Views\ViewsInterface;
+use Spiral\Prototype\Traits\PrototypeTrait;
 
 class HomeController
 {
-    /** @var ViewsInterface */
-    private $views;
-
-    /**
-     * @param ViewsInterface $views
-     */
-    public function __construct(ViewsInterface $views)
-    {
-        $this->views = $views;
-    }
+    use PrototypeTrait;
 
     /**
      * @return string
@@ -43,13 +33,15 @@ class HomeController
     }
 
     /**
-     * @param QueueInterface $queue
      * @return string
      */
-    public function ping(QueueInterface $queue): string
+    public function ping(): string
     {
-        return sprintf("Job ID: %s", $queue->push(
-            new Ping(['value' => 'hello world'])
-        ));
+        $jobID = $this->queue->push(
+            Ping::class,
+            ['value' => 'hello world']
+        );
+
+        return sprintf("Job ID: %s", $jobID);
     }
 }

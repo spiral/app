@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Bootloader\LoggingBootloader;
-use App\Bootloader\RoutesBootloader;
-use Spiral\Bootloader;
+use App\Bootloader;
+use Spiral\Bootloader as Framework;
 use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
 use Spiral\Nyholm\Bootloader as Nyholm;
+use Spiral\Prototype\Bootloader as Prototype;
+use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 
 class App extends Kernel
@@ -29,54 +30,57 @@ class App extends Kernel
         DotEnv\DotenvBootloader::class,
 
         // Core Services
-        Bootloader\DebugBootloader::class,
-        Bootloader\SnapshotsBootloader::class,
-        Bootloader\I18nBootloader::class,
+        Framework\DebugBootloader::class,
+        Framework\SnapshotsBootloader::class,
+        Framework\I18nBootloader::class,
 
         // Security and validation
-        Bootloader\Security\EncrypterBootloader::class,
-        Bootloader\Security\ValidationBootloader::class,
-        Bootloader\Security\FiltersBootloader::class,
-        Bootloader\Security\GuardBootloader::class,
+        Framework\Security\EncrypterBootloader::class,
+        Framework\Security\ValidationBootloader::class,
+        Framework\Security\FiltersBootloader::class,
+        Framework\Security\GuardBootloader::class,
 
         // HTTP extensions
         Nyholm\NyholmBootloader::class,
-        Bootloader\Http\RouterBootloader::class,
-        Bootloader\Http\ErrorHandlerBootloader::class,
-        Bootloader\Http\CookiesBootloader::class,
-        Bootloader\Http\SessionBootloader::class,
-        Bootloader\Http\CsrfBootloader::class,
-        Bootloader\Http\PaginationBootloader::class,
+        Framework\Http\RouterBootloader::class,
+        Framework\Http\ErrorHandlerBootloader::class,
+        Framework\Http\CookiesBootloader::class,
+        Framework\Http\SessionBootloader::class,
+        Framework\Http\CsrfBootloader::class,
+        Framework\Http\PaginationBootloader::class,
 
         // Databases
-        Bootloader\Database\DatabaseBootloader::class,
-        Bootloader\Database\MigrationsBootloader::class,
+        Framework\Database\DatabaseBootloader::class,
+        Framework\Database\MigrationsBootloader::class,
 
         // ORM
-        Bootloader\Cycle\CycleBootloader::class,
-        Bootloader\Cycle\ProxiesBootloader::class,
-        Bootloader\Cycle\AnnotatedBootloader::class,
+        Framework\Cycle\CycleBootloader::class,
+        Framework\Cycle\ProxiesBootloader::class,
+        Framework\Cycle\AnnotatedBootloader::class,
 
         // Views and view translation
-        Bootloader\Views\ViewsBootloader::class,
-        Bootloader\Views\TranslatedCacheBootloader::class,
+        Framework\Views\ViewsBootloader::class,
+        Framework\Views\TranslatedCacheBootloader::class,
 
         // Additional dispatchers
-        Bootloader\Jobs\JobsBootloader::class,
+        Framework\Jobs\JobsBootloader::class,
 
         // Extensions and bridges
         Monolog\MonologBootloader::class,
         Stempler\StemplerBootloader::class,
 
         // Framework commands
-        Bootloader\CommandBootloader::class
+        Framework\CommandBootloader::class,
+        Scaffolder\ScaffolderBootloader::class
     ];
 
     /*
      * Application specific services and extensions.
      */
     protected const APP = [
-        RoutesBootloader::class,
-        LoggingBootloader::class,
+        Bootloader\RoutesBootloader::class,
+        Bootloader\LoggingBootloader::class,
+
+        Prototype\PrototypeBootloader::class,
     ];
 }
