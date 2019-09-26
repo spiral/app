@@ -51,5 +51,8 @@
     "psr-4": {
       "App\\": "app/src/"
     }
+  },
+  "extra": {
+    "publish-cmd": "php app.php publish"
   }
 }
