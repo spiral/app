@@ -8,7 +8,7 @@
 <define:body>
     <div class="wrapper">
         <div class="placeholder">
-            <img src="/images/spiral.svg" alt="Framework Logotype" width="200px"/>
+            <img src="/images/logo.svg" alt="Framework Logotype" width="200px"/>
             <h2>[[Welcome to Spiral Framework]]</h2>
 
             <homepage:links git="https://github.com/spiral/app" style="font-weight: bold;"/>
