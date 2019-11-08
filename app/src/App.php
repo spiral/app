@@ -28,11 +28,11 @@ class App extends Kernel
      * within system container on application start.
      */
     protected const LOAD = [
-        // Environment configuration
+        // Base extensions
         DotEnv\DotenvBootloader::class,
+        Monolog\MonologBootloader::class,
 
         // Core Services
-        Framework\DebugBootloader::class,
         Framework\SnapshotsBootloader::class,
         Framework\I18nBootloader::class,
 
@@ -68,12 +68,16 @@ class App extends Kernel
         Framework\Jobs\JobsBootloader::class,
 
         // Extensions and bridges
-        Monolog\MonologBootloader::class,
         Stempler\StemplerBootloader::class,
 
         // Framework commands
         Framework\CommandBootloader::class,
-        Scaffolder\ScaffolderBootloader::class
+        Scaffolder\ScaffolderBootloader::class,
+
+        // Debug and debug extensions
+        Framework\DebugBootloader::class,
+        Framework\Debug\LogCollectorBootloader::class,
+        Framework\Debug\HttpCollectorBootloader::class
     ];
 
     /*
@@ -83,6 +87,7 @@ class App extends Kernel
         Bootloader\RoutesBootloader::class,
         Bootloader\LoggingBootloader::class,
 
+        // fast code prototyping
         Prototype\PrototypeBootloader::class,
     ];
 }
