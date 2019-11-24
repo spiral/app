@@ -85,6 +85,7 @@ class App extends Kernel
      */
     protected const APP = [
         Bootloader\RoutesBootloader::class,
+        Bootloader\LocaleSelectorBootloader::class,
         Bootloader\LoggingBootloader::class,
 
         // fast code prototyping
