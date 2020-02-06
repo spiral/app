@@ -60,6 +60,14 @@ Application will be available on `http://localhost:8080`.
 
 > Read more about application server configuration [here](https://roadrunner.dev/docs).
 
+Testing:
+--------
+To test an application:
+
+```bash
+$ ./vendor/bin/phpunit
+```
+
 License:
 --------
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Spiral Scout](https://spiralscout.com).
