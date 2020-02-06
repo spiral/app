@@ -22,7 +22,7 @@ class Ping extends JobHandler
      * @param string $id
      * @param string $value
      */
-    public function invoke(string $id, string $value)
+    public function invoke(string $id, string $value): void
     {
         // do something
         error_log("pong by {$id}, value `{$value}`");

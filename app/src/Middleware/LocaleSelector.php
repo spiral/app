@@ -9,7 +9,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
@@ -46,7 +45,7 @@ class LocaleSelector implements MiddlewareInterface
 
         try {
             foreach ($this->fetchLocales($request) as $locale) {
-                if ($locale && in_array($locale, $this->availableLocales, true)) {
+                if ($locale !== '' && in_array($locale, $this->availableLocales, true)) {
                     $this->translator->setLocale($locale);
                     break;
                 }
@@ -70,6 +69,7 @@ class LocaleSelector implements MiddlewareInterface
             if (strpos($value, ';') !== false) {
                 yield substr($value, 0, strpos($value, ';'));
             }
+
             yield $value;
         }
     }

@@ -28,20 +28,12 @@ abstract class TestCase extends BaseTestCase
 
     /** @var \Spiral\Boot\AbstractKernel */
     protected $app;
+
     /** @var \Spiral\Http\Http */
     protected $http;
+
     /** @var \Spiral\Views\ViewsInterface */
     protected $views;
-
-    protected function makeApp(array $env = []): TestApp
-    {
-        return TestApp::init([
-            'root' => __DIR__ . '/../',
-            'app' => __DIR__ . '/../app',
-            'runtime' => __DIR__ . '/../runtime/tests',
-            'cache' => __DIR__ . '/../runtime/tests'
-        ], new Environment($env), false);
-    }
 
     protected function setUp(): void
     {
@@ -65,5 +57,15 @@ abstract class TestCase extends BaseTestCase
         if ($fs->isDirectory($runtime)) {
             $fs->deleteDirectory($runtime);
         }
+    }
+
+    protected function makeApp(array $env = []): TestApp
+    {
+        return TestApp::init([
+            'root' => __DIR__ . '/../',
+            'app' => __DIR__ . '/../app',
+            'runtime' => __DIR__ . '/../runtime/tests',
+            'cache' => __DIR__ . '/../runtime/tests'
+        ], new Environment($env), false);
     }
 }

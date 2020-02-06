@@ -17,7 +17,7 @@ use Spiral\Bootloader\Http\HttpBootloader;
 
 class LocaleSelectorBootloader extends Bootloader
 {
-    public function boot(HttpBootloader $http)
+    public function boot(HttpBootloader $http): void
     {
         $http->addMiddleware(LocaleSelector::class);
     }

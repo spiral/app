@@ -24,7 +24,7 @@ class RoutesBootloader extends Bootloader
     /**
      * @param RouterInterface $router
      */
-    public function boot(RouterInterface $router)
+    public function boot(RouterInterface $router): void
     {
         // named route
         $router->addRoute(

@@ -29,7 +29,7 @@ class HomeController
     /**
      * Example of exception page.
      */
-    public function exception()
+    public function exception(): void
     {
         echo $undefined;
     }
@@ -44,6 +44,6 @@ class HomeController
             ['value' => 'hello world']
         );
 
-        return sprintf("Job ID: %s", $jobID);
+        return sprintf('Job ID: %s', $jobID);
     }
 }

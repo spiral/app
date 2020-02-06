@@ -22,7 +22,7 @@ class LoggingBootloader extends Bootloader
     /**
      * @param MonologBootloader $monolog
      */
-    public function boot(MonologBootloader $monolog)
+    public function boot(MonologBootloader $monolog): void
     {
         // http level errors
         $monolog->addHandler(ErrorHandlerMiddleware::class, $monolog->logRotate(
