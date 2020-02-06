@@ -42,11 +42,11 @@ class LocaleSelector implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $locale = $this->translator->getLocale();
+        $defaultLocale = $this->translator->getLocale();
 
         try {
             foreach ($this->fetchLocales($request) as $locale) {
-                if (in_array($locale, $this->availableLocales, true)) {
+                if ($locale && in_array($locale, $this->availableLocales, true)) {
                     $this->translator->setLocale($locale);
                     break;
                 }
@@ -55,7 +55,7 @@ class LocaleSelector implements MiddlewareInterface
             return $handler->handle($request);
         } finally {
             // restore
-            $this->translator->setLocale($locale);
+            $this->translator->setLocale($defaultLocale);
         }
     }
 
