@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Kairee Wu (krwu)
+ */
+
 declare(strict_types=1);
 
 namespace Tests;
@@ -16,8 +23,8 @@ use Tests\Traits\InteractsWithHttp;
 
 abstract class TestCase extends BaseTestCase
 {
-    use InteractsWithConsole,
-        InteractsWithHttp;
+    use InteractsWithConsole;
+    use InteractsWithHttp;
 
     /** @var \Spiral\Boot\AbstractKernel */
     protected $app;

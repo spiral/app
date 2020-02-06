@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Kairee Wu (krwu)
+ */
 
 namespace Tests\Traits;
 

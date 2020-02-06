@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Kairee Wu (krwu)
+ */
+
 declare(strict_types=1);
 
 namespace Tests;

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Kairee Wu (krwu)
+ */
+
 declare(strict_types=1);
 
 error_reporting(E_ALL | E_STRICT);
