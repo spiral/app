@@ -91,4 +91,17 @@ class App extends Kernel
         // fast code prototyping
         Prototype\PrototypeBootloader::class,
     ];
+
+    /**
+     * Get object from the container.
+     *
+     * @param string      $alias
+     * @param string|null $context
+     * @return mixed|object|null
+     * @throws \Throwable
+     */
+    public function get($alias, string $context = null)
+    {
+        return $this->container->get($alias, $context);
+    }
 }
