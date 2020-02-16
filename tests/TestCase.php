@@ -53,11 +53,11 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
-    protected function makeApp(array $env = []): \App\App
+    protected function makeApp(array $env = []): TestApp
     {
-        $root = __DIR__ . '/../';
+        $root = dirname(__DIR__);
 
-        return \App\App::init([
+        return TestApp::init([
             'root' => $root,
             'app' => $root . '/app',
             'runtime' => $root . '/runtime/tests',
