@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Kairee Wu (krwu)
  */
+
+declare(strict_types=1);
 
 namespace Tests\Traits;
 

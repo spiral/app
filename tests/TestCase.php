@@ -45,13 +45,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $fs = new Files();
-
-        if ($fs->isDirectory(__DIR__ . '/../app/migrations')) {
-            $fs->deleteDirectory(__DIR__ . '/../app/migrations');
-        }
 
         $runtime = $this->app->get(DirectoriesInterface::class)->get('runtime');
         if ($fs->isDirectory($runtime)) {
@@ -61,11 +55,13 @@ abstract class TestCase extends BaseTestCase
 
     protected function makeApp(array $env = []): TestApp
     {
+        $root = dirname(__DIR__);
+
         return TestApp::init([
-            'root' => __DIR__ . '/../',
-            'app' => __DIR__ . '/../app',
-            'runtime' => __DIR__ . '/../runtime/tests',
-            'cache' => __DIR__ . '/../runtime/tests'
+            'root' => $root,
+            'app' => $root . '/app',
+            'runtime' => $root . '/runtime/tests',
+            'cache' => $root . '/runtime/tests/cache',
         ], new Environment($env), false);
     }
 }
