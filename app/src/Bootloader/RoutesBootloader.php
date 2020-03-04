@@ -27,7 +27,7 @@ class RoutesBootloader extends Bootloader
     public function boot(RouterInterface $router): void
     {
         // named route
-        $router->addRoute(
+        $router->setRoute(
             'html',
             new Route('/<action>.html', new Controller(HomeController::class))
         );
