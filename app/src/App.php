@@ -32,6 +32,9 @@ class App extends Kernel
         DotEnv\DotenvBootloader::class,
         Monolog\MonologBootloader::class,
 
+        // Application specific logs
+        Bootloader\LoggingBootloader::class,
+
         // Core Services
         Framework\SnapshotsBootloader::class,
         Framework\I18nBootloader::class,
@@ -46,6 +49,7 @@ class App extends Kernel
         Nyholm\NyholmBootloader::class,
         Framework\Http\RouterBootloader::class,
         Framework\Http\ErrorHandlerBootloader::class,
+        Framework\Http\JsonPayloadsBootloader::class,
         Framework\Http\CookiesBootloader::class,
         Framework\Http\SessionBootloader::class,
         Framework\Http\CsrfBootloader::class,
@@ -86,7 +90,6 @@ class App extends Kernel
     protected const APP = [
         Bootloader\LocaleSelectorBootloader::class,
         Bootloader\RoutesBootloader::class,
-        Bootloader\LoggingBootloader::class,
 
         // fast code prototyping
         Prototype\PrototypeBootloader::class,
