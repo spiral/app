@@ -14,7 +14,7 @@
             <homepage:links git="https://github.com/spiral/app" style="font-weight: bold;"/>
 
             <div style="font-size: 12px; margin-top: 10px;">
-                [[This view file is located in]] <b>app/views/home.dark.php</b> [[and rendered by]] <b>Controller\IndexController</b>.
+                [[This view file is located in]] <b>app/views/home.dark.php</b> [[and rendered by]] <b>Controller\HomeController</b>.
             </div>
         </div>
     </div>
