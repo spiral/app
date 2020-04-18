@@ -19,7 +19,7 @@ return [
     'drivers'   => [
         'runtime' => [
             'driver'     => Driver\SQLite\SQLiteDriver::class,
-            'connection' => 'sqlite:' . directory('runtime') . 'runtime.db',
+            'connection' => 'sqlite:' . directory('root') . 'app.db',
             'profiling'  => true,
         ],
     ]
