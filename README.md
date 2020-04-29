@@ -68,6 +68,17 @@ To test an application:
 $ ./vendor/bin/phpunit
 ```
 
+Cloning:
+--------
+Make sure to properly configure project if you cloned the existing repository.
+
+```bash
+$ copy .env.sample .env
+$ php app.php encrypt:key -m .env
+$ php app.php configure -vv
+$ ./vendor/bin/spiral get
+```
+
 License:
 --------
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Spiral Scout](https://spiralscout.com).
