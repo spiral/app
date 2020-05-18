@@ -30,4 +30,11 @@ class BasicTest extends TestCase
 
         $this->assertStringContainsString($want, $got);
     }
+
+    public function testInteractWithConsole(): void
+    {
+        $output = $this->runCommand('views:reset');
+
+        $this->assertStringContainsString('cache', $output);
+    }
 }
