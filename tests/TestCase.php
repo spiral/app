@@ -38,7 +38,7 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         $this->app = $this->makeApp();
-        $this->http = $this->app->get(HTTP::class);
+        $this->http = $this->app->get(Http::class);
         $this->views = $this->app->get(ViewsInterface::class);
         $this->app->get(TranslatorInterface::class)->setLocale('en');
     }
