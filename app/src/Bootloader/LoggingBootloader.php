@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Spiral Framework.
+ * This file is part of Spiral package.
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -20,6 +20,8 @@ use Spiral\Monolog\LogFactory;
 class LoggingBootloader extends Bootloader
 {
     /**
+     * Bootloader execute method.
+     *
      * @param MonologBootloader $monolog
      */
     public function boot(MonologBootloader $monolog): void

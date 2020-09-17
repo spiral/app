@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Spiral Framework.
+ * This file is part of Spiral package.
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -17,6 +17,11 @@ use Spiral\Bootloader\Http\HttpBootloader;
 
 class LocaleSelectorBootloader extends Bootloader
 {
+    /**
+     * Bootloader execute method.
+     *
+     * @param HttpBootloader $http
+     */
     public function boot(HttpBootloader $http): void
     {
         $http->addMiddleware(LocaleSelector::class);

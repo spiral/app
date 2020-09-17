@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Spiral Framework.
+ * This file is part of Spiral package.
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -28,6 +28,8 @@ class HomeController
 
     /**
      * Example of exception page.
+     *
+     * @throws \Error
      */
     public function exception(): void
     {
@@ -39,10 +41,9 @@ class HomeController
      */
     public function ping(): string
     {
-        $jobID = $this->queue->push(
-            Ping::class,
-            ['value' => 'hello world']
-        );
+        $jobID = $this->queue->push(Ping::class, [
+            'value' => 'hello world'
+        ]);
 
         return sprintf('Job ID: %s', $jobID);
     }
