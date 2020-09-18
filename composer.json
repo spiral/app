@@ -5,8 +5,8 @@
     "description": "Spiral Skeleton Application",
     "homepage": "https://spiral.dev",
     "support": {
-        "issues": "https://github.com/spiral/framework/issues",
-        "source": "https://github.com/spiral/auth"
+        "issues": "https://github.com/spiral/app/issues",
+        "source": "https://github.com/spiral/app"
     },
     "authors": [
         {
