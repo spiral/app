@@ -25,7 +25,7 @@ return [
      */
     'databases' => [
         'default' => [
-            'driver' => 'sqlite'
+            'driver' => 'sqlite',
         ],
     ],
 
@@ -41,5 +41,5 @@ return [
             'connection' => 'sqlite:' . directory('root') . 'app.db',
             'profiling'  => true,
         ],
-    ]
+    ],
 ];

@@ -42,7 +42,7 @@ class HomeController
     public function ping(): string
     {
         $jobID = $this->queue->push(Ping::class, [
-            'value' => 'hello world'
+            'value' => 'hello world',
         ]);
 
         return sprintf('Job ID: %s', $jobID);
