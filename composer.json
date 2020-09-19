@@ -17,7 +17,7 @@
     "require": {
         "php": ">=7.2",
         "ext-mbstring": "*",
-        "spiral/framework": "^2.6",
+        "spiral/framework": "^2.7",
         "spiral/jobs": "^2.0",
         "spiral/roadrunner": "^1.4",
         "spiral/database": "^2.3",
@@ -26,8 +26,6 @@
         "spiral/stempler-bridge": "^1.0",
         "spiral/dotenv-bridge": "^1.0",
         "spiral/nyholm-bridge": "^1.0",
-        "spiral/scaffolder": "^2.0",
-        "spiral/prototype": "^1.0",
         "cycle/orm": "^1.0",
         "cycle/proxy-factory": "^1.0",
         "cycle/annotated": "^2.0",
