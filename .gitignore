@@ -5,3 +5,4 @@ rr*
 spiral*
 .env
 .phpunit.result.cache
+composer.lock
