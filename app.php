@@ -33,6 +33,6 @@ require __DIR__ . '/vendor/autoload.php';
 $app = App::init(['root' => __DIR__]);
 
 if ($app !== null) {
-    $code = (int) $app->serve();
+    $code = (int)$app->serve();
     exit($code);
 }
