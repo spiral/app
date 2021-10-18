@@ -1,34 +1,127 @@
-# http service configuration.
+rpc:
+    # TCP address:port for listening.
+    #
+    # Default: "tcp://127.0.0.1:6001"
+    listen: tcp://127.0.0.1:6001
+
+# Application server settings (docs: https://roadrunner.dev/docs/php-worker)
+server:
+    # Worker starting command, with any required arguments.
+    #
+    # This option is required.
+    command: "D:\\Development\\php\\7.4\\php.exe app.php"
+
+    # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6001), or
+    # socket (eg.: unix:///var/run/rr.sock).
+    #
+    # Default: "pipes"
+    relay: "tcp://127.0.0.1:6002"
+
+# HTTP plugin settings.
 http:
-  address: 0.0.0.0:8080
+    # Host and port to listen on (eg.: `127.0.0.1:8080`).
+    #
+    # This option is required.
+    address: 127.0.0.1:8080
 
-  workers:
-    command: "php app.php"
+    # Middlewares for the http plugin, order is important.
+    # Allowed values is: "headers", "static", "gzip".
+    #
+    # Default value: []
+    middleware: [ "headers", "static", "gzip" ]
 
-# queue and jobs
+    # Workers pool settings.
+    pool:
+        # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+        #
+        # Default: 0
+        num_workers: 2
+
+    # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+    static:
+        # Path to the directory with static assets.
+        #
+        # This option is required.
+        dir: "public"
+
+        # File extensions to forbid.
+        #
+        # Default: []
+        forbid: [ ".htaccess", ".php" ]
+
+    headers:
+        # Automatically add headers to every response.
+        #
+        # Default: <empty map>
+        response:
+            X-Powered-By: "RoadRunner"
+
+#
+# In this section, the jobs themselves are configured
+#
 jobs:
-  dispatch:
-    app-job-*.pipeline: "local"
-  pipelines:
-    local:
-      broker: "ephemeral"
-  consume: ["local"]
+    # Number of threads which will try to obtain the job from the priority queue
+    #
+    # Default: number of the logical CPU cores
+    num_pollers: 2
+    # worker pool configuration
+    pool:
+        num_workers: 2
+    consume: [ "local" ]
+    # List of broker pipelines associated with the drivers.
+    #
+    # This option is not required since you can declare pipelines in the runtime.
+    # Pipeline driver should exist.
+    pipelines:
+        local:
+            driver: "memory"
 
-  workers:
-    command: "php app.php"
-    pool.numWorkers: 2
 
-# serve static files
-static:
-  dir:    "public"
-  forbid: [".php", ".htaccess"]
+# Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
+# for this feature disabling.
+#metrics:
+#    # Prometheus client address (path /metrics added automatically).
+#    #
+#    # Default: "127.0.0.1:2112"
+#    address: "127.0.0.1:2112"
 
-metrics:
-  # prometheus client address (path /metrics added automatically)
-  address: localhost:2112
+# Automatically detect PHP file changes and reload connected services (docs:
+# https://roadrunner.dev/docs/beep-beep-reload). Drop this section for this feature disabling.
+reload:
+    # Sync interval.
+    #
+    # Default: "1s"
+    interval: 1s
 
-# control the max memory usage
-limit:
-  services:
-    http.maxMemory: 100
-    jobs.maxMemory: 100
+    # Global patterns to sync.
+    #
+    # Default: [".php"]
+    patterns: [ ".php", ".env" ]
+
+    # List of included for sync services (this is a map, where key name is a plugin name).
+    #
+    # Default: <empty map>
+    services:
+        http:
+            # Directories to sync. If recursive is set to true, recursive sync
+            # will be applied only to the directories in "dirs" section.
+            # Dot (.) means "current working directory".
+            #
+            # Default: []
+            dirs: [ "app" ]
+
+            # Recursive search for file patterns to add.
+            #
+            # Default: false
+            recursive: true
+
+            # Ignored folders.
+            #
+            # Default: []
+            ignore: [ "vendor" ]
+
+            # Service specific file pattens to sync.
+            #
+            # Default: []
+            patterns: [ ".php" ]
+

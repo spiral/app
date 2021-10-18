@@ -14,7 +14,7 @@ namespace App\Job;
 use Spiral\Jobs\JobHandler;
 
 /**
- * (QueueInterface)->push(PingJob::class, ["value"=>"my value"]);
+ * (QueueInterface)->push(PingJob::class, ['value' => 'my value']);
  */
 class Ping extends JobHandler
 {
@@ -25,6 +25,6 @@ class Ping extends JobHandler
     public function invoke(string $id, string $value): void
     {
         // do something
-        error_log("pong by {$id}, value `{$value}`");
+        var_dump("pong by $id, value `$value`");
     }
 }
