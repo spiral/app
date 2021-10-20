@@ -9,7 +9,7 @@ server:
     # Worker starting command, with any required arguments.
     #
     # This option is required.
-    command: "D:\\Development\\php\\7.4\\php.exe app.php"
+    command: "php app.php"
 
     # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6001), or
     # socket (eg.: unix:///var/run/rr.sock).
