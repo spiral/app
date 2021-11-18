@@ -1,12 +1,5 @@
 <?php
 
-/**
- * This file is part of Spiral package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace App;
@@ -56,13 +49,13 @@ class App extends Kernel
         Framework\Http\PaginationBootloader::class,
 
         // Databases
-        Framework\Database\DatabaseBootloader::class,
-        Framework\Database\MigrationsBootloader::class,
+        Bootloader\DatabaseBootloader::class,
+        Bootloader\MigrationsBootloader::class,
 
         // ORM
-        Framework\Cycle\CycleBootloader::class,
-        Framework\Cycle\ProxiesBootloader::class,
-        Framework\Cycle\AnnotatedBootloader::class,
+        Bootloader\CycleOrmV2Bootloader::class,
+        Bootloader\SchemaBootloader::class,
+        Bootloader\AnnotatedBootloader::class,
 
         // Views and view translation
         Framework\Views\ViewsBootloader::class,
@@ -75,8 +68,11 @@ class App extends Kernel
         Stempler\StemplerBootloader::class,
 
         // Framework commands
-        Framework\CommandBootloader::class,
+        Bootloader\CommandBootloader::class,
         Scaffolder\ScaffolderBootloader::class,
+
+        // Sentry exceptions logger
+        // \Spiral\Sentry\Bootloader\SentryBootloader::class,
 
         // Debug and debug extensions
         Framework\DebugBootloader::class,

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * This file is part of Spiral package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace App\Middleware;
@@ -19,30 +12,14 @@ use Spiral\Translator\Translator;
 
 class LocaleSelector implements MiddlewareInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
+    /** @var string[] */
+    private array $availableLocales;
 
-    /**
-     * @var string[]
-     */
-    private $availableLocales;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
         $this->availableLocales = $this->translator->getCatalogueManager()->getLocales();
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $defaultLocale = $this->translator->getLocale();
@@ -62,10 +39,6 @@ class LocaleSelector implements MiddlewareInterface
         }
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return \Generator
-     */
     public function fetchLocales(ServerRequestInterface $request): \Generator
     {
         $header = $request->getHeaderLine('accept-language');

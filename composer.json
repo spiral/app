@@ -15,21 +15,26 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=8.0",
         "ext-mbstring": "*",
+        "cycle/annotated": "2.0.x-dev",
+        "cycle/migrations": "2.0.x-dev",
+        "cycle/orm": "2.0.x-dev",
+        "cycle/schema-migrations-generator": "dev-master",
+        "cycle/schema-renderer": "^1.0",
         "spiral/framework": "^2.8",
         "spiral/jobs": "^2.0",
-        "spiral/roadrunner": "^1.4",
-        "spiral/database": "^2.3",
         "spiral/migrations": "^2.0",
         "spiral/nyholm-bridge": "^1.0",
-        "cycle/orm": "^1.0",
-        "cycle/proxy-factory": "^1.0",
-        "cycle/annotated": "^2.0",
-        "cycle/migrations": "^1.0"
+        "spiral/roadrunner": "^1.4",
+        "spiral/sentry-bridge": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5|^9.0"
+    },
+    "suggest": {
+        "doctrine/collections": "Required to use CycleORM doctrine collections for relations via DoctrineCollectionFactory",
+        "illuminate/collections": "Required to use CycleORM illuminate collections for relations via IlluminateCollectionFactory"
     },
     "scripts": {
         "post-create-project-cmd": [
