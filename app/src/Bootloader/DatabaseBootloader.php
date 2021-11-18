@@ -22,11 +22,9 @@ final class DatabaseBootloader extends Bootloader implements SingletonInterface
         DatabaseInterface::class => Database::class,
     ];
 
-    private ConfiguratorInterface $config;
-
-    public function __construct(ConfiguratorInterface $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        private ConfiguratorInterface $config
+    ) {
     }
 
     /**

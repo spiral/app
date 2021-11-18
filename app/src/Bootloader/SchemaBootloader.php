@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Bootloader;
 
+use App\Cycle\FinalClassMapperFixerGenerator;
 use Cycle\ORM\SchemaInterface;
 use Cycle\Schema\GeneratorInterface;
 use Cycle\Schema\Registry;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\MemoryInterface;
 use Spiral\Bootloader\TokenizerBootloader;
+use Spiral\Config\ConfiguratorInterface;
 use Spiral\Core\Container;
-use Spiral\Cycle\SchemaCompiler;
 use Cycle\Schema\Generator;
 
 final class SchemaBootloader extends Bootloader implements Container\SingletonInterface
@@ -28,12 +29,13 @@ final class SchemaBootloader extends Bootloader implements Container\SingletonIn
         SchemaInterface::class => [self::class, 'schema'],
     ];
 
-    private Container $container;
-
     /** @var string[][]|GeneratorInterface[][] */
     private array $generators = [];
 
-    public function __construct(Container $container)
+    public function __construct(
+        private ConfiguratorInterface $config,
+        private Container $container
+    )
     {
         $this->container = $container;
         $this->generators = [
@@ -50,9 +52,25 @@ final class SchemaBootloader extends Bootloader implements Container\SingletonIn
             ],
             self::GROUP_POSTPROCESS => [
                 // post processing
+                FinalClassMapperFixerGenerator::class,
                 Generator\GenerateTypecast::class,
             ],
         ];
+    }
+
+    /**
+     * Init database config.
+     */
+    public function boot(): void
+    {
+        $this->config->setDefaults(
+            'cycle',
+            [
+                'schema' => [
+                    'defaults' => []
+                ]
+            ]
+        );
     }
 
     public function addGenerator(string $group, string $generator): void
@@ -89,7 +107,8 @@ final class SchemaBootloader extends Bootloader implements Container\SingletonIn
         if ($schemaCompiler->isEmpty()) {
             $schemaCompiler = SchemaCompiler::compile(
                 $this->container->get(Registry::class),
-                $this->getGenerators()
+                $this->getGenerators(),
+                $this->config->getConfig('cycle')['schema']['defaults'] ?? []
             );
 
             $schemaCompiler->toMemory($memory);
