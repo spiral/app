@@ -12,7 +12,7 @@ use Spiral\Cycle\SchemaCompiler;
 
 final class UpdateCommand extends Command
 {
-    protected const NAME = 'cycle:update';
+    protected const NAME = 'cycle';
     protected const DESCRIPTION = 'Update (init) cycle schema from database and annotated classes';
 
     public function perform(
