@@ -1,15 +1,17 @@
 <?php
 
-/**
- * This file is part of Spiral package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
+use Cycle\Database\Config;
+
 return [
+    'logger' => [
+        'default' => null,
+        'drivers' => [
+            // 'runtime' => 'stdout'
+        ],
+    ],
+
     /**
      * Default database connection
      */
@@ -35,11 +37,11 @@ return [
      * database drivers. To register a new connection you have to specify
      * the driver class and its connection options.
      */
-    'drivers'   => [
-        'sqlite' => [
-            'driver'     => \Spiral\Database\Driver\SQLite\SQLiteDriver::class,
-            'connection' => 'sqlite:' . directory('root') . 'app.db',
-            'profiling'  => true,
-        ],
+    'drivers' => [
+        'runtime' => new Config\SQLiteDriverConfig(
+            connection: new Config\SQLite\MemoryConnectionConfig(),
+            queryCache: true
+        ),
+        // ...
     ],
 ];

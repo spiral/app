@@ -20,6 +20,7 @@ use Spiral\Nyholm\Bootloader as Nyholm;
 use Spiral\Prototype\Bootloader as Prototype;
 use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
+use Spiral\Cycle\Bootloader as CycleBridge;
 
 class App extends Kernel
 {
@@ -56,13 +57,21 @@ class App extends Kernel
         Framework\Http\PaginationBootloader::class,
 
         // Databases
-        Framework\Database\DatabaseBootloader::class,
-        Framework\Database\MigrationsBootloader::class,
+        CycleBridge\DatabaseBootloader::class,
+        CycleBridge\MigrationsBootloader::class,
+        // CycleBridge\DisconnectsBootloader::class,
 
         // ORM
-        Framework\Cycle\CycleBootloader::class,
-        Framework\Cycle\ProxiesBootloader::class,
-        Framework\Cycle\AnnotatedBootloader::class,
+        CycleBridge\SchemaBootloader::class,
+        CycleBridge\CycleOrmBootloader::class,
+        CycleBridge\AnnotatedBootloader::class,
+        CycleBridge\CommandBootloader::class,
+
+        // DataGrid
+        // CycleBridge\DataGridBootloader::class,
+
+        // Auth
+        // CycleBridge\AuthTokensBootloader::class,
 
         // Views and view translation
         Framework\Views\ViewsBootloader::class,
