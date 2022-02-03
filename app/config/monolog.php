@@ -18,4 +18,14 @@ return [
             ]
         ],
     ],
+    'processors' => [
+        'stdout' => [
+            [
+                'class'   => \Monolog\Processor\PsrLogMessageProcessor::class,
+                'options' => [
+                    'dateFormat' => 'Y-m-d\TH:i:s.uP'
+                ]
+            ],
+        ],
+    ],
 ];

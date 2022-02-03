@@ -13,10 +13,16 @@ namespace App\Controller;
 
 use App\Job\Ping;
 use Spiral\Prototype\Traits\PrototypeTrait;
+use Spiral\Queue\QueueInterface;
 
 class HomeController
 {
     use PrototypeTrait;
+
+    public function __construct(
+        private QueueInterface $queue,
+    ) {
+    }
 
     /**
      * @return string

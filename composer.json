@@ -15,24 +15,23 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=8.0",
         "ext-mbstring": "*",
         "doctrine/collections": "^1.6",
         "spiral/cycle-bridge": "^1.0",
-        "spiral/framework": "^2.8",
-        "spiral/jobs": "^2.0",
+        "spiral/framework": "^2.9",
         "spiral/nyholm-bridge": "^1.0",
-        "spiral/roadrunner": "^1.4"
+        "spiral/roadrunner-bridge": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5|^9.0"
+        "phpunit/phpunit": "^9.5"
     },
     "scripts": {
         "post-create-project-cmd": [
             "php -r \"copy('.env.sample', '.env');\"",
             "php app.php encrypt:key -m .env",
             "php app.php configure -vv",
-            "spiral get-binary"
+            "rr get-binary"
         ]
     },
     "autoload": {
