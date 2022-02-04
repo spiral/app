@@ -7,7 +7,7 @@ use Spiral\Cache\Storage\FileStorage;
 
 return [
 
-    'default' => 'array',
+    'default' => env('CACHE_STORAGE', 'array'),
 
     /**
      *  Aliases for storages, if you want to use domain specific storages
