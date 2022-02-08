@@ -33,6 +33,16 @@ return [
             'path' => __DIR__ . '/../../runtime/cache',
         ],
 
+        'redis' => [
+            'type' => 'roadrunner',
+            'driver' => 'redis'
+        ],
+
+        'rr-local' => [
+            'type' => 'roadrunner',
+            'driver' => 'local'
+        ],
+
     ],
 
     /**
