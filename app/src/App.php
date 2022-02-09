@@ -21,6 +21,7 @@ use Spiral\Prototype\Bootloader as Prototype;
 use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 use Spiral\Cycle\Bootloader as CycleBridge;
+use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
 
 class App extends Kernel
 {
@@ -29,6 +30,14 @@ class App extends Kernel
      * within system container on application start.
      */
     protected const LOAD = [
+
+        // RoadRunner
+        RoadRunnerBridge\CacheBootloader::class,
+        RoadRunnerBridge\GRPCBootloader::class,
+        RoadRunnerBridge\HttpBootloader::class,
+        RoadRunnerBridge\QueueBootloader::class,
+        RoadRunnerBridge\RoadRunnerBootloader::class,
+
         // Base extensions
         DotEnv\DotenvBootloader::class,
         Monolog\MonologBootloader::class,
@@ -73,12 +82,13 @@ class App extends Kernel
         // Auth
         // CycleBridge\AuthTokensBootloader::class,
 
+        // Entity checker
+        // CycleBridge\ValidationBootloader::class,
+
         // Views and view translation
         Framework\Views\ViewsBootloader::class,
         Framework\Views\TranslatedCacheBootloader::class,
 
-        // Additional dispatchers
-        Framework\Jobs\JobsBootloader::class,
 
         // Extensions and bridges
         Stempler\StemplerBootloader::class,
@@ -91,6 +101,8 @@ class App extends Kernel
         Framework\DebugBootloader::class,
         Framework\Debug\LogCollectorBootloader::class,
         Framework\Debug\HttpCollectorBootloader::class,
+
+        RoadRunnerBridge\CommandBootloader::class,
     ];
 
     /*

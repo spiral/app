@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Tests\Traits;
 
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 trait InteractsWithHttp
 {

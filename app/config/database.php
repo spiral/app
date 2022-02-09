@@ -27,7 +27,7 @@ return [
      */
     'databases' => [
         'default' => [
-            'driver' => 'sqlite',
+            'driver' => 'runtime',
         ],
     ],
 

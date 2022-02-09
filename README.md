@@ -13,7 +13,7 @@ Spiral Framework is a High-Performance PHP/Go Full-Stack framework and group of 
 Server Requirements
 --------
 Make sure that your server is configured with following PHP version and extensions:
-* PHP 7.2+, 64bit
+* PHP 8.0+, 64bit
 * *mb-string* extension
 * PDO Extension with desired database drivers
 
@@ -49,13 +49,13 @@ $ php ./app.php configure
 To start application server execute:
 
 ```
-$ ./spiral serve -v -d
+$ ./rr serve -v -d
 ```
 
 On Windows:
 
 ```$xslt
-$ spiral.exe serve -v -d
+$ rr.exe serve -v -d
 ```
 
 Application will be available on `http://localhost:8080`.
@@ -78,7 +78,7 @@ Make sure to properly configure project if you cloned the existing repository.
 $ copy .env.sample .env
 $ php app.php encrypt:key -m .env
 $ php app.php configure -vv
-$ ./vendor/bin/spiral get
+$ ./vendor/bin/rr get-binary
 ```
 
 License:

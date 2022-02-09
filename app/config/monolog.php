@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Monolog\Logger;
 
 return [
-    'globalLevel' => Logger::DEBUG,
+    'globalLevel' => Logger::toMonologLevel(env('MONOLOG_DEFAULT_LEVEL', Logger::DEBUG)),
 
     'handlers' => [
         'stdout' => [
@@ -16,6 +16,16 @@ return [
                     'facility' => LOG_USER,
                 ]
             ]
+        ],
+    ],
+    'processors' => [
+        'stdout' => [
+            [
+                'class'   => \Monolog\Processor\PsrLogMessageProcessor::class,
+                'options' => [
+                    'dateFormat' => 'Y-m-d\TH:i:s.uP'
+                ]
+            ],
         ],
     ],
 ];
