@@ -9,26 +9,29 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controller;
 
 use Tests\TestCase;
 
-class BasicTest extends TestCase
+class HomeControllerTest extends TestCase
 {
     public function testDefaultActionWorks(): void
     {
-        $want = 'Welcome to Spiral Framework<';
-        $got = (string)$this->get('/')->getBody();
-
-        $this->assertStringContainsString($want, $got);
+        $this
+            ->fakeHttp()
+            ->get('/')
+            ->assertOk()
+            ->assertBodyContains('Welcome to Spiral Framework');
     }
 
     public function testDefaultActionWithRuLocale(): void
     {
-        $want = 'Вас приветствует Spiral Framework';
-        $got = (string)$this->get('/', [], [ 'accept-language' => 'ru'])->getBody();
-
-        $this->assertStringContainsString($want, $got);
+        $this
+            ->fakeHttp()
+            ->withHeader('accept-language', 'ru')
+            ->get('/')
+            ->assertOk()
+            ->assertBodyContains('Вас приветствует Spiral Framework');
     }
 
     public function testInteractWithConsole(): void
