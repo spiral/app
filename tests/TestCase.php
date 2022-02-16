@@ -11,57 +11,53 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
-use Spiral\Boot\DirectoriesInterface;
-use Spiral\Boot\Environment;
-use Spiral\Files\Files;
-use Spiral\Http\Http;
+use Spiral\Boot\AbstractKernel;
+use Spiral\Testing\TestableKernelInterface;
+use Spiral\Testing\TestCase as BaseTestCase;
 use Spiral\Translator\TranslatorInterface;
 use Spiral\Views\ViewsInterface;
-use Tests\Traits\InteractsWithConsole;
-use Tests\Traits\InteractsWithHttp;
+use Tests\App\TestApp;
 
-abstract class TestCase extends BaseTestCase
+class TestCase extends BaseTestCase
 {
-    use InteractsWithConsole;
-    use InteractsWithHttp;
-
-    /** @var \Spiral\Boot\AbstractKernel */
-    protected $app;
-
-    /** @var \Spiral\Http\Http */
-    protected $http;
-
-    /** @var \Spiral\Views\ViewsInterface */
-    protected $views;
+    protected ViewsInterface $views;
 
     protected function setUp(): void
     {
-        $this->app = $this->makeApp();
-        $this->http = $this->app->get(Http::class);
-        $this->views = $this->app->get(ViewsInterface::class);
-        $this->app->get(TranslatorInterface::class)->setLocale('en');
+        parent::setUp();
+
+        $this->views = $this->getContainer()->get(ViewsInterface::class);
+        $this->getContainer()->get(TranslatorInterface::class)->setLocale('en');
     }
 
     protected function tearDown(): void
     {
-        $fs = new Files();
-
-        $runtime = $this->app->get(DirectoriesInterface::class)->get('runtime');
-        if ($fs->isDirectory($runtime)) {
-            $fs->deleteDirectory($runtime);
-        }
+        $this->cleanUpRuntimeDirectory();
     }
 
-    protected function makeApp(array $env = []): TestApp
+    public function rootDirectory(): string
     {
-        $root = dirname(__DIR__);
+        return \dirname(__DIR__);
+    }
 
-        return TestApp::init([
+    public function defineDirectories(string $root): array
+    {
+        return [
             'root' => $root,
-            'app' => $root . '/app',
-            'runtime' => $root . '/runtime/tests',
-            'cache' => $root . '/runtime/tests/cache',
-        ], new Environment($env), false);
+            'app' => $root.'/App',
+            'runtime' => $root.'/runtime',
+            'cache' => $root.'/runtime/cache',
+        ];
+    }
+
+    /**
+     * @return TestableKernelInterface|AbstractKernel
+     */
+    public function createAppInstance(): TestableKernelInterface
+    {
+        return TestApp::create(
+            $this->defineDirectories($this->rootDirectory()),
+            false
+        );
     }
 }

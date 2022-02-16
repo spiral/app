@@ -24,7 +24,8 @@
         "spiral/roadrunner-bridge": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "spiral/testing": "^1.1"
     },
     "scripts": {
         "post-create-project-cmd": [
