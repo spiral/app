@@ -15,7 +15,7 @@ return [
     /**
      * Default database connection
      */
-    'default'   => 'default',
+    'default' => 'default',
 
     /**
      * The Spiral/Database module provides support to manage multiple databases

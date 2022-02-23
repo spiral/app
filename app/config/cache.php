@@ -7,15 +7,21 @@ use Spiral\Cache\Storage\FileStorage;
 
 return [
 
+    /**
+     * The default cache connection that gets used while using this caching library.
+     */
     'default' => env('CACHE_STORAGE', 'local'),
 
     /**
-     *  Aliases for storages, if you want to use domain specific storages
+     * Aliases, if you want to use domain specific storages.
      */
     'aliases' => [
-        'user-data' => 'localMemory'
+        'user-data' => 'localMemory',
     ],
 
+    /**
+     * Here you may define all of the cache "storages" for your application as well as their types.
+     */
     'storages' => [
 
         'local' => [
@@ -30,17 +36,17 @@ return [
         'file' => [
             // Alias for FileStorage type
             'type' => 'file',
-            'path' => __DIR__ . '/../../runtime/cache',
+            'path' => directory('runtime') . 'cache',
         ],
 
         'redis' => [
             'type' => 'roadrunner',
-            'driver' => 'redis'
+            'driver' => 'redis',
         ],
 
         'rr-local' => [
             'type' => 'roadrunner',
-            'driver' => 'local'
+            'driver' => 'local',
         ],
 
     ],

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Cycle\ORM\Collection\ArrayCollectionFactory;
 use Cycle\ORM\Collection\DoctrineCollectionFactory;
-use Cycle\ORM\SchemaInterface;
 
 return [
     'schema' => [
@@ -67,5 +66,5 @@ return [
         //     \Cycle\ORM\Config\RelationConfig::LOADER => \Cycle\ORM\Select\Loader\EmbeddedLoader::class,
         //     \Cycle\ORM\Config\RelationConfig::RELATION => \Cycle\ORM\Relation\Embedded::class,
         // ]
-    ]
+    ],
 ];

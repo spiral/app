@@ -8,10 +8,12 @@ return [
      * You can download the binary here: https://github.com/roadrunner-server/roadrunner/releases
      * Default: null
      */
-    'binaryPath' => null,
-    // 'binaryPath' => __DIR__.'/../../protoc-gen-php-grpc',
+    // 'binaryPath' => directory('root').'protoc-gen-php-grpc',
 
+    /**
+     * Paths to proto files, that should be compiled into PHP by "grpc:generate" console command.
+     */
     'services' => [
-        __DIR__ . '/../../proto/echo.proto',
+        // directory('root').'proto/echo.proto',
     ],
 ];

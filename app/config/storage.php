@@ -38,7 +38,7 @@ return [
             // The required path to the local directory where your files will
             // be stored.
             //
-            'directory'  => directory('public') . '/uploads',
+            'directory' => directory('public') . 'uploads',
 
             //
             // Visibility mapping. Here you can set the default visibility for
@@ -48,7 +48,7 @@ return [
             // The visibility value can only be "private" or "public".
             //
             'visibility' => [
-                'public'  => ['file' => 0644, 'dir' => 0755],
+                'public' => ['file' => 0644, 'dir' => 0755],
                 'private' => ['file' => 0600, 'dir' => 0700],
 
                 'default' => 'public',

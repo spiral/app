@@ -16,18 +16,18 @@ return [
         Directive\LoopDirective::class,
         Directive\JsonDirective::class,
         Directive\ConditionalDirective::class,
-        Directive\ContainerDirective::class
+        Directive\ContainerDirective::class,
     ],
     'processors' => [
         // cache depended source processors (i.e. LocaleProcessor)
-        Processor\ContextProcessor::class
+        Processor\ContextProcessor::class,
     ],
     'visitors' => [
         Builder::STAGE_PREPARE => [
             // visitors to be invoked before transformations
             Visitor\DefineBlocks::class,
             Visitor\DefineAttributes::class,
-            Visitor\DefineHidden::class
+            Visitor\DefineHidden::class,
         ],
         Builder::STAGE_TRANSFORM => [
             // visitors to be invoked during transformations
@@ -39,6 +39,6 @@ return [
         ],
         Builder::STAGE_COMPILE => [
             // visitors to be invoked on compilation stage
-        ]
-    ]
+        ],
+    ],
 ];
