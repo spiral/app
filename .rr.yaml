@@ -1,3 +1,5 @@
+version: '2.7'
+
 rpc:
   listen: tcp://127.0.0.1:6001
 
@@ -27,10 +29,6 @@ jobs:
     supervisor:
       max_worker_memory: 100
 
-metrics:
-  # prometheus client address (path /metrics added automatically)
-  address: localhost:2112
-
 kv:
   local:
     driver: memory
@@ -40,8 +38,11 @@ kv:
     driver: redis
     config:
       addrs:
-        - "localhost:6379"
+        - localhost:6379
 #grpc:
 #  listen: "tcp://localhost:9001"
 #  proto:
 #    - "first.proto"
+
+metrics:
+  address: localhost:2112
