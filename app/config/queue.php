@@ -39,7 +39,7 @@ return [
                     // Run consumer for this pipeline on startup (by default)
                     // You can pause consumer for this pipeline via console command
                     // php app.php queue:pause local
-                    'consume' => true
+                    'consume' => true,
                 ],
                 // 'amqp' => [
                 //     'connector' => new AMQPCreateInfo('bus', ...),
@@ -56,7 +56,7 @@ return [
                 // 'sqs' => [
                 //     'connector' => new SQSCreateInfo('amazon', ...),
                 // ],
-            ]
+            ],
         ],
     ],
 
