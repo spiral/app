@@ -22,6 +22,8 @@ use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
+use Spiral\Validation\Bootloader\ValidationBootloader;
+use Spiral\Views\Bootloader\ViewsBootloader;
 
 class App extends Kernel
 {
@@ -51,7 +53,7 @@ class App extends Kernel
 
         // Security and validation
         Framework\Security\EncrypterBootloader::class,
-        Framework\Security\ValidationBootloader::class,
+        ValidationBootloader::class,
         Framework\Security\FiltersBootloader::class,
         Framework\Security\GuardBootloader::class,
 
@@ -86,7 +88,7 @@ class App extends Kernel
         // CycleBridge\ValidationBootloader::class,
 
         // Views and view translation
-        Framework\Views\ViewsBootloader::class,
+        ViewsBootloader::class,
         Framework\Views\TranslatedCacheBootloader::class,
 
 
@@ -98,6 +100,7 @@ class App extends Kernel
         Scaffolder\ScaffolderBootloader::class,
 
         // Debug and debug extensions
+        Framework\ExceptionHandlerBootloader::class,
         Framework\DebugBootloader::class,
         Framework\Debug\LogCollectorBootloader::class,
         Framework\Debug\HttpCollectorBootloader::class,
