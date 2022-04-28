@@ -18,10 +18,11 @@
         "php": ">=8.0",
         "ext-mbstring": "*",
         "doctrine/collections": "^1.6",
-        "spiral/cycle-bridge": "^1.0",
-        "spiral/framework": "^2.9",
-        "spiral/nyholm-bridge": "^1.0",
-        "spiral/roadrunner-bridge": "^1.0"
+        "spiral/cycle-bridge": "^1.2",
+        "spiral/framework": "^2.13",
+        "spiral/nyholm-bridge": "^1.1",
+        "spiral/roadrunner-bridge": "^1.0",
+        "symfony/var-dumper": "^6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -52,7 +53,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "spiral/composer-publish-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
