@@ -13,7 +13,7 @@ return [
     'handler' => new Autowire(
         FileHandler::class,
         [
-            'directory' => directory('runtime').'session',
+            'directory' => directory('runtime') . 'session',
             'lifetime' => (int)env('SESSION_LIFETIME', 86400),
         ]
     ),
