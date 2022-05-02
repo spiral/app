@@ -34,7 +34,7 @@ function dumprr(mixed $value): mixed
 
 
     // Set new handler and store previous one
-    $prevent = VarDumper::setHandler(static fn($value) => $dumper->dump($cloner->cloneVar($value)));
+    $prevent = VarDumper::setHandler(static fn ($value) => $dumper->dump($cloner->cloneVar($value)));
     $result = VarDumper::dump($value);
     // Reset handler
     VarDumper::setHandler($prevent);
