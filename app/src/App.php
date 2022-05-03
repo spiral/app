@@ -18,6 +18,7 @@ use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
 use Spiral\Nyholm\Bootloader as Nyholm;
 use Spiral\Prototype\Bootloader as Prototype;
+use Spiral\Sapi\Bootloader\SapiBootloader;
 use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 use Spiral\Cycle\Bootloader as CycleBridge;
@@ -66,6 +67,7 @@ class App extends Kernel
         Framework\Http\SessionBootloader::class,
         Framework\Http\CsrfBootloader::class,
         Framework\Http\PaginationBootloader::class,
+        SapiBootloader::class,
 
         // Databases
         CycleBridge\DatabaseBootloader::class,

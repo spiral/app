@@ -22,6 +22,7 @@
         "spiral/framework": "^3.0",
         "spiral/nyholm-bridge": "^1.2",
         "spiral/roadrunner-bridge": "^2.0",
+        "spiral/sapi-bridge": "^1.0",
         "symfony/var-dumper": "^6.0"
     },
     "require-dev": {
