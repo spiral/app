@@ -12,8 +12,6 @@ use App\App;
 \error_reporting(E_ALL | E_STRICT ^ E_DEPRECATED);
 \ini_set('display_errors', 'stderr');
 
-// Register custom helpers.
-require __DIR__ . '/app/src/helpers.php';
 // Register Composer's auto loader.
 require __DIR__ . '/vendor/autoload.php';
 
