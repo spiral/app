@@ -26,7 +26,7 @@ if (!\function_exists('dumprr')) {
         $cloner->addCasters(ReflectionCaster::UNSET_CLOSURE_FILE_INFO);
 
         // Set new handler and store previous one
-        $prevent = VarDumper::setHandler(static fn($value) => $dumper->dump($cloner->cloneVar($value)));
+        $prevent = VarDumper::setHandler(static fn ($value) => $dumper->dump($cloner->cloneVar($value)));
         $result = VarDumper::dump($value);
         // Reset handler
         VarDumper::setHandler($prevent);
