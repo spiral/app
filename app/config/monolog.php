@@ -23,7 +23,7 @@ return [
             [
                 'class' => 'log.rotate',
                 'options' => [
-                    'filename' => directory('runtime').'logs/app.log',
+                    'filename' => directory('runtime') . 'logs/app.log',
                     'level' => Logger::DEBUG,
                 ],
             ],
