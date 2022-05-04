@@ -11,7 +11,7 @@ return [
     /**
      *  Default queue connection name
      */
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'roadrunner'),
 
     /**
      *  Aliases for queue connections, if you want to use domain specific queues
@@ -39,7 +39,7 @@ return [
                     // Run consumer for this pipeline on startup (by default)
                     // You can pause consumer for this pipeline via console command
                     // php app.php queue:pause local
-                    'consume' => true
+                    'consume' => true,
                 ],
                 // 'amqp' => [
                 //     'connector' => new AMQPCreateInfo('bus', ...),
@@ -56,7 +56,7 @@ return [
                 // 'sqs' => [
                 //     'connector' => new SQSCreateInfo('amazon', ...),
                 // ],
-            ]
+            ],
         ],
     ],
 
