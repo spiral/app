@@ -10,15 +10,15 @@ Spiral Framework is a High-Performance PHP/Go Full-Stack framework and group of 
 
 <br/>
 
-Server Requirements
---------
+## Server Requirements
+
 Make sure that your server is configured with following PHP version and extensions:
-* PHP 8.0+, 64bit
+* PHP 8.1+, 64bit
 * *mb-string* extension
 * PDO Extension with desired database drivers
 
-Application Bundle
---------
+## Application Bundle
+
 Application bundle includes the following components:
 * High-performance HTTP, HTTP/2 server based on [RoadRunner](https://roadrunner.dev)
 * Console commands via Symfony/Console
@@ -32,9 +32,9 @@ Application bundle includes the following components:
 * Prometheus metrics
 * [Cycle DataMapper ORM](https://github.com/cycle)
 
-Installation
---------
-```
+## Installation
+
+```bash
 composer create-project spiral/app
 ```
 
@@ -42,45 +42,45 @@ composer create-project spiral/app
 
 Once the application is installed you can ensure that it was configured properly by executing:
 
-```
-$ php ./app.php configure
+```bash
+php ./app.php configure
 ```
 
 To start application server execute:
 
-```
-$ ./rr serve -v -d
+```bash
+./rr serve -v -d
 ```
 
 On Windows:
 
-```$xslt
-$ rr.exe serve -v -d
+```bash
+rr.exe serve -v -d
 ```
 
 Application will be available on `http://localhost:8080`.
 
 > Read more about application server configuration [here](https://roadrunner.dev/docs).
 
-Testing:
---------
+## Testing:
+
 To test an application:
 
 ```bash
-$ ./vendor/bin/phpunit
+./vendor/bin/phpunit
 ```
 
-Cloning:
---------
+## Cloning:
+
 Make sure to properly configure project if you cloned the existing repository.
 
 ```bash
-$ copy .env.sample .env
-$ php app.php encrypt:key -m .env
-$ php app.php configure -vv
-$ ./vendor/bin/rr get-binary
+copy .env.sample .env
+php app.php encrypt:key -m .env
+php app.php configure -vv
+./vendor/bin/rr get-binary
 ```
 
-License:
---------
+## License:
+
 MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Spiral Scout](https://spiralscout.com).

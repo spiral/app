@@ -32,7 +32,7 @@ class LoggingBootloader extends Bootloader
         ));
 
         // app level errors
-        $monolog->addHandler(LogFactory::DEFAULT, $monolog->logRotate(
+        $monolog->addHandler('default', $monolog->logRotate(
             directory('runtime') . 'logs/error.log',
             Logger::ERROR,
             25,
@@ -40,7 +40,7 @@ class LoggingBootloader extends Bootloader
         ));
 
         // debug and info messages via global LoggerInterface
-        $monolog->addHandler(LogFactory::DEFAULT, $monolog->logRotate(
+        $monolog->addHandler('default', $monolog->logRotate(
             directory('runtime') . 'logs/debug.log'
         ));
     }
