@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\SyslogHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -29,7 +30,7 @@ return [
             ],
         ],
         'stderr' => [
-            \Monolog\Handler\ErrorLogHandler::class,
+            ErrorLogHandler::class,
         ],
         'stdout' => [
             [

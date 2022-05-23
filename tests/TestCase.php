@@ -1,32 +1,22 @@
 <?php
 
-/**
- * Spiral Framework.
- *
- * @license   MIT
- * @author    Kairee Wu (krwu)
- */
-
 declare(strict_types=1);
 
 namespace Tests;
 
-use Spiral\Boot\AbstractKernel;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Set;
+use Spiral\Core\Container;
 use Spiral\Testing\TestableKernelInterface;
 use Spiral\Testing\TestCase as BaseTestCase;
 use Spiral\Translator\TranslatorInterface;
-use Spiral\Views\ViewsInterface;
 use Tests\App\TestApp;
 
 class TestCase extends BaseTestCase
 {
-    protected ViewsInterface $views;
-
     protected function setUp(): void
     {
-        $this->beforeStarting(static function (ConfiguratorInterface $config): void {
+        $this->beforeBooting(static function (ConfiguratorInterface $config): void {
             if (! $config->exists('session')) {
                 return;
             }
@@ -36,8 +26,18 @@ class TestCase extends BaseTestCase
 
         parent::setUp();
 
-        $this->views = $this->getContainer()->get(ViewsInterface::class);
         $this->getContainer()->get(TranslatorInterface::class)->setLocale('en');
+    }
+
+    public function createAppInstance(Container $container = new Container()): TestableKernelInterface
+    {
+        return TestApp::create(
+            directories: $this->defineDirectories(
+                $this->rootDirectory()
+            ),
+            handleErrors: false,
+            container: $container
+        );
     }
 
     protected function tearDown(): void
@@ -56,16 +56,5 @@ class TestCase extends BaseTestCase
         return [
             'root' => $root,
         ];
-    }
-
-    /**
-     * @return TestableKernelInterface|AbstractKernel
-     */
-    public function createAppInstance(): TestableKernelInterface
-    {
-        return TestApp::create(
-            $this->defineDirectories($this->rootDirectory()),
-            false
-        );
     }
 }

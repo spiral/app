@@ -20,13 +20,10 @@ class HomeController
     use PrototypeTrait;
 
     public function __construct(
-        private QueueInterface $queue,
+        private readonly QueueInterface $queue,
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function index(): string
     {
         return $this->views->render('home.dark.php');
@@ -42,9 +39,6 @@ class HomeController
         echo $undefined;
     }
 
-    /**
-     * @return string
-     */
     public function ping(): string
     {
         $jobID = $this->queue->push(Ping::class, [

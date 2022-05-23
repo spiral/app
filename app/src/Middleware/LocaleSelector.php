@@ -19,37 +19,22 @@ use Spiral\Translator\Translator;
 
 class LocaleSelector implements MiddlewareInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
+    /** @var string[] */
+    private array $availableLocales;
 
-    /**
-     * @var string[]
-     */
-    private $availableLocales;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        private readonly Translator $translator
+    ) {
         $this->availableLocales = $this->translator->getCatalogueManager()->getLocales();
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $defaultLocale = $this->translator->getLocale();
 
         try {
             foreach ($this->fetchLocales($request) as $locale) {
-                if ($locale !== '' && in_array($locale, $this->availableLocales, true)) {
+                if ($locale !== '' && \in_array($locale, $this->availableLocales, true)) {
                     $this->translator->setLocale($locale);
                     break;
                 }
@@ -62,16 +47,12 @@ class LocaleSelector implements MiddlewareInterface
         }
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return \Generator
-     */
     public function fetchLocales(ServerRequestInterface $request): \Generator
     {
         $header = $request->getHeaderLine('accept-language');
-        foreach (explode(',', $header) as $value) {
-            if (strpos($value, ';') !== false) {
-                yield substr($value, 0, strpos($value, ';'));
+        foreach (\explode(',', $header) as $value) {
+            if (\str_contains($value, ';')) {
+                yield \substr($value, 0, \strpos($value, ';'));
             }
 
             yield $value;

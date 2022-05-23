@@ -19,15 +19,16 @@
         "ext-mbstring": "*",
         "doctrine/collections": "^1.6",
         "spiral/cycle-bridge": "^2.0",
-        "spiral/framework": "^3.0",
+        "spiral/framework": "3.0.x-dev",
         "spiral/nyholm-bridge": "^1.2",
         "spiral/roadrunner-bridge": "^2.0",
         "spiral/sapi-bridge": "^1.0",
         "symfony/var-dumper": "^6.0"
     },
     "require-dev": {
+        "nunomaduro/collision": "^6.2",
         "phpunit/phpunit": "^9.5",
-        "spiral/testing": "^1.1"
+        "spiral/testing": "^2.0"
     },
     "scripts": {
         "post-create-project-cmd": [

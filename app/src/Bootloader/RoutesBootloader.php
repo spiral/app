@@ -21,17 +21,12 @@ use Spiral\Router\Target\Namespaced;
 
 class RoutesBootloader extends Bootloader
 {
-    /**
-     * Bootloader execute method.
-     *
-     * @param RouterInterface $router
-     */
     public function boot(RouterInterface $router): void
     {
         // named route
         $router->setRoute(
-            'html',
-            new Route('/<action>.html', new Controller(HomeController::class))
+            name: 'html',
+            route: new Route('/<action>.html', new Controller(HomeController::class))
         );
 
         // fallback (default) route
@@ -40,20 +35,18 @@ class RoutesBootloader extends Bootloader
 
     /**
      * Default route points to namespace of controllers.
-     *
-     * @return RouteInterface
      */
     protected function defaultRoute(): RouteInterface
     {
         // handle all /controller/action like urls
         $route = new Route(
-            '/[<controller>[/<action>]]',
-            new Namespaced('App\\Controller')
+            pattern: '/[<controller>[/<action>]]',
+            target: new Namespaced('App\\Controller')
         );
 
         return $route->withDefaults([
             'controller' => 'home',
-            'action'     => 'index',
+            'action' => 'index',
         ]);
     }
 }
