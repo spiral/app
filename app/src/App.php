@@ -30,6 +30,9 @@ class App extends Kernel
      * within system container on application start.
      */
     protected const LOAD = [
+        // Base extensions
+        DotEnv\DotenvBootloader::class,
+        Monolog\MonologBootloader::class,
 
         // RoadRunner
         RoadRunnerBridge\CacheBootloader::class,
@@ -37,10 +40,6 @@ class App extends Kernel
         RoadRunnerBridge\HttpBootloader::class,
         RoadRunnerBridge\QueueBootloader::class,
         RoadRunnerBridge\RoadRunnerBootloader::class,
-
-        // Base extensions
-        DotEnv\DotenvBootloader::class,
-        Monolog\MonologBootloader::class,
 
         // Application specific logs
         Bootloader\LoggingBootloader::class,
