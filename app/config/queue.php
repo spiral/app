@@ -38,14 +38,14 @@ return [
                     'connector' => new MemoryCreateInfo('local'),
                     // Run consumer for this pipeline on startup (by default)
                     // You can pause consumer for this pipeline via console command
-                    // php app.php queue:pause local
+                    // php app.php roadrunner:pause local
                     'consume' => true,
                 ],
                 // 'amqp' => [
                 //     'connector' => new AMQPCreateInfo('bus', ...),
                 //     // Don't consume jobs for this pipeline on start
                 //     // You can run consumer for this pipeline via console command
-                //     // php app.php queue:resume local
+                //     // php app.php roadrunner:resume bus (from jobs.pipelines.<name> in .rr.yaml)
                 //     'consume' => false
                 // ],
                 //
