@@ -9,6 +9,7 @@ use Spiral\Bootloader as Framework;
 use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
+use Spiral\Nyholm\Bootloader as Nyholm;
 use Spiral\Prototype\Bootloader as Prototype;
 use Spiral\Sapi\Bootloader\SapiBootloader;
 use Spiral\Scaffolder\Bootloader as Scaffolder;
@@ -51,6 +52,7 @@ class App extends Kernel
         Framework\Security\GuardBootloader::class,
 
         // HTTP extensions
+        Nyholm\NyholmBootloader::class,
         Framework\Http\RouterBootloader::class,
         Framework\Http\ErrorHandlerBootloader::class,
         Framework\Http\JsonPayloadsBootloader::class,
