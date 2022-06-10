@@ -95,7 +95,6 @@ class App extends Kernel
         Scaffolder\ScaffolderBootloader::class,
 
         // Debug and debug extensions
-        Framework\ExceptionHandlerBootloader::class,
         Framework\DebugBootloader::class,
         Framework\Debug\LogCollectorBootloader::class,
         Framework\Debug\HttpCollectorBootloader::class,
