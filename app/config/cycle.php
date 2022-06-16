@@ -14,7 +14,7 @@ return [
          * false - Schema won't be stored in a cache after compilation.
          * It will be automatically changed after entity modification. (Development mode)
          */
-        'cache' => false,
+        'cache' => env('CYCLE_SCHEMA_CACHE', true),
 
         /**
          * The CycleORM provides the ability to manage default settings for
@@ -57,6 +57,8 @@ return [
         //        \Cycle\Schema\Generator\GenerateTypecast::class,
         // ],
     ],
+
+    'warmup' => env('CYCLE_SCHEMA_WARMUP', false),
 
     /**
      * Custom relation types for entities
