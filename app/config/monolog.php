@@ -8,6 +8,10 @@ use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
+    /**
+     * Specify a default monolog handler
+     */
+    'default' => env('MONOLOG_DEFAULT_CHANNEL', 'default'),
 
     /**
      * Monolog supports the logging levels described by RFC 5424.
