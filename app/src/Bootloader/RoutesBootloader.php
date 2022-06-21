@@ -42,7 +42,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
             ],
             'api' => [
                 //
-            ]
+            ],
         ];
     }
 

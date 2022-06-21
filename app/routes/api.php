@@ -15,5 +15,4 @@ use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 |
 */
 return function (RoutingConfigurator $routes) {
-
 };
