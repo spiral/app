@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Bootloader;
+use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
 use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
@@ -16,16 +17,30 @@ use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
+use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 use Spiral\Validation\Bootloader\ValidationBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
 
 class App extends Kernel
 {
+    protected const SYSTEM = [
+        CoreBootloader::class,
+        TokenizerBootloader::class,
+        DotEnv\DotenvBootloader::class,
+    ];
+
     /*
      * List of components and extensions to be automatically registered
      * within system container on application start.
      */
     protected const LOAD = [
+
+        // Logging and exceptions handling
+        Monolog\MonologBootloader::class,
+        Bootloader\ExceptionHandlerBootloader::class,
+
+        // Application specific logs
+        Bootloader\LoggingBootloader::class,
 
         // RoadRunner
         RoadRunnerBridge\CacheBootloader::class,
@@ -33,13 +48,6 @@ class App extends Kernel
         RoadRunnerBridge\HttpBootloader::class,
         RoadRunnerBridge\QueueBootloader::class,
         RoadRunnerBridge\RoadRunnerBootloader::class,
-
-        // Base extensions
-        DotEnv\DotenvBootloader::class,
-        Monolog\MonologBootloader::class,
-
-        // Application specific logs
-        Bootloader\LoggingBootloader::class,
 
         // Core Services
         Framework\SnapshotsBootloader::class,
@@ -54,7 +62,6 @@ class App extends Kernel
         // HTTP extensions
         Nyholm\NyholmBootloader::class,
         Framework\Http\RouterBootloader::class,
-        Framework\Http\ErrorHandlerBootloader::class,
         Framework\Http\JsonPayloadsBootloader::class,
         Framework\Http\CookiesBootloader::class,
         Framework\Http\SessionBootloader::class,

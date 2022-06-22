@@ -12,4 +12,8 @@ return [
     'Welcome to Spiral Framework' => 'Вас приветствует Spiral Framework',
     'This view file is located in' => 'Данный шаблон находится в файле',
     'and rendered by' => 'и вызван контроллером',
+    'Access Forbidden' => 'Доступ запрещен',
+    'Page not found' => 'Страница не найдена',
+    'Something went wrong' => 'Что-то пошло не так',
+    'Error code' => 'Код ошибки'
 ];
