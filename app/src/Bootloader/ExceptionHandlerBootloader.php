@@ -22,7 +22,7 @@ final class ExceptionHandlerBootloader extends Bootloader
 {
     protected const BINDINGS = [
         SuppressErrorsInterface::class => EnvSuppressErrors::class,
-        RendererInterface::class => ViewRenderer::class
+        RendererInterface::class => ViewRenderer::class,
     ];
 
     public function init(AbstractKernel $kernel): void
