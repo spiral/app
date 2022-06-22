@@ -15,5 +15,5 @@ return [
     'Access Forbidden' => 'Доступ запрещен',
     'Page not found' => 'Страница не найдена',
     'Something went wrong' => 'Что-то пошло не так',
-    'Error code' => 'Код ошибки'
+    'Error code' => 'Код ошибки',
 ];
