@@ -7,19 +7,19 @@ namespace App\ErrorHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Spiral\Boot\DirectoriesInterface;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Header\AcceptHeader;
+use Spiral\Views\Exception\ViewException;
+use Spiral\Views\ViewInterface;
 use Spiral\Views\ViewsInterface;
 
 class ViewRenderer implements RendererInterface
 {
-    private const GENERAL_VIEW = 'exception/error.dark.php';
-    private const VIEW = 'exception/%s.dark.php';
+    private const GENERAL_VIEW = 'exception/error';
+    private const VIEW = 'exception/%s';
 
     public function __construct(
         private readonly ViewsInterface $views,
-        private DirectoriesInterface $dirs,
         private readonly ResponseFactoryInterface $responseFactory
     ) {
     }
@@ -49,8 +49,11 @@ class ViewRenderer implements RendererInterface
         $response = $this->responseFactory->createResponse($code);
         $content = "Error code: {$code}";
 
-        if ($template = $this->findTemplate($code)) {
-            $content = $this->views->render($template, ['code' => $code, 'error' => $message]);
+        $view = $this->findTemplate(\sprintf( self::VIEW, $code));
+        $view ??= $this->findTemplate(self::GENERAL_VIEW);
+
+        if ($view) {
+            $content = $view->render(['code' => $code, 'error' => $message]);
         }
 
         $response->getBody()->write($content);
@@ -58,12 +61,12 @@ class ViewRenderer implements RendererInterface
         return $response;
     }
 
-    private function findTemplate(int $code): ?string
+    private function findTemplate(string $path): ?ViewInterface
     {
-        if (\file_exists(\sprintf($this->dirs->get('views') . '/' . self::VIEW, $code))) {
-            return \sprintf(self::VIEW, $code);
+        try {
+            return $this->views->get($path);
+        } catch (ViewException $e) {
+            return null;
         }
-
-        return \file_exists($this->dirs->get('views') . '/' . self::GENERAL_VIEW) ? self::GENERAL_VIEW : null;
     }
 }
