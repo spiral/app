@@ -19,7 +19,7 @@ use Spiral\Monolog\Config\MonologConfig;
 
 class LoggingBootloader extends Bootloader
 {
-    public function boot(MonologBootloader $monolog): void
+    public function init(MonologBootloader $monolog): void
     {
         // http level errors
         $monolog->addHandler(
