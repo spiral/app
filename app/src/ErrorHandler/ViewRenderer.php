@@ -49,7 +49,7 @@ class ViewRenderer implements RendererInterface
         $response = $this->responseFactory->createResponse($code);
         $content = "Error code: {$code}";
 
-        $view = $this->findTemplate(\sprintf( self::VIEW, $code));
+        $view = $this->findTemplate(\sprintf(self::VIEW, $code));
         $view ??= $this->findTemplate(self::GENERAL_VIEW);
 
         if ($view) {
