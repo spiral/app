@@ -23,27 +23,27 @@ class ViewRenderer implements RendererInterface
     ) {
     }
 
-    public function renderException(Request $request, int $code, string $message): ResponseInterface
+    public function renderException(Request $request, int $code, \Throwable $exception): ResponseInterface
     {
         $acceptItems = AcceptHeader::fromString($request->getHeaderLine('Accept'))->getAll();
         if ($acceptItems && $acceptItems[0]->getValue() === 'application/json') {
-            return $this->renderJson($code, $message);
+            return $this->renderJson($code, $exception);
         }
 
-        return $this->renderView($code, $message);
+        return $this->renderView($code, $exception);
     }
 
-    private function renderJson(int $code, string $message): ResponseInterface
+    private function renderJson(int $code, \Throwable $exception): ResponseInterface
     {
         $response = $this->responseFactory->createResponse($code);
 
         $response = $response->withHeader('Content-Type', 'application/json; charset=UTF-8');
-        $response->getBody()->write(\json_encode(['status' => $code, 'error' => $message]));
+        $response->getBody()->write(\json_encode(['status' => $code, 'error' => $exception->getMessage()]));
 
         return $response;
     }
 
-    private function renderView(int $code, string $message): ResponseInterface
+    private function renderView(int $code, \Throwable $exception): ResponseInterface
     {
         $response = $this->responseFactory->createResponse($code);
 
@@ -53,7 +53,7 @@ class ViewRenderer implements RendererInterface
             $view = $this->views->get(self::GENERAL_VIEW);
         }
 
-        $content = $view->render(['code' => $code, 'error' => $message]);
+        $content = $view->render(['code' => $code, 'exception' => $exception]);
         $response->getBody()->write($content);
 
         return $response;
