@@ -53,7 +53,7 @@ class ViewRenderer implements RendererInterface
             $view = $this->views->get(self::GENERAL_VIEW);
         }
 
-        $content = $view->render(['code' => $code, 'error' => $exception->getMessage()]);
+        $content = $view->render(['code' => $code, 'exception' => $exception]);
         $response->getBody()->write($content);
 
         return $response;
