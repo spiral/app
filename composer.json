@@ -48,7 +48,7 @@
     "extra": {
         "publish-cmd": "php app.php publish",
         "branch-alias": {
-            "dev-master": "1.4.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     },
     "config": {
