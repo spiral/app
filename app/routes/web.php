@@ -15,6 +15,6 @@ use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 | contains the "web" middleware group.
 |
 */
-return function (RoutingConfigurator $routes) {
+return function (RoutingConfigurator $routes): void {
     $routes->add('html', '/<action>.html')->controller(HomeController::class);
 };
