@@ -19,7 +19,7 @@
         "ext-mbstring": "*",
         "doctrine/collections": "^1.6",
         "spiral/cycle-bridge": "^2.0",
-        "spiral/framework": "3.0.x-dev",
+        "spiral/framework": "^3.0",
         "spiral/nyholm-bridge": "^1.2",
         "spiral/roadrunner-bridge": "^2.0",
         "spiral/sapi-bridge": "^1.0",
