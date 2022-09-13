@@ -11,8 +11,8 @@ use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
 use Spiral\Exceptions\ExceptionHandlerInterface;
 use Spiral\Exceptions\Renderer\JsonRenderer;
+use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
-use Spiral\Exceptions\Reporter\SnapshotterReporter;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\EnvSuppressErrors;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
@@ -37,11 +37,11 @@ final class ExceptionHandlerBootloader extends Bootloader
     public function boot(
         ExceptionHandlerInterface $handler,
         LoggerReporter $logger,
-        SnapshotterReporter $snapshotter,
+        FileReporter $files,
         IgnitionRenderer $ignition
     ): void {
         $handler->addReporter($logger);
-        $handler->addReporter($snapshotter);
+        $handler->addReporter($files);
 
         $handler->addRenderer($ignition);
     }
