@@ -107,14 +107,14 @@ class App extends Kernel
         Framework\Debug\HttpCollectorBootloader::class,
 
         RoadRunnerBridge\CommandBootloader::class,
+
+        Bootloader\RoutesBootloader::class,
     ];
 
     /*
      * Application specific services and extensions.
      */
     protected const APP = [
-        Bootloader\RoutesBootloader::class,
-
         // fast code prototyping
         Prototype\PrototypeBootloader::class,
     ];
