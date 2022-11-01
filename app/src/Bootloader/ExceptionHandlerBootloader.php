@@ -9,7 +9,6 @@ use App\Exception\CollisionRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
-use Spiral\Exceptions\ExceptionHandlerInterface;
 use Spiral\Exceptions\Renderer\JsonRenderer;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
@@ -35,14 +34,16 @@ final class ExceptionHandlerBootloader extends Bootloader
     }
 
     public function boot(
-        ExceptionHandlerInterface $handler,
+        ExceptionHandler $handler,
         LoggerReporter $logger,
         FileReporter $files,
-        IgnitionRenderer $ignition
+        ?IgnitionRenderer $ignition = null
     ): void {
         $handler->addReporter($logger);
         $handler->addReporter($files);
 
-        $handler->addRenderer($ignition);
+        if ($ignition !== null) {
+            $handler->addRenderer($ignition);
+        }
     }
 }
