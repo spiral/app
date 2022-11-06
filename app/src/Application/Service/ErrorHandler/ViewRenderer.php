@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ErrorHandler;
+namespace App\Application\Service\ErrorHandler;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;

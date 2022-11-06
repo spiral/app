@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Api\Web\Controller;
 
-use App\Job\Ping;
+use App\Api\Job\Ping;
+use Exception;
 use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Queue\QueueInterface;
 
@@ -29,7 +30,7 @@ class HomeController
      */
     public function exception(): void
     {
-        echo $undefined;
+        throw new Exception('This is a test exception.');
     }
 
     public function ping(): string

@@ -2,26 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Application;
 
-use App\Bootloader;
+use App\Application\Bootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
+use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\DotEnv\Bootloader as DotEnv;
-use Spiral\Framework\Kernel;
 use Spiral\Monolog\Bootloader as Monolog;
 use Spiral\Nyholm\Bootloader as Nyholm;
 use Spiral\Prototype\Bootloader as Prototype;
+use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
 use Spiral\Sapi\Bootloader\SapiBootloader;
 use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
-use Spiral\Cycle\Bootloader as CycleBridge;
-use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
 use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 use Spiral\Validation\Bootloader\ValidationBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
 
-class App extends Kernel
+class Kernel extends \Spiral\Framework\Kernel
 {
     protected const SYSTEM = [
         CoreBootloader::class,

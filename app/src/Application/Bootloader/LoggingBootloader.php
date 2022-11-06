@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Bootloader;
+namespace App\Application\Bootloader;
 
 use Monolog\Logger;
 use Spiral\Boot\Bootloader\Bootloader;

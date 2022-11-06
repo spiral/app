@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Bootloader;
+namespace App\Application\Bootloader;
 
-use App\ErrorHandler\ViewRenderer;
-use App\Exception\CollisionRenderer;
+use App\Application\Service\ErrorHandler\Exception\CollisionRenderer;
+use App\Application\Service\ErrorHandler\ViewRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;

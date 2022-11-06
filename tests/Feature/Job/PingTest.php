@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Job;
 
-use App\Job\Ping;
+use App\Api\Job\Ping;
 use Spiral\Testing\Queue\FakeQueue;
 use Tests\TestCase;
 

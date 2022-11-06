@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Controller\HomeController;
+use App\Api\Web\Controller\HomeController;
 use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 
 /*
@@ -16,5 +16,5 @@ use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 |
 */
 return function (RoutingConfigurator $routes): void {
-    $routes->add('html', '/<action>.html')->controller(HomeController::class);
+    $routes->add('home', '/<action>')->controller(HomeController::class);
 };
