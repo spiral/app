@@ -116,5 +116,8 @@ class Kernel extends \Spiral\Framework\Kernel
     protected const APP = [
         // fast code prototyping
         Prototype\PrototypeBootloader::class,
+
+        // Modules
+        \App\Module\EmptyModule\Application\Bootloader::class,
     ];
 }
