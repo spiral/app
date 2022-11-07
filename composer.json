@@ -57,6 +57,7 @@
             "php app.php configure -vv",
             "rr get-binary"
         ],
+        "psalm:config": "psalm",
         "deptrack": [
             "deptrac analyze --report-uncovered"
         ]
