@@ -6,15 +6,26 @@ namespace App\Api\Cli\Command;
 
 use Spiral\Console\Command;
 
-class DoNothing extends Command
+/**
+ * To execute this command run:
+ * php app.php do-nothing foo --times=20
+ *
+ * Run `php app.php help do-nothing` to see all available options.
+ */
+final class DoNothing extends Command
 {
-    protected const NAME = 'do-nothing';
-    protected const DESCRIPTION = '';
-    protected const ARGUMENTS = [];
-    protected const OPTIONS = [];
+    protected const SIGNATURE = <<<CMD
+        do-nothing
+        {name : Task name}
+        {--t|times=10 : Number of times to repeat}
+        CMD;
 
-    protected function perform(): void
+    protected const DESCRIPTION = 'The command does nothing.';
+
+    public function __invoke(): int
     {
-        $this->info('done');
+        $this->info(\sprintf('I did %s %s times!', $this->argument('name'), $this->option('times')));
+
+        return self::SUCCESS;
     }
 }

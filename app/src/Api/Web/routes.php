@@ -15,6 +15,6 @@ use Spiral\Router\Loader\Configurator\RoutingConfigurator;
  * You can use route attributes instead.
  * @link https://spiral.dev/docs/keeper-routing/#register-routes-via-annotations
  */
-return function (RoutingConfigurator $routes): void {
+return static function (RoutingConfigurator $routes): void {
     $routes->add('home', '/<action>')->controller(HomeController::class);
 };

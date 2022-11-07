@@ -29,10 +29,8 @@ class HomeController
 
     /**
      * Example of exception page.
-     *
-     * @throws \Error
      */
-    public function exception(): void
+    public function exception(): never
     {
         throw new Exception('This is a test exception.');
     }
