@@ -11,8 +11,11 @@ if (!\function_exists('dumprr')) {
     /**
      * Dump value int STDERR.
      */
-    function dumprr(mixed $value): mixed
+    function dumprr(mixed $value, mixed ...$values): mixed
     {
+        $previous = $_SERVER['VAR_DUMPER_FORMAT'] ?? false;
+        unset($_SERVER['VAR_DUMPER_FORMAT']);
+
         if (!\defined('STDERR')) {
             \define('STDERR', \fopen('php://stderr', 'wb'));
         }
@@ -27,10 +30,19 @@ if (!\function_exists('dumprr')) {
         $cloner->addCasters(ReflectionCaster::UNSET_CLOSURE_FILE_INFO);
 
         // Set new handler and store previous one
-        $prevent = VarDumper::setHandler(static fn (mixed $value): ?string => $dumper->dump($cloner->cloneVar($value)));
+        $prevent = VarDumper::setHandler(static fn ($value) => $dumper->dump($cloner->cloneVar($value)));
         $result = VarDumper::dump($value);
+
+        foreach ($values as $v) {
+            VarDumper::dump($v);
+        }
+
         // Reset handler
         VarDumper::setHandler($prevent);
+
+        if ($previous) {
+            $_SERVER['VAR_DUMPER_FORMAT'] = $previous;
+        }
 
         return $result;
     }
