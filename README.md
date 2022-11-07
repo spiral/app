@@ -52,12 +52,6 @@ To start application server execute:
 ./rr serve
 ```
 
-On Windows:
-
-```bash
-rr.exe serve
-```
-
 Application will be available on `http://localhost:8080`.
 
 > Read more about application server configuration [here](https://roadrunner.dev/docs).

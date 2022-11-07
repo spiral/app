@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Bootloader;
+namespace App\Application\Bootloader;
 
-use App\ErrorHandler\ViewRenderer;
-use App\Exception\CollisionRenderer;
+use App\Application\Service\ErrorHandler\Handler;
+use App\Application\Service\ErrorHandler\ViewRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
 use Spiral\Exceptions\ExceptionHandlerInterface;
+use Spiral\Exceptions\Renderer\ConsoleRenderer;
 use Spiral\Exceptions\Renderer\JsonRenderer;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\EnvSuppressErrors;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
-use Spiral\Ignition\IgnitionRenderer;
 
 final class ExceptionHandlerBootloader extends Bootloader
 {
@@ -28,8 +28,6 @@ final class ExceptionHandlerBootloader extends Bootloader
     public function init(AbstractKernel $kernel): void
     {
         $kernel->running(static function (ExceptionHandler $handler): void {
-            // $handler->addRenderer(new ConsoleRenderer());
-            $handler->addRenderer(new CollisionRenderer());
             $handler->addRenderer(new JsonRenderer());
         });
     }
@@ -38,11 +36,9 @@ final class ExceptionHandlerBootloader extends Bootloader
         ExceptionHandlerInterface $handler,
         LoggerReporter $logger,
         FileReporter $files,
-        IgnitionRenderer $ignition
     ): void {
+        \assert($handler instanceof Handler);
         $handler->addReporter($logger);
         $handler->addReporter($files);
-
-        $handler->addRenderer($ignition);
     }
 }

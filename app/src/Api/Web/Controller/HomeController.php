@@ -2,14 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Api\Web\Controller;
 
-use App\Job\Ping;
+use App\Api\Job\Ping;
+use Exception;
 use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Queue\QueueInterface;
 
 class HomeController
 {
+    /**
+     * Read more about Prototyping:
+     * @link https://spiral.dev/docs/basics-prototype/#installation
+     */
     use PrototypeTrait;
 
     public function __construct(
@@ -24,12 +29,10 @@ class HomeController
 
     /**
      * Example of exception page.
-     *
-     * @throws \Error
      */
-    public function exception(): void
+    public function exception(): never
     {
-        echo $undefined;
+        throw new Exception('This is a test exception.');
     }
 
     public function ping(): string

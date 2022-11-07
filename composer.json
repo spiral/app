@@ -8,43 +8,29 @@
         "issues": "https://github.com/spiral/app/issues",
         "source": "https://github.com/spiral/app"
     },
-    "authors": [
-        {
-            "name": "Wolfy-J",
-            "email": "wolfy.jd@gmail.com"
-        }
-    ],
     "require": {
         "php": ">=8.1",
         "ext-mbstring": "*",
-        "doctrine/collections": "^1.6",
-        "spiral/cycle-bridge": "^2.0",
+        "doctrine/collections": "^1.8",
+        "spiral/cycle-bridge": "^2.1",
         "spiral/framework": "^3.0",
         "spiral/nyholm-bridge": "^1.2",
         "spiral/roadrunner-bridge": "^2.0",
         "spiral/sapi-bridge": "^1.0"
     },
     "require-dev": {
-        "nunomaduro/collision": "^6.2",
         "phpunit/phpunit": "^9.5",
+        "qossmic/deptrac-shim": "^1.0",
         "spiral/testing": "^2.0",
-        "spiral-packages/ignition-bridge": "^1.0",
-        "symfony/var-dumper": "^6.0"
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "php -r \"copy('.env.sample', '.env');\"",
-            "php app.php encrypt:key -m .env",
-            "php app.php configure -vv",
-            "rr get-binary"
-        ]
+        "symfony/var-dumper": "^6.0",
+        "vimeo/psalm": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/src"
         },
         "files": [
-            "app/src/helpers.php"
+          "app/src/Application/helpers.php"
         ]
     },
     "autoload-dev": {
@@ -63,6 +49,18 @@
         "allow-plugins": {
             "spiral/composer-publish-plugin": true
         }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php -r \"copy('.env.sample', '.env');\"",
+            "php app.php encrypt:key -m .env",
+            "php app.php configure -vv",
+            "rr get-binary"
+        ],
+        "psalm:config": "psalm",
+        "deptrack": [
+            "deptrac analyze --report-uncovered"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

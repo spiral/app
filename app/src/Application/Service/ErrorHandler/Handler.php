@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Exception;
+namespace App\Application\Service\ErrorHandler;
 
 use Spiral\Exceptions\ExceptionHandler;
+use Spiral\Exceptions\Renderer\ConsoleRenderer;
 
 /**
  * -----------------------------------------------------
@@ -13,4 +14,9 @@ use Spiral\Exceptions\ExceptionHandler;
  */
 final class Handler extends ExceptionHandler
 {
+    protected function bootBasicHandlers(): void
+    {
+        parent::bootBasicHandlers();
+        $this->addRenderer(new ConsoleRenderer());
+    }
 }

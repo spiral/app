@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Middleware;
+namespace App\Application\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,8 +44,9 @@ class LocaleSelector implements MiddlewareInterface
     {
         $header = $request->getHeaderLine('accept-language');
         foreach (\explode(',', $header) as $value) {
-            if (\str_contains($value, ';')) {
-                yield \substr($value, 0, \strpos($value, ';'));
+            $pos = \strpos($value, ';');
+            if ($pos!== false) {
+                yield \substr($value, 0, $pos);
             }
 
             yield $value;

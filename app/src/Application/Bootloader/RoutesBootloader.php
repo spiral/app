@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Bootloader;
+namespace App\Application\Bootloader;
 
-use App\Middleware\LocaleSelector;
-use Spiral\Auth\Middleware\AuthTransportMiddleware;
+use App\Application\Middleware\LocaleSelector;
 use Spiral\Boot\DirectoriesInterface;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
-use Spiral\Core\Container\Autowire;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
 use Spiral\Debug\StateCollector\HttpCollector;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
@@ -51,10 +49,10 @@ final class RoutesBootloader extends BaseRoutesBootloader
 
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
-        $routes->import($this->dirs->get('app') . '/routes/web.php')->group('web');
+        $routes->import($this->dirs->get('app') . 'src/Api/Web/routes.php')->group('web');
 
         $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Controller')
+            ->namespaced('App\\Api\\Web\\Controller')
             ->defaults([
                 'controller' => 'home',
                 'action' => 'index',

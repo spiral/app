@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Application\Service\ErrorHandler\Handler;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Set;
 use Spiral\Core\Container;
 use Spiral\Testing\TestableKernelInterface;
 use Spiral\Testing\TestCase as BaseTestCase;
 use Spiral\Translator\TranslatorInterface;
-use Tests\App\TestApp;
+use Tests\App\TestKernel;
 
 class TestCase extends BaseTestCase
 {
@@ -31,11 +32,11 @@ class TestCase extends BaseTestCase
 
     public function createAppInstance(Container $container = new Container()): TestableKernelInterface
     {
-        return TestApp::create(
+        return TestKernel::create(
             directories: $this->defineDirectories(
                 $this->rootDirectory()
             ),
-            handleErrors: false,
+            exceptionHandler: Handler::class,
             container: $container
         );
     }
