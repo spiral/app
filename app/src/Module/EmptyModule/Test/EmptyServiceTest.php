@@ -8,6 +8,10 @@ use App\Module\EmptyModule\Api\EmptyService as EmptyServiceInterface;
 use App\Module\EmptyModule\Internal\EmptyService;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @psalm-internal App\Module\EmptyModule\Test
+ */
 final class EmptyServiceTest extends TestCase
 {
     /**

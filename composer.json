@@ -8,12 +8,6 @@
         "issues": "https://github.com/spiral/app/issues",
         "source": "https://github.com/spiral/app"
     },
-    "authors": [
-        {
-            "name": "Wolfy-J",
-            "email": "wolfy.jd@gmail.com"
-        }
-    ],
     "require": {
         "php": ">=8.1",
         "ext-mbstring": "*",
@@ -27,17 +21,10 @@
     "require-dev": {
         "nunomaduro/collision": "^6.2",
         "phpunit/phpunit": "^9.5",
+        "qossmic/deptrac-shim": "^1.0",
         "spiral/testing": "^2.0",
         "spiral-packages/ignition-bridge": "^1.0",
         "symfony/var-dumper": "^6.0"
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "php -r \"copy('.env.sample', '.env');\"",
-            "php app.php encrypt:key -m .env",
-            "php app.php configure -vv",
-            "rr get-binary"
-        ]
     },
     "autoload": {
         "psr-4": {
@@ -63,6 +50,17 @@
         "allow-plugins": {
             "spiral/composer-publish-plugin": true
         }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php -r \"copy('.env.sample', '.env');\"",
+            "php app.php encrypt:key -m .env",
+            "php app.php configure -vv",
+            "rr get-binary"
+        ],
+        "deptrack": [
+            "deptrac analyze --report-uncovered"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
