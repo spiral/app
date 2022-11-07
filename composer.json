@@ -19,12 +19,11 @@
         "spiral/sapi-bridge": "^1.0"
     },
     "require-dev": {
-        "nunomaduro/collision": "^6.2",
         "phpunit/phpunit": "^9.5",
         "qossmic/deptrac-shim": "^1.0",
         "spiral/testing": "^2.0",
-        "spiral-packages/ignition-bridge": "^1.0",
-        "symfony/var-dumper": "^6.0"
+        "symfony/var-dumper": "^6.0",
+        "vimeo/psalm": "dev-master"
     },
     "autoload": {
         "psr-4": {

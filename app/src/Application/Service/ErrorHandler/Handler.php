@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Service\ErrorHandler\Exception;
+namespace App\Application\Service\ErrorHandler;
 
 use Spiral\Exceptions\ExceptionHandler;
 
