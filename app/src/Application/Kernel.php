@@ -43,10 +43,9 @@ class Kernel extends \Spiral\Framework\Kernel
 
         // RoadRunner
         RoadRunnerBridge\CacheBootloader::class,
-        RoadRunnerBridge\GRPCBootloader::class,
+        // RoadRunnerBridge\GRPCBootloader::class,
         RoadRunnerBridge\HttpBootloader::class,
         RoadRunnerBridge\QueueBootloader::class,
-        RoadRunnerBridge\RoadRunnerBootloader::class,
 
         // Core Services
         Framework\SnapshotsBootloader::class,

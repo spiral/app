@@ -49,7 +49,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
 
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
-        $routes->import($this->dirs->get('app') . 'src/Api/Web/web.php')->group('web');
+        $routes->import($this->dirs->get('app') . 'src/Api/Web/routes.php')->group('web');
 
         $routes->default('/[<controller>[/<action>]]')
             ->namespaced('App\\Controller')
