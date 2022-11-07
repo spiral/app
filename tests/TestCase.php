@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Application\Service\ErrorHandler\Handler;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Set;
 use Spiral\Core\Container;
@@ -35,7 +36,7 @@ class TestCase extends BaseTestCase
             directories: $this->defineDirectories(
                 $this->rootDirectory()
             ),
-            handleErrors: false,
+            exceptionHandler: Handler::class,
             container: $container
         );
     }

@@ -12,7 +12,7 @@ class HomeControllerTest extends TestCase
     {
         $this
             ->fakeHttp()
-            ->get('/`')
+            ->get('/')
             ->assertOk()
             ->assertBodyContains('Welcome to Spiral Framework');
     }

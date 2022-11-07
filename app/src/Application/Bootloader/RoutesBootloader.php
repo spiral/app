@@ -52,7 +52,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
         $routes->import($this->dirs->get('app') . 'src/Api/Web/routes.php')->group('web');
 
         $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Controller')
+            ->namespaced('App\\Api\\Web\\Controller')
             ->defaults([
                 'controller' => 'home',
                 'action' => 'index',
