@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
+use App\Application\Service\ErrorHandler\Handler;
 use App\Application\Service\ErrorHandler\ViewRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
@@ -36,6 +37,7 @@ final class ExceptionHandlerBootloader extends Bootloader
         LoggerReporter $logger,
         FileReporter $files,
     ): void {
+        \assert($handler instanceof Handler);
         $handler->addReporter($logger);
         $handler->addReporter($files);
     }
