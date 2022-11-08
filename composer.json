@@ -13,16 +13,16 @@
         "ext-mbstring": "*",
         "doctrine/collections": "^1.8",
         "spiral/cycle-bridge": "^2.1",
-        "spiral/framework": "^3.0",
-        "spiral/nyholm-bridge": "^1.2",
-        "spiral/roadrunner-bridge": "^2.0",
-        "spiral/sapi-bridge": "^1.0"
+        "spiral/framework": "^3.2",
+        "spiral/nyholm-bridge": "^1.3",
+        "spiral/roadrunner-bridge": "^2.1",
+        "spiral/sapi-bridge": "^1.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "qossmic/deptrac-shim": "^1.0",
-        "spiral/testing": "^2.0",
-        "symfony/var-dumper": "^6.0",
+        "spiral/testing": "^2.2",
+        "symfony/var-dumper": "^6.1",
         "vimeo/psalm": "dev-master"
     },
     "autoload": {
@@ -30,7 +30,7 @@
             "App\\": "app/src"
         },
         "files": [
-          "app/src/Application/helpers.php"
+            "app/src/Application/helpers.php"
         ]
     },
     "autoload-dev": {
@@ -39,10 +39,7 @@
         }
     },
     "extra": {
-        "publish-cmd": "php app.php publish",
-        "branch-alias": {
-            "dev-3.x": "3.0.x-dev"
-        }
+        "publish-cmd": "php app.php publish"
     },
     "config": {
         "sort-packages": true,
