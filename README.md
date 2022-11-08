@@ -46,6 +46,12 @@ Once the application is installed you can ensure that it was configured properly
 php ./app.php configure
 ```
 
+Get roadrunner binary:
+
+```bash
+vendor/bin/rr get-binary
+```
+
 To start application server execute:
 
 ```bash
