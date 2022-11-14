@@ -16,6 +16,19 @@
             <div style="font-size: 12px; margin-top: 10px;">
                 [[This view file is located in]] <b>app/views/exception/error.dark.php</b>.
             </div>
+
+            @if ($exception && env('DEBUG') === true)
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    @while($exception)
+                    <section style="max-width: 100%; overflow: auto; background: #efefef; padding: 5px 20px;">
+                        <h3>{{ $exception->getMessage() }}</h3>
+                        <pre style="word-break: break-all">{{ $exception->getTraceAsString() }}</pre>
+                    </section>
+
+                    @php $exception = $exception->getPrevious(); @endphp
+                    @endwhile
+                </div>
+            @endif
         </div>
     </div>
 </define:body>
