@@ -36,7 +36,7 @@ kv:
       addrs:
         - localhost:6379
 #grpc:
-#  listen: "tcp://localhost:9001"
+#  listen: "tcp://0.0.0.0:9001"
 #  proto:
 #    - "first.proto"
 
