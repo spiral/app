@@ -71,8 +71,8 @@ final class Installer extends AbstractInstaller
         $installer->io->write('<info>Setting up application files</info>');
         $installer->setApplicationFiles();
 
-        $installer->updateRootPackage();
         $installer->removeInstallerFromDefinition();
+        $installer->updateRootPackage();
         $installer->finalize();
     }
 
@@ -239,6 +239,8 @@ final class Installer extends AbstractInstaller
         $this->io->write('<info>Remove Installer from composer.json</info>');
 
         unset(
+            $this->composerDevRequires['composer/composer'],
+            $this->composerDefinition['require-dev']['composer/composer'],
             $this->composerDefinition['scripts']['pre-update-cmd'],
             $this->composerDefinition['scripts']['pre-install-cmd']
         );
