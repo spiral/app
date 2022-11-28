@@ -40,10 +40,10 @@ final class Config implements GeneratorInterface
     {
         return match ($collections) {
             Collections::Doctrine => [
-                Collections::Doctrine->value => new Literal('new DoctrineCollectionFactory()')
+                Collections::Doctrine->value => new Literal('new DoctrineCollectionFactory()'),
             ],
             Collections::Illuminate => [
-                Collections::Illuminate->value => new Literal('new IlluminateCollectionFactory()')
+                Collections::Illuminate->value => new Literal('new IlluminateCollectionFactory()'),
             ],
             default => [Collections::Array->value => new Literal('new ArrayCollectionFactory()')]
         };

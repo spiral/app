@@ -23,17 +23,17 @@ final class Validator extends AbstractQuestion
                 new Package(
                     package: Packages::SpiralValidator,
                     generators: [new SpiralValidatorBootloaders()]
-                )
+                ),
             ]),
             new Option(name: 'Symfony Validator', packages: [
                 new Package(
                     package: Packages::SymfonyValidator,
                     generators: [new SymfonyValidatorBootloaders()]
-                )
+                ),
             ]),
             new Option(name: 'Laravel Validator', packages: [
-                Packages::LaravelValidator
-            ])
+                Packages::LaravelValidator,
+            ]),
         ],
     ) {
         parent::__construct($question, $required, $options);

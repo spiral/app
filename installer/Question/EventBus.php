@@ -22,10 +22,10 @@ final class EventBus extends AbstractQuestion
                 new Package(
                     package: Packages::LeagueEvent,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

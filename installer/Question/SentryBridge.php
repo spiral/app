@@ -22,10 +22,10 @@ final class SentryBridge extends AbstractQuestion
                 new Package(
                     package: Packages::SentryBridge,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

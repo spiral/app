@@ -26,7 +26,7 @@ final class TemplateEngine extends AbstractQuestion
                         package: Packages::StemplerBridge,
                         resources: ['packages/stempler/views' => 'app/views'],
                         generators: [new StemplerBootloaders()]
-                    )
+                    ),
                 ]
             ),
             new Option(
@@ -36,9 +36,9 @@ final class TemplateEngine extends AbstractQuestion
                         package: Packages::TwigBridge,
                         resources: ['packages/twig/views' => 'app/views'],
                         generators: [new TwigBootloaders()]
-                    )
+                    ),
                 ]
-            )
+            ),
         ],
     ) {
         parent::__construct($question, $required, $options);

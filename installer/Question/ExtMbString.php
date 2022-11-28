@@ -17,8 +17,8 @@ final class ExtMbString extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                Packages::ExtMbString
-            ])
+                Packages::ExtMbString,
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

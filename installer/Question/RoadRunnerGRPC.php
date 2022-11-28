@@ -22,10 +22,10 @@ final class RoadRunnerGRPC extends AbstractQuestion
                 new Package(
                     package: Packages::RoadRunnerBridge,
                     generators: [
-                        new GRPCBootloader()
+                        new GRPCBootloader(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);
