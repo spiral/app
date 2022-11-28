@@ -45,6 +45,12 @@
         "post-install-cmd": "Installer\\Configurator::configure",
         "post-update-cmd": "Installer\\Configurator::configure",
         "psalm:config": "psalm",
+        "post-create-project-cmd": [
+            "php -r \"copy('.env.sample', '.env');\"",
+            "php app.php encrypt:key -m .env",
+            "php app.php configure -vv",
+            "rr get-binary"
+        ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
         "deptrack": [
