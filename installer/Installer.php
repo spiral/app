@@ -229,10 +229,13 @@ final class Installer extends AbstractInstaller
 
     private function updateRootPackage(): void
     {
+        $autoload = $this->application->getAutoload();
+        $autoload['psr-4']['Installer\\'] = 'installer';
+
         $this->rootPackage->setRequires($this->composerRequires);
         $this->rootPackage->setDevRequires($this->composerDevRequires);
         $this->rootPackage->setStabilityFlags($this->stabilityFlags);
-        $this->rootPackage->setAutoload($this->application->getAutoload());
+        $this->rootPackage->setAutoload($autoload);
         $this->rootPackage->setDevAutoload($this->application->getAutoloadDev());
         $this->rootPackage->setExtra($this->composerDefinition['extra'] ?? []);
     }
