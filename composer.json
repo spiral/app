@@ -43,12 +43,6 @@
         "pre-update-cmd": "Installer\\Installer::install",
         "post-install-cmd": "Installer\\Configurator::configure",
         "post-update-cmd": "Installer\\Configurator::configure",
-        "post-create-project-cmd": [
-            "php -r \"copy('.env.sample', '.env');\"",
-            "php app.php encrypt:key -m .env",
-            "php app.php configure -vv",
-            "rr get-binary"
-        ],
         "psalm:config": "psalm",
         "deptrack": [
             "deptrac analyze --report-uncovered"
