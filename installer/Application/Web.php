@@ -5,27 +5,20 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use App\Application\Kernel;
+use Composer\Package\PackageInterface;
 use Installer\Package\Packages;
 use Installer\Question\QuestionInterface;
 
+/**
+ * @psalm-import-type AutoloadRules from PackageInterface
+ * @psalm-import-type DevAutoloadRules from PackageInterface
+ */
 final class Web extends AbstractApplication
 {
     /**
      * @param Packages[] $packages
-     * @param array{
-     *     psr-0?: array<string, string>,
-     *     psr-4?: array<string, string>,
-     *     classmap?: array<string>,
-     *     files?: array<string>,
-     *     exclude-from-classmap?: array<string>
-     * } $autoload
-     * @param array{
-     *     psr-0?: array<string, string>,
-     *     psr-4?: array<string, string>,
-     *     classmap?: array<string>,
-     *     files?: array<string>,
-     *     exclude-from-classmap?: array<string>
-     * } $autoloadDev
+     * @param AutoloadRules $autoload
+     * @param DevAutoloadRules $autoloadDev
      * @param QuestionInterface[] $questions
      */
     public function __construct(
@@ -57,6 +50,7 @@ final class Web extends AbstractApplication
 
     public function getKernelClass(): string
     {
+        /** @psalm-suppress UndefinedClass */
         return Kernel::class;
     }
 }

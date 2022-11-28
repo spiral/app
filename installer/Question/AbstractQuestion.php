@@ -11,7 +11,7 @@ use Installer\Question\Option\Option;
 abstract class AbstractQuestion implements QuestionInterface
 {
     /**
-     * @var Option[]
+     * @var array<int, Option>
      */
     private array $options = [];
 
@@ -21,7 +21,7 @@ abstract class AbstractQuestion implements QuestionInterface
     private array $conditions = [];
 
     /**
-     * @param Option[] $options
+     * @param array<int, Option> $options
      * @param array{require?: Packages[], require-dev?: Packages[]} $conditions
      */
     public function __construct(
@@ -126,7 +126,7 @@ abstract class AbstractQuestion implements QuestionInterface
             if ($option->getPackages() === []) {
                 $this->options[0] = $option;
             } else {
-                $this->options[$key + 1] = $option;
+                $this->options[(int) $key + 1] = $option;
             }
         }
 

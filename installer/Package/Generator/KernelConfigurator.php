@@ -133,9 +133,9 @@ final class KernelConfigurator
         foreach ($array as $pos => $value) {
             if ($afterBootloader === $value) {
                 $array = \array_merge(
-                    \array_slice($array, 0, $pos + 1),
+                    \array_slice($array, 0, (int) $pos + 1),
                     [$bootloader],
-                    \array_slice($array, $pos + 1)
+                    \array_slice($array, (int) $pos + 1)
                 );
                 $founded = true;
                 break;
@@ -153,9 +153,9 @@ final class KernelConfigurator
         foreach ($array as $pos => $value) {
             if ($beforeBootloader === $value) {
                 $array = \array_merge(
-                    \array_slice($array, 0, $pos),
+                    \array_slice($array, 0, (int) $pos),
                     [$bootloader],
-                    \array_slice($array, $pos)
+                    \array_slice($array, (int) $pos)
                 );
                 $founded = true;
                 break;

@@ -17,7 +17,8 @@
         "qossmic/deptrac-shim": "^1.0",
         "spiral/testing": "^2.2",
         "symfony/var-dumper": "^6.1",
-        "vimeo/psalm": "dev-master"
+        "vimeo/psalm": "dev-master",
+        "composer/composer": "^2.4"
     },
     "autoload": {
         "psr-4": {

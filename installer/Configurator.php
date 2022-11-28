@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer;
 
+use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Installer\Application\ApplicationInterface;
 use Installer\Package\Generator\Context;
@@ -22,14 +23,25 @@ final class Configurator extends AbstractInstaller
      */
     private array $installedPackages = [];
 
+    public function __construct(IOInterface $io, ?string $projectRoot = null)
+    {
+        parent::__construct($io, $projectRoot);
+
+        $this->container = new Container();
+        $applicationType = $this->config[$this->composerDefinition['extra']['spiral']['application-type']];
+        if (!$applicationType instanceof ApplicationInterface) {
+            throw new \InvalidArgumentException('Invalid application type!');
+        }
+        $this->application = $applicationType;
+
+        $this->setInstalledPackages();
+        $this->setContext();
+    }
+
     public static function configure(Event $event): void
     {
         $conf = new self($event->getIO());
 
-        $conf->container = new Container();
-        $conf->application = $conf->config[$conf->composerDefinition['extra']['spiral']['application-type']];
-        $conf->setInstalledPackages();
-        $conf->setContext();
         $conf->runGenerators();
     }
 

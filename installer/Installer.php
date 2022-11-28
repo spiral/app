@@ -20,6 +20,7 @@ use Seld\JsonLint\ParsingException;
 
 final class Installer extends AbstractInstaller
 {
+    /** @psalm-suppress PropertyNotSetInConstructor */
     private ApplicationInterface $application;
     private JsonFile $composerJson;
     private RootPackageInterface $rootPackage;
@@ -31,7 +32,7 @@ final class Installer extends AbstractInstaller
     /** @var Link[] */
     private array $composerDevRequires = [];
 
-    /** @var int[] */
+    /** @var array<string, BasePackage::STABILITY_*> */
     private array $stabilityFlags = [];
 
     /**
@@ -44,7 +45,12 @@ final class Installer extends AbstractInstaller
     ) {
         parent::__construct($io, $projectRoot);
 
-        $this->parseComposerDefinition($composer, Factory::getComposerFile());
+        $composerFile = Factory::getComposerFile();
+        $this->composerJson = new JsonFile($composerFile);
+        $this->rootPackage = $composer->getPackage();
+        $this->composerRequires = $this->rootPackage->getRequires();
+        $this->composerDevRequires = $this->rootPackage->getDevRequires();
+        $this->stabilityFlags = $this->rootPackage->getStabilityFlags();
 
         $this->installerSource = \realpath(__DIR__) . '/Resources/';
     }
@@ -120,25 +126,25 @@ final class Installer extends AbstractInstaller
             ),
         ];
         foreach ($this->config as $key => $app) {
-            $query[] = \sprintf("  [<comment>%s</comment>] %s\n", $key + 1, $app->getName());
+            if ($app instanceof ApplicationInterface) {
+                $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int) $key + 1, $app->getName());
+            }
         }
-        $query[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', \array_key_first($this->config) + 1);
+        $query[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', 1);
 
-        $answer = (int) $this->io->ask(\implode($query), 1) - 1;
+        return (int) $this->io->ask(\implode($query), 1) - 1;
+    }
 
-        if (!isset($this->config[$answer]) || !$this->config[$answer] instanceof ApplicationInterface) {
+    private function setApplicationType(int $type): void
+    {
+        if (!isset($this->config[$type]) || !$this->config[$type] instanceof ApplicationInterface) {
             $this->io->write('<error>Invalid application preset!</error>');
             exit;
         }
 
-        return $answer;
-    }
+        $this->application = $this->config[$type];
 
-    private function setApplicationType(int $applicationType): void
-    {
-        $this->application = $this->config[$applicationType];
-
-        $this->composerDefinition['extra']['spiral']['application-type'] = $applicationType;
+        $this->composerDefinition['extra']['spiral']['application-type'] = $type;
     }
 
     private function askQuestion(QuestionInterface $question): int
@@ -174,7 +180,7 @@ final class Installer extends AbstractInstaller
 
         $link = new Link('__root__', $package->getName(), $constraint, 'requires', $package->getVersion());
 
-        // Add package to the root package and composer.json requirements
+        /** @psalm-suppress PossiblyInvalidArgument */
         if (\in_array($package->getName(), $this->config['require-dev'] ?? [], true)) {
             unset(
                 $this->composerDefinition['require'][$package->getName()],
@@ -213,18 +219,6 @@ final class Installer extends AbstractInstaller
         foreach ($package->getResources() as $source => $target) {
             $this->copyResource($source, $target);
         }
-    }
-
-    /**
-     * @throws ParsingException
-     */
-    private function parseComposerDefinition(Composer $composer, string $composerFile): void
-    {
-        $this->composerJson = new JsonFile($composerFile);
-        $this->rootPackage = $composer->getPackage();
-        $this->composerRequires = $this->rootPackage->getRequires();
-        $this->composerDevRequires = $this->rootPackage->getDevRequires();
-        $this->stabilityFlags = $this->rootPackage->getStabilityFlags();
     }
 
     private function updateRootPackage(): void

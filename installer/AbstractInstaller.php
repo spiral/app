@@ -15,7 +15,7 @@ abstract class AbstractInstaller
     protected array $composerDefinition;
 
     /**
-     * @var ApplicationInterface[]
+     * @var array<int|string, ApplicationInterface|list<string>>
      */
     protected array $config;
 
@@ -33,18 +33,9 @@ abstract class AbstractInstaller
         $this->projectRoot = $projectRoot ?? \realpath(\dirname($composerFile));
         $this->projectRoot = \rtrim($this->projectRoot, '/\\') . '/';
 
-        // Parse the composer.json
-        $this->parseComposerDefinition($composerFile);
-
-        $this->config = require __DIR__ . '/config.php';
-    }
-
-    /**
-     * @throws ParsingException
-     */
-    private function parseComposerDefinition(string $composerFile): void
-    {
         $composerJson = new JsonFile($composerFile);
         $this->composerDefinition = $composerJson->read();
+
+        $this->config = require __DIR__ . '/config.php';
     }
 }
