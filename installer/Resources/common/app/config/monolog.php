@@ -33,18 +33,9 @@ return [
                 ],
             ],
         ],
-        'stderr' => [
-            ErrorLogHandler::class,
-        ],
-        'stdout' => [
-            [
-                'class' => SyslogHandler::class,
-                'options' => [
-                    'ident' => 'app',
-                    'facility' => LOG_USER,
-                ],
-            ],
-        ],
+        'roadrunner' => [
+            \Spiral\RoadRunnerBridge\Logger\Handler::class,
+        ]
     ],
 
     /**

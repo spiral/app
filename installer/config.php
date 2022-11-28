@@ -18,9 +18,7 @@ return [
             new Question\SentryBridge(),
         ],
         resources: [
-            'applications/web/app.php' => 'app.php',
-            'applications/web/deptrac.yaml' => 'deptrac.yaml',
-            'applications/web/psalm.xml' => 'psalm.xml',
+            'common' => '',
             'applications/web/app' => 'app',
             'applications/web/public' => 'public',
             'applications/web/tests' => 'tests',
@@ -31,12 +29,22 @@ return [
             new Question\CycleBridge(),
         ],
         resources: [
-            'applications/cli/psalm.xml' => 'psalm.xml',
+            'common' => '',
         ]
     ),
     new Application\GRPC(
+        questions: [
+            new Question\CycleBridge(),
+            new Question\Validator(),
+            new Question\EventBus(),
+            new Question\Scheduler(),
+            new Question\TemporalBridge(),
+            new Question\SentryBridge(),
+        ],
         resources: [
-            'applications/grpc/psalm.xml' => 'psalm.xml',
+            'common' => '',
+            'applications/grpc/app' => 'app',
+            'applications/grpc/proto' => 'proto',
         ]
     ),
     new Application\CustomBuild(
@@ -56,7 +64,7 @@ return [
             new Question\SentryBridge(),
         ],
         resources: [
-            'applications/custom/psalm.xml' => 'psalm.xml',
+            'common' => '',
         ]
     ),
 ];

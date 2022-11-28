@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Package\Generator;
 
 use Nette\PhpGenerator\Literal;
+use PhpParser\Comment;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
@@ -30,6 +31,8 @@ final class KernelConfigurator
     ];
 
     private array $load = [
+        \App\Application\Bootloader\ExceptionHandlerBootloader::class,
+        \App\Application\Bootloader\LoggingBootloader::class,
         MonologBootloader::class,
         Framework\SnapshotsBootloader::class,
         Framework\I18nBootloader::class,
@@ -70,45 +73,45 @@ final class KernelConfigurator
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('SYSTEM')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->system));
+            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->system));
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('LOAD')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->load));
+            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->load));
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('APP')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->app));
+            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->app));
 
         (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
     }
 
-    public function systemAppend(string $bootloader, string $afterBootloader): void
+    public function systemAppend(string|Literal $bootloader, string $afterBootloader): void
     {
         $this->append($this->system, $bootloader, $afterBootloader);
     }
 
-    public function loadAppend(string $bootloader, string $afterBootloader): void
+    public function loadAppend(string|Literal $bootloader, string $afterBootloader): void
     {
         $this->append($this->load, $bootloader, $afterBootloader);
     }
 
-    public function appAppend(string $bootloader, string $afterBootloader): void
+    public function appAppend(string|Literal $bootloader, string $afterBootloader): void
     {
         $this->append($this->app, $bootloader, $afterBootloader);
     }
 
-    public function systemPrepend(string $bootloader, string $beforeBootloader): void
+    public function systemPrepend(string|Literal $bootloader, string $beforeBootloader): void
     {
         $this->prepend($this->system, $bootloader, $beforeBootloader);
     }
 
-    public function loadPrepend(string $bootloader, string $beforeBootloader): void
+    public function loadPrepend(string|Literal $bootloader, string $beforeBootloader): void
     {
         $this->prepend($this->load, $bootloader, $beforeBootloader);
     }
 
-    public function appPrepend(string $bootloader, string $beforeBootloader): void
+    public function appPrepend(string|Literal $bootloader, string $beforeBootloader): void
     {
         $this->prepend($this->app, $bootloader, $beforeBootloader);
     }
@@ -120,6 +123,10 @@ final class KernelConfigurator
 
     private function getFormatted(mixed $value): string|Literal
     {
+        if ($value instanceof Literal) {
+            return $value;
+        }
+
         if (\class_exists($value)) {
             return new Literal($this->namespace->simplifyName($value) . '::class' . PHP_EOL);
         }
@@ -127,15 +134,15 @@ final class KernelConfigurator
         return $value;
     }
 
-    private function append(array &$array, string $bootloader, string $afterBootloader): void
+    private function append(array &$array, string|Literal $bootloader, string $afterBootloader): void
     {
         $founded = false;
         foreach ($array as $pos => $value) {
             if ($afterBootloader === $value) {
                 $array = \array_merge(
-                    \array_slice($array, 0, (int) $pos + 1),
+                    \array_slice($array, 0, (int)$pos + 1),
                     [$bootloader],
-                    \array_slice($array, (int) $pos + 1)
+                    \array_slice($array, (int)$pos + 1)
                 );
                 $founded = true;
                 break;
@@ -147,15 +154,15 @@ final class KernelConfigurator
         }
     }
 
-    private function prepend(array &$array, string $bootloader, string $beforeBootloader): void
+    private function prepend(array &$array, string|Literal $bootloader, string $beforeBootloader): void
     {
         $founded = false;
         foreach ($array as $pos => $value) {
             if ($beforeBootloader === $value) {
                 $array = \array_merge(
-                    \array_slice($array, 0, (int) $pos),
+                    \array_slice($array, 0, (int)$pos),
                     [$bootloader],
-                    \array_slice($array, (int) $pos)
+                    \array_slice($array, (int)$pos)
                 );
                 $founded = true;
                 break;

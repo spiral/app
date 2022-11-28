@@ -7,6 +7,8 @@ namespace Installer\Package;
 enum Packages: string
 {
     case ExtMbString = 'ext-mbstring:*';
+    case ExtGRPC = 'ext-grpc:*';
+    case GRPC = 'grpc/grpc:^1.42';
     case RoadRunnerBridge = 'spiral/roadrunner-bridge:^2.1';
     case NyholmBridge = 'spiral/nyholm-bridge:^1.3';
     case SapiBridge = 'spiral/sapi-bridge:^1.0.1';

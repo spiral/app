@@ -45,6 +45,8 @@
         "post-install-cmd": "Installer\\Configurator::configure",
         "post-update-cmd": "Installer\\Configurator::configure",
         "psalm:config": "psalm",
+        "rr:download": "rr get-binary",
+        "rr:download-protoc": "rr download-protoc-binary",
         "deptrack": [
             "deptrac analyze --report-uncovered"
         ]

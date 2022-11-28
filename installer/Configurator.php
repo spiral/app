@@ -12,29 +12,25 @@ use Installer\Package\Generator\GeneratorInterface;
 use Installer\Package\Generator\KernelConfigurator;
 use Installer\Package\Package;
 use Spiral\Core\Container;
+use Symfony\Component\Process\Process;
 
 final class Configurator extends AbstractInstaller
 {
     private ApplicationInterface $application;
     private Container $container;
     private Context $context;
-    /**
-     * @var Package[]
-     */
-    private array $installedPackages = [];
 
     public function __construct(IOInterface $io, ?string $projectRoot = null)
     {
         parent::__construct($io, $projectRoot);
 
         $this->container = new Container();
-        $applicationType = $this->config[$this->composerDefinition['extra']['spiral']['application-type']];
+        $applicationType = $this->config[$this->getApplicationType()] ?? null;
         if (!$applicationType instanceof ApplicationInterface) {
             throw new \InvalidArgumentException('Invalid application type!');
         }
         $this->application = $applicationType;
 
-        $this->setInstalledPackages();
         $this->setContext();
     }
 
@@ -43,36 +39,40 @@ final class Configurator extends AbstractInstaller
         $conf = new self($event->getIO());
 
         $conf->runGenerators();
+        $conf->runCommands();
     }
 
     private function runGenerators(): void
     {
-        foreach ($this->installedPackages as $package) {
-            foreach ($package->getGenerators() as $generator) {
-                if (!$generator instanceof GeneratorInterface) {
-                    $generator = $this->container->get($generator);
-                }
-                $generator->process($this->context);
+        foreach ($this->application->getGenerators() as $package => $generator) {
+            if ($package instanceof Package && !$this->isPackageInstalled($package)) {
+                continue;
             }
+
+            if (!$generator instanceof GeneratorInterface) {
+                $generator = $this->container->get($generator);
+            }
+
+            $generator->process($this->context);
         }
     }
 
     private function isPackageInstalled(Package $package): bool
     {
-        return \in_array($package->getName(), $this->composerDefinition['extra']['spiral']['packages'], true);
+        return \in_array($package->getName(), $this->getExtraPackages(), true);
     }
 
-    private function setInstalledPackages(): void
+    /**
+     * @return non-empty-string[]
+     */
+    private function getExtraPackages(): array
     {
-        foreach ($this->application->getQuestions() as $question) {
-            foreach ($question->getOptions() as $option) {
-                foreach ($option->getPackages() as $package) {
-                    if ($this->isPackageInstalled($package)) {
-                        $this->installedPackages[] = $package;
-                    }
-                }
-            }
-        }
+        return $this->composerDefinition['extra']['spiral']['packages'] ?? [];
+    }
+
+    private function getApplicationType(): int
+    {
+        return $this->composerDefinition['extra']['spiral']['application-type'] ?? 1;
     }
 
     private function setContext(): void
@@ -83,5 +83,14 @@ final class Configurator extends AbstractInstaller
             applicationRoot: $this->projectRoot,
             composerDefinition: $this->composerDefinition
         );
+    }
+
+    private function runCommands(): void
+    {
+        foreach ($this->application->getCommands() as $command) {
+            (new Process(\explode(' ', $command)))->run(function ($type, $data) {
+                $this->io->write($data);
+            });
+        }
     }
 }

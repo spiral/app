@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
+use Installer\Package\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -42,4 +43,14 @@ interface ApplicationInterface
      * @return class-string
      */
     public function getKernelClass(): string;
+
+    /**
+     * @return \Generator<PackageInterface|null, GeneratorInterface|class-string<GeneratorInterface>>
+     */
+    public function getGenerators(): \Generator;
+
+    /**
+     * @return non-empty-string[]
+     */
+    public function getCommands(): array;
 }

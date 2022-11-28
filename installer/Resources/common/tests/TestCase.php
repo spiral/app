@@ -44,7 +44,7 @@ class TestCase extends BaseTestCase
     protected function tearDown(): void
     {
         // Uncomment this line if you want to clean up runtime directory.
-        // $this->cleanUpRuntimeDirectory();
+        $this->cleanUpRuntimeDirectory();
     }
 
     public function rootDirectory(): string

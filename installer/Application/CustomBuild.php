@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Application;
 
-use App\Kernel;
+use App\Application\Kernel;
 use Composer\Package\PackageInterface;
 use Installer\Package\Packages;
 use Installer\Question\QuestionInterface;

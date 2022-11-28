@@ -10,6 +10,7 @@ use Installer\Question\Option\Option;
 
 abstract class AbstractQuestion implements QuestionInterface
 {
+    private const NONE_OPTION = 0;
     /**
      * @var array<int, Option>
      */
@@ -29,7 +30,7 @@ abstract class AbstractQuestion implements QuestionInterface
         private readonly bool $required,
         array $options,
         array $conditions = [],
-        private readonly int $default = 1
+        private readonly int $default = self::NONE_OPTION
     ) {
         $this->setOptions($options);
         $this->setConditions($conditions);
@@ -131,7 +132,7 @@ abstract class AbstractQuestion implements QuestionInterface
         }
 
         if ($this->required !== true && !isset($this->options[0])) {
-            $this->options[0] = new Option(name: \count($this->options) === 1 ? 'No' : 'None of the above');
+            $this->options[self::NONE_OPTION] = new Option(name: \count($this->options) === 1 ? 'No' : 'None of the above');
         }
     }
 

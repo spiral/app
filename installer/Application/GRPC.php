@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Application;
 
-use App\Kernel;
+use App\Application\Kernel;
 use Composer\Package\PackageInterface;
+use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
 use Installer\Package\Packages;
 use Installer\Question\QuestionInterface;
 
@@ -24,19 +25,40 @@ final class GRPC extends AbstractApplication
     public function __construct(
         string $name = 'gRPC',
         array $packages = [
+            Packages::ExtMbString,
+            Packages::ExtGRPC,
+            Packages::GRPC,
             Packages::RoadRunnerBridge,
-            Packages::CycleBridge,
         ],
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
+                'GRPC\\' => 'generated/GRPC'
             ],
         ],
-        array $autoloadDev = [],
+        array $autoloadDev = [
+            'psr-4' => [
+                'Tests\\' => 'tests',
+            ],
+        ],
         array $questions = [],
         array $resources = []
     ) {
-        parent::__construct($name, $packages, $autoload, $autoloadDev, $questions, $resources);
+        parent::__construct(
+            name: $name,
+            packages: $packages,
+            autoload: $autoload,
+            autoloadDev: $autoloadDev,
+            questions: $questions,
+            resources: $resources,
+            generators: [
+                new GRPCBootloader(),
+            ],
+            commands: [
+                'composer rr:download',
+                'composer rr:download-protoc',
+            ]
+        );
     }
 
     public function getKernelClass(): string

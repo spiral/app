@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package ping.dto;
+
+option php_namespace = "GRPC\\Ping";
+option php_metadata_namespace = "GRPC\\Ping\\GPBMetadata";
+
+import "google/protobuf/timestamp.proto";
+
+service PingService {
+    rpc PingUrl (ping.dto.PingRequest) returns (ping.dto.PingResponse) {
+    }
+}
+
+message PingRequest {
+    string url = 1;
+}
+
+message PingResponse {
+    int32 status = 1;
+    google.protobuf.Timestamp created_at = 2;
+}
