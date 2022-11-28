@@ -242,7 +242,6 @@ final class Installer extends AbstractInstaller
         $this->io->write('<info>Remove Installer from composer.json</info>');
 
         unset(
-            $this->composerDefinition['autoload']['psr-4']['Installer\\'],
             $this->composerDefinition['scripts']['pre-update-cmd'],
             $this->composerDefinition['scripts']['pre-install-cmd']
         );
@@ -288,6 +287,7 @@ final class Installer extends AbstractInstaller
     {
         $this->composerDefinition['autoload'] = $this->application->getAutoload();
         $this->composerDefinition['autoload-dev'] = $this->application->getAutoloadDev();
+        $this->composerDefinition['autoload']['psr-4']['Installer\\'] = 'installer';
 
         $this->composerJson->write($this->composerDefinition);
     }
