@@ -32,7 +32,7 @@ return [
 
         'collections' => [
             'default' => ':collections:',
-            'factories' => :collectionsFactory:
+            'factories' => ':collectionsFactory:'
         ],
 
         /**

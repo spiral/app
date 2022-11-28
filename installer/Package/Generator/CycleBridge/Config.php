@@ -29,7 +29,7 @@ final class Config implements GeneratorInterface
         \file_put_contents(
             $context->applicationRoot . 'app/config/' . self::FILENAME,
             \str_replace(
-                [':collections:', ':collectionsFactory:'],
+                [':collections:', "':collectionsFactory:'"],
                 [$collections->value, (new Dumper())->dump($this->getFactory($collections))],
                 $config
             ),
