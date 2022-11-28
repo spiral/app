@@ -15,6 +15,10 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(ViewsBootloader::class);
+        $context->kernel->addUse(TranslatedCacheBootloader::class);
+        $context->kernel->addUse(StemplerBootloader::class);
+
         $context->kernel->loadAppend(ViewsBootloader::class, GuardBootloader::class);
         $context->kernel->loadAppend(TranslatedCacheBootloader::class, ViewsBootloader::class);
         $context->kernel->loadAppend(StemplerBootloader::class, TranslatedCacheBootloader::class);

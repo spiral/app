@@ -14,6 +14,9 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(EventsBootloader::class);
+        $context->kernel->addUse(EventBootloader::class);
+
         $context->kernel->loadAppend(EventsBootloader::class, CommandBootloader::class);
         $context->kernel->loadAppend(EventBootloader::class, EventsBootloader::class);
     }

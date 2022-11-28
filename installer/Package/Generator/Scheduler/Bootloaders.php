@@ -13,6 +13,8 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(SchedulerBootloader::class);
+
         $context->kernel->loadAppend(SchedulerBootloader::class, GuardBootloader::class);
     }
 }

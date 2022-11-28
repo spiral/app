@@ -13,6 +13,8 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(NyholmBootloader::class);
+
         $context->kernel->loadAppend(NyholmBootloader::class, GuardBootloader::class);
     }
 }

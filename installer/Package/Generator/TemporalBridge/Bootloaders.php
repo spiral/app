@@ -14,6 +14,9 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(PrototypeBootloader::class);
+        $context->kernel->addUse(TemporalBridgeBootloader::class);
+
         $context->kernel->loadAppend(PrototypeBootloader::class, GuardBootloader::class);
         $context->kernel->loadAppend(TemporalBridgeBootloader::class, PrototypeBootloader::class);
     }

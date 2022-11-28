@@ -14,6 +14,9 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(ValidationBootloader::class);
+        $context->kernel->addUse(ValidatorBootloader::class);
+
         $context->kernel->loadAppend(ValidationBootloader::class, FiltersBootloader::class);
         $context->kernel->loadAppend(ValidatorBootloader::class, ValidationBootloader::class);
     }

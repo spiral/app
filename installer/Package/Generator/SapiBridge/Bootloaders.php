@@ -13,6 +13,8 @@ final class Bootloaders implements GeneratorInterface
 {
     public function process(Context $context): void
     {
+        $context->kernel->addUse(SapiBootloader::class);
+
         $context->kernel->loadAppend(SapiBootloader::class, GuardBootloader::class);
     }
 }
