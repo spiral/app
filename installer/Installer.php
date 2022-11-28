@@ -262,9 +262,9 @@ final class Installer extends AbstractInstaller
                         } else {
                             $this->io->write(
                                 \sprintf(
-                                '  - Copying <info>%s</info>',
-                                \str_replace('\\', '/', $destination) . '/' . $file
-                            )
+                                    '  - Copying <info>%s</info>',
+                                    \str_replace('\\', '/', $destination) . '/' . $file
+                                )
                             );
                             if (!\is_dir($destination)) {
                                 \mkdir($destination, 0775, true);
