@@ -22,8 +22,8 @@ final class TemporalBridge extends AbstractQuestion
                 new Package(
                     package: Packages::TemporalBridge,
                     generators: [new Bootloaders()]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

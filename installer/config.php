@@ -15,7 +15,7 @@ return [
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\TemporalBridge(),
-            new Question\SentryBridge()
+            new Question\SentryBridge(),
         ],
         resources: [
             'applications/web/app.php' => 'app.php',
@@ -26,7 +26,7 @@ return [
         ]
     ),
     new Application\Cli(questions: [
-        new Question\CycleBridge()
+        new Question\CycleBridge(),
     ]),
     new Application\GRPC(),
     new Application\CustomBuild(questions: [
@@ -42,6 +42,6 @@ return [
         new Question\Validator(),
         new Question\EventBus(),
         new Question\Scheduler(),
-        new Question\SentryBridge()
-    ])
+        new Question\SentryBridge(),
+    ]),
 ];

@@ -22,10 +22,10 @@ final class RoadRunnerBridge extends AbstractQuestion
                 new Package(
                     package: Packages::RoadRunnerBridge,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

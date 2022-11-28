@@ -22,10 +22,10 @@ final class Sapi extends AbstractQuestion
                 new Package(
                     package: Packages::SapiBridge,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

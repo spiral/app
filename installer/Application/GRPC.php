@@ -32,12 +32,12 @@ final class GRPC extends AbstractApplication
         string $name = 'gRPC',
         array $packages = [
             Packages::RoadRunnerBridge,
-            Packages::CycleBridge
+            Packages::CycleBridge,
         ],
         array $autoload = [
             'psr-4' => [
-                'App\\' => 'app/src'
-            ]
+                'App\\' => 'app/src',
+            ],
         ],
         array $autoloadDev = [],
         array $questions = [],

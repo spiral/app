@@ -22,10 +22,10 @@ final class Scheduler extends AbstractQuestion
                 new Package(
                     package: Packages::Scheduler,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

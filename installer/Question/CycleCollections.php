@@ -17,17 +17,17 @@ final class CycleCollections extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Doctrine Collections', packages: [
-                Packages::DoctrineCollections
+                Packages::DoctrineCollections,
             ]),
             new Option(name: 'Laravel Collections', packages: [
-                Packages::IlluminateCollections
+                Packages::IlluminateCollections,
             ]),
             new Option(name: 'Use PHP array as the collection'),
         ],
         array $conditions = [
             'require' => [
-                Packages::CycleBridge
-            ]
+                Packages::CycleBridge,
+            ],
         ]
     ) {
         parent::__construct($question, $required, $options, $conditions);

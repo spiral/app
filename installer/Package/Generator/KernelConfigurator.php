@@ -57,6 +57,32 @@ final class KernelConfigurator
         $this->namespace = $this->declaration->getNamespaces()->get($this->reflection->getNamespaceName());
     }
 
+    public function __destruct()
+    {
+        $this->namespace->addUse(CoreBootloader::class);
+        $this->namespace->addUse(TokenizerBootloader::class);
+        $this->namespace->addUse(DotenvBootloader::class);
+        $this->namespace->addUse(MonologBootloader::class);
+        $this->namespace->addUse('Spiral\Bootloader', 'Framework');
+        $this->namespace->addUse(ScaffolderBootloader::class);
+        $this->namespace->addUse(PrototypeBootloader::class);
+
+        $this->declaration
+            ->getClass($this->reflection->getName())
+            ->getConstant('SYSTEM')
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->system));
+        $this->declaration
+            ->getClass($this->reflection->getName())
+            ->getConstant('LOAD')
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->load));
+        $this->declaration
+            ->getClass($this->reflection->getName())
+            ->getConstant('APP')
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->app));
+
+        (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
+    }
+
     public function systemAppend(string $bootloader, string $afterBootloader): void
     {
         $this->append($this->system, $bootloader, $afterBootloader);
@@ -90,32 +116,6 @@ final class KernelConfigurator
     public function addUse(string $name, ?string $alias = null): void
     {
         $this->namespace->addUse($name, $alias);
-    }
-
-    public function __destruct()
-    {
-        $this->namespace->addUse(CoreBootloader::class);
-        $this->namespace->addUse(TokenizerBootloader::class);
-        $this->namespace->addUse(DotenvBootloader::class);
-        $this->namespace->addUse(MonologBootloader::class);
-        $this->namespace->addUse('Spiral\Bootloader', 'Framework');
-        $this->namespace->addUse(ScaffolderBootloader::class);
-        $this->namespace->addUse(PrototypeBootloader::class);
-
-        $this->declaration
-            ->getClass($this->reflection->getName())
-            ->getConstant('SYSTEM')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->system));
-        $this->declaration
-            ->getClass($this->reflection->getName())
-            ->getConstant('LOAD')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->load));
-        $this->declaration
-            ->getClass($this->reflection->getName())
-            ->getConstant('APP')
-            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->app));
-
-        (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
     }
 
     private function getFormatted(mixed $value): string|Literal

@@ -33,8 +33,8 @@ final class CustomBuild extends AbstractApplication
         array $packages = [],
         array $autoload = [
             'psr-4' => [
-                'App\\' => 'app/src'
-            ]
+                'App\\' => 'app/src',
+            ],
         ],
         array $autoloadDev = [],
         array $questions = [],

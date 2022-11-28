@@ -23,14 +23,14 @@ final class CycleBridge extends AbstractQuestion
                 new Package(
                     package: Packages::CycleBridge,
                     resources: [
-                        'packages/cycle/config' => 'app/config'
+                        'packages/cycle/config' => 'app/config',
                     ],
                     generators: [
                         new Bootloaders(),
-                        new Config()
+                        new Config(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

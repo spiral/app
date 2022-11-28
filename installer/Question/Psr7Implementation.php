@@ -22,10 +22,10 @@ final class Psr7Implementation extends AbstractQuestion
                 new Package(
                     package: Packages::NyholmBridge,
                     generators: [
-                        new Bootloaders()
+                        new Bootloaders(),
                     ]
-                )
-            ])
+                ),
+            ]),
         ]
     ) {
         parent::__construct($question, $required, $options);

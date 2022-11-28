@@ -34,20 +34,20 @@ final class Web extends AbstractApplication
             Packages::ExtMbString,
             Packages::RoadRunnerBridge,
             Packages::NyholmBridge,
-            Packages::SapiBridge
+            Packages::SapiBridge,
         ],
         array $autoload = [
             'psr-4' => [
-                'App\\' => 'app/src'
+                'App\\' => 'app/src',
             ],
             'files' => [
-                'app/src/Application/helpers.php'
-            ]
+                'app/src/Application/helpers.php',
+            ],
         ],
         array $autoloadDev = [
             'psr-4' => [
-                'Tests\\' => 'tests'
-            ]
+                'Tests\\' => 'tests',
+            ],
         ],
         array $questions = [],
         array $resources = [],

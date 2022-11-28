@@ -121,7 +121,6 @@ final class Installer extends AbstractInstaller
         ];
         foreach ($this->config as $key => $app) {
             $query[] = \sprintf("  [<comment>%s</comment>] %s\n", $key + 1, $app->getName());
-
         }
         $query[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', \array_key_first($this->config) + 1);
 
@@ -164,7 +163,8 @@ final class Installer extends AbstractInstaller
 
     private function addPackage(Package $package): void
     {
-        $this->io->write(\sprintf('  - Adding package <info>%s</info> (<comment>%s</comment>)',
+        $this->io->write(\sprintf(
+            '  - Adding package <info>%s</info> (<comment>%s</comment>)',
             $package->getName(),
             $package->getVersion()
         ));
@@ -251,21 +251,23 @@ final class Installer extends AbstractInstaller
     private function copyResource(string $resource, string $target): void
     {
         $copy = function (string $source, string $destination) use (&$copy): void {
-            if(\is_dir($source)) {
+            if (\is_dir($source)) {
                 $handle = \opendir($source);
-                while($file = \readdir($handle)){
-                    if($file !== '.' && $file !== '..'){
-                        if(\is_dir($source . '/' . $file)){
-                            if(!\is_dir($destination . '/' . $file)){
+                while ($file = \readdir($handle)) {
+                    if ($file !== '.' && $file !== '..') {
+                        if (\is_dir($source . '/' . $file)) {
+                            if (!\is_dir($destination . '/' . $file)) {
                                 \mkdir($destination . '/' . $file, 0775, true);
                             }
                             $copy($source . '/' . $file, $destination . '/' . $file);
                         } else {
-                            $this->io->write(\sprintf(
+                            $this->io->write(
+                                \sprintf(
                                 '  - Copying <info>%s</info>',
-                                \str_replace('\\', '/', $destination) . '/' . $file)
+                                \str_replace('\\', '/', $destination) . '/' . $file
+                            )
                             );
-                            if(!\is_dir($destination)){
+                            if (!\is_dir($destination)) {
                                 \mkdir($destination, 0775, true);
                             }
                             \copy($source . '/' . $file, $destination . '/' . $file);
