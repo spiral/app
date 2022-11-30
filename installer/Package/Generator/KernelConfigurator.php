@@ -73,15 +73,15 @@ final class KernelConfigurator
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('SYSTEM')
-            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->system));
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->system));
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('LOAD')
-            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->load));
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->load));
         $this->declaration
             ->getClass($this->reflection->getName())
             ->getConstant('APP')
-            ->setValue(\array_map(fn(string $value) => $this->getFormatted($value), $this->app));
+            ->setValue(\array_map(fn (string $value) => $this->getFormatted($value), $this->app));
 
         (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
     }

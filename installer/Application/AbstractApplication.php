@@ -37,7 +37,7 @@ abstract class AbstractApplication implements ApplicationInterface
         private readonly array $resources = [],
         private readonly array $generators = [],
         private readonly array $commands = [
-            'composer rr:download'
+            'composer rr:download',
         ]
     ) {
         $this->setPackages($packages);
@@ -85,16 +85,6 @@ abstract class AbstractApplication implements ApplicationInterface
         return $this->resources;
     }
 
-    /**
-     * @param Packages[] $packages
-     */
-    private function setPackages(array $packages): void
-    {
-        foreach ($packages as $package) {
-            $this->packages[] = new Package($package);
-        }
-    }
-
     public function getGenerators(): \Generator
     {
         foreach ($this->generators as $generator) {
@@ -115,5 +105,15 @@ abstract class AbstractApplication implements ApplicationInterface
     public function getCommands(): array
     {
         return $this->commands;
+    }
+
+    /**
+     * @param Packages[] $packages
+     */
+    private function setPackages(array $packages): void
+    {
+        foreach ($packages as $package) {
+            $this->packages[] = new Package($package);
+        }
     }
 }

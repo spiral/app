@@ -33,7 +33,7 @@ final class GRPC extends AbstractApplication
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
-                'GRPC\\' => 'generated/GRPC'
+                'GRPC\\' => 'generated/GRPC',
             ],
         ],
         array $autoloadDev = [

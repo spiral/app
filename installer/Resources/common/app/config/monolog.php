@@ -35,7 +35,7 @@ return [
         ],
         'roadrunner' => [
             \Spiral\RoadRunnerBridge\Logger\Handler::class,
-        ]
+        ],
     ],
 
     /**
