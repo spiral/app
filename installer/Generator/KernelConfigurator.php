@@ -7,6 +7,7 @@ namespace Installer\Generator;
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader\CommandBootloader;
+use Spiral\Bootloader\Security\EncrypterBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Files\Files;
@@ -85,6 +86,14 @@ final class KernelConfigurator
                 ExceptionHandlerBootloader::class,
             ],
             comment: 'Logging and exceptions handling',
+        );
+
+        $this->load->addGroup(
+            bootloaders: [
+                EncrypterBootloader::class,
+            ],
+            comment: 'Security',
+            priority: 3
         );
 
         $this->load->addGroup(
