@@ -56,7 +56,7 @@ final class Bootloaders
     {
         $founded = false;
         foreach ($this->groups as $group) {
-            if ($group->hasBootloader($bootloader)) {
+            if ($group->hasBootloader($beforeBootloader)) {
                 $group->prepend($bootloader, $beforeBootloader);
                 $founded = true;
             }

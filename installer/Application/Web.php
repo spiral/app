@@ -6,6 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
+use Installer\Application\Generator\WebApplicationBootloaders;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -40,7 +41,17 @@ final class Web extends AbstractApplication
         array $questions = [],
         array $resources = [],
     ) {
-        parent::__construct($name, $packages, $autoload, $autoloadDev, $questions, $resources);
+        parent::__construct(
+            name: $name,
+            packages: $packages,
+            autoload: $autoload,
+            autoloadDev: $autoloadDev,
+            questions: $questions,
+            resources: $resources,
+            generators: [
+                new WebApplicationBootloaders()
+            ]
+        );
     }
 
     public function getKernelClass(): string
