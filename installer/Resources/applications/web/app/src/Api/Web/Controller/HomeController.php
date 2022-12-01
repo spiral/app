@@ -24,7 +24,7 @@ class HomeController
 
     public function index(): string
     {
-        return $this->views->render('home.dark.php');
+        return $this->views->render('home');
     }
 
     /**
