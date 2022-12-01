@@ -13,7 +13,7 @@ final class LeagueEvent extends Package
         parent::__construct(
             package: Packages::LeagueEvent,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

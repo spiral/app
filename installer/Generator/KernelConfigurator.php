@@ -67,21 +67,21 @@ final class KernelConfigurator
             bootloaders: [
                 CoreBootloader::class,
                 TokenizerBootloader::class,
-                DotenvBootloader::class
+                DotenvBootloader::class,
             ],
         );
 
         $this->load->addGroup(
             bootloaders: [
                 MonologBootloader::class,
-                ExceptionHandlerBootloader::class
+                ExceptionHandlerBootloader::class,
             ],
             comment: 'Logging and exceptions handling',
         );
 
         $this->app->addGroup(
             bootloaders: [
-                PrototypeBootloader::class
+                PrototypeBootloader::class,
             ],
             comment: 'Fast code prototyping',
         );

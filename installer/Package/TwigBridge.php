@@ -13,10 +13,10 @@ final class TwigBridge extends Package
         parent::__construct(
             package: Packages::TwigBridge,
             resources: [
-                'packages/twig/views' => 'app/views'
+                'packages/twig/views' => 'app/views',
             ],
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

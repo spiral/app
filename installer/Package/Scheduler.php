@@ -13,7 +13,7 @@ final class Scheduler extends Package
         parent::__construct(
             package: Packages::Scheduler,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

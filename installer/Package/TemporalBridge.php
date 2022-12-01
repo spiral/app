@@ -13,7 +13,7 @@ final class TemporalBridge extends Package
         parent::__construct(
             package: Packages::TemporalBridge,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

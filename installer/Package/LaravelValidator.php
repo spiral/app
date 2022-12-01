@@ -13,7 +13,7 @@ final class LaravelValidator extends Package
         parent::__construct(
             package: Packages::LaravelValidator,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

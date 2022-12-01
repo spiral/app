@@ -13,7 +13,7 @@ final class SymfonyValidator extends Package
         parent::__construct(
             package: Packages::SymfonyValidator,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

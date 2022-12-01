@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->load->addGroup(
             bootloaders: [
                 EventsBootloader::class,
-                EventBootloader::class
+                EventBootloader::class,
             ],
             comment: 'Event Dispatcher',
             priority: 8

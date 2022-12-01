@@ -13,7 +13,7 @@ final class SpiralValidator extends Package
         parent::__construct(
             package: Packages::SpiralValidator,
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }

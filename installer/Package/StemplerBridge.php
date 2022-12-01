@@ -13,10 +13,10 @@ final class StemplerBridge extends Package
         parent::__construct(
             package: Packages::StemplerBridge,
             resources: [
-                'packages/stempler/views' => 'app/views'
+                'packages/stempler/views' => 'app/views',
             ],
             generators: [
-                new Bootloaders()
+                new Bootloaders(),
             ]
         );
     }
