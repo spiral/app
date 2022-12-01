@@ -6,7 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
-use Installer\Package\Packages;
+use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -16,19 +16,14 @@ use Installer\Question\QuestionInterface;
 final class Web extends AbstractApplication
 {
     /**
-     * @param Packages[] $packages
+     * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
      * @param QuestionInterface[] $questions
      */
     public function __construct(
         string $name = 'Web',
-        array $packages = [
-            Packages::ExtMbString,
-            Packages::RoadRunnerBridge,
-            Packages::NyholmBridge,
-            Packages::SapiBridge,
-        ],
+        array $packages = [],
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
@@ -50,7 +45,6 @@ final class Web extends AbstractApplication
 
     public function getKernelClass(): string
     {
-        /** @psalm-suppress UndefinedClass */
         return Kernel::class;
     }
 }

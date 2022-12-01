@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\TwigBridge;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\Security\GuardBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Bootloader\Views\TranslatedCacheBootloader;
 use Spiral\Twig\Bootloader\TwigBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
@@ -19,8 +18,14 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->addUse(TranslatedCacheBootloader::class);
         $context->kernel->addUse(TwigBootloader::class);
 
-        $context->kernel->loadAppend(ViewsBootloader::class, GuardBootloader::class);
-        $context->kernel->loadAppend(TranslatedCacheBootloader::class, ViewsBootloader::class);
-        $context->kernel->loadAppend(TwigBootloader::class, TranslatedCacheBootloader::class);
+        $context->kernel->load->addGroup(
+            bootloaders: [
+                ViewsBootloader::class,
+                TranslatedCacheBootloader::class,
+                TwigBootloader::class,
+            ],
+            comment: 'Views and view translation',
+            priority: 12
+        );
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Package;
 
-use Installer\Package\Generator\GeneratorInterface;
+use Installer\Generator\GeneratorInterface;
 
-final class Package
+class Package
 {
     private string $name;
     private string $version;

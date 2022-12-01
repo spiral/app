@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\NyholmBridge\Bootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\NyholmBridge;
 use Installer\Question\Option\Option;
 
 final class Psr7Implementation extends AbstractQuestion
@@ -19,12 +17,7 @@ final class Psr7Implementation extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::NyholmBridge,
-                    generators: [
-                        new Bootloaders(),
-                    ]
-                ),
+                new NyholmBridge(),
             ]),
         ]
     ) {

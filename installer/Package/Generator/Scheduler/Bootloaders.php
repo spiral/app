@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\Scheduler;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\Security\GuardBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Scheduler\Bootloader\SchedulerBootloader;
 
 final class Bootloaders implements GeneratorInterface
@@ -15,6 +14,10 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel->addUse(SchedulerBootloader::class);
 
-        $context->kernel->loadAppend(SchedulerBootloader::class, GuardBootloader::class);
+        $context->kernel->load->addGroup(
+            bootloaders: [SchedulerBootloader::class],
+            comment: 'Scheduler',
+            priority: 9
+        );
     }
 }

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\LeagueEvent;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\CommandBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Events\Bootloader\EventsBootloader;
 use Spiral\League\Event\Bootloader\EventBootloader;
 
@@ -17,7 +16,13 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->addUse(EventsBootloader::class);
         $context->kernel->addUse(EventBootloader::class);
 
-        $context->kernel->loadAppend(EventsBootloader::class, CommandBootloader::class);
-        $context->kernel->loadAppend(EventBootloader::class, EventsBootloader::class);
+        $context->kernel->load->addGroup(
+            bootloaders: [
+                EventsBootloader::class,
+                EventBootloader::class
+            ],
+            comment: 'Event Dispatcher',
+            priority: 8
+        );
     }
 }

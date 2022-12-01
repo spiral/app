@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\RoadRunnerBridge\Bootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\RoadRunnerBridge as Package;
 use Installer\Question\Option\Option;
 
 final class RoadRunnerBridge extends AbstractQuestion
@@ -19,12 +17,7 @@ final class RoadRunnerBridge extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::RoadRunnerBridge,
-                    generators: [
-                        new Bootloaders(),
-                    ]
-                ),
+                new Package(),
             ]),
         ]
     ) {

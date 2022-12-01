@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\CycleBridge;
 
-use Cycle\ORM\Collection\ArrayCollectionFactory;
-use Cycle\ORM\Collection\DoctrineCollectionFactory;
-use Cycle\ORM\Collection\IlluminateCollectionFactory;
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Package\Packages;
 use Nette\PhpGenerator\Dumper;

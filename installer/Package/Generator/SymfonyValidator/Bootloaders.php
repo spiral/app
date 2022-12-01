@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\SymfonyValidator;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Bootloader\Security\FiltersBootloader;
 use Spiral\Validation\Symfony\Bootloader\ValidatorBootloader;
 use Spiral\Validation\Bootloader\ValidationBootloader;
@@ -17,7 +17,7 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->addUse(ValidationBootloader::class);
         $context->kernel->addUse(ValidatorBootloader::class);
 
-        $context->kernel->loadAppend(ValidationBootloader::class, FiltersBootloader::class);
-        $context->kernel->loadAppend(ValidatorBootloader::class, ValidationBootloader::class);
+        $context->kernel->load->append(ValidationBootloader::class, FiltersBootloader::class);
+        $context->kernel->load->append(ValidatorBootloader::class, ValidationBootloader::class);
     }
 }

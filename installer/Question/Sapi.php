@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\SapiBridge\Bootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\SapiBridge;
 use Installer\Question\Option\Option;
 
 final class Sapi extends AbstractQuestion
@@ -19,12 +17,7 @@ final class Sapi extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::SapiBridge,
-                    generators: [
-                        new Bootloaders(),
-                    ]
-                ),
+                new SapiBridge(),
             ]),
         ]
     ) {

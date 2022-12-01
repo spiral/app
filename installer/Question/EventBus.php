@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\LeagueEvent\Bootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\LeagueEvent;
 use Installer\Question\Option\Option;
 
 final class EventBus extends AbstractQuestion
@@ -19,12 +17,7 @@ final class EventBus extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::LeagueEvent,
-                    generators: [
-                        new Bootloaders(),
-                    ]
-                ),
+                new LeagueEvent(),
             ]),
         ]
     ) {

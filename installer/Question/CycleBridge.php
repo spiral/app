@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\CycleBridge\Bootloaders;
-use Installer\Package\Generator\CycleBridge\Config;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\CycleBridge as Package;
 use Installer\Question\Option\Option;
 
 final class CycleBridge extends AbstractQuestion
@@ -20,16 +17,7 @@ final class CycleBridge extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::CycleBridge,
-                    resources: [
-                        'packages/cycle/config' => 'app/config',
-                    ],
-                    generators: [
-                        new Bootloaders(),
-                        new Config(),
-                    ]
-                ),
+                new Package(),
             ]),
         ]
     ) {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\SapiBridge;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\Security\GuardBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
+use Spiral\Bootloader\Http\PaginationBootloader;
 use Spiral\Sapi\Bootloader\SapiBootloader;
 
 final class Bootloaders implements GeneratorInterface
@@ -15,6 +15,6 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel->addUse(SapiBootloader::class);
 
-        $context->kernel->loadAppend(SapiBootloader::class, GuardBootloader::class);
+        $context->kernel->load->append(SapiBootloader::class, PaginationBootloader::class);
     }
 }

@@ -7,9 +7,9 @@ namespace Installer;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Installer\Application\ApplicationInterface;
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Installer\Package\Generator\KernelConfigurator;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
+use Installer\Generator\KernelConfigurator;
 use Installer\Package\Package;
 use Spiral\Core\Container;
 use Symfony\Component\Process\Process;
@@ -88,7 +88,7 @@ final class Configurator extends AbstractInstaller
     private function runCommands(): void
     {
         foreach ($this->application->getCommands() as $command) {
-            (new Process(\explode(' ', $command)))->run(function ($type, $data) {
+            (new Process(\explode(' ', $command)))->run(function (string $type, mixed $data) {
                 $this->io->write($data);
             });
         }

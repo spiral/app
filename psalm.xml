@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="2"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="installer" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="installer/Resources" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Spiral\Cycle\Bootloader\DatabaseBootloader" />
+                <referencedClass name="Spiral\Cycle\Bootloader\MigrationsBootloader" />
+                <referencedClass name="Spiral\Cycle\Bootloader\SchemaBootloader" />
+                <referencedClass name="Spiral\Cycle\Bootloader\CycleOrmBootloader" />
+                <referencedClass name="Spiral\Cycle\Bootloader\AnnotatedBootloader" />
+                <referencedClass name="Spiral\Twig\Bootloader\TwigBootloader" />
+                <referencedClass name="Spiral\TemporalBridge\Bootloader\PrototypeBootloader" />
+                <referencedClass name="Spiral\TemporalBridge\Bootloader\TemporalBridgeBootloader" />
+                <referencedClass name="Spiral\Validation\Symfony\Bootloader\ValidatorBootloader" />
+                <referencedClass name="Spiral\Validator\Bootloader\ValidatorBootloader" />
+                <referencedClass name="Spiral\Sentry\Bootloader\SentryReporterBootloader" />
+                <referencedClass name="Spiral\Scheduler\Bootloader\SchedulerBootloader" />
+                <referencedClass name="Spiral\Sapi\Bootloader\SapiBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\CacheBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\GRPCBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\CommandBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\HttpBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\QueueBootloader" />
+                <referencedClass name="Spiral\Nyholm\Bootloader\NyholmBootloader" />
+                <referencedClass name="Spiral\League\Event\Bootloader\EventBootloader" />
+                <referencedClass name="Spiral\Validation\Laravel\Bootloader\ValidatorBootloader" />
+                <referencedClass name="Spiral\Cycle\Bootloader\CommandBootloader" />
+                <referencedClass name="App\Application\Bootloader\ExceptionHandlerBootloader" />
+                <referencedClass name="App\Application\Kernel" />
+            </errorLevel>
+        </UndefinedClass>
+    </issueHandlers>
+</psalm>

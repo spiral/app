@@ -3,10 +3,17 @@
 declare(strict_types=1);
 
 use Installer\Application;
+use Installer\Package;
 use Installer\Question;
 
 return [
     new Application\Web(
+        packages: [
+            new Package\ExtMbString(),
+            new Package\RoadRunnerBridge(),
+            new Package\NyholmBridge(),
+            new Package\SapiBridge(),
+        ],
         questions: [
             new Question\CycleBridge(),
             new Question\CycleCollections(),
@@ -33,6 +40,12 @@ return [
         ]
     ),
     new Application\GRPC(
+        packages: [
+            new Package\ExtMbString(),
+            new Package\ExtGRPC(),
+            new Package\GRPC(),
+            new Package\RoadRunnerBridge(),
+        ],
         questions: [
             new Question\CycleBridge(),
             new Question\Validator(),

@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
-use Installer\Package\Generator\GeneratorInterface;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
-use Installer\Package\Packages;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -22,7 +21,7 @@ abstract class AbstractApplication implements ApplicationInterface
     private array $packages = [];
 
     /**
-     * @param Packages[] $packages
+     * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
      * @param QuestionInterface[] $questions
@@ -36,9 +35,7 @@ abstract class AbstractApplication implements ApplicationInterface
         private readonly array $questions = [],
         private readonly array $resources = [],
         private readonly array $generators = [],
-        private readonly array $commands = [
-            'composer rr:download',
-        ]
+        private readonly array $commands = []
     ) {
         $this->setPackages($packages);
     }
@@ -87,10 +84,20 @@ abstract class AbstractApplication implements ApplicationInterface
 
     public function getGenerators(): \Generator
     {
+        // application generators
         foreach ($this->generators as $generator) {
             yield null => $generator;
         }
 
+        // required packages generators
+        foreach ($this->getPackages() as $package) {
+            foreach ($package->getGenerators() as $generator) {
+                yield $package => $generator;
+            }
+        }
+
+        // optional packages generators
+        // Attention! Returns all available optional packages.Need to check if the package is installed
         foreach ($this->getQuestions() as $question) {
             foreach ($question->getOptions() as $option) {
                 foreach ($option->getPackages() as $package) {
@@ -108,12 +115,12 @@ abstract class AbstractApplication implements ApplicationInterface
     }
 
     /**
-     * @param Packages[] $packages
+     * @param Package[] $packages
      */
     private function setPackages(array $packages): void
     {
         foreach ($packages as $package) {
-            $this->packages[] = new Package($package);
+            $this->packages[] = $package;
         }
     }
 }

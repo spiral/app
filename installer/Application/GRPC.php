@@ -7,7 +7,7 @@ namespace Installer\Application;
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
 use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
-use Installer\Package\Packages;
+use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -17,19 +17,14 @@ use Installer\Question\QuestionInterface;
 final class GRPC extends AbstractApplication
 {
     /**
-     * @param Packages[] $packages
+     * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
      * @param QuestionInterface[] $questions
      */
     public function __construct(
         string $name = 'gRPC',
-        array $packages = [
-            Packages::ExtMbString,
-            Packages::ExtGRPC,
-            Packages::GRPC,
-            Packages::RoadRunnerBridge,
-        ],
+        array $packages = [],
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
@@ -55,7 +50,6 @@ final class GRPC extends AbstractApplication
                 new GRPCBootloader(),
             ],
             commands: [
-                'composer rr:download',
                 'composer rr:download-protoc',
             ]
         );
@@ -63,7 +57,6 @@ final class GRPC extends AbstractApplication
 
     public function getKernelClass(): string
     {
-        /** @psalm-suppress UndefinedClass */
         return Kernel::class;
     }
 }

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\StemplerBridge;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\Security\GuardBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Bootloader\Views\TranslatedCacheBootloader;
 use Spiral\Stempler\Bootloader\StemplerBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
@@ -19,8 +18,14 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->addUse(TranslatedCacheBootloader::class);
         $context->kernel->addUse(StemplerBootloader::class);
 
-        $context->kernel->loadAppend(ViewsBootloader::class, GuardBootloader::class);
-        $context->kernel->loadAppend(TranslatedCacheBootloader::class, ViewsBootloader::class);
-        $context->kernel->loadAppend(StemplerBootloader::class, TranslatedCacheBootloader::class);
+        $context->kernel->load->addGroup(
+            bootloaders: [
+                ViewsBootloader::class,
+                TranslatedCacheBootloader::class,
+                StemplerBootloader::class,
+            ],
+            comment: 'Views and view translation',
+            priority: 12
+        );
     }
 }

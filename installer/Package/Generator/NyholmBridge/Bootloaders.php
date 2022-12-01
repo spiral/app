@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\NyholmBridge;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
-use Spiral\Bootloader\Security\GuardBootloader;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
+use Spiral\Bootloader\Http\RouterBootloader;
 use Spiral\Nyholm\Bootloader\NyholmBootloader;
 
 final class Bootloaders implements GeneratorInterface
@@ -15,6 +15,6 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel->addUse(NyholmBootloader::class);
 
-        $context->kernel->loadAppend(NyholmBootloader::class, GuardBootloader::class);
+        $context->kernel->load->prepend(NyholmBootloader::class, RouterBootloader::class);
     }
 }

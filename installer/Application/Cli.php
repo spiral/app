@@ -6,7 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
-use Installer\Package\Packages;
+use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -16,7 +16,7 @@ use Installer\Question\QuestionInterface;
 final class Cli extends AbstractApplication
 {
     /**
-     * @param Packages[] $packages
+     * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
      * @param QuestionInterface[] $questions
@@ -38,7 +38,6 @@ final class Cli extends AbstractApplication
 
     public function getKernelClass(): string
     {
-        /** @psalm-suppress UndefinedClass */
         return Kernel::class;
     }
 }

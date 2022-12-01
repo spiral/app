@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\SentryBridge\Bootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\SentryBridge as Package;
 use Installer\Question\Option\Option;
 
 final class SentryBridge extends AbstractQuestion
@@ -19,12 +17,7 @@ final class SentryBridge extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
-                new Package(
-                    package: Packages::SentryBridge,
-                    generators: [
-                        new Bootloaders(),
-                    ]
-                ),
+                new Package(),
             ]),
         ]
     ) {

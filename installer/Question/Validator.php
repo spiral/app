@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\SpiralValidator\Bootloaders as SpiralValidatorBootloaders;
-use Installer\Package\Generator\SymfonyValidator\Bootloaders as SymfonyValidatorBootloaders;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\LaravelValidator;
+use Installer\Package\SpiralValidator;
+use Installer\Package\SymfonyValidator;
 use Installer\Question\Option\Option;
 
 final class Validator extends AbstractQuestion
@@ -20,19 +19,13 @@ final class Validator extends AbstractQuestion
         bool $required = false,
         array $options = [
             new Option(name: 'Spiral Validator', packages: [
-                new Package(
-                    package: Packages::SpiralValidator,
-                    generators: [new SpiralValidatorBootloaders()]
-                ),
+                new SpiralValidator(),
             ]),
             new Option(name: 'Symfony Validator', packages: [
-                new Package(
-                    package: Packages::SymfonyValidator,
-                    generators: [new SymfonyValidatorBootloaders()]
-                ),
+                new SymfonyValidator(),
             ]),
             new Option(name: 'Laravel Validator', packages: [
-                Packages::LaravelValidator,
+                new LaravelValidator(),
             ]),
         ],
     ) {

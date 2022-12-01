@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\RoadRunnerBridge;
 
-use Installer\Package\Generator\Context;
-use Installer\Package\Generator\GeneratorInterface;
+use Installer\Generator\Context;
+use Installer\Generator\GeneratorInterface;
 use Spiral\Bootloader\CommandBootloader as FrameworkCommand;
-use Spiral\Bootloader\Security\GuardBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\CacheBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\CommandBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\HttpBootloader;
@@ -19,9 +18,15 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel->addUse('Spiral\RoadRunnerBridge\Bootloader', 'RoadRunnerBridge');
 
-        $context->kernel->loadAppend(CacheBootloader::class, GuardBootloader::class);
-        $context->kernel->loadAppend(HttpBootloader::class, CacheBootloader::class);
-        $context->kernel->loadAppend(QueueBootloader::class, HttpBootloader::class);
-        $context->kernel->loadAppend(CommandBootloader::class, FrameworkCommand::class);
+        $context->kernel->load->addGroup(
+            bootloaders: [
+                CacheBootloader::class,
+                HttpBootloader::class,
+                QueueBootloader::class,
+            ],
+            comment: 'RoadRunner',
+            priority: 3
+        );
+        $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
     }
 }

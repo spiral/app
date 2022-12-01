@@ -15,7 +15,7 @@ enum Packages: string
     case CycleBridge = 'spiral/cycle-bridge:^2.1';
     case DoctrineCollections = 'doctrine/collections:^1.8';
     case IlluminateCollections = 'illuminate/collections:^9.0';
-    case RoadRunnerGrpc = 'spiral/roadrunner-grpc:^2.0';
+    case RoadRunnerGRPC = 'spiral/roadrunner-grpc:^2.0';
     case SpiralValidator = 'spiral/validator:^1.1';
     case SymfonyValidator = 'spiral-packages/symfony-validator:^1.2';
     case LaravelValidator = 'spiral-packages/laravel-validator:^1.1';
