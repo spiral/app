@@ -12,8 +12,7 @@ final class RoadRunnerBridge extends Package
         array $generators = [
             new Bootloaders(),
         ]
-    )
-    {
+    ) {
         parent::__construct(
             package: Packages::RoadRunnerBridge,
             generators: $generators
