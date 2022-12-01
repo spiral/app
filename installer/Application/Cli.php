@@ -39,10 +39,7 @@ final class Cli extends AbstractApplication
             autoload: $autoload,
             autoloadDev: $autoloadDev,
             questions: $questions,
-            resources: $resources,
-            commands: [
-                'rr get-binary',
-            ]
+            resources: $resources
         );
     }
 

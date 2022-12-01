@@ -48,7 +48,8 @@
         "post-create-project-cmd": [
             "php -r \"copy('.env.sample', '.env');\"",
             "php app.php encrypt:key -m .env",
-            "php app.php configure -vv"
+            "php app.php configure -vv",
+            "rr get-binary"
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",

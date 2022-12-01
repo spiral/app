@@ -51,9 +51,6 @@ final class Web extends AbstractApplication
             generators: [
                 new WebApplicationBootloaders(),
             ],
-            commands: [
-                'rr get-binary',
-            ]
         );
     }
 
