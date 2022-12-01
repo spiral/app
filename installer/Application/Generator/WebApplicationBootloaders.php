@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Application\Generator;
 
+use App\Application\Bootloader\RoutesBootloader;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Spiral\Bootloader\Http;
@@ -34,6 +35,14 @@ final class WebApplicationBootloaders implements GeneratorInterface
             ],
             comment: 'HTTP extensions',
             priority: 6
+        );
+
+        $context->kernel->load->addGroup(
+            bootloaders: [
+                RoutesBootloader::class,
+            ],
+            comment: 'Configure route groups, middleware for route groups',
+            priority: 101
         );
     }
 }
