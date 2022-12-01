@@ -6,6 +6,7 @@ namespace Installer\Generator;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
+use Spiral\Bootloader\CommandBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Files\Files;
@@ -35,7 +36,9 @@ final class KernelConfigurator
         $this->declaration = FileDeclaration::fromCode(\file_get_contents($this->reflection->getFileName()));
         $this->namespace = $this->declaration->getNamespaces()->get($this->reflection->getNamespaceName());
 
-        $this->addRequiredBootloaders();
+        $this->addRequiredSystemBootloaders();
+        $this->addRequiredLoadBootloaders();
+        $this->addRequiredAppBootloaders();
     }
 
     public function __destruct()
@@ -56,14 +59,11 @@ final class KernelConfigurator
         $this->namespace->addUse($name, $alias);
     }
 
-    private function addRequiredBootloaders(): void
+    private function addRequiredSystemBootloaders(): void
     {
         $this->addUse(CoreBootloader::class);
         $this->addUse(TokenizerBootloader::class);
         $this->addUse(DotenvBootloader::class);
-        $this->addUse(MonologBootloader::class);
-        $this->addUse(PrototypeBootloader::class);
-        $this->addUse('Spiral\Bootloader', 'Framework');
 
         $this->system->addGroup(
             bootloaders: [
@@ -72,6 +72,12 @@ final class KernelConfigurator
                 DotenvBootloader::class,
             ],
         );
+    }
+
+    private function addRequiredLoadBootloaders(): void
+    {
+        $this->addUse(MonologBootloader::class);
+        $this->addUse('Spiral\Bootloader', 'Framework');
 
         $this->load->addGroup(
             bootloaders: [
@@ -88,6 +94,19 @@ final class KernelConfigurator
             comment: 'Core Services',
             priority: 4
         );
+
+        $this->load->addGroup(
+            bootloaders: [
+                CommandBootloader::class,
+            ],
+            comment: 'Console commands',
+            priority: 14
+        );
+    }
+
+    private function addRequiredAppBootloaders(): void
+    {
+        $this->addUse(PrototypeBootloader::class);
 
         $this->app->addGroup(
             bootloaders: [

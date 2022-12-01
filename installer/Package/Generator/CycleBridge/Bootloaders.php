@@ -6,6 +6,7 @@ namespace Installer\Package\Generator\CycleBridge;
 
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
+use Spiral\Bootloader\CommandBootloader as FrameworkCommands;
 use Spiral\Cycle\Bootloader\AnnotatedBootloader;
 use Spiral\Cycle\Bootloader\CommandBootloader;
 use Spiral\Cycle\Bootloader\CycleOrmBootloader;
@@ -32,10 +33,10 @@ final class Bootloaders implements GeneratorInterface
                 SchemaBootloader::class,
                 CycleOrmBootloader::class,
                 AnnotatedBootloader::class,
-                CommandBootloader::class,
             ],
             comment: 'ORM',
             priority: 8
         );
+        $context->kernel->load->append(CommandBootloader::class, FrameworkCommands::class);
     }
 }

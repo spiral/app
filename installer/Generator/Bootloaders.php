@@ -50,7 +50,7 @@ final class Bootloaders
 
     /**
      * @param class-string $bootloader
-     * @param class-string $afterBootloader
+     * @param class-string $beforeBootloader
      */
     public function prepend(string $bootloader, string $beforeBootloader): void
     {
