@@ -6,6 +6,7 @@ namespace Installer\Generator;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
+use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Files\Files;
 use Spiral\Monolog\Bootloader\MonologBootloader;
@@ -62,6 +63,7 @@ final class KernelConfigurator
         $this->addUse(DotenvBootloader::class);
         $this->addUse(MonologBootloader::class);
         $this->addUse(PrototypeBootloader::class);
+        $this->addUse('Spiral\Bootloader', 'Framework');
 
         $this->system->addGroup(
             bootloaders: [
@@ -77,6 +79,14 @@ final class KernelConfigurator
                 ExceptionHandlerBootloader::class,
             ],
             comment: 'Logging and exceptions handling',
+        );
+
+        $this->load->addGroup(
+            bootloaders: [
+                SnapshotsBootloader::class,
+            ],
+            comment: 'Core Services',
+            priority: 4
         );
 
         $this->app->addGroup(
