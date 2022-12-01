@@ -49,7 +49,7 @@ final class Web extends AbstractApplication
             questions: $questions,
             resources: $resources,
             generators: [
-                new WebApplicationBootloaders()
+                new WebApplicationBootloaders(),
             ]
         );
     }
