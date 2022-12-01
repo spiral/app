@@ -12,6 +12,9 @@ final class TemporalBridge extends Package
     {
         parent::__construct(
             package: Packages::TemporalBridge,
+            resources: [
+                'packages/temporal' => '.',
+            ],
             generators: [
                 new Bootloaders(),
             ]

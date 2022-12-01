@@ -53,4 +53,11 @@ interface ApplicationInterface
      * @return non-empty-string[]
      */
     public function getCommands(): array;
+
+    public function useRoadRunnerPlugin(string ... $name): void;
+
+    /**
+     * @return array<non-empty-string, bool>
+     */
+    public function getRoadRunnerPlugins(): array;
 }

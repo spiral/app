@@ -50,6 +50,9 @@ final class Web extends AbstractApplication
             resources: $resources,
             generators: [
                 new WebApplicationBootloaders(),
+            ],
+            commands: [
+                'rr get-binary',
             ]
         );
     }

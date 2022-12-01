@@ -87,10 +87,15 @@ final class Configurator extends AbstractInstaller
 
     private function runCommands(): void
     {
-        foreach ($this->application->getCommands() as $command) {
-            (new Process(\explode(' ', $command)))->run(function (string $type, mixed $data) {
-                $this->io->write($data);
-            });
+        $plugins = '';
+        $rrPlugins = $this->application->getRoadRunnerPlugins();
+
+        if (\count($rrPlugins) > 0) {
+            $plugins = ' -p ' . \implode(' -p ', $rrPlugins);
         }
+
+        (new Process(\explode(' ', 'rr make-config' . $plugins)))->run(function (string $type, mixed $data) {
+            $this->io->write($data);
+        });
     }
 }

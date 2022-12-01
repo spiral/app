@@ -27,6 +27,9 @@ final class Bootloaders implements GeneratorInterface
             comment: 'RoadRunner',
             priority: 3
         );
+
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
+
+        $context->application->useRoadRunnerPlugin('http', 'jobs', 'kv');
     }
 }

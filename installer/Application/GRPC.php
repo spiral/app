@@ -50,7 +50,8 @@ final class GRPC extends AbstractApplication
                 new GRPCBootloader(),
             ],
             commands: [
-                'composer rr:download-protoc',
+                'rr get-binary',
+                'rr download-protoc-binary',
             ]
         );
     }

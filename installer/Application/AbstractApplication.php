@@ -21,6 +21,11 @@ abstract class AbstractApplication implements ApplicationInterface
     private array $packages = [];
 
     /**
+     * @var array<non-empty-string, bool>
+     */
+    private array $roadRunnerPlugins = [];
+
+    /**
      * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
@@ -112,6 +117,18 @@ abstract class AbstractApplication implements ApplicationInterface
     public function getCommands(): array
     {
         return $this->commands;
+    }
+
+    public function useRoadRunnerPlugin(string ...$name): void
+    {
+        foreach ($name as $n) {
+            $this->roadRunnerPlugins[$n] = true;
+        }
+    }
+
+    public function getRoadRunnerPlugins(): array
+    {
+        return \array_keys($this->roadRunnerPlugins);
     }
 
     /**

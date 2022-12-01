@@ -22,6 +22,7 @@ return [
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\TemporalBridge(),
+            new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
         ],
         resources: [
@@ -34,6 +35,7 @@ return [
     new Application\Cli(
         questions: [
             new Question\CycleBridge(),
+            new Question\RoadRunnerMetrics(),
         ],
         resources: [
             'common' => '',
@@ -44,7 +46,7 @@ return [
             new Package\ExtMbString(),
             new Package\ExtGRPC(),
             new Package\GRPC(),
-            new Package\RoadRunnerBridge(),
+            new Package\RoadRunnerBridge([]),
         ],
         questions: [
             new Question\CycleBridge(),
@@ -52,6 +54,7 @@ return [
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\TemporalBridge(),
+            new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
         ],
         resources: [
@@ -61,15 +64,17 @@ return [
         ]
     ),
     new Application\CustomBuild(
+        name: 'Custom build',
         questions: [
             new Question\ExtMbString(),
             new Question\Psr7Implementation(),
             new Question\Sapi(),
             new Question\RoadRunnerBridge(),
-            new Question\RoadRunnerGRPC(),
             new Question\CycleBridge(),
             new Question\CycleCollections(),
+            new Question\RoadRunnerGRPC(),
             new Question\TemporalBridge(),
+            new Question\RoadRunnerMetrics(),
             new Question\TemplateEngine(),
             new Question\Validator(),
             new Question\EventBus(),

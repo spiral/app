@@ -71,8 +71,12 @@ final class Installer extends AbstractInstaller
         $installer->io->write('<info>Setting up application files</info>');
         $installer->setApplicationFiles();
 
+        $installer->io->write('<info>Setting up application commands</info>');
+        $installer->setApplicationCommands();
+
         $installer->removeInstallerFromDefinition();
         $installer->updateRootPackage();
+
         $installer->finalize();
     }
 
@@ -87,6 +91,13 @@ final class Installer extends AbstractInstaller
     {
         foreach ($this->application->getResources() as $source => $target) {
             $this->copyResource($source, $target);
+        }
+    }
+
+    private function setApplicationCommands(): void
+    {
+        foreach ($this->application->getCommands() as $command) {
+            $this->composerDefinition['scripts']['post-create-project-cmd'][] = $command;
         }
     }
 

@@ -24,5 +24,7 @@ final class Bootloaders implements GeneratorInterface
             comment: 'Temporal',
             priority: 13
         );
+
+        $context->application->useRoadRunnerPlugin('temporal');
     }
 }

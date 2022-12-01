@@ -33,7 +33,17 @@ final class Cli extends AbstractApplication
         array $questions = [],
         array $resources = []
     ) {
-        parent::__construct($name, $packages, $autoload, $autoloadDev, $questions, $resources);
+        parent::__construct(
+            name: $name,
+            packages: $packages,
+            autoload: $autoload,
+            autoloadDev: $autoloadDev,
+            questions: $questions,
+            resources: $resources,
+            commands: [
+                'rr get-binary',
+            ]
+        );
     }
 
     public function getKernelClass(): string
