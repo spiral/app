@@ -44,6 +44,7 @@ return [
             new Question\RoadRunnerMetrics(),
         ],
         generators: [
+            new Generator\CliApplicationBootloaders(),
             new Generator\ViewRenderer(),
         ],
         resources: [
@@ -67,6 +68,7 @@ return [
             new Question\SentryBridge(),
         ],
         generators: [
+            new Generator\GRPCApplicationBootloaders(),
             new GRPCBootloader(),
             new Generator\ViewRenderer(),
         ],
@@ -95,6 +97,7 @@ return [
             new Question\SentryBridge(),
         ],
         generators: [
+            new Generator\CustomApplicationBootloaders(),
             new Generator\ViewRenderer(),
         ],
         resources: [
