@@ -240,6 +240,7 @@ final class Installer extends AbstractInstaller
         $this->rootPackage->setAutoload($autoload);
         $this->rootPackage->setDevAutoload($this->application->getAutoloadDev());
         $this->rootPackage->setExtra($this->composerDefinition['extra'] ?? []);
+        $this->rootPackage->setScripts($this->composerDefinition['scripts']);
     }
 
     private function removeInstallerFromDefinition(): void
