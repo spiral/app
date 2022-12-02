@@ -45,6 +45,11 @@
         "pre-update-cmd": "Installer\\Installer::install",
         "post-install-cmd": "Installer\\Configurator::configure",
         "post-update-cmd": "Installer\\Configurator::configure",
+        "post-create-project-cmd": [
+            "php app.php encrypt:key -m .env",
+            "php app.php configure -vv",
+            "rr get-binary"
+        ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
         "psalm:config": "psalm",

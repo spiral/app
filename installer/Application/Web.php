@@ -49,12 +49,7 @@ final class Web extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: $generators,
-            commands: [
-                'php app.php encrypt:key -m .env',
-                'php app.php configure -vv',
-                'rr get-binary',
-            ]
+            generators: $generators
         );
     }
 }

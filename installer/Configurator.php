@@ -44,6 +44,7 @@ final class Configurator extends AbstractInstaller
         $conf->resource->createEnv();
         $conf->runGenerators();
         $conf->createRoadRunnerConfig();
+        $conf->runCommands();
     }
 
     private function runGenerators(): void
@@ -89,6 +90,15 @@ final class Configurator extends AbstractInstaller
             resource: $this->resource,
             composerDefinition: $this->composerDefinition
         );
+    }
+
+    private function runCommands(): void
+    {
+        foreach ($this->application->getCommands() as $command) {
+            (new Process(\explode(' ', $command)))->run(function (string $type, mixed $data) {
+                $this->io->write($data);
+            });
+        }
     }
 
     private function createRoadRunnerConfig(): void
