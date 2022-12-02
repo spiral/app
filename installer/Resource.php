@@ -8,6 +8,8 @@ use Composer\IO\IOInterface;
 
 final class Resource
 {
+    private const ENV_SAMPLE = '.env.sample';
+
     public function __construct(
         private readonly string $source,
         private readonly string $root,
@@ -22,18 +24,14 @@ final class Resource
                 $handle = \opendir($source);
                 while ($file = \readdir($handle)) {
                     if ($file !== '.' && $file !== '..') {
+                        $destination = \rtrim($destination, '/');
                         if (\is_dir($source . '/' . $file)) {
                             if (!\is_dir($destination . '/' . $file)) {
                                 \mkdir($destination . '/' . $file, 0775, true);
                             }
                             $copy($source . '/' . $file, $destination . '/' . $file);
                         } else {
-                            $this->io?->write(
-                                \sprintf(
-                                    '  - Copying <info>%s</info>',
-                                    \str_replace('\\', '/', $destination) . '/' . $file
-                                )
-                            );
+                            $this->writeInfo($destination . '/' . $file);
                             if (!\is_dir($destination)) {
                                 \mkdir($destination, 0775, true);
                             }
@@ -43,7 +41,7 @@ final class Resource
                 }
                 \closedir($handle);
             } else {
-                $this->io?->write(\sprintf('  - Copying <info>%s</info>', \str_replace('\\', '/', $destination)));
+                $this->writeInfo($destination);
                 \copy($source, $destination);
             }
         };
@@ -51,8 +49,20 @@ final class Resource
         $copy($this->source . $resource, $this->root . $target);
     }
 
+    public function createEnv(): void
+    {
+        $this->writeInfo($this->root . '.env');
+
+        \copy($this->root . self::ENV_SAMPLE, $this->root . '.env');
+    }
+
     public function getSource(): string
     {
         return $this->source;
+    }
+
+    private function writeInfo(string $destination): void
+    {
+        $this->io?->write(\sprintf('  - Copying <info>%s</info>', $destination));
     }
 }

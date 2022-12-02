@@ -30,7 +30,7 @@ abstract class AbstractInstaller
     ) {
         $composerFile = Factory::getComposerFile();
 
-        $this->projectRoot = $projectRoot ?? \realpath(\dirname($composerFile));
+        $this->projectRoot = $projectRoot ?? \str_replace('\\', '/', \realpath(\dirname($composerFile)));
         $this->projectRoot = \rtrim($this->projectRoot, '/\\') . '/';
 
         $composerJson = new JsonFile($composerFile);

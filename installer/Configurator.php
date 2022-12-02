@@ -41,6 +41,7 @@ final class Configurator extends AbstractInstaller
     {
         $conf = new self($event->getIO());
 
+        $conf->resource->createEnv();
         $conf->runGenerators();
         $conf->runCommands();
     }
