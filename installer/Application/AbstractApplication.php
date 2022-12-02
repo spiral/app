@@ -119,6 +119,9 @@ abstract class AbstractApplication implements ApplicationInterface
         return $this->commands;
     }
 
+    /**
+     * @param non-empty-string ...$name
+     */
     public function useRoadRunnerPlugin(string ...$name): void
     {
         foreach ($name as $n) {
@@ -126,6 +129,9 @@ abstract class AbstractApplication implements ApplicationInterface
         }
     }
 
+    /**
+     * @return list<non-empty-string>
+     */
     public function getRoadRunnerPlugins(): array
     {
         return \array_keys($this->roadRunnerPlugins);

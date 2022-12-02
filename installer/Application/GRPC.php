@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Installer\Application;
 
-use App\Application\Kernel;
 use Composer\Package\PackageInterface;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
@@ -53,10 +52,5 @@ final class GRPC extends AbstractApplication
                 'rr download-protoc-binary',
             ]
         );
-    }
-
-    public function getKernelClass(): string
-    {
-        return Kernel::class;
     }
 }

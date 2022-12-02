@@ -40,11 +40,6 @@ interface ApplicationInterface
     public function getResources(): array;
 
     /**
-     * @return class-string
-     */
-    public function getKernelClass(): string;
-
-    /**
      * @return \Generator<Package|null, GeneratorInterface|class-string<GeneratorInterface>>
      */
     public function getGenerators(): \Generator;
@@ -54,10 +49,13 @@ interface ApplicationInterface
      */
     public function getCommands(): array;
 
+    /**
+     * @param non-empty-string ...$name
+     */
     public function useRoadRunnerPlugin(string ...$name): void;
 
     /**
-     * @return array<non-empty-string, bool>
+     * @return list<non-empty-string>
      */
     public function getRoadRunnerPlugins(): array;
 }

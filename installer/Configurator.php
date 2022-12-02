@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
+use App\Application\Kernel;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Installer\Application\ApplicationInterface;
@@ -81,7 +82,7 @@ final class Configurator extends AbstractInstaller
     {
         $this->context = new Context(
             application: $this->application,
-            kernel: new KernelConfigurator($this->application->getKernelClass()),
+            kernel: new KernelConfigurator(Kernel::class),
             exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
             applicationRoot: $this->projectRoot,
             resource: $this->resource,
