@@ -18,8 +18,8 @@ abstract class AbstractInstaller
      * @var array<int|string, ApplicationInterface|list<string>>
      */
     protected array $config;
-
     protected string $projectRoot;
+    protected Resource $resource;
 
     /**
      * @throws ParsingException
@@ -37,5 +37,7 @@ abstract class AbstractInstaller
         $this->composerDefinition = $composerJson->read();
 
         $this->config = require __DIR__ . '/config.php';
+
+        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/', $this->projectRoot, $io);
     }
 }

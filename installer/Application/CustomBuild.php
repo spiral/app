@@ -6,6 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -19,6 +20,7 @@ final class CustomBuild extends AbstractApplication
      * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
+     * @param GeneratorInterface[] $generators
      * @param QuestionInterface[] $questions
      */
     public function __construct(
@@ -31,9 +33,18 @@ final class CustomBuild extends AbstractApplication
         ],
         array $autoloadDev = [],
         array $questions = [],
+        array $generators = [],
         array $resources = []
     ) {
-        parent::__construct($name, $packages, $autoload, $autoloadDev, $questions, $resources);
+        parent::__construct(
+            name: $name,
+            packages: $packages,
+            autoload: $autoload,
+            autoloadDev: $autoloadDev,
+            questions: $questions,
+            resources: $resources,
+            generators: $generators
+        );
     }
 
     public function getKernelClass(): string

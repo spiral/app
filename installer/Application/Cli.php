@@ -6,6 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -19,6 +20,7 @@ final class Cli extends AbstractApplication
      * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
+     * @param GeneratorInterface[] $generators
      * @param QuestionInterface[] $questions
      */
     public function __construct(
@@ -31,6 +33,7 @@ final class Cli extends AbstractApplication
         ],
         array $autoloadDev = [],
         array $questions = [],
+        array $generators = [],
         array $resources = []
     ) {
         parent::__construct(
@@ -39,7 +42,8 @@ final class Cli extends AbstractApplication
             autoload: $autoload,
             autoloadDev: $autoloadDev,
             questions: $questions,
-            resources: $resources
+            resources: $resources,
+            generators: $generators
         );
     }
 

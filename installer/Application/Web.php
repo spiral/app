@@ -6,7 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
-use Installer\Application\Generator\WebApplicationBootloaders;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -20,6 +20,7 @@ final class Web extends AbstractApplication
      * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
+     * @param GeneratorInterface[] $generators
      * @param QuestionInterface[] $questions
      */
     public function __construct(
@@ -39,7 +40,8 @@ final class Web extends AbstractApplication
             ],
         ],
         array $questions = [],
-        array $resources = [],
+        array $generators = [],
+        array $resources = []
     ) {
         parent::__construct(
             name: $name,
@@ -48,9 +50,7 @@ final class Web extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: [
-                new WebApplicationBootloaders(),
-            ],
+            generators: $generators,
         );
     }
 

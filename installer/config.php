@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Installer\Application;
+use Installer\Application\Generator;
 use Installer\Package;
+use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
 use Installer\Question;
 
 return [
@@ -25,6 +27,10 @@ return [
             new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
         ],
+        generators: [
+            new Generator\WebApplicationBootloaders(),
+            new Generator\ViewRenderer(),
+        ],
         resources: [
             'common' => '',
             'applications/web/app' => 'app',
@@ -36,6 +42,9 @@ return [
         questions: [
             new Question\CycleBridge(),
             new Question\RoadRunnerMetrics(),
+        ],
+        generators: [
+            new Generator\ViewRenderer(),
         ],
         resources: [
             'common' => '',
@@ -56,6 +65,10 @@ return [
             new Question\TemporalBridge(),
             new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
+        ],
+        generators: [
+            new GRPCBootloader(),
+            new Generator\ViewRenderer(),
         ],
         resources: [
             'common' => '',
@@ -80,6 +93,9 @@ return [
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\SentryBridge(),
+        ],
+        generators: [
+            new Generator\ViewRenderer(),
         ],
         resources: [
             'common' => '',

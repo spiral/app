@@ -6,7 +6,7 @@ namespace Installer\Application;
 
 use App\Application\Kernel;
 use Composer\Package\PackageInterface;
-use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 
@@ -20,6 +20,7 @@ final class GRPC extends AbstractApplication
      * @param Package[] $packages
      * @param AutoloadRules $autoload
      * @param DevAutoloadRules $autoloadDev
+     * @param GeneratorInterface[] $generators
      * @param QuestionInterface[] $questions
      */
     public function __construct(
@@ -37,6 +38,7 @@ final class GRPC extends AbstractApplication
             ],
         ],
         array $questions = [],
+        array $generators = [],
         array $resources = []
     ) {
         parent::__construct(
@@ -46,9 +48,7 @@ final class GRPC extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: [
-                new GRPCBootloader(),
-            ],
+            generators: $generators,
             commands: [
                 'rr download-protoc-binary',
             ]

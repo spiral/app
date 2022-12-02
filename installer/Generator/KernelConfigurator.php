@@ -7,23 +7,14 @@ namespace Installer\Generator;
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader\CommandBootloader;
-use Spiral\Bootloader\Security\EncrypterBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
-use Spiral\Files\Files;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
-use Spiral\Reactor\FileDeclaration;
-use Spiral\Reactor\Partial\PhpNamespace;
-use Spiral\Reactor\Writer;
 use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 
-final class KernelConfigurator
+final class KernelConfigurator extends AbstractConfigurator
 {
-    private FileDeclaration $declaration;
-    private \ReflectionClass $reflection;
-    private PhpNamespace $namespace;
-
     /**
      * @param class-string $kernelClass
      */
@@ -33,9 +24,7 @@ final class KernelConfigurator
         public readonly Bootloaders $load = new Bootloaders(BootloaderPlaces::Load),
         public readonly Bootloaders $app = new Bootloaders(BootloaderPlaces::App)
     ) {
-        $this->reflection = new \ReflectionClass($kernelClass);
-        $this->declaration = FileDeclaration::fromCode(\file_get_contents($this->reflection->getFileName()));
-        $this->namespace = $this->declaration->getNamespaces()->get($this->reflection->getNamespaceName());
+        parent::__construct($kernelClass);
 
         $this->addRequiredSystemBootloaders();
         $this->addRequiredLoadBootloaders();
@@ -52,12 +41,7 @@ final class KernelConfigurator
             );
         }
 
-        (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
-    }
-
-    public function addUse(string $name, ?string $alias = null): void
-    {
-        $this->namespace->addUse($name, $alias);
+        $this->write();
     }
 
     private function addRequiredSystemBootloaders(): void
@@ -86,14 +70,6 @@ final class KernelConfigurator
                 ExceptionHandlerBootloader::class,
             ],
             comment: 'Logging and exceptions handling',
-        );
-
-        $this->load->addGroup(
-            bootloaders: [
-                EncrypterBootloader::class,
-            ],
-            comment: 'Security',
-            priority: 3
         );
 
         $this->load->addGroup(

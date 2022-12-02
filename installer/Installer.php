@@ -24,7 +24,6 @@ final class Installer extends AbstractInstaller
     private ApplicationInterface $application;
     private JsonFile $composerJson;
     private RootPackageInterface $rootPackage;
-    private string $installerSource;
 
     /** @var Link[] */
     private array $composerRequires = [];
@@ -51,8 +50,6 @@ final class Installer extends AbstractInstaller
         $this->composerRequires = $this->rootPackage->getRequires();
         $this->composerDevRequires = $this->rootPackage->getDevRequires();
         $this->stabilityFlags = $this->rootPackage->getStabilityFlags();
-
-        $this->installerSource = \realpath(__DIR__) . '/Resources/';
     }
 
     public static function install(Event $event): void
@@ -90,7 +87,7 @@ final class Installer extends AbstractInstaller
     private function setApplicationFiles(): void
     {
         foreach ($this->application->getResources() as $source => $target) {
-            $this->copyResource($source, $target);
+            $this->resource->copy($source, $target);
         }
     }
 
@@ -228,7 +225,7 @@ final class Installer extends AbstractInstaller
 
         // Package resources
         foreach ($package->getResources() as $source => $target) {
-            $this->copyResource($source, $target);
+            $this->resource->copy($source, $target);
         }
     }
 
@@ -255,42 +252,6 @@ final class Installer extends AbstractInstaller
             $this->composerDefinition['scripts']['pre-update-cmd'],
             $this->composerDefinition['scripts']['pre-install-cmd']
         );
-    }
-
-    private function copyResource(string $resource, string $target): void
-    {
-        $copy = function (string $source, string $destination) use (&$copy): void {
-            if (\is_dir($source)) {
-                $handle = \opendir($source);
-                while ($file = \readdir($handle)) {
-                    if ($file !== '.' && $file !== '..') {
-                        if (\is_dir($source . '/' . $file)) {
-                            if (!\is_dir($destination . '/' . $file)) {
-                                \mkdir($destination . '/' . $file, 0775, true);
-                            }
-                            $copy($source . '/' . $file, $destination . '/' . $file);
-                        } else {
-                            $this->io->write(
-                                \sprintf(
-                                    '  - Copying <info>%s</info>',
-                                    \str_replace('\\', '/', $destination) . '/' . $file
-                                )
-                            );
-                            if (!\is_dir($destination)) {
-                                \mkdir($destination, 0775, true);
-                            }
-                            \copy($source . '/' . $file, $destination . '/' . $file);
-                        }
-                    }
-                }
-                \closedir($handle);
-            } else {
-                $this->io->write(\sprintf('  - Copying <info>%s</info>', \str_replace('\\', '/', $destination)));
-                \copy($source, $destination);
-            }
-        };
-
-        $copy($this->installerSource . $resource, $this->projectRoot . $target);
     }
 
     private function finalize(): void
