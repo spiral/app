@@ -50,6 +50,11 @@ final class Web extends AbstractApplication
             questions: $questions,
             resources: $resources,
             generators: $generators,
+            commands: [
+                'php app.php encrypt:key -m .env',
+                'php app.php configure -vv',
+                'rr get-binary'
+            ]
         );
     }
 }

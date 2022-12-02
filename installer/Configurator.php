@@ -43,7 +43,7 @@ final class Configurator extends AbstractInstaller
 
         $conf->resource->createEnv();
         $conf->runGenerators();
-        $conf->runCommands();
+        $conf->createRoadRunnerConfig();
     }
 
     private function runGenerators(): void
@@ -91,7 +91,7 @@ final class Configurator extends AbstractInstaller
         );
     }
 
-    private function runCommands(): void
+    private function createRoadRunnerConfig(): void
     {
         $plugins = '';
         $rrPlugins = $this->application->getRoadRunnerPlugins();
