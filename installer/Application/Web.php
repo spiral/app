@@ -53,7 +53,7 @@ final class Web extends AbstractApplication
             commands: [
                 'php app.php encrypt:key -m .env',
                 'php app.php configure -vv',
-                'rr get-binary'
+                'rr get-binary',
             ]
         );
     }
