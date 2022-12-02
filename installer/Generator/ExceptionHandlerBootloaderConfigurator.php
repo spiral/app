@@ -13,18 +13,18 @@ final class ExceptionHandlerBootloaderConfigurator extends AbstractConfigurator
     private const BINDINGS_CONSTANT = 'BINDINGS';
 
     private array $bindings = [
-        SuppressErrorsInterface::class => EnvSuppressErrors::class
+        SuppressErrorsInterface::class => EnvSuppressErrors::class,
     ];
-
-    public function addBinding(string $alias, string $resolver): void
-    {
-        $this->bindings[$alias] = $resolver;
-    }
 
     public function __destruct()
     {
         $this->addBindings();
         $this->write();
+    }
+
+    public function addBinding(string $alias, string $resolver): void
+    {
+        $this->bindings[$alias] = $resolver;
     }
 
     private function addBindings(): void
