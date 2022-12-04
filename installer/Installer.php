@@ -7,7 +7,6 @@ namespace Installer;
 use Composer\Composer;
 use Composer\Factory;
 use Composer\IO\IOInterface;
-use Composer\Json\JsonFile;
 use Composer\Package\BasePackage;
 use Composer\Package\Link;
 use Composer\Package\RootPackageInterface;
@@ -22,7 +21,6 @@ final class Installer extends AbstractInstaller
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
     private ApplicationInterface $application;
-    private JsonFile $composerJson;
     private RootPackageInterface $rootPackage;
 
     /** @var Link[] */
@@ -44,8 +42,6 @@ final class Installer extends AbstractInstaller
     ) {
         parent::__construct($io, $projectRoot);
 
-        $composerFile = Factory::getComposerFile();
-        $this->composerJson = new JsonFile($composerFile);
         $this->rootPackage = $composer->getPackage();
         $this->composerRequires = $this->rootPackage->getRequires();
         $this->composerDevRequires = $this->rootPackage->getDevRequires();

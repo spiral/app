@@ -45,6 +45,8 @@ final class Configurator extends AbstractInstaller
         $conf->runGenerators();
         $conf->createRoadRunnerConfig();
         $conf->runCommands();
+        $conf->removeInstaller();
+        $conf->finalize();
     }
 
     private function runGenerators(): void
@@ -113,5 +115,26 @@ final class Configurator extends AbstractInstaller
         (new Process(\explode(' ', 'rr make-config' . $plugins)))->run(function (string $type, mixed $data) {
             $this->io->write($data);
         });
+    }
+
+    private function removeInstaller(): void
+    {
+        $this->io->write('<info>Remove Configurator from composer.json</info>');
+
+        unset(
+            $this->composerDefinition['scripts']['post-install-cmd'],
+            $this->composerDefinition['scripts']['post-update-cmd']
+        );
+
+        $this->io->write('<info>Remove Installer files</info>');
+        $this->recursiveRmdir($this->projectRoot . 'installer');
+    }
+
+    private function finalize(): void
+    {
+        $this->composerDefinition['autoload'] = $this->application->getAutoload();
+        $this->composerDefinition['autoload-dev'] = $this->application->getAutoloadDev();
+
+        $this->composerJson->write($this->composerDefinition);
     }
 }

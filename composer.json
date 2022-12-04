@@ -48,7 +48,8 @@
         "post-create-project-cmd": [
             "php app.php encrypt:key -m .env",
             "php app.php configure -vv",
-            "rr get-binary"
+            "rr get-binary",
+            "composer dump-autoload"
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
