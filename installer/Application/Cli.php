@@ -32,7 +32,11 @@ final class Cli extends AbstractApplication
                 'App\\' => 'app/src',
             ],
         ],
-        array $autoloadDev = [],
+        array $autoloadDev = [
+            'psr-4' => [
+                'Tests\\' => 'tests',
+            ],
+        ],
         array $questions = [],
         array $generators = [
             new CliApplicationBootloaders(),
