@@ -13,6 +13,7 @@ final class StemplerBridge extends Package
         parent::__construct(
             package: Packages::StemplerBridge,
             resources: [
+                'packages/stempler/config' => 'app/config',
                 'packages/stempler/views' => 'app/views',
             ],
             generators: [
