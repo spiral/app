@@ -5,8 +5,15 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
+use Installer\Application\Generator\GRPCApplicationBootloaders;
+use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
+use Installer\Package\ExtGRPC;
+use Installer\Package\ExtMbString;
+use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
+use Installer\Package\GRPC as PackageGRPC;
 use Installer\Package\Package;
+use Installer\Package\RoadRunnerBridge;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -24,7 +31,12 @@ final class GRPC extends AbstractApplication
      */
     public function __construct(
         string $name = 'gRPC',
-        array $packages = [],
+        array $packages = [
+            new ExtMbString(),
+            new ExtGRPC(),
+            new PackageGRPC(),
+            new RoadRunnerBridge([]),
+        ],
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
@@ -37,8 +49,16 @@ final class GRPC extends AbstractApplication
             ],
         ],
         array $questions = [],
-        array $generators = [],
-        array $resources = []
+        array $generators = [
+            new GRPCApplicationBootloaders(),
+            new GRPCBootloader(),
+            new ViewRenderer(),
+        ],
+        array $resources = [
+            'common' => '',
+            'applications/grpc/app' => 'app',
+            'applications/grpc/proto' => 'proto',
+        ]
     ) {
         parent::__construct(
             name: $name,

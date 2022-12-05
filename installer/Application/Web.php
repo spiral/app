@@ -5,8 +5,14 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
+use Installer\Application\Generator\ViewRenderer;
+use Installer\Application\Generator\WebApplicationBootloaders;
 use Installer\Generator\GeneratorInterface;
+use Installer\Package\ExtMbString;
+use Installer\Package\NyholmBridge;
 use Installer\Package\Package;
+use Installer\Package\RoadRunnerBridge;
+use Installer\Package\SapiBridge;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -24,7 +30,12 @@ final class Web extends AbstractApplication
      */
     public function __construct(
         string $name = 'Web',
-        array $packages = [],
+        array $packages = [
+            new ExtMbString(),
+            new RoadRunnerBridge(),
+            new NyholmBridge(),
+            new SapiBridge(),
+        ],
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
@@ -39,8 +50,16 @@ final class Web extends AbstractApplication
             ],
         ],
         array $questions = [],
-        array $generators = [],
-        array $resources = []
+        array $generators = [
+            new WebApplicationBootloaders(),
+            new ViewRenderer(),
+        ],
+        array $resources = [
+            'common' => '',
+            'applications/web/app' => 'app',
+            'applications/web/public' => 'public',
+            'applications/web/tests' => 'tests',
+        ]
     ) {
         parent::__construct(
             name: $name,

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
+use Installer\Application\Generator\CliApplicationBootloaders;
+use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
@@ -32,8 +34,13 @@ final class Cli extends AbstractApplication
         ],
         array $autoloadDev = [],
         array $questions = [],
-        array $generators = [],
-        array $resources = []
+        array $generators = [
+            new CliApplicationBootloaders(),
+            new ViewRenderer(),
+        ],
+        array $resources = [
+            'common' => '',
+        ]
     ) {
         parent::__construct(
             name: $name,

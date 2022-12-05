@@ -3,19 +3,10 @@
 declare(strict_types=1);
 
 use Installer\Application;
-use Installer\Application\Generator;
-use Installer\Package;
-use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
 use Installer\Question;
 
 return [
     new Application\Web(
-        packages: [
-            new Package\ExtMbString(),
-            new Package\RoadRunnerBridge(),
-            new Package\NyholmBridge(),
-            new Package\SapiBridge(),
-        ],
         questions: [
             new Question\CycleBridge(),
             new Question\CycleCollections(),
@@ -26,38 +17,15 @@ return [
             new Question\TemporalBridge(),
             new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
-        ],
-        generators: [
-            new Generator\WebApplicationBootloaders(),
-            new Generator\ViewRenderer(),
-        ],
-        resources: [
-            'common' => '',
-            'applications/web/app' => 'app',
-            'applications/web/public' => 'public',
-            'applications/web/tests' => 'tests',
         ]
     ),
     new Application\Cli(
         questions: [
             new Question\CycleBridge(),
             new Question\RoadRunnerMetrics(),
-        ],
-        generators: [
-            new Generator\CliApplicationBootloaders(),
-            new Generator\ViewRenderer(),
-        ],
-        resources: [
-            'common' => '',
         ]
     ),
     new Application\GRPC(
-        packages: [
-            new Package\ExtMbString(),
-            new Package\ExtGRPC(),
-            new Package\GRPC(),
-            new Package\RoadRunnerBridge([]),
-        ],
         questions: [
             new Question\CycleBridge(),
             new Question\Validator(),
@@ -67,19 +35,8 @@ return [
             new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
         ],
-        generators: [
-            new Generator\GRPCApplicationBootloaders(),
-            new GRPCBootloader(),
-            new Generator\ViewRenderer(),
-        ],
-        resources: [
-            'common' => '',
-            'applications/grpc/app' => 'app',
-            'applications/grpc/proto' => 'proto',
-        ]
     ),
     new Application\CustomBuild(
-        name: 'Custom build',
         questions: [
             new Question\ExtMbString(),
             new Question\Psr7Implementation(),
@@ -96,12 +53,5 @@ return [
             new Question\Scheduler(),
             new Question\SentryBridge(),
         ],
-        generators: [
-            new Generator\CustomApplicationBootloaders(),
-            new Generator\ViewRenderer(),
-        ],
-        resources: [
-            'common' => '',
-        ]
     ),
 ];
