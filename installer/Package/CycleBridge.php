@@ -15,6 +15,7 @@ final class CycleBridge extends Package
             package: Packages::CycleBridge,
             resources: [
                 'packages/cycle/config' => 'app/config',
+                'packages/cycle/migrations' => 'app/migrations',
             ],
             generators: [
                 new Bootloaders(),
