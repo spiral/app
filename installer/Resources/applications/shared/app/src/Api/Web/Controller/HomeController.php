@@ -8,6 +8,7 @@ use App\Api\Job\Ping;
 use Exception;
 use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Queue\QueueInterface;
+use Spiral\Router\Annotation\Route;
 
 class HomeController
 {
@@ -22,6 +23,7 @@ class HomeController
     ) {
     }
 
+    #[Route(route: '/', name: 'index')]
     public function index(): string
     {
         return $this->views->render('home');
@@ -30,11 +32,13 @@ class HomeController
     /**
      * Example of exception page.
      */
+    #[Route(route: '/exception', name: 'exception')]
     public function exception(): never
     {
         throw new Exception('This is a test exception.');
     }
 
+    #[Route(route: '/ping', name: 'ping')]
     public function ping(): string
     {
         $jobID = $this->queue->push(Ping::class, [
