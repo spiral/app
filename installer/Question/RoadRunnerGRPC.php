@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
+use Installer\Package\Generator\RoadRunnerBridge\GRPC;
 use Installer\Package\Package;
 use Installer\Package\Packages;
 use Installer\Question\Option\Option;
@@ -22,7 +22,7 @@ final class RoadRunnerGRPC extends AbstractQuestion
                 new Package(
                     package: Packages::RoadRunnerBridge,
                     generators: [
-                        new GRPCBootloader(),
+                        new GRPC(),
                     ]
                 ),
             ]),

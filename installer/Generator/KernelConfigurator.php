@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Installer\Generator;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
+use App\Application\Bootloader\LoggingBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader\CommandBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
-use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
+use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
 final class KernelConfigurator extends AbstractConfigurator
 {
@@ -47,13 +48,13 @@ final class KernelConfigurator extends AbstractConfigurator
     private function addRequiredSystemBootloaders(): void
     {
         $this->addUse(CoreBootloader::class);
-        $this->addUse(TokenizerBootloader::class);
+        $this->addUse(TokenizerListenerBootloader::class);
         $this->addUse(DotenvBootloader::class);
 
         $this->system->addGroup(
             bootloaders: [
                 CoreBootloader::class,
-                TokenizerBootloader::class,
+                TokenizerListenerBootloader::class,
                 DotenvBootloader::class,
             ],
         );
@@ -70,6 +71,14 @@ final class KernelConfigurator extends AbstractConfigurator
                 ExceptionHandlerBootloader::class,
             ],
             comment: 'Logging and exceptions handling',
+        );
+
+        $this->load->addGroup(
+            bootloaders: [
+                LoggingBootloader::class,
+            ],
+            comment: 'Application specific logs',
+            priority: 1
         );
 
         $this->load->addGroup(

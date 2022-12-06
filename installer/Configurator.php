@@ -123,7 +123,8 @@ final class Configurator extends AbstractInstaller
 
         unset(
             $this->composerDefinition['scripts']['post-install-cmd'],
-            $this->composerDefinition['scripts']['post-update-cmd']
+            $this->composerDefinition['scripts']['post-update-cmd'],
+            $this->composerDefinition['extra']['spiral']
         );
 
         $this->io->write('<info>Remove Installer files</info>');

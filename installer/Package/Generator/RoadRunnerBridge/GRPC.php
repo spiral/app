@@ -7,14 +7,16 @@ namespace Installer\Package\Generator\RoadRunnerBridge;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Spiral\RoadRunnerBridge\Bootloader\CacheBootloader;
-use Spiral\RoadRunnerBridge\Bootloader\GRPCBootloader as Bootloader;
+use Spiral\RoadRunnerBridge\Bootloader\GRPCBootloader;
 
-final class GRPCBootloader implements GeneratorInterface
+final class GRPC implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->kernel->load->append(Bootloader::class, CacheBootloader::class);
+        $context->kernel->load->append(GRPCBootloader::class, CacheBootloader::class);
 
         $context->application->useRoadRunnerPlugin('grpc');
+
+        $context->resource->copy('packages/grpc/config', 'app/config');
     }
 }
