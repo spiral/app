@@ -106,7 +106,7 @@ abstract class AbstractApplication implements ApplicationInterface
         // Attention! Returns all available optional packages.Need to check if the package is installed
         foreach ($this->getQuestions() as $question) {
             foreach ($question->getOptions() as $option) {
-                foreach ($option instanceOf Option ? $option->getPackages() : [] as $package) {
+                foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
                     foreach ($package->getGenerators() as $generator) {
                         yield $package => $generator;
                     }
