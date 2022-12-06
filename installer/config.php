@@ -22,6 +22,7 @@ return [
     ),
     new Application\Cli(
         questions: [
+            new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
             new Question\RoadRunnerMetrics(),
         ]
@@ -39,6 +40,7 @@ return [
     ),
     new Application\CustomBuild(
         questions: [
+            new Question\ApplicationSkeleton(),
             new Question\ExtMbString(),
             new Question\Psr7Implementation(),
             new Question\Sapi(),
