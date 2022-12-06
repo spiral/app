@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Question\Option\Option;
+use Installer\Question\Option\OptionInterface;
 
 interface QuestionInterface
 {
@@ -16,13 +16,13 @@ interface QuestionInterface
     public function isRequired(): bool;
 
     /**
-     * @return Option[]
+     * @return OptionInterface[]
      */
     public function getOptions(): array;
 
     public function hasOption(int $key): bool;
 
-    public function getOption(int $key): Option;
+    public function getOption(int $key): OptionInterface;
 
     public function getConditions(): array;
 

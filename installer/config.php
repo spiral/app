@@ -8,6 +8,7 @@ use Installer\Question;
 return [
     new Application\Web(
         questions: [
+            new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
             new Question\CycleCollections(),
             new Question\Validator(),

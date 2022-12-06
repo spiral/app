@@ -14,6 +14,8 @@ use Composer\Package\Version\VersionParser;
 use Composer\Script\Event;
 use Installer\Application\ApplicationInterface;
 use Installer\Package\Package;
+use Installer\Question\Option\BooleanOption;
+use Installer\Question\Option\Option;
 use Installer\Question\QuestionInterface;
 use Seld\JsonLint\ParsingException;
 
@@ -106,8 +108,15 @@ final class Installer extends AbstractInstaller
         }
 
         // Add packages to install
-        foreach ($question->getOption($answer)->getPackages() as $package) {
-            $this->addPackage($package);
+        $option = $question->getOption($answer);
+        switch (true) {
+            case $option instanceof Option:
+                foreach ($option->getPackages() as $package) {
+                    $this->addPackage($package);
+                }
+                break;
+            case $option instanceof BooleanOption:
+                $this->addBooleanAnswer($question, $option);
         }
     }
 
@@ -153,7 +162,7 @@ final class Installer extends AbstractInstaller
             $answer = 1;
         }
 
-        if (!isset($question->getOptions()[(int) $answer])) {
+        if (!$question->hasOption((int) $answer)) {
             $this->io->write('<error>Invalid answer</error>');
             exit;
         }
@@ -247,5 +256,13 @@ final class Installer extends AbstractInstaller
         $this->composerDefinition['autoload']['psr-4']['Installer\\'] = 'installer';
 
         $this->composerJson->write($this->composerDefinition);
+    }
+
+    private function addBooleanAnswer(QuestionInterface $question, BooleanOption $answer): void
+    {
+        // Add option to the extra section
+        if (!\array_key_exists($question::class, $this->composerDefinition['extra']['spiral']['options'] ?? [])) {
+            $this->composerDefinition['extra']['spiral']['options'][$question::class] = $answer->value;
+        }
     }
 }

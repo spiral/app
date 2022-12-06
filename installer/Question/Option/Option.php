@@ -7,7 +7,7 @@ namespace Installer\Question\Option;
 use Installer\Package\Package;
 use Installer\Package\Packages;
 
-final class Option
+final class Option extends AbstractOption
 {
     /**
      * @var Package[]
@@ -18,15 +18,12 @@ final class Option
      * @param array<Package|Packages> $packages
      */
     public function __construct(
-        private readonly string $name,
+        string $name,
         array $packages = []
     ) {
-        $this->setPackages($packages);
-    }
+        parent::__construct($name);
 
-    public function getName(): string
-    {
-        return $this->name;
+        $this->setPackages($packages);
     }
 
     /**

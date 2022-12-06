@@ -7,12 +7,13 @@ namespace Installer\Question;
 use Installer\Package\Package;
 use Installer\Package\Packages;
 use Installer\Question\Option\Option;
+use Installer\Question\Option\OptionInterface;
 
 abstract class AbstractQuestion implements QuestionInterface
 {
     private const NONE_OPTION = 0;
     /**
-     * @var array<int, Option>
+     * @var array<int, OptionInterface>
      */
     private array $options = [];
 
@@ -22,7 +23,7 @@ abstract class AbstractQuestion implements QuestionInterface
     private array $conditions = [];
 
     /**
-     * @param array<int, Option> $options
+     * @param array<int, OptionInterface> $options
      * @param array{require?: Packages[], require-dev?: Packages[]} $conditions
      */
     public function __construct(
@@ -66,7 +67,7 @@ abstract class AbstractQuestion implements QuestionInterface
     }
 
     /**
-     * @return Option[]
+     * @return OptionInterface[]
      */
     public function getOptions(): array
     {
@@ -78,7 +79,7 @@ abstract class AbstractQuestion implements QuestionInterface
         return isset($this->options[$key]);
     }
 
-    public function getOption(int $key): Option
+    public function getOption(int $key): OptionInterface
     {
         return $this->hasOption($key) ? $this->options[$key] : throw new \InvalidArgumentException('Invalid option!');
     }
@@ -120,11 +121,11 @@ abstract class AbstractQuestion implements QuestionInterface
     private function setOptions(array $options): void
     {
         /**
-         * @var Option $option
+         * @var OptionInterface $option
          */
         foreach ($options as $key => $option) {
             //  Negative answer
-            if ($option->getPackages() === []) {
+            if ($option instanceof Option && $option->getPackages() === []) {
                 $this->options[0] = $option;
             } else {
                 $this->options[(int) $key + 1] = $option;

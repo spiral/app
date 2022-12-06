@@ -14,7 +14,7 @@ use Spiral\Http\ErrorHandler\RendererInterface;
 
 final class ViewRenderer implements GeneratorInterface
 {
-    private const RENDERER_PATH = 'applications/shared/Application/Service/ErrorHandler/ViewRenderer.php';
+    private const RENDERER_PATH = 'applications/shared/app/src/Application/Service/ErrorHandler/ViewRenderer.php';
     private const TARGET_PATH = 'app/src/Application/Service/ErrorHandler/ViewRenderer.php';
 
     public function process(Context $context): void

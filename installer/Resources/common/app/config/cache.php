@@ -10,7 +10,7 @@ return [
     /**
      * The default cache connection that gets used while using this caching library.
      */
-    'default' => env('CACHE_STORAGE', 'local'),
+    'default' => env('CACHE_STORAGE', 'rr-local'),
 
     /**
      * Aliases, if you want to use domain specific storages.

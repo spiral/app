@@ -7,6 +7,7 @@ namespace Installer\Application;
 use Composer\Package\PackageInterface;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
+use Installer\Question\Option\Option;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -105,7 +106,7 @@ abstract class AbstractApplication implements ApplicationInterface
         // Attention! Returns all available optional packages.Need to check if the package is installed
         foreach ($this->getQuestions() as $question) {
             foreach ($question->getOptions() as $option) {
-                foreach ($option->getPackages() as $package) {
+                foreach ($option instanceOf Option ? $option->getPackages() : [] as $package) {
                     foreach ($package->getGenerators() as $generator) {
                         yield $package => $generator;
                     }
