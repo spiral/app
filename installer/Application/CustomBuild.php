@@ -7,6 +7,7 @@ namespace Installer\Application;
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\CustomApplicationBootloaders;
 use Installer\Application\Generator\ViewRenderer;
+use Installer\Application\Generator\WebApplicationSkeleton;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
@@ -41,6 +42,7 @@ final class CustomBuild extends AbstractApplication
         array $generators = [
             new CustomApplicationBootloaders(),
             new ViewRenderer(),
+            new WebApplicationSkeleton(),
         ],
         array $resources = [
             'common' => '',

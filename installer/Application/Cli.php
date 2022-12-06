@@ -6,6 +6,7 @@ namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\CliApplicationBootloaders;
+use Installer\Application\Generator\CliApplicationSkeleton;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
@@ -41,6 +42,7 @@ final class Cli extends AbstractApplication
         array $generators = [
             new CliApplicationBootloaders(),
             new ViewRenderer(),
+            new CliApplicationSkeleton(),
         ],
         array $resources = [
             'common' => '',
