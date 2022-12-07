@@ -14,6 +14,7 @@ use Installer\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Generator\GeneratorInterface;
 use Installer\Generator\KernelConfigurator;
 use Installer\Package\Package;
+use Installer\Question\QuestionInterface;
 use Spiral\Core\Container;
 use Symfony\Component\Process\Process;
 
@@ -55,6 +56,9 @@ final class Configurator extends AbstractInstaller
             if ($package instanceof Package && !$this->isPackageInstalled($package)) {
                 continue;
             }
+            if ($package instanceof QuestionInterface && !$this->isBooleanAnswerTrue($package)) {
+                continue;
+            }
 
             if (!$generator instanceof GeneratorInterface) {
                 $generator = $this->container->get($generator);
@@ -69,12 +73,25 @@ final class Configurator extends AbstractInstaller
         return \in_array($package->getName(), $this->getExtraPackages(), true);
     }
 
+    private function isBooleanAnswerTrue(QuestionInterface $question): bool
+    {
+        return isset($this->getOptions()[$question::class]) && $this->getOptions()[$question::class] === true;
+    }
+
     /**
      * @return non-empty-string[]
      */
     private function getExtraPackages(): array
     {
         return $this->composerDefinition['extra']['spiral']['packages'] ?? [];
+    }
+
+    /**
+     * @return array<non-empty-string, bool>
+     */
+    private function getOptions(): array
+    {
+        return $this->composerDefinition['extra']['spiral']['options'] ?? [];
     }
 
     private function getApplicationType(): int

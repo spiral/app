@@ -40,7 +40,7 @@ interface ApplicationInterface
     public function getResources(): array;
 
     /**
-     * @return \Generator<Package|null, GeneratorInterface|class-string<GeneratorInterface>>
+     * @return \Generator<Package|null|QuestionInterface, GeneratorInterface|class-string<GeneratorInterface>>
      */
     public function getGenerators(): \Generator;
 

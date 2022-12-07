@@ -7,6 +7,7 @@ namespace Installer\Application;
 use Composer\Package\PackageInterface;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
+use Installer\Question\Option\BooleanOption;
 use Installer\Question\Option\Option;
 use Installer\Question\QuestionInterface;
 
@@ -109,6 +110,11 @@ abstract class AbstractApplication implements ApplicationInterface
                 foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
                     foreach ($package->getGenerators() as $generator) {
                         yield $package => $generator;
+                    }
+                }
+                if ($option instanceof BooleanOption) {
+                    foreach ($option->generators as $generator) {
+                        yield $question => $generator;
                     }
                 }
             }
