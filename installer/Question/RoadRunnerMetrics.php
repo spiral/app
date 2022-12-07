@@ -20,7 +20,7 @@ final class RoadRunnerMetrics extends AbstractQuestion
             new BooleanOption(
                 name: 'Yes',
                 generators: [
-                    new MetricsBootloader()
+                    new MetricsBootloader(),
                 ]
             ),
         ]
