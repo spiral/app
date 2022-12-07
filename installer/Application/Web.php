@@ -60,7 +60,6 @@ final class Web extends AbstractApplication
             'common' => '',
             'applications/web/app' => 'app',
             'applications/web/public' => 'public',
-            'applications/web/tests' => 'tests',
         ]
     ) {
         parent::__construct(
