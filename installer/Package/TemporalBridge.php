@@ -6,6 +6,7 @@ namespace Installer\Package;
 
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Generator\TemporalBridge\Bootloaders;
+use Installer\Package\Generator\TemporalBridge\Env;
 
 final class TemporalBridge extends Package
 {
@@ -18,6 +19,7 @@ final class TemporalBridge extends Package
         ],
         array $generators = [
             new Bootloaders(),
+            new Env()
         ]
     ) {
         parent::__construct(Packages::TemporalBridge, $resources, $generators);
