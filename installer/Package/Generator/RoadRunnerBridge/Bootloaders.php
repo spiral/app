@@ -10,6 +10,7 @@ use Spiral\Bootloader\CommandBootloader as FrameworkCommand;
 use Spiral\RoadRunnerBridge\Bootloader\CacheBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\CommandBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\HttpBootloader;
+use Spiral\RoadRunnerBridge\Bootloader\LoggerBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\QueueBootloader;
 
 final class Bootloaders implements GeneratorInterface
@@ -23,6 +24,7 @@ final class Bootloaders implements GeneratorInterface
                 CacheBootloader::class,
                 HttpBootloader::class,
                 QueueBootloader::class,
+                LoggerBootloader::class,
             ],
             comment: 'RoadRunner',
             priority: 3

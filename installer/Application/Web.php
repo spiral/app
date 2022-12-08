@@ -7,6 +7,7 @@ namespace Installer\Application;
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Application\Generator\WebApplicationBootloaders;
+use Installer\Application\Generator\WebApplicationEnv;
 use Installer\Application\Generator\WebApplicationSkeleton;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\ExtMbString;
@@ -54,6 +55,7 @@ final class Web extends AbstractApplication
         array $generators = [
             new WebApplicationBootloaders(),
             new ViewRenderer(),
+            new WebApplicationEnv(),
             new WebApplicationSkeleton(),
         ],
         array $resources = [

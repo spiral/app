@@ -16,6 +16,7 @@ final class Context
         public readonly ApplicationInterface $application,
         public readonly KernelConfigurator $kernel,
         public readonly ExceptionHandlerBootloaderConfigurator $exceptionHandlerBootloader,
+        public readonly EnvConfigurator $envConfigurator,
         public readonly string $applicationRoot,
         public readonly Resource $resource,
         public readonly array $composerDefinition

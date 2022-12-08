@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Installer\Package;
 
+use Installer\Generator\GeneratorInterface;
 use Installer\Package\Generator\SentryBridge\Bootloaders;
+use Installer\Package\Generator\SentryBridge\Env;
 
 final class SentryBridge extends Package
 {
-    public function __construct()
-    {
-        parent::__construct(
-            package: Packages::SentryBridge,
-            generators: [
-                new Bootloaders(),
-            ]
-        );
+    /**
+     * @param GeneratorInterface[] $generators
+     */
+    public function __construct(
+        array $resources = [],
+        array $generators = [
+            new Bootloaders(),
+            new Env(),
+        ]
+    ) {
+        parent::__construct(Packages::SentryBridge, $resources, $generators);
     }
 }

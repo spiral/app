@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Installer\Package;
 
+use Installer\Generator\GeneratorInterface;
+
 final class DoctrineCollections extends Package
 {
-    public function __construct()
+    /**
+     * @param GeneratorInterface[] $generators
+     */
+    public function __construct(array $resources = [], array $generators = [])
     {
-        parent::__construct(Packages::DoctrineCollections);
+        parent::__construct(Packages::DoctrineCollections, $resources, $generators);
     }
 }

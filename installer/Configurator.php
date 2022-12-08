@@ -10,6 +10,7 @@ use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Installer\Application\ApplicationInterface;
 use Installer\Generator\Context;
+use Installer\Generator\EnvConfigurator;
 use Installer\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Generator\GeneratorInterface;
 use Installer\Generator\KernelConfigurator;
@@ -42,7 +43,6 @@ final class Configurator extends AbstractInstaller
     {
         $conf = new self($event->getIO());
 
-        $conf->resource->createEnv();
         $conf->runGenerators();
         $conf->createRoadRunnerConfig();
         $conf->runCommands();
@@ -105,6 +105,7 @@ final class Configurator extends AbstractInstaller
             application: $this->application,
             kernel: new KernelConfigurator(Kernel::class),
             exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
+            envConfigurator: new EnvConfigurator($this->projectRoot, $this->resource),
             applicationRoot: $this->projectRoot,
             resource: $this->resource,
             composerDefinition: $this->composerDefinition

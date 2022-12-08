@@ -35,6 +35,7 @@
                 <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\HttpBootloader" />
                 <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\QueueBootloader" />
                 <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\MetricsBootloader" />
+                <referencedClass name="Spiral\RoadRunnerBridge\Bootloader\LoggerBootloader" />
                 <referencedClass name="Spiral\Nyholm\Bootloader\NyholmBootloader" />
                 <referencedClass name="Spiral\League\Event\Bootloader\EventBootloader" />
                 <referencedClass name="Spiral\Validation\Laravel\Bootloader\ValidatorBootloader" />
