@@ -14,6 +14,7 @@ use Installer\Generator\EnvConfigurator;
 use Installer\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Generator\GeneratorInterface;
 use Installer\Generator\KernelConfigurator;
+use Installer\Generator\Notification;
 use Installer\Package\Package;
 use Installer\Question\QuestionInterface;
 use Spiral\Core\Container;
@@ -106,6 +107,7 @@ final class Configurator extends AbstractInstaller
             kernel: new KernelConfigurator(Kernel::class),
             exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
             envConfigurator: new EnvConfigurator($this->projectRoot, $this->resource),
+            notification: new Notification($this->io),
             applicationRoot: $this->projectRoot,
             resource: $this->resource,
             composerDefinition: $this->composerDefinition

@@ -6,6 +6,7 @@ namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\GRPCApplicationBootloaders;
+use Installer\Application\Generator\SuccessInstallation;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\ExtGRPC;
@@ -53,6 +54,7 @@ final class GRPC extends AbstractApplication
             new GRPCApplicationBootloaders(),
             new RoadRunnerGRPC(),
             new ViewRenderer(),
+            new SuccessInstallation(),
         ],
         array $resources = [
             'common' => '',
