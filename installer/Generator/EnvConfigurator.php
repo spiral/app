@@ -12,6 +12,11 @@ final class EnvConfigurator
 {
     private const FILENAME = '.env.sample';
 
+    /**
+     * @var EnvGroup[]
+     */
+    private array $groups = [];
+
     public function __construct(
         private readonly string $projectRoot,
         private readonly Resource $resource
@@ -19,10 +24,23 @@ final class EnvConfigurator
         $this->addRequiredValues();
     }
 
-    /**
-     * @var EnvGroup[]
-     */
-    private array $groups = [];
+    public function __destruct()
+    {
+        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
+
+        $groups = \array_map(
+            static fn (EnvGroup $group) => $group->render(),
+            \array_values($this->groups)
+        );
+
+        (new Files())->write(
+            $this->projectRoot . self::FILENAME,
+            \implode(PHP_EOL, $groups),
+            FilesInterface::RUNTIME
+        );
+
+        $this->resource->createEnv();
+    }
 
     /**
      * @param array<non-empty-string, mixed> $values
@@ -52,24 +70,6 @@ final class EnvConfigurator
         }
     }
 
-    public function __destruct()
-    {
-        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
-
-        $groups = \array_map(
-            static fn (EnvGroup $group) => $group->render(),
-            \array_values($this->groups)
-        );
-
-        (new Files())->write(
-            $this->projectRoot . self::FILENAME,
-            \implode(PHP_EOL, $groups),
-            FilesInterface::RUNTIME
-        );
-
-        $this->resource->createEnv();
-    }
-
     private function addRequiredValues(): void
     {
         $this->addGroup(
@@ -90,7 +90,7 @@ final class EnvConfigurator
         $this->addGroup(
             values: [
                 'MONOLOG_DEFAULT_CHANNEL' => 'default',
-                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY'
+                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
             ],
             comment: 'Monolog',
             priority: 4

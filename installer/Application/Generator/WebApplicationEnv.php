@@ -14,7 +14,7 @@ final class WebApplicationEnv implements GeneratorInterface
         $context->envConfigurator->addGroup(
             values: [
                 'SESSION_LIFETIME' => 86400,
-                'SESSION_COOKIE' => 'sid'
+                'SESSION_COOKIE' => 'sid',
             ],
             comment: 'Session',
             priority: 8
@@ -23,7 +23,7 @@ final class WebApplicationEnv implements GeneratorInterface
             values: [
                 'MAILER_DSN' => null,
                 'MAILER_PIPELINE' => 'local',
-                'MAILER_FROM' => '"Spiral <sendit@local.host>"'
+                'MAILER_FROM' => '"Spiral <sendit@local.host>"',
             ],
             comment: 'Mailer',
             priority: 9
