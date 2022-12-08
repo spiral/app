@@ -12,6 +12,7 @@ return [
             new Question\CycleBridge(),
             new Question\CycleCollections(),
             new Question\Validator(),
+            new Question\Mailer(),
             new Question\TemplateEngine(),
             new Question\EventBus(),
             new Question\Scheduler(),
@@ -24,6 +25,7 @@ return [
         questions: [
             new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
+            new Question\Mailer(),
             new Question\RoadRunnerMetrics(),
         ]
     ),
@@ -33,6 +35,7 @@ return [
             new Question\Validator(),
             new Question\EventBus(),
             new Question\Scheduler(),
+            new Question\Mailer(),
             new Question\TemporalBridge(),
             new Question\RoadRunnerMetrics(),
             new Question\SentryBridge(),
@@ -46,6 +49,7 @@ return [
             new Question\Sapi(),
             new Question\RoadRunnerBridge(),
             new Question\CycleBridge(),
+            new Question\Mailer(),
             new Question\CycleCollections(),
             new Question\RoadRunnerGRPC(),
             new Question\TemporalBridge(),

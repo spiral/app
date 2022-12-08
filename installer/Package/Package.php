@@ -15,11 +15,13 @@ class Package
      * @param array<GeneratorInterface|class-string<GeneratorInterface>> $generators
      */
     public function __construct(
-        Packages $package,
+        ?Packages $package,
         private readonly array $resources = [],
         private readonly array $generators = []
     ) {
-        $this->setPackage($package);
+        if ($package !== null) {
+            $this->setPackage($package);
+        }
     }
 
     public function getName(): string
@@ -50,11 +52,13 @@ class Package
         $parts = \explode(':', $package->value);
 
         if (!isset($parts[0], $parts[1])) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Invalid package name `%s`. The package name must follow this pattern: `%s`.',
-                $package->value,
-                'vendor/package-name:version'
-            ));
+            throw new \InvalidArgumentException(
+                \sprintf(
+                    'Invalid package name `%s`. The package name must follow this pattern: `%s`.',
+                    $package->value,
+                    'vendor/package-name:version'
+                )
+            );
         }
 
         $this->name = $parts[0];
