@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
 
         $context->envConfigurator->addGroup(
             values: [
-                'LOGGER_FORMAT' => '"%message% %context% %extra%\n"'
+                'LOGGER_FORMAT' => '"%message% %context% %extra%\n"',
             ],
             comment: 'RoadRunner Logger',
             priority: 13

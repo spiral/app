@@ -21,7 +21,7 @@ final class Env implements GeneratorInterface
         $context->envConfigurator->addGroup(
             values: [
                 'CYCLE_SCHEMA_CACHE' => true,
-                'CYCLE_SCHEMA_WARMUP' => false
+                'CYCLE_SCHEMA_WARMUP' => false,
             ],
             comment: 'Cycle Bridge',
             priority: 11
