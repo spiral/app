@@ -15,13 +15,11 @@ class Package
      * @param array<GeneratorInterface|class-string<GeneratorInterface>> $generators
      */
     public function __construct(
-        ?Packages $package,
+        Packages $package,
         private readonly array $resources = [],
         private readonly array $generators = []
     ) {
-        if ($package !== null) {
-            $this->setPackage($package);
-        }
+        $this->setPackage($package);
     }
 
     public function getName(): string

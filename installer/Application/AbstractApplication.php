@@ -168,10 +168,10 @@ abstract class AbstractApplication implements ApplicationInterface
      *
      * Don't use this method. It is called only once by the Installer
      */
-    public function setInstalled(array $extra): void
+    public function setInstalled(array $installed): void
     {
-        $this->installedPackages = $extra['packages'] ?? [];
-        $this->options = $extra['options'] ?? [];
+        $this->installedPackages = $installed['packages'] ?? [];
+        $this->options = $installed['options'] ?? [];
     }
 
     /**

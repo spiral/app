@@ -37,7 +37,7 @@ final class Configurator extends AbstractInstaller
         $this->application = $applicationType;
 
         if ($this->application instanceof AbstractApplication) {
-            $this->application->setInstalled($this->composerDefinition['extra']['spiral']);
+            $this->application->setInstalled($this->composerDefinition['extra']['spiral'] ?? []);
         }
 
         $this->setContext();
