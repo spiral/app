@@ -19,14 +19,5 @@ final class WebApplicationEnv implements GeneratorInterface
             comment: 'Session',
             priority: 8
         );
-        $context->envConfigurator->addGroup(
-            values: [
-                'MAILER_DSN' => null,
-                'MAILER_PIPELINE' => 'local',
-                'MAILER_FROM' => '"Spiral <sendit@local.host>"',
-            ],
-            comment: 'Mailer',
-            priority: 9
-        );
     }
 }

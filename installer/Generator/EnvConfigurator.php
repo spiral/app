@@ -82,6 +82,12 @@ final class EnvConfigurator
             comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
             priority: 2
         );
+        // TODO implement verbosity
+//        $this->addGroup(
+//            values: ['VERBOSITY' => 'verbose # basic, verbose, debug'],
+//            comment: 'Verbosity level',
+//            priority: 2
+//        );
         $this->addGroup(
             values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
             comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
