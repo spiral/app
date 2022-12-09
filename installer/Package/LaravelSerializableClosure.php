@@ -17,7 +17,7 @@ final class LaravelSerializableClosure extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
-            new Env()
+            new Env(),
         ]
     ) {
         parent::__construct(Packages::LaravelSerializableClosure, $resources, $generators);

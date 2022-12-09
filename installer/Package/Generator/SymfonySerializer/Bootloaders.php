@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->load->addGroup(
             bootloaders: [
                 SpiralSerializerBootloader::class,
-                SerializerBootloader::class
+                SerializerBootloader::class,
             ],
             comment: 'Serializer',
             priority: 14
