@@ -122,5 +122,12 @@ final class EnvConfigurator
             comment: 'Storage',
             priority: 7
         );
+        $this->addGroup(
+            values: [
+                'TELEMETRY_DRIVER' => null,
+            ],
+            comment: 'Telemetry',
+            priority: 8
+        );
     }
 }
