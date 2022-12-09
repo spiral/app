@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
-use Installer\Application\Generator\SuccessInstallation;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Application\Generator\WebApplicationBootloaders;
 use Installer\Application\Generator\WebApplicationEnv;
@@ -58,13 +57,14 @@ final class Web extends AbstractApplication
             new ViewRenderer(),
             new WebApplicationEnv(),
             new WebApplicationSkeleton(),
-            new SuccessInstallation(),
         ],
         array $resources = [
             'common' => '',
             'applications/web/app' => 'app',
             'applications/web/public' => 'public',
-        ]
+        ],
+        array $commands = [],
+        array $instructions = []
     ) {
         parent::__construct(
             name: $name,
@@ -73,7 +73,9 @@ final class Web extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: $generators
+            generators: $generators,
+            commands: $commands,
+            instructions: $instructions
         );
     }
 }

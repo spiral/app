@@ -23,8 +23,14 @@ final class CycleBridge extends Package
             new Bootloaders(),
             new Config(),
             new Env(),
+        ],
+        array $instructions = [
+            'Database configuration file available here: <comment>app/config/database.php</comment>',
+            'Migrations configuration file available here: <comment>app/config/migration.php</comment>',
+            'Cycle ORM configuration file available here: <comment>app/config/cycle.php</comment>',
+            'Documentation: <comment>https://spiral.dev/docs/packages-cycle-bridge</comment>'
         ]
     ) {
-        parent::__construct(Packages::CycleBridge, $resources, $generators);
+        parent::__construct(Packages::CycleBridge, $resources, $generators, $instructions);
     }
 }

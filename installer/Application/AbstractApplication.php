@@ -18,11 +18,6 @@ use Installer\Question\QuestionInterface;
 abstract class AbstractApplication implements ApplicationInterface
 {
     /**
-     * @var Package[]
-     */
-    private array $packages = [];
-
-    /**
      * @var array<non-empty-string, bool>
      */
     private array $roadRunnerPlugins = [];
@@ -39,15 +34,15 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function __construct(
         private readonly string $name,
-        array $packages = [],
+        private readonly array $packages = [],
         private readonly array $autoload = [],
         private readonly array $autoloadDev = [],
         private readonly array $questions = [],
         private readonly array $resources = [],
         private readonly array $generators = [],
-        private readonly array $commands = []
+        private readonly array $commands = [],
+        private readonly array $instructions = []
     ) {
-        $this->setPackages($packages);
     }
 
     public function getName(): string
@@ -69,6 +64,14 @@ abstract class AbstractApplication implements ApplicationInterface
     public function getQuestions(): array
     {
         return $this->questions;
+    }
+
+    /**
+     * @return non-empty-string[]
+     */
+    public function getInstructions(): array
+    {
+        return $this->instructions === [] ? $this->getDefaultInstructions() : $this->instructions;
     }
 
     /**
@@ -174,13 +177,11 @@ abstract class AbstractApplication implements ApplicationInterface
         $this->options = $installed['options'] ?? [];
     }
 
-    /**
-     * @param Package[] $packages
-     */
-    private function setPackages(array $packages): void
+    protected function getDefaultInstructions(): array
     {
-        foreach ($packages as $package) {
-            $this->packages[] = $package;
-        }
+        return [
+            'Please, configure the environment variables in the <comment>.env</comment> file at the application\'s root.',
+            'Read documentation about Spiral Framework: <comment>https://spiral.dev/docs</comment></info>'
+        ];
     }
 }

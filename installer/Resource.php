@@ -51,8 +51,6 @@ final class Resource
 
     public function createEnv(): void
     {
-        $this->writeInfo($this->root . '.env');
-
         \copy($this->root . self::ENV_SAMPLE, $this->root . '.env');
     }
 

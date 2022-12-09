@@ -11,8 +11,8 @@ final class DoctrineCollections extends Package
     /**
      * @param GeneratorInterface[] $generators
      */
-    public function __construct(array $resources = [], array $generators = [])
+    public function __construct(array $resources = [], array $generators = [], array $instructions = [])
     {
-        parent::__construct(Packages::DoctrineCollections, $resources, $generators);
+        parent::__construct(Packages::DoctrineCollections, $resources, $generators, $instructions);
     }
 }

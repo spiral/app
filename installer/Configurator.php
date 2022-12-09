@@ -15,7 +15,8 @@ use Installer\Generator\EnvConfigurator;
 use Installer\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Generator\GeneratorInterface;
 use Installer\Generator\KernelConfigurator;
-use Installer\Generator\Notification;
+use Installer\Package\Package;
+use Installer\Question\Option\Option;
 use Spiral\Core\Container;
 use Symfony\Component\Process\Process;
 
@@ -50,6 +51,7 @@ final class Configurator extends AbstractInstaller
         $conf->runGenerators();
         $conf->createRoadRunnerConfig();
         $conf->runCommands();
+        $conf->showInstructions();
         $conf->removeInstaller();
         $conf->finalize();
     }
@@ -77,7 +79,6 @@ final class Configurator extends AbstractInstaller
             kernel: new KernelConfigurator(Kernel::class),
             exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
             envConfigurator: new EnvConfigurator($this->projectRoot, $this->resource),
-            notification: new Notification($this->io),
             applicationRoot: $this->projectRoot,
             resource: $this->resource
         );
@@ -104,6 +105,42 @@ final class Configurator extends AbstractInstaller
         (new Process(\explode(' ', 'rr make-config' . $plugins)))->run(function (string $type, mixed $data) {
             $this->io->write($data);
         });
+    }
+
+    private function showInstructions(): void
+    {
+        $this->io->write('  <comment>Next steps:</comment>');
+
+        // from application
+        foreach ($this->application->getInstructions() as $index => $instruction) {
+            $this->io->write(\sprintf('  %s. %s', (int) $index + 1, $instruction));
+        }
+
+        $showPackageInstruction = function (Package $package): void {
+            if ($package->getInstructions() !== []) {
+                $this->io->write(\sprintf('  <comment>%s</comment>', $package->getTitle()));
+            }
+
+            foreach ($package->getInstructions() as $index => $instruction) {
+                $this->io->write(\sprintf('  %s. %s', (int) $index + 1, $instruction));
+            }
+        };
+
+        // from required packages
+        foreach ($this->application->getPackages() as $package) {
+            $showPackageInstruction($package);
+        }
+
+        // from installed optional packages
+        foreach ($this->application->getQuestions() as $question) {
+            foreach ($question->getOptions() as $option) {
+                foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
+                    if ($this->application->isPackageInstalled($package)) {
+                        $showPackageInstruction($package);
+                    }
+                }
+            }
+        }
     }
 
     private function removeInstaller(): void

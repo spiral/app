@@ -18,8 +18,9 @@ final class SymfonySerializer extends Package
         array $generators = [
             new Bootloaders(),
             new Env(),
-        ]
+        ],
+        array $instructions = []
     ) {
-        parent::__construct(Packages::SymfonySerializer, $resources, $generators);
+        parent::__construct(Packages::SymfonySerializer, $resources, $generators, $instructions);
     }
 }

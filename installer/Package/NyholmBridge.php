@@ -16,8 +16,9 @@ final class NyholmBridge extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
-        ]
+        ],
+        array $instructions = []
     ) {
-        parent::__construct(Packages::NyholmBridge, $resources, $generators);
+        parent::__construct(Packages::NyholmBridge, $resources, $generators, $instructions);
     }
 }

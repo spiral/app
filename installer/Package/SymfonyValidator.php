@@ -16,8 +16,12 @@ final class SymfonyValidator extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
+        ],
+        array $instructions = [
+            'Read more about validation in the Spiral Framework: <comment>https://spiral.dev/docs/validation-factory</comment>',
+            'Documentation: <comment>https://spiral.dev/docs/validation-symfony</comment>'
         ]
     ) {
-        parent::__construct(Packages::SymfonyValidator, $resources, $generators);
+        parent::__construct(Packages::SymfonyValidator, $resources, $generators, $instructions);
     }
 }

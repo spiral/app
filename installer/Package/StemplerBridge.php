@@ -19,8 +19,12 @@ final class StemplerBridge extends Package
         ],
         array $generators = [
             new Bootloaders(),
+        ],
+        array $instructions = [
+            'Read more about views in the Spiral Framework: <comment>https://spiral.dev/docs/views-configuration</comment>',
+            'Documentation: <comment>https://spiral.dev/docs/stempler-configuration</comment>'
         ]
     ) {
-        parent::__construct(Packages::StemplerBridge, $resources, $generators);
+        parent::__construct(Packages::StemplerBridge, $resources, $generators, $instructions);
     }
 }

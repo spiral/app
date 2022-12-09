@@ -18,8 +18,12 @@ final class SentryBridge extends Package
         array $generators = [
             new Bootloaders(),
             new Env(),
+        ],
+        array $instructions = [
+            'Please, configure the <comment>SENTRY_DSN</comment> environment variable',
+            'Documentation: <comment>https://spiral.dev/docs/extension-sentry</comment>'
         ]
     ) {
-        parent::__construct(Packages::SentryBridge, $resources, $generators);
+        parent::__construct(Packages::SentryBridge, $resources, $generators, $instructions);
     }
 }

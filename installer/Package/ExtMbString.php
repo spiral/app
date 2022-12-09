@@ -11,8 +11,8 @@ final class ExtMbString extends Package
     /**
      * @param GeneratorInterface[] $generators
      */
-    public function __construct(array $resources = [], array $generators = [])
+    public function __construct(array $resources = [], array $generators = [], array $instructions = [])
     {
-        parent::__construct(Packages::ExtMbString, $resources, $generators);
+        parent::__construct(Packages::ExtMbString, $resources, $generators, $instructions);
     }
 }

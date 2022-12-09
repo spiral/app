@@ -20,8 +20,11 @@ final class TemporalBridge extends Package
         array $generators = [
             new Bootloaders(),
             new Env(),
+        ],
+        array $instructions = [
+            'Documentation: <comment>https://spiral.dev/docs/packages-temporal-bridge</comment>'
         ]
     ) {
-        parent::__construct(Packages::TemporalBridge, $resources, $generators);
+        parent::__construct(Packages::TemporalBridge, $resources, $generators, $instructions);
     }
 }

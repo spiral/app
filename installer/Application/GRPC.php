@@ -6,7 +6,6 @@ namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\GRPCApplicationBootloaders;
-use Installer\Application\Generator\SuccessInstallation;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\ExtGRPC;
@@ -54,13 +53,16 @@ final class GRPC extends AbstractApplication
             new GRPCApplicationBootloaders(),
             new RoadRunnerGRPC(),
             new ViewRenderer(),
-            new SuccessInstallation(),
         ],
         array $resources = [
             'common' => '',
             'applications/grpc/app' => 'app',
             'applications/grpc/proto' => 'proto',
-        ]
+        ],
+        array $commands = [
+            'rr download-protoc-binary'
+        ],
+        array $instructions = []
     ) {
         parent::__construct(
             name: $name,
@@ -70,9 +72,8 @@ final class GRPC extends AbstractApplication
             questions: $questions,
             resources: $resources,
             generators: $generators,
-            commands: [
-                'rr download-protoc-binary',
-            ]
+            commands: $commands,
+            instructions: $instructions
         );
     }
 }

@@ -16,8 +16,9 @@ final class LeagueEvent extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
-        ]
+        ],
+        array $instructions = []
     ) {
-        parent::__construct(Packages::LeagueEvent, $resources, $generators);
+        parent::__construct(Packages::LeagueEvent, $resources, $generators, $instructions);
     }
 }

@@ -16,8 +16,9 @@ final class SapiBridge extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
-        ]
+        ],
+        array $instructions = []
     ) {
-        parent::__construct(Packages::SapiBridge, $resources, $generators);
+        parent::__construct(Packages::SapiBridge, $resources, $generators, $instructions);
     }
 }

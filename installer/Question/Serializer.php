@@ -6,6 +6,7 @@ namespace Installer\Question;
 
 use Installer\Package\LaravelSerializableClosure;
 use Installer\Package\SymfonySerializer;
+use Installer\Question\Option\Option;
 use Installer\Question\Option\OptionInterface;
 
 final class Serializer extends AbstractQuestion

@@ -40,6 +40,11 @@ interface ApplicationInterface
     public function getResources(): array;
 
     /**
+     * @return non-empty-string[]
+     */
+    public function getInstructions(): array;
+
+    /**
      * @return \Generator<Package|null|QuestionInterface, GeneratorInterface|class-string<GeneratorInterface>>
      */
     public function getGenerators(): \Generator;

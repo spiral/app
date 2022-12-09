@@ -6,7 +6,6 @@ namespace Installer\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\CustomApplicationBootloaders;
-use Installer\Application\Generator\SuccessInstallation;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Application\Generator\WebApplicationEnv;
 use Installer\Application\Generator\WebApplicationSkeleton;
@@ -46,11 +45,12 @@ final class CustomBuild extends AbstractApplication
             new ViewRenderer(),
             new WebApplicationEnv(),
             new WebApplicationSkeleton(),
-            new SuccessInstallation(),
         ],
         array $resources = [
             'common' => '',
-        ]
+        ],
+        array $commands = [],
+        array $instructions = []
     ) {
         parent::__construct(
             name: $name,
@@ -59,7 +59,9 @@ final class CustomBuild extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: $generators
+            generators: $generators,
+            commands: $commands,
+            instructions: $instructions
         );
     }
 }

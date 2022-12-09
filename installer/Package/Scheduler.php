@@ -16,8 +16,11 @@ final class Scheduler extends Package
         array $resources = [],
         array $generators = [
             new Bootloaders(),
+        ],
+        array $instructions = [
+            'Documentation: <comment>https://spiral.dev/docs/packages-scheduler</comment>'
         ]
     ) {
-        parent::__construct(Packages::Scheduler, $resources, $generators);
+        parent::__construct(Packages::Scheduler, $resources, $generators, $instructions);
     }
 }

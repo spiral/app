@@ -9,6 +9,7 @@ use Installer\Generator\GeneratorInterface;
 class Package
 {
     private string $name;
+    private string $title;
     private string $version;
 
     /**
@@ -17,14 +18,26 @@ class Package
     public function __construct(
         Packages $package,
         private readonly array $resources = [],
-        private readonly array $generators = []
+        private readonly array $generators = [],
+        private readonly array $instructions = []
     ) {
         $this->setPackage($package);
     }
 
+    /**
+     * @return string Composer-like package name. i.e vendor/package
+     */
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string Human-readable package name
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     public function getVersion(): string
@@ -45,6 +58,14 @@ class Package
         return $this->generators;
     }
 
+    /**
+     * @return non-empty-string[]
+     */
+    public function getInstructions(): array
+    {
+        return $this->instructions;
+    }
+
     private function setPackage(Packages $package): void
     {
         $parts = \explode(':', $package->value);
@@ -60,6 +81,7 @@ class Package
         }
 
         $this->name = $parts[0];
+        $this->title = $package->name;
         $this->version = $parts[1];
     }
 }

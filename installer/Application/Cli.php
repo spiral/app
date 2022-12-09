@@ -7,7 +7,6 @@ namespace Installer\Application;
 use Composer\Package\PackageInterface;
 use Installer\Application\Generator\CliApplicationBootloaders;
 use Installer\Application\Generator\CliApplicationSkeleton;
-use Installer\Application\Generator\SuccessInstallation;
 use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
@@ -44,11 +43,12 @@ final class Cli extends AbstractApplication
             new CliApplicationBootloaders(),
             new ViewRenderer(),
             new CliApplicationSkeleton(),
-            new SuccessInstallation(),
         ],
         array $resources = [
             'common' => '',
-        ]
+        ],
+        array $commands = [],
+        array $instructions = []
     ) {
         parent::__construct(
             name: $name,
@@ -57,7 +57,9 @@ final class Cli extends AbstractApplication
             autoloadDev: $autoloadDev,
             questions: $questions,
             resources: $resources,
-            generators: $generators
+            generators: $generators,
+            commands: $commands,
+            instructions: $instructions
         );
     }
 }

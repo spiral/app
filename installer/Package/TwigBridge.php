@@ -18,8 +18,12 @@ final class TwigBridge extends Package
         ],
         array $generators = [
             new Bootloaders(),
+        ],
+        array $instructions = [
+            'Read more about views in the Spiral Framework: <comment>https://spiral.dev/docs/views-configuration</comment>',
+            'Documentation: <comment>https://spiral.dev/docs/views-twig</comment>'
         ]
     ) {
-        parent::__construct(Packages::TwigBridge, $resources, $generators);
+        parent::__construct(Packages::TwigBridge, $resources, $generators, $instructions);
     }
 }
