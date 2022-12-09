@@ -7,12 +7,12 @@ namespace Installer\Question;
 use Installer\Package\Generator\Mailer\Bootloaders;
 use Installer\Package\Generator\Mailer\Env;
 use Installer\Question\Option\BooleanOption;
-use Installer\Question\Option\Option;
+use Installer\Question\Option\OptionInterface;
 
 final class Mailer extends AbstractQuestion
 {
     /**
-     * @param Option[] $options
+     * @param OptionInterface[] $options
      */
     public function __construct(
         string $question = 'Do you want to use Mailer Component?',

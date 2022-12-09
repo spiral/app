@@ -94,7 +94,7 @@ final class KernelConfigurator extends AbstractConfigurator
                 CommandBootloader::class,
             ],
             comment: 'Console commands',
-            priority: 14
+            priority: 101
         );
     }
 

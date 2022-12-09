@@ -40,6 +40,8 @@
                 <referencedClass name="Spiral\League\Event\Bootloader\EventBootloader" />
                 <referencedClass name="Spiral\Validation\Laravel\Bootloader\ValidatorBootloader" />
                 <referencedClass name="Spiral\Cycle\Bootloader\CommandBootloader" />
+                <referencedClass name="Spiral\SerializableClosure\Bootloader\SerializableClosureBootloader" />
+                <referencedClass name="Spiral\Serializer\Symfony\Bootloader\SerializerBootloader" />
                 <referencedClass name="App\Application\Bootloader\ExceptionHandlerBootloader" />
                 <referencedClass name="App\Application\Bootloader\LoggingBootloader" />
                 <referencedClass name="App\Application\Bootloader\RoutesBootloader" />

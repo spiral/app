@@ -25,4 +25,6 @@ enum Packages: string
     case StemplerBridge = 'spiral/stempler-bridge:^3.2';
     case TwigBridge = 'spiral/twig-bridge:^2.0';
     case LeagueEvent = 'spiral-packages/league-event:^1.0';
+    case SymfonySerializer = 'spiral-packages/symfony-serializer:^1.0';
+    case LaravelSerializableClosure = 'spiral-packages/serializable-closure:^1.0';
 }

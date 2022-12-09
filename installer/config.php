@@ -12,6 +12,7 @@ return [
             new Question\CycleBridge(),
             new Question\CycleCollections(),
             new Question\Validator(),
+            new Question\Serializer(),
             new Question\Mailer(),
             new Question\TemplateEngine(),
             new Question\EventBus(),
@@ -25,6 +26,7 @@ return [
         questions: [
             new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
+            new Question\Serializer(),
             new Question\Mailer(),
             new Question\RoadRunnerMetrics(),
         ]
@@ -33,6 +35,7 @@ return [
         questions: [
             new Question\CycleBridge(),
             new Question\Validator(),
+            new Question\Serializer(),
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\Mailer(),
@@ -56,6 +59,7 @@ return [
             new Question\RoadRunnerMetrics(),
             new Question\TemplateEngine(),
             new Question\Validator(),
+            new Question\Serializer(),
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\SentryBridge(),

@@ -14,11 +14,12 @@ final class Env implements GeneratorInterface
         $context->envConfigurator->addGroup(
             values: [
                 'MAILER_DSN' => null,
-                'MAILER_PIPELINE' => 'local',
+                'MAILER_QUEUE' => 'local',
+                'MAILER_QUEUE_CONNECTION' => null,
                 'MAILER_FROM' => '"Spiral <sendit@local.host>"',
             ],
             comment: 'Mailer',
-            priority: 9
+            priority: 10
         );
     }
 }

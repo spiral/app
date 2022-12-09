@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Installer\Package\Generator\SentryBridge;
+namespace Installer\Package\Generator\SymfonySerializer;
 
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
@@ -13,10 +13,10 @@ final class Env implements GeneratorInterface
     {
         $context->envConfigurator->addGroup(
             values: [
-                'SENTRY_DSN' => null,
+                'DEFAULT_SERIALIZER_FORMAT' => 'json # csv, xml, yaml',
             ],
-            comment: 'Sentry',
-            priority: 13
+            comment: 'Serializer',
+            priority: 16
         );
     }
 }

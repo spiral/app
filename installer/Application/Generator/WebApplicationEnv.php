@@ -19,5 +19,14 @@ final class WebApplicationEnv implements GeneratorInterface
             comment: 'Session',
             priority: 8
         );
+
+        $context->envConfigurator->addGroup(
+            values: [
+                'AUTH_TOKEN_TRANSPORT' => 'cookie',
+                'AUTH_TOKEN_STORAGE' => 'session',
+            ],
+            comment: 'Authorization',
+            priority: 9
+        );
     }
 }

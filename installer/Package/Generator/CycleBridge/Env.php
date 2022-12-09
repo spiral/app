@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
                 'SAFE_MIGRATIONS' => true,
             ],
             comment: 'Set to TRUE to disable confirmation in `migrate` commands',
-            priority: 10
+            priority: 11
         );
         $context->envConfigurator->addGroup(
             values: [
@@ -24,7 +24,7 @@ final class Env implements GeneratorInterface
                 'CYCLE_SCHEMA_WARMUP' => false,
             ],
             comment: 'Cycle Bridge',
-            priority: 11
+            priority: 12
         );
     }
 }
