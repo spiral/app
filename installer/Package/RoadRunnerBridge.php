@@ -21,7 +21,7 @@ final class RoadRunnerBridge extends Package
         ],
         array $instructions = [
             'The RoadRunner configuration is available in the <comment>.rr.yaml</comment> file at the root of the application',
-            'Documentation: <comment>https://spiral.dev/docs/packages-roadrunner-bridge</comment>'
+            'Documentation: <comment>https://spiral.dev/docs/packages-roadrunner-bridge</comment>',
         ]
     ) {
         parent::__construct(Packages::RoadRunnerBridge, $resources, $generators, $instructions);

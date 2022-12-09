@@ -60,7 +60,7 @@ final class GRPC extends AbstractApplication
             'applications/grpc/proto' => 'proto',
         ],
         array $commands = [
-            'rr download-protoc-binary'
+            'rr download-protoc-binary',
         ],
         array $instructions = []
     ) {
