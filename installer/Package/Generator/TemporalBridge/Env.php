@@ -14,7 +14,7 @@ final class Env implements GeneratorInterface
         $context->envConfigurator->addGroup(
             values: [
                 'TEMPORAL_ADDRESS' => '127.0.0.1:7233',
-                'TEMPORAL_TASK_QUEUE' => 'default'
+                'TEMPORAL_TASK_QUEUE' => 'default',
             ],
             comment: 'Temporal bridge configuration',
             priority: 15

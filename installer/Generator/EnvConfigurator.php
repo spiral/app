@@ -82,7 +82,7 @@ final class EnvConfigurator
             comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
             priority: 2
         );
-// TODO implement verbosity
+        // TODO implement verbosity
 //        $this->addGroup(
 //            values: ['VERBOSITY' => 'verbose # basic, verbose, debug'],
 //            comment: 'Verbosity level',

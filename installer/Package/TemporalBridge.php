@@ -19,7 +19,7 @@ final class TemporalBridge extends Package
         ],
         array $generators = [
             new Bootloaders(),
-            new Env()
+            new Env(),
         ]
     ) {
         parent::__construct(Packages::TemporalBridge, $resources, $generators);

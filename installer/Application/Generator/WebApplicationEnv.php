@@ -19,6 +19,5 @@ final class WebApplicationEnv implements GeneratorInterface
             comment: 'Session',
             priority: 8
         );
-
     }
 }
