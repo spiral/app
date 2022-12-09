@@ -19,8 +19,7 @@ final class Context
         public readonly EnvConfigurator $envConfigurator,
         public readonly Notification $notification,
         public readonly string $applicationRoot,
-        public readonly Resource $resource,
-        public readonly array $composerDefinition
+        public readonly Resource $resource
     ) {
     }
 }

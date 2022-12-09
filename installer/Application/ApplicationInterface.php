@@ -58,4 +58,11 @@ interface ApplicationInterface
      * @return list<non-empty-string>
      */
     public function getRoadRunnerPlugins(): array;
+
+    public function isPackageInstalled(Package $package): bool;
+
+    /**
+     * @param class-string $question
+     */
+    public function getOption(string $question): mixed;
 }

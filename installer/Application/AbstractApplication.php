@@ -27,6 +27,9 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     private array $roadRunnerPlugins = [];
 
+    private array $installedPackages = [];
+    private array $options = [];
+
     /**
      * @param Package[] $packages
      * @param AutoloadRules $autoload
@@ -104,17 +107,20 @@ abstract class AbstractApplication implements ApplicationInterface
         }
 
         // optional packages generators
-        // Attention! Returns all available optional packages.Need to check if the package is installed
         foreach ($this->getQuestions() as $question) {
             foreach ($question->getOptions() as $option) {
                 foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
-                    foreach ($package->getGenerators() as $generator) {
-                        yield $package => $generator;
+                    if ($this->isPackageInstalled($package)) {
+                        foreach ($package->getGenerators() as $generator) {
+                            yield $package => $generator;
+                        }
                     }
                 }
                 if ($option instanceof BooleanOption) {
-                    foreach ($option->generators as $generator) {
-                        yield $question => $generator;
+                    if ($this->getOption($question::class) === true) {
+                        foreach ($option->generators as $generator) {
+                            yield $question => $generator;
+                        }
                     }
                 }
             }
@@ -142,6 +148,30 @@ abstract class AbstractApplication implements ApplicationInterface
     public function getRoadRunnerPlugins(): array
     {
         return \array_keys($this->roadRunnerPlugins);
+    }
+
+    public function isPackageInstalled(Package $package): bool
+    {
+        return \in_array($package->getName(), $this->installedPackages, true);
+    }
+
+    /**
+     * @param class-string $question
+     */
+    public function getOption(string $question): mixed
+    {
+        return $this->options[$question] ?? null;
+    }
+
+    /**
+     * @internal
+     *
+     * Don't use this method. It is called only once by the Installer
+     */
+    public function setInstalled(array $extra): void
+    {
+        $this->installedPackages = $extra['packages'] ?? [];
+        $this->options = $extra['options'] ?? [];
     }
 
     /**

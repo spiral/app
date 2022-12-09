@@ -13,7 +13,7 @@ final class CliApplicationSkeleton implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        if ($context->composerDefinition['extra']['spiral']['options'][ApplicationSkeleton::class] ?? false) {
+        if ($context->application->getOption(ApplicationSkeleton::class) === true) {
             $context->resource->copy('applications/shared/app/src/Api/Cli', 'app/src/Api/Cli');
             $context->resource->copy('applications/shared/app/src/Api/Job', 'app/src/Api/Job');
             $context->resource->copy('applications/shared/app/src/Api/Rpc', 'app/src/Api/Rpc');

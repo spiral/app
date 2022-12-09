@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Installer\Package\Generator\CycleBridge;
 
+use Installer\Application\ApplicationInterface;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
-use Installer\Package\Package;
-use Installer\Package\Packages;
+use Installer\Package\DoctrineCollections;
+use Installer\Package\IlluminateCollections;
 use Nette\PhpGenerator\Dumper;
 use Nette\PhpGenerator\Literal;
 
@@ -17,7 +18,7 @@ final class Config implements GeneratorInterface
 
     public function process(Context $context): void
     {
-        $collections = $this->getInstalledCollections($context);
+        $collections = $this->getInstalledCollections($context->application);
 
         $config = \file_get_contents(
             $context->applicationRoot . 'app/config/' . self::FILENAME
@@ -46,19 +47,12 @@ final class Config implements GeneratorInterface
         };
     }
 
-    private function getInstalledCollections(Context $context): Collections
+    private function getInstalledCollections(ApplicationInterface $application): Collections
     {
-        $doctrine = new Package(Packages::DoctrineCollections);
-        $illuminate = new Package(Packages::IlluminateCollections);
-
-        if (\in_array($doctrine->getName(), $context->composerDefinition['extra']['spiral']['packages'], true)) {
-            return Collections::Doctrine;
-        }
-
-        if (\in_array($illuminate->getName(), $context->composerDefinition['extra']['spiral']['packages'], true)) {
-            return Collections::Illuminate;
-        }
-
-        return Collections::Array;
+        return match (true) {
+            $application->isPackageInstalled(new DoctrineCollections()) => Collections::Doctrine,
+            $application->isPackageInstalled(new IlluminateCollections()) => Collections::Illuminate,
+            default => Collections::Array
+        };
     }
 }

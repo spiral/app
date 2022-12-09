@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Application\Generator;
 
 use App\Application\Service\ErrorHandler\ViewRenderer as Renderer;
+use Installer\Application\ApplicationInterface;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\StemplerBridge;
@@ -21,7 +22,7 @@ final class ViewRenderer implements GeneratorInterface
     {
         $context->exceptionHandlerBootloader->addUse(RendererInterface::class);
 
-        if ($this->isTemplateEngineInstalled($context->composerDefinition['extra']['spiral']['packages'] ?? [])) {
+        if ($this->isTemplateEngineInstalled($context->application)) {
             $context->resource->copy(self::RENDERER_PATH, self::TARGET_PATH);
             $context->exceptionHandlerBootloader->addUse(Renderer::class);
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, Renderer::class);
@@ -31,9 +32,9 @@ final class ViewRenderer implements GeneratorInterface
         }
     }
 
-    private function isTemplateEngineInstalled(array $packages): bool
+    private function isTemplateEngineInstalled(ApplicationInterface $application): bool
     {
-        return \in_array((new StemplerBridge())->getName(), $packages, true)
-            || \in_array((new TwigBridge())->getName(), $packages, true);
+        return $application->isPackageInstalled(new StemplerBridge())
+            || $application->isPackageInstalled(new TwigBridge());
     }
 }

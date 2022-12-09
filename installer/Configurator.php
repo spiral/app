@@ -8,6 +8,7 @@ use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Kernel;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
+use Installer\Application\AbstractApplication;
 use Installer\Application\ApplicationInterface;
 use Installer\Generator\Context;
 use Installer\Generator\EnvConfigurator;
@@ -15,8 +16,6 @@ use Installer\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Generator\GeneratorInterface;
 use Installer\Generator\KernelConfigurator;
 use Installer\Generator\Notification;
-use Installer\Package\Package;
-use Installer\Question\QuestionInterface;
 use Spiral\Core\Container;
 use Symfony\Component\Process\Process;
 
@@ -37,6 +36,10 @@ final class Configurator extends AbstractInstaller
         }
         $this->application = $applicationType;
 
+        if ($this->application instanceof AbstractApplication) {
+            $this->application->setInstalled($this->composerDefinition['extra']['spiral']);
+        }
+
         $this->setContext();
     }
 
@@ -53,46 +56,13 @@ final class Configurator extends AbstractInstaller
 
     private function runGenerators(): void
     {
-        foreach ($this->application->getGenerators() as $package => $generator) {
-            if ($package instanceof Package && !$this->isPackageInstalled($package)) {
-                continue;
-            }
-            if ($package instanceof QuestionInterface && !$this->isBooleanAnswerTrue($package)) {
-                continue;
-            }
-
+        foreach ($this->application->getGenerators() as $generator) {
             if (!$generator instanceof GeneratorInterface) {
                 $generator = $this->container->get($generator);
             }
 
             $generator->process($this->context);
         }
-    }
-
-    private function isPackageInstalled(Package $package): bool
-    {
-        return \in_array($package->getName(), $this->getExtraPackages(), true);
-    }
-
-    private function isBooleanAnswerTrue(QuestionInterface $question): bool
-    {
-        return isset($this->getOptions()[$question::class]) && $this->getOptions()[$question::class] === true;
-    }
-
-    /**
-     * @return non-empty-string[]
-     */
-    private function getExtraPackages(): array
-    {
-        return $this->composerDefinition['extra']['spiral']['packages'] ?? [];
-    }
-
-    /**
-     * @return array<non-empty-string, bool>
-     */
-    private function getOptions(): array
-    {
-        return $this->composerDefinition['extra']['spiral']['options'] ?? [];
     }
 
     private function getApplicationType(): int
@@ -109,8 +79,7 @@ final class Configurator extends AbstractInstaller
             envConfigurator: new EnvConfigurator($this->projectRoot, $this->resource),
             notification: new Notification($this->io),
             applicationRoot: $this->projectRoot,
-            resource: $this->resource,
-            composerDefinition: $this->composerDefinition
+            resource: $this->resource
         );
     }
 

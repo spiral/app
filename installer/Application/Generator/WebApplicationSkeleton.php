@@ -13,7 +13,7 @@ final class WebApplicationSkeleton implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        if ($context->composerDefinition['extra']['spiral']['options'][ApplicationSkeleton::class] ?? false) {
+        if ($context->application->getOption(ApplicationSkeleton::class) === true) {
             $context->resource->copy('applications/shared/app/src/Api', 'app/src/Api');
             $context->resource->copy('applications/shared/app/src/Module', 'app/src/Module');
             $context->resource->copy('applications/shared/tests', 'tests');
