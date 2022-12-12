@@ -181,7 +181,7 @@ abstract class AbstractApplication implements ApplicationInterface
     {
         return [
             'Please, configure the environment variables in the <comment>.env</comment> file at the application\'s root.',
-            'Read documentation about Spiral Framework: <comment>https://spiral.dev/docs</comment></info>'
+            'Read documentation about Spiral Framework: <comment>https://spiral.dev/docs</comment></info>',
         ];
     }
 }

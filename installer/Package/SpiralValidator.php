@@ -19,7 +19,7 @@ final class SpiralValidator extends Package
         ],
         array $instructions = [
             'Read more about validation in the Spiral Framework: <comment>https://spiral.dev/docs/validation-factory</comment>',
-            'Documentation: <comment>https://spiral.dev/docs/validation-spiral</comment>'
+            'Documentation: <comment>https://spiral.dev/docs/validation-spiral</comment>',
         ]
     ) {
         parent::__construct(Packages::SpiralValidator, $resources, $generators, $instructions);
