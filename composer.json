@@ -47,8 +47,8 @@
         "post-update-cmd": "Installer\\Configurator::configure",
         "post-create-project-cmd": [
             "php app.php encrypt:key -m .env",
-            "php app.php configure -vv",
-            "rr get-binary",
+            "php app.php configure --quiet",
+            "rr get-binary --quiet",
             "composer dump-autoload"
         ],
         "rr:download": "rr get-binary",
