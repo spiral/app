@@ -124,7 +124,7 @@ final class EnvConfigurator
         );
         $this->addGroup(
             values: [
-                'TELEMETRY_DRIVER' => null,
+                'TELEMETRY_DRIVER' => 'null',
             ],
             comment: 'Telemetry',
             priority: 8
