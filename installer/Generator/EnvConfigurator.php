@@ -35,7 +35,7 @@ final class EnvConfigurator
 
         (new Files())->write(
             $this->projectRoot . self::FILENAME,
-            \implode(PHP_EOL, $groups),
+            \ltrim(\implode(PHP_EOL, $groups)),
             FilesInterface::RUNTIME
         );
 
