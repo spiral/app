@@ -19,7 +19,7 @@ final class Env implements GeneratorInterface
                 'MAILER_FROM' => '"Spiral <sendit@local.host>"',
             ],
             comment: 'Mailer',
-            priority: 11
+            priority: 12
         );
     }
 }

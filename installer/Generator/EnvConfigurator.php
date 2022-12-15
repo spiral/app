@@ -82,16 +82,15 @@ final class EnvConfigurator
             comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
             priority: 2
         );
-        // TODO implement verbosity
-//        $this->addGroup(
-//            values: ['VERBOSITY' => 'verbose # basic, verbose, debug'],
-//            comment: 'Verbosity level',
-//            priority: 2
-//        );
+        $this->addGroup(
+            values: ['VERBOSITY_LEVEL' => '1 # 0, 1, 2'],
+            comment: 'Verbosity level',
+            priority: 3
+        );
         $this->addGroup(
             values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
             comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
-            priority: 3
+            priority: 4
         );
         $this->addGroup(
             values: [
@@ -99,35 +98,35 @@ final class EnvConfigurator
                 'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
             ],
             comment: 'Monolog',
-            priority: 4
+            priority: 5
         );
         $this->addGroup(
             values: [
                 'QUEUE_CONNECTION' => 'sync',
             ],
             comment: 'Queue',
-            priority: 5
+            priority: 6
         );
         $this->addGroup(
             values: [
                 'CACHE_STORAGE' => 'local',
             ],
             comment: 'Cache',
-            priority: 6
+            priority: 7
         );
         $this->addGroup(
             values: [
                 'STORAGE_DEFAULT' => 'default',
             ],
             comment: 'Storage',
-            priority: 7
+            priority: 8
         );
         $this->addGroup(
             values: [
                 'TELEMETRY_DRIVER' => 'null',
             ],
             comment: 'Telemetry',
-            priority: 8
+            priority: 9
         );
     }
 }

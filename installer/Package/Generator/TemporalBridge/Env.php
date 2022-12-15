@@ -17,7 +17,7 @@ final class Env implements GeneratorInterface
                 'TEMPORAL_TASK_QUEUE' => 'default',
             ],
             comment: 'Temporal bridge configuration',
-            priority: 16
+            priority: 18
         );
     }
 }

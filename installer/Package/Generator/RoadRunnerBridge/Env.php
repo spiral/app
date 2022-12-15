@@ -19,7 +19,7 @@ final class Env implements GeneratorInterface
                 'LOGGER_FORMAT' => '"%message% %context% %extra%\n"',
             ],
             comment: 'RoadRunner Logger',
-            priority: 15
+            priority: 16
         );
     }
 }

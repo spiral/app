@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
                 'DEFAULT_SERIALIZER_FORMAT' => 'closure',
             ],
             comment: 'Serializer',
-            priority: 16
+            priority: 17
         );
     }
 }
