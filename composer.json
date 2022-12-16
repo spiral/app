@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=8.1",
-        "spiral/roadrunner-cli": "dev-feature/config-command as 2.0",
+        "spiral/roadrunner-cli": "^2.4",
         "spiral/framework": "^3.2"
     },
     "require-dev": {
