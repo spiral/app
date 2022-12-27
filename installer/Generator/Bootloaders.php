@@ -71,11 +71,11 @@ final class Bootloaders
     {
         \uasort(
             $this->groups,
-            static fn(BootloaderGroup $a, BootloaderGroup $b) => $a->priority <=> $b->priority
+            static fn (BootloaderGroup $a, BootloaderGroup $b) => $a->priority <=> $b->priority
         );
 
         $groups = \array_map(
-            static fn(BootloaderGroup $group) => $group->render($namespace),
+            static fn (BootloaderGroup $group) => $group->render($namespace),
             \array_values($this->groups)
         );
 

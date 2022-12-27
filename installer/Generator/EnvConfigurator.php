@@ -26,10 +26,10 @@ final class EnvConfigurator
 
     public function __destruct()
     {
-        \uasort($this->groups, static fn(EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
+        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
 
         $groups = \array_map(
-            static fn(EnvGroup $group) => $group->render(),
+            static fn (EnvGroup $group) => $group->render(),
             \array_values($this->groups)
         );
 
