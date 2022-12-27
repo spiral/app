@@ -61,6 +61,10 @@ final class Resource
 
     private function writeInfo(string $destination): void
     {
+        if (!$this->io?->isVerbose()) {
+            return;
+        }
+
         $this->io?->write(\sprintf('  - Copying <info>%s</info>', $destination));
     }
 }

@@ -128,12 +128,14 @@ abstract class AbstractQuestion implements QuestionInterface
             if ($option instanceof Option && $option->getPackages() === []) {
                 $this->options[0] = $option;
             } else {
-                $this->options[(int) $key + 1] = $option;
+                $this->options[(int)$key + 1] = $option;
             }
         }
 
         if ($this->required !== true && !isset($this->options[0])) {
-            $this->options[self::NONE_OPTION] = new Option(name: \count($this->options) === 1 ? 'No' : 'None of the above');
+            $this->options[self::NONE_OPTION] = new Option(
+                name: \count($this->options) === 1 ? 'No' : 'None of the above'
+            );
         }
     }
 

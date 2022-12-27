@@ -7,6 +7,7 @@ namespace Installer\Package;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Generator\RoadRunnerBridge\Bootloaders;
 use Installer\Package\Generator\RoadRunnerBridge\Env;
+use Installer\Package\Generator\RoadRunnerBridge\QueueConfig;
 
 final class RoadRunnerBridge extends Package
 {
@@ -16,6 +17,7 @@ final class RoadRunnerBridge extends Package
     public function __construct(
         array $resources = [],
         array $generators = [
+            new QueueConfig(),
             new Bootloaders(),
             new Env(),
         ],

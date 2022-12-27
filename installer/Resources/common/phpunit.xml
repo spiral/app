@@ -14,20 +14,20 @@
     stopOnFailure="false"
     stopOnError="false"
     stderr="true">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">app/src</directory>
-    </include>
-  </coverage>
-  <testsuites>
-    <testsuite name="Unit">
-      <directory suffix="Test.php">tests/Unit</directory>
-    </testsuite>
-    <testsuite name="Feature">
-      <directory suffix="Test.php">tests/Feature</directory>
-    </testsuite>
-      <testsuite name="Modules">
-          <directory>app/src/Module/*/Test</directory>
-      </testsuite>
-  </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">app/src</directory>
+        </include>
+    </coverage>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Modules">
+            <directory>app/src/Module/*/Test</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

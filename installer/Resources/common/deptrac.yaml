@@ -26,10 +26,10 @@ deptrac:
       collectors:
         - type: className
           value: App\\Application\\Bootloader\\.*
-#    - name: AppTest
-#      collectors:
-#        - type: className
-#          value: Tests\\.*
+    #    - name: AppTest
+    #      collectors:
+    #        - type: className
+    #          value: Tests\\.*
 
     # Api
     - name: Controller
@@ -59,10 +59,10 @@ deptrac:
       collectors:
         - type: className
           value: App\\Module\\.*Bootloader.*
-#    - name: ModuleTest
-#      collectors:
-#        - type: className
-#          value: App\\Module\\[a-z_][a-z0-9_]*\\Tests?\\.*
+    #    - name: ModuleTest
+    #      collectors:
+    #        - type: className
+    #          value: App\\Module\\[a-z_][a-z0-9_]*\\Tests?\\.*
 
     # Vendor
     - name: VendorBootloader

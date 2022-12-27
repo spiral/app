@@ -35,9 +35,9 @@ final class BootloaderGroup
         foreach ($this->bootloaders as $pos => $value) {
             if ($afterBootloader === $value) {
                 $this->bootloaders = \array_merge(
-                    \array_slice($this->bootloaders, 0, (int) $pos + 1),
+                    \array_slice($this->bootloaders, 0, (int)$pos + 1),
                     [$bootloader],
-                    \array_slice($this->bootloaders, (int) $pos + 1)
+                    \array_slice($this->bootloaders, (int)$pos + 1)
                 );
                 break;
             }
@@ -52,9 +52,9 @@ final class BootloaderGroup
         foreach ($this->bootloaders as $pos => $value) {
             if ($beforeBootloader === $value) {
                 $this->bootloaders = \array_merge(
-                    \array_slice($this->bootloaders, 0, (int) $pos),
+                    \array_slice($this->bootloaders, 0, (int)$pos),
                     [$bootloader],
-                    \array_slice($this->bootloaders, (int) $pos)
+                    \array_slice($this->bootloaders, (int)$pos)
                 );
                 break;
             }

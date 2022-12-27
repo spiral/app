@@ -14,7 +14,7 @@ final class Bootloaders implements GeneratorInterface
     public function process(Context $context): void
     {
         $context->kernel->addUse(SpiralSerializerBootloader::class);
-        $context->kernel->addUse(SerializerBootloader::class);
+        $context->kernel->addUse(SerializerBootloader::class, 'SymfonySerializer');
 
         $context->kernel->load->addGroup(
             bootloaders: [

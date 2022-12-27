@@ -18,7 +18,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         $this->beforeBooting(static function (ConfiguratorInterface $config): void {
-            if (! $config->exists('session')) {
+            if (!$config->exists('session')) {
                 return;
             }
 
@@ -49,7 +49,7 @@ class TestCase extends BaseTestCase
 
     public function rootDirectory(): string
     {
-        return __DIR__.'/..';
+        return __DIR__ . '/..';
     }
 
     public function defineDirectories(string $root): array

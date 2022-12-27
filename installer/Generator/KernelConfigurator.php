@@ -12,6 +12,7 @@ use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
+use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
 final class KernelConfigurator extends AbstractConfigurator
@@ -63,6 +64,7 @@ final class KernelConfigurator extends AbstractConfigurator
     private function addRequiredLoadBootloaders(): void
     {
         $this->addUse(MonologBootloader::class);
+        $this->addUse(ScaffolderBootloader::class);
         $this->addUse('Spiral\Bootloader', 'Framework');
 
         $this->load->addGroup(
@@ -92,6 +94,7 @@ final class KernelConfigurator extends AbstractConfigurator
         $this->load->addGroup(
             bootloaders: [
                 CommandBootloader::class,
+                ScaffolderBootloader::class,
             ],
             comment: 'Console commands',
             priority: 101

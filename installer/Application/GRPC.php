@@ -10,7 +10,7 @@ use Installer\Application\Generator\ViewRenderer;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\ExtGRPC;
 use Installer\Package\ExtMbString;
-use Installer\Package\Generator\RoadRunnerBridge\GRPC as RoadRunnerGRPC;
+use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
 use Installer\Package\GRPC as PackageGRPC;
 use Installer\Package\Package;
 use Installer\Package\RoadRunnerBridge;
@@ -51,7 +51,7 @@ final class GRPC extends AbstractApplication
         array $questions = [],
         array $generators = [
             new GRPCApplicationBootloaders(),
-            new RoadRunnerGRPC(),
+            new GRPCBootloader(),
             new ViewRenderer(),
         ],
         array $resources = [

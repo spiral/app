@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Question;
 
 use Installer\Package\Generator\RoadRunnerBridge\MetricsBootloader;
+use Installer\Package\Packages;
 use Installer\Question\Option\BooleanOption;
 use Installer\Question\Option\OptionInterface;
 
@@ -23,8 +24,13 @@ final class RoadRunnerMetrics extends AbstractQuestion
                     new MetricsBootloader(),
                 ]
             ),
+        ],
+        array $conditions = [
+            'require' => [
+                Packages::RoadRunnerBridge,
+            ],
         ]
     ) {
-        parent::__construct($question, $required, $options);
+        parent::__construct($question, $required, $options, $conditions);
     }
 }

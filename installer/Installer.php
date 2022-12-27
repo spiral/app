@@ -34,6 +34,8 @@ final class Installer extends AbstractInstaller
     /** @var array<string, BasePackage::STABILITY_*> */
     private array $stabilityFlags = [];
 
+    private readonly bool $verbose;
+
     /**
      * @throws ParsingException
      */
@@ -54,16 +56,16 @@ final class Installer extends AbstractInstaller
     {
         $installer = new self($event->getIO(), $event->getComposer());
 
-        $installer->io->write('<info>Setting up application preset</info>');
+        $installer->writeInfo('<info>Setting up application preset</info>');
         $installer->setApplicationType($installer->requestApplicationType());
 
-        $installer->io->write('<info>Setting up required packages</info>');
+        $installer->writeInfo('<info>Setting up required packages</info>');
         $installer->setRequiredPackages();
 
-        $installer->io->write('<info>Setting up optional packages</info>');
+        $installer->writeInfo('<info>Setting up optional packages</info>');
         $installer->promptForOptionalPackages();
 
-        $installer->io->write('<info>Setting up application files</info>');
+        $installer->writeInfo('<info>Setting up application files</info>');
         $installer->setApplicationFiles();
 
         $installer->removeInstallerFromDefinition();
@@ -130,12 +132,12 @@ final class Installer extends AbstractInstaller
         ];
         foreach ($this->config as $key => $app) {
             if ($app instanceof ApplicationInterface) {
-                $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int) $key + 1, $app->getName());
+                $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int)$key + 1, $app->getName());
             }
         }
         $query[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', 1);
 
-        return (int) $this->io->ask(\implode($query), 1) - 1;
+        return (int)$this->io->ask(\implode($query), 1) - 1;
     }
 
     private function setApplicationType(int $type): void
@@ -152,31 +154,33 @@ final class Installer extends AbstractInstaller
 
     private function askQuestion(QuestionInterface $question): int
     {
-        $answer = $this->io->ask($question->getQuestion(), (string) $question->getDefault());
+        $answer = $this->io->ask($question->getQuestion(), (string)$question->getDefault());
 
         // Handling "y", "Y", "n", "N"
-        if (\strtolower((string) $answer) === 'n') {
+        if (\strtolower((string)$answer) === 'n') {
             $answer = 0;
         }
-        if (\strtolower((string) $answer) === 'y' && count($question->getOptions()) === 2) {
+        if (\strtolower((string)$answer) === 'y' && count($question->getOptions()) === 2) {
             $answer = 1;
         }
 
-        if (!$question->hasOption((int) $answer)) {
+        if (!$question->hasOption((int)$answer)) {
             $this->io->write('<error>Invalid answer</error>');
             exit;
         }
 
-        return (int) $answer;
+        return (int)$answer;
     }
 
     private function addPackage(Package $package): void
     {
-        $this->io->write(\sprintf(
-            '  - Adding package <info>%s</info> (<comment>%s</comment>)',
-            $package->getName(),
-            $package->getVersion()
-        ));
+        $this->writeInfo(
+            \sprintf(
+                '  - Adding package <info>%s</info> (<comment>%s</comment>)',
+                $package->getName(),
+                $package->getVersion()
+            )
+        );
 
         $versionParser = new VersionParser();
         $constraint = $versionParser->parseConstraints($package->getVersion());
@@ -209,6 +213,7 @@ final class Installer extends AbstractInstaller
             'RC' => BasePackage::STABILITY_RC,
             default => null
         };
+
         if ($stability !== null) {
             $this->stabilityFlags[$package->getName()] = $stability;
         }
@@ -239,7 +244,7 @@ final class Installer extends AbstractInstaller
 
     private function removeInstallerFromDefinition(): void
     {
-        $this->io->write('<info>Remove Installer from composer.json</info>');
+        $this->writeInfo('<info>Remove Installer from composer.json</info>');
 
         unset(
             $this->composerDevRequires['composer/composer'],
@@ -264,5 +269,14 @@ final class Installer extends AbstractInstaller
         if (!\array_key_exists($question::class, $this->composerDefinition['extra']['spiral']['options'] ?? [])) {
             $this->composerDefinition['extra']['spiral']['options'][$question::class] = $answer->value;
         }
+    }
+
+    private function writeInfo(string $message): void
+    {
+        if (!$this->io->isVerbose()) {
+            return;
+        }
+
+        $this->io->write($message);
     }
 }

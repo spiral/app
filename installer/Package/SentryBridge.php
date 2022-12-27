@@ -20,7 +20,7 @@ final class SentryBridge extends Package
             new Env(),
         ],
         array $instructions = [
-            'Please, configure the <comment>SENTRY_DSN</comment> environment variable',
+            'Please, configure the <comment>`SENTRY_DSN`</comment> environment variable',
             'Documentation: <comment>https://spiral.dev/docs/extension-sentry</comment>',
         ]
     ) {
