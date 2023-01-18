@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=8.1",
-        "ext-socket": "*",
+        "ext-sockets": "*",
         "spiral/roadrunner-cli": "^2.4",
         "spiral/framework": "^3.3"
     },
