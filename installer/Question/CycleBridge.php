@@ -19,8 +19,14 @@ final class CycleBridge extends AbstractQuestion
             new Option(name: 'Yes', packages: [
                 new Package(),
             ]),
-        ]
+        ],
+        int $default = self::NONE_OPTION,
     ) {
-        parent::__construct($question, $required, $options);
+        parent::__construct(
+            question: $question,
+            required: $required,
+            options: $options,
+            default: $default
+        );
     }
 }

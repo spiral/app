@@ -9,12 +9,12 @@ return [
     new Application\Web(
         questions: [
             new Question\ApplicationSkeleton(),
-            new Question\CycleBridge(),
-            new Question\CycleCollections(),
-            new Question\Validator(),
+            new Question\CycleBridge(default: 1),
+            new Question\CycleCollections(default: 1),
+            new Question\Validator(default: 1),
             new Question\Serializer(),
             new Question\Mailer(),
-            new Question\TemplateEngine(),
+            new Question\TemplateEngine(default: 1),
             new Question\EventBus(),
             new Question\Scheduler(),
             new Question\TemporalBridge(),

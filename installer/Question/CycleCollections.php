@@ -28,8 +28,15 @@ final class CycleCollections extends AbstractQuestion
             'require' => [
                 Packages::CycleBridge,
             ],
-        ]
+        ],
+        int $default = self::NONE_OPTION
     ) {
-        parent::__construct($question, $required, $options, $conditions);
+        parent::__construct(
+            question: $question,
+            required: $required,
+            options: $options,
+            conditions: $conditions,
+            default: $default
+        );
     }
 }
