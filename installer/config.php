@@ -30,6 +30,7 @@ return [
             new Question\Mailer(),
             new Question\RoadRunnerBridge(),
             new Question\RoadRunnerMetrics(),
+            new Question\TemporalBridge(),
         ]
     ),
     new Application\GRPC(

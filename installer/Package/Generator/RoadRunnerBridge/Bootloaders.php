@@ -32,6 +32,6 @@ final class Bootloaders implements GeneratorInterface
 
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
 
-        $context->application->useRoadRunnerPlugin('http', 'jobs', 'kv');
+        $context->application->useRoadRunnerPlugin('jobs', 'kv');
     }
 }
