@@ -77,5 +77,7 @@ final class Web extends AbstractApplication
             commands: $commands,
             instructions: $instructions
         );
+
+        $this->useRoadRunnerPlugin('http');
     }
 }
