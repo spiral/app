@@ -24,7 +24,8 @@ final class RoutesBootloader extends BaseRoutesBootloader
     protected function globalMiddleware(): array
     {
         return [
-            LocaleSelector::class,
+            // Uncomment and add I18nBootloader to the Kernel if you want to use locales
+            // LocaleSelector::class,
             ErrorHandlerMiddleware::class,
             JsonPayloadMiddleware::class,
             HttpCollector::class,
