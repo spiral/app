@@ -29,6 +29,4 @@ final class CycleBridge extends AbstractQuestion
             default: $default
         );
     }
-
-
 }

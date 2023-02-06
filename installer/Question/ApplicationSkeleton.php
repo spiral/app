@@ -38,6 +38,5 @@ This will add a default application skeleton to your project.
     - Views
     - Locales
 HELP;
-
     }
 }

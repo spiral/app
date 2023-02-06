@@ -31,6 +31,5 @@ The Event Dispatcher is a simple PHP event system that allows you to listen for 
   We use the League\Event - https://event.thephpleague.com/3.0/ package for this purpose.
   Documentation: https://spiral.dev/docs/advanced-events
 HELP;
-
     }
 }
