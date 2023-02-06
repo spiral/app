@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Cycle\ORM\Collection\ArrayCollectionFactory;
 use Cycle\ORM\Collection\DoctrineCollectionFactory;
 use Cycle\ORM\Collection\IlluminateCollectionFactory;
+use Cycle\ORM\Collection\LoophpCollectionFactory;
 
 return [
     'schema' => [
