@@ -8,6 +8,7 @@ use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
 use Installer\Application\ApplicationInterface;
+use Installer\Console\IO;
 use Seld\JsonLint\ParsingException;
 
 abstract class AbstractInstaller
@@ -21,14 +22,17 @@ abstract class AbstractInstaller
     protected string $projectRoot;
     protected Resource $resource;
     protected JsonFile $composerJson;
+    protected readonly IO $io;
 
     /**
      * @throws ParsingException
      */
     public function __construct(
-        protected readonly IOInterface $io,
+        IOInterface $io,
         ?string $projectRoot = null
     ) {
+        $this->io = new IO($io);
+
         $composerFile = Factory::getComposerFile();
 
         $this->projectRoot = $projectRoot ?? \str_replace('\\', '/', \realpath(\dirname($composerFile)));
@@ -39,7 +43,7 @@ abstract class AbstractInstaller
 
         $this->config = require __DIR__ . '/config.php';
 
-        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/', $this->projectRoot, $io);
+        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/', $this->projectRoot, $this->io);
     }
 
     protected function recursiveRmdir(string $directory): void

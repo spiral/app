@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer;
 
-use Composer\IO\IOInterface;
+use Installer\Console\IO;
 
 final class Resource
 {
@@ -13,7 +13,7 @@ final class Resource
     public function __construct(
         private readonly string $source,
         private readonly string $root,
-        private readonly ?IOInterface $io = null
+        private readonly IO $io
     ) {
     }
 
@@ -61,10 +61,10 @@ final class Resource
 
     private function writeInfo(string $destination): void
     {
-        if (!$this->io?->isVerbose()) {
+        if (!$this->io->isVerbose()) {
             return;
         }
 
-        $this->io?->write(\sprintf('  - Copying <info>%s</info>', $destination));
+        $this->io->write(\sprintf('  - Copying <info>%s</info>', $destination));
     }
 }

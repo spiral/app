@@ -56,16 +56,25 @@ final class Installer extends AbstractInstaller
     {
         $installer = new self($event->getIO(), $event->getComposer());
 
-        $installer->writeInfo('<info>Setting up application preset</info>');
-        $installer->setApplicationType($installer->requestApplicationType());
+        $installer->io->success('Setting up application preset...');
 
-        $installer->writeInfo('<info>Setting up required packages</info>');
+        do {
+            try {
+                $type = $installer->requestApplicationType();
+                $installer->setApplicationType($type);
+                break;
+            } catch (\InvalidArgumentException $e) {
+                $installer->io->error($e->getMessage());
+            }
+        } while (true);
+
+        $installer->io->success('Setting up required packages...');
         $installer->setRequiredPackages();
 
-        $installer->writeInfo('<info>Setting up optional packages</info>');
+        $installer->io->success('Setting up optional packages...');
         $installer->promptForOptionalPackages();
 
-        $installer->writeInfo('<info>Setting up application files</info>');
+        $installer->io->success('Setting up application files...');
         $installer->setApplicationFiles();
 
         $installer->removeInstallerFromDefinition();
@@ -99,15 +108,22 @@ final class Installer extends AbstractInstaller
 
     private function promptForOptionalPackage(QuestionInterface $question): void
     {
-        $answer = $this->askQuestion($question);
-        if ($answer === 0) {
-            return;
-        }
+        do {
+            try {
+                $answer = $this->askQuestion($question);
 
-        if (!$question->hasOption($answer)) {
-            $this->io->write('<error>Invalid package</error>');
-            exit;
-        }
+                if ($answer === 0) {
+                    return;
+                }
+
+                if (!$question->hasOption($answer)) {
+                    throw new \InvalidArgumentException('Invalid package!');
+                }
+                break;
+            } catch (\InvalidArgumentException $e) {
+                $this->io->error($e->getMessage());
+            }
+        } while (true);
 
         // Add packages to install
         $option = $question->getOption($answer);
@@ -135,7 +151,7 @@ final class Installer extends AbstractInstaller
                 $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int)$key + 1, $app->getName());
             }
         }
-        $query[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', 1);
+        $query[] = \sprintf('  Make your selection <comment>(default: %s)</comment>: ', 1);
 
         return (int)$this->io->ask(\implode($query), 1) - 1;
     }
@@ -143,8 +159,7 @@ final class Installer extends AbstractInstaller
     private function setApplicationType(int $type): void
     {
         if (!isset($this->config[$type]) || !$this->config[$type] instanceof ApplicationInterface) {
-            $this->io->write('<error>Invalid application preset!</error>');
-            exit;
+            throw new \InvalidArgumentException('Invalid preset! Please select one of the available presets.');
         }
 
         $this->application = $this->config[$type];
@@ -154,7 +169,20 @@ final class Installer extends AbstractInstaller
 
     private function askQuestion(QuestionInterface $question): int
     {
-        $answer = $this->io->ask($question->getQuestion(), (string)$question->getDefault());
+        do {
+            $answer = $this->io->ask($question->getQuestion(), (string)$question->getDefault());
+
+            if (!\in_array(\strtolower((string)$answer), ['?', 'h', 'help'])) {
+                break;
+            }
+
+            if ($question->getHelp() === null) {
+                $this->io->error('Help is not available for this question.');
+            } else {
+                $this->io->title('Help:');
+                $this->io->comment($question->getHelp());
+            }
+        } while (true);
 
         // Handling "y", "Y", "n", "N"
         if (\strtolower((string)$answer) === 'n') {
@@ -165,8 +193,7 @@ final class Installer extends AbstractInstaller
         }
 
         if (!$question->hasOption((int)$answer)) {
-            $this->io->write('<error>Invalid answer</error>');
-            exit;
+            throw new \InvalidArgumentException('Invalid answer! Please select one of the available options.');
         }
 
         return (int)$answer;
@@ -174,9 +201,9 @@ final class Installer extends AbstractInstaller
 
     private function addPackage(Package $package): void
     {
-        $this->writeInfo(
+        $this->io->debug(
             \sprintf(
-                '  - Adding package <info>%s</info> (<comment>%s</comment>)',
+                '- Adding package <info>%s</info> (<comment>%s</comment>)',
                 $package->getName(),
                 $package->getVersion()
             )
@@ -244,7 +271,7 @@ final class Installer extends AbstractInstaller
 
     private function removeInstallerFromDefinition(): void
     {
-        $this->writeInfo('<info>Remove Installer from composer.json</info>');
+        $this->io->success('Removing Installer from composer.json ...');
 
         unset(
             $this->composerDevRequires['composer/composer'],
@@ -269,14 +296,5 @@ final class Installer extends AbstractInstaller
         if (!\array_key_exists($question::class, $this->composerDefinition['extra']['spiral']['options'] ?? [])) {
             $this->composerDefinition['extra']['spiral']['options'][$question::class] = $answer->value;
         }
-    }
-
-    private function writeInfo(string $message): void
-    {
-        if (!$this->io->isVerbose()) {
-            return;
-        }
-
-        $this->io->write($message);
     }
 }

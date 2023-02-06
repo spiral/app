@@ -13,7 +13,7 @@ final class Scheduler extends AbstractQuestion
      * @param Option[] $options
      */
     public function __construct(
-        string $question = 'Do you need a cron jobs Scheduler?',
+        string $question = 'Do you need a cron jobs scheduler?',
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [

@@ -37,6 +37,11 @@ abstract class AbstractQuestion implements QuestionInterface
         $this->setConditions($conditions);
     }
 
+    public function getHelp(): ?string
+    {
+        return null;
+    }
+
     /**
      * Get formatted question with all options
      */
@@ -56,7 +61,11 @@ abstract class AbstractQuestion implements QuestionInterface
             $ask[] = \sprintf("  [<comment>0</comment>] %s\n", $this->options[0]->getName());
         }
 
-        $ask[] = \sprintf('  Make your selection <comment>(%s)</comment>: ', $this->default);
+        if ($this->getHelp() !== null) {
+            $ask[] = "  [<comment>?</comment>] Help\n";
+        }
+
+        $ask[] = \sprintf('  Make your selection <comment>(default: %s)</comment>: ', $this->default);
 
         return \implode($ask);
     }

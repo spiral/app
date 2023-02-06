@@ -9,6 +9,7 @@ use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\DoctrineCollections;
 use Installer\Package\IlluminateCollections;
+use Installer\Package\LoophpCollections;
 use Nette\PhpGenerator\Dumper;
 use Nette\PhpGenerator\Literal;
 
@@ -43,6 +44,9 @@ final class Config implements GeneratorInterface
             Collections::Illuminate => [
                 Collections::Illuminate->value => new Literal('new IlluminateCollectionFactory()'),
             ],
+            Collections::Loophp => [
+                Collections::Loophp->value => new Literal('new LoophpCollectionFactory()'),
+            ],
             default => [Collections::Array->value => new Literal('new ArrayCollectionFactory()')]
         };
     }
@@ -52,7 +56,7 @@ final class Config implements GeneratorInterface
         return match (true) {
             $application->isPackageInstalled(new DoctrineCollections()) => Collections::Doctrine,
             $application->isPackageInstalled(new IlluminateCollections()) => Collections::Illuminate,
-            default => Collections::Array
+            $application->isPackageInstalled(new LoophpCollections()) => Collections::Loophp,
         };
     }
 }

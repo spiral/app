@@ -1,10 +1,12 @@
 # Spiral Application installer
 
-[App Skeleton](https://github.com/spiral/app) | [**Documentation**](https://spiral.dev/docs) | [Discord](https://discord.gg/TFeEmCs) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/about-contributing/)
+[**Documentation**](https://spiral.dev/docs) | [Discord](https://discord.gg/V6EK4he) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/overview-contributing/)
 
 ![Installer](https://user-images.githubusercontent.com/773481/208850084-891a9d6f-3e70-4a06-af57-4e63c37c9c47.png)
 
-The package has been developed for the [Spiral Framework](https://github.com/spiral/framework/), providing a convenient command line interface for installing and configuring the framework and any desired packages. This makes it simple for developers to get started with Spiral.
+The package has been developed for the [Spiral Framework](https://github.com/spiral/framework/), providing a convenient
+command line interface for installing and configuring the framework and any desired packages. This makes it simple for
+developers to get started with Spiral.
 
 <br />
 

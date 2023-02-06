@@ -7,7 +7,7 @@ namespace Installer\Question\Option;
 abstract class AbstractOption implements OptionInterface
 {
     public function __construct(
-        private readonly string $name
+        private readonly string $name,
     ) {
     }
 

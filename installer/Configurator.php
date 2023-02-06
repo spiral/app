@@ -88,9 +88,10 @@ final class Configurator extends AbstractInstaller
     private function runCommands(): void
     {
         foreach ($this->application->getCommands() as $command) {
-            (new Process(\explode(' ', $command)))->run(function (string $type, mixed $data) {
-                $this->io->write($data);
-            });
+            (new Process(\explode(' ', $command)))
+                ->run(function (string $type, mixed $data) {
+                    $this->io->write($data);
+                });
         }
     }
 
@@ -103,9 +104,10 @@ final class Configurator extends AbstractInstaller
             $plugins = ' -p ' . \implode(' -p ', $rrPlugins);
         }
 
-        (new Process(\explode(' ', 'rr make-config' . $plugins)))->run(function (string $type, mixed $data) {
-            $this->io->write($data);
-        });
+        (new Process(\explode(' ', 'rr make-config' . $plugins)))
+            ->run(function (string $type, mixed $data) {
+                $this->io->write($data);
+            });
     }
 
     private function updateReadme(): void
@@ -163,7 +165,9 @@ final class Configurator extends AbstractInstaller
 
     private function showInstructions(): void
     {
-        $this->io->write('  <comment>Next steps:</comment>');
+        $this->io->info('Installation complete!');
+        $this->io->write('');
+        $this->io->comment('Next steps:');
 
         // from application
         foreach ($this->application->getInstructions() as $index => $instruction) {
@@ -175,7 +179,7 @@ final class Configurator extends AbstractInstaller
                 return;
             }
 
-            $this->io->write(\sprintf('  <comment>%s</comment>', $package->getTitle()));
+            $this->io->comment($package->getTitle());
             foreach ($package->getInstructions() as $index => $instruction) {
                 $this->io->write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
             }
@@ -200,7 +204,7 @@ final class Configurator extends AbstractInstaller
 
     private function removeInstaller(): void
     {
-        $this->io->write('<info>Remove Configurator from composer.json</info>');
+        $this->io->info('Removing Configurator from composer.json ...');
 
         unset(
             $this->composerDefinition['scripts']['post-install-cmd'],
@@ -208,7 +212,7 @@ final class Configurator extends AbstractInstaller
             $this->composerDefinition['extra']['spiral']
         );
 
-        $this->io->write('<info>Remove Installer files</info>');
+        $this->io->success('Removing Installer files ...');
         $this->recursiveRmdir($this->projectRoot . 'installer');
     }
 

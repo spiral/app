@@ -14,6 +14,7 @@ enum Packages: string
     case SapiBridge = 'spiral/sapi-bridge:^1.0.1';
     case CycleBridge = 'spiral/cycle-bridge:^2.1';
     case DoctrineCollections = 'doctrine/collections:^1.8';
+    case LoophpCollections = 'loophp/collection:^6.0';
     case IlluminateCollections = 'illuminate/collections:^9.0';
     case RoadRunnerGRPC = 'spiral/roadrunner-grpc:^2.0';
     case SpiralValidator = 'spiral/validator:^1.1';

@@ -27,4 +27,17 @@ final class ApplicationSkeleton extends AbstractQuestion
             default: $default
         );
     }
+
+    public function getHelp(): ?string
+    {
+        return <<<'HELP'
+This will add a default application skeleton to your project.
+    - Home controller
+    - Example Console command
+    - Example Queue job
+    - Views
+    - Locales
+HELP;
+
+    }
 }

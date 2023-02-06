@@ -13,6 +13,8 @@ interface QuestionInterface
      */
     public function getQuestion(): string;
 
+    public function getHelp(): ?string;
+
     public function isRequired(): bool;
 
     /**

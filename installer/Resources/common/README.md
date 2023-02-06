@@ -33,7 +33,7 @@ composer rr:download
 ./vendor/bin/rr get-binary
 ```
 
-### Download or update protoc get GRPC plugin
+### Download or update protoc-gen GRPC plugin
 
 Allows to install the latest version of the `protoc-gen-php-grpc` file compatible with your environment (operating
 system, processor architecture, runtime, etc...).

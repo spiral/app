@@ -22,6 +22,9 @@ final class CycleCollections extends AbstractQuestion
             new Option(name: 'Laravel Collections', packages: [
                 Packages::IlluminateCollections,
             ]),
+            new Option(name: 'Loophp Collections', packages: [
+                Packages::LoophpCollections,
+            ]),
             new Option(name: 'Use PHP array as the collection'),
         ],
         array $conditions = [

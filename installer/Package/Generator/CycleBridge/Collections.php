@@ -9,4 +9,5 @@ enum Collections: string
     case Array = 'array';
     case Doctrine = 'doctrine';
     case Illuminate = 'illuminate';
+    case Loophp = 'loophp';
 }

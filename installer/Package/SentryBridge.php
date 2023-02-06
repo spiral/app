@@ -20,8 +20,8 @@ final class SentryBridge extends Package
             new Env(),
         ],
         array $instructions = [
-            'Please, configure the <comment>`SENTRY_DSN`</comment> environment variable',
-            'Documentation: <comment>https://spiral.dev/docs/extension-sentry</comment>',
+            'Configure the <comment>`SENTRY_DSN`</comment> environment variable to enable Sentry error reporting.',
+            'Documentation: <comment>https://spiral.dev/docs/basics-errors</comment>',
         ]
     ) {
         parent::__construct(Packages::SentryBridge, $resources, $generators, $instructions);

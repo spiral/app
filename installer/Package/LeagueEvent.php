@@ -17,7 +17,9 @@ final class LeagueEvent extends Package
         array $generators = [
             new Bootloaders(),
         ],
-        array $instructions = []
+        array $instructions = [
+            'Documentation: <comment>https://spiral.dev/docs/advanced-events</comment>',
+        ]
     ) {
         parent::__construct(Packages::LeagueEvent, $resources, $generators, $instructions);
     }

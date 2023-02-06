@@ -25,10 +25,10 @@ final class CycleBridge extends Package
             new Env(),
         ],
         array $instructions = [
-            'Database configuration file available here: <comment>app/config/database.php</comment>',
-            'Migrations configuration file available here: <comment>app/config/migration.php</comment>',
-            'Cycle ORM configuration file available here: <comment>app/config/cycle.php</comment>',
-            'Documentation: <comment>https://spiral.dev/docs/packages-cycle-bridge</comment>',
+            'Database configuration file: <comment>app/config/database.php</comment>',
+            'Migrations configuration file: <comment>app/config/migration.php</comment>',
+            'Cycle ORM configuration file: <comment>app/config/cycle.php</comment>',
+            'Documentation: <comment>https://spiral.dev/docs/basics-orm</comment>',
         ]
     ) {
         parent::__construct(Packages::CycleBridge, $resources, $generators, $instructions);
