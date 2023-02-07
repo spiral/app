@@ -26,7 +26,6 @@ return [
         questions: [
             new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
-            new Question\CycleCollections(default: 1),
             new Question\Serializer(),
             new Question\Mailer(),
             new Question\RoadRunnerBridge(),
@@ -37,7 +36,6 @@ return [
     new Application\GRPC(
         questions: [
             new Question\CycleBridge(),
-            new Question\CycleCollections(default: 1),
             new Question\Validator(),
             new Question\Serializer(),
             new Question\EventDispatcher(),

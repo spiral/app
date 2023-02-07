@@ -47,7 +47,9 @@ final class Config implements GeneratorInterface
             Collections::Loophp => [
                 Collections::Loophp->value => new Literal('new LoophpCollectionFactory()'),
             ],
-            default => [Collections::Array->value => new Literal('new ArrayCollectionFactory()')]
+            default => [
+                Collections::Array->value => new Literal('new ArrayCollectionFactory()')
+            ]
         };
     }
 
@@ -57,6 +59,7 @@ final class Config implements GeneratorInterface
             $application->isPackageInstalled(new DoctrineCollections()) => Collections::Doctrine,
             $application->isPackageInstalled(new IlluminateCollections()) => Collections::Illuminate,
             $application->isPackageInstalled(new LoophpCollections()) => Collections::Loophp,
+            default => Collections::Array
         };
     }
 }
