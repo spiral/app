@@ -48,7 +48,7 @@ final class Config implements GeneratorInterface
                 Collections::Loophp->value => new Literal('new LoophpCollectionFactory()'),
             ],
             default => [
-                Collections::Array->value => new Literal('new ArrayCollectionFactory()')
+                Collections::Array->value => new Literal('new ArrayCollectionFactory()'),
             ]
         };
     }
