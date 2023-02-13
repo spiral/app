@@ -107,14 +107,15 @@ class Kernel extends \Spiral\Framework\Kernel
         RoadRunnerBridge\CommandBootloader::class,
 
         Bootloader\RoutesBootloader::class,
+
+        // Fast code prototyping
+        Prototype\PrototypeBootloader::class,
     ];
 
     /*
      * Application specific services and extensions.
      */
     protected const APP = [
-        // fast code prototyping
-        Prototype\PrototypeBootloader::class,
 
         // Modules
         \App\Module\EmptyModule\Application\Bootloader::class,
