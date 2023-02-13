@@ -30,7 +30,6 @@ final class KernelConfigurator extends AbstractConfigurator
 
         $this->addRequiredSystemBootloaders();
         $this->addRequiredLoadBootloaders();
-        $this->addRequiredAppBootloaders();
     }
 
     public function __destruct()
@@ -66,6 +65,7 @@ final class KernelConfigurator extends AbstractConfigurator
         $this->addUse(MonologBootloader::class);
         $this->addUse(ScaffolderBootloader::class);
         $this->addUse('Spiral\Bootloader', 'Framework');
+        $this->addUse(PrototypeBootloader::class);
 
         $this->load->addGroup(
             bootloaders: [
@@ -91,6 +91,14 @@ final class KernelConfigurator extends AbstractConfigurator
             priority: 4
         );
 
+        $this->app->addGroup(
+            bootloaders: [
+                PrototypeBootloader::class,
+            ],
+            comment: 'Fast code prototyping',
+            priority: 100
+        );
+
         $this->load->addGroup(
             bootloaders: [
                 CommandBootloader::class,
@@ -98,18 +106,6 @@ final class KernelConfigurator extends AbstractConfigurator
             ],
             comment: 'Console commands',
             priority: 101
-        );
-    }
-
-    private function addRequiredAppBootloaders(): void
-    {
-        $this->addUse(PrototypeBootloader::class);
-
-        $this->app->addGroup(
-            bootloaders: [
-                PrototypeBootloader::class,
-            ],
-            comment: 'Fast code prototyping',
         );
     }
 }
