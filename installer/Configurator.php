@@ -52,7 +52,12 @@ final class Configurator extends AbstractInstaller
         $conf->createRoadRunnerConfig();
         $conf->runCommands();
         $conf->showInstructions();
+
         $conf->updateReadme();
+
+        // We don't need MIT license file in the application, that's why we remove it.
+        $conf->removeLicense();
+
         $conf->removeInstaller();
         $conf->finalize();
     }
@@ -200,6 +205,11 @@ final class Configurator extends AbstractInstaller
                 }
             }
         }
+    }
+
+    private function removeLicense(): void
+    {
+        \unlink($this->projectRoot . 'LICENSE');
     }
 
     private function removeInstaller(): void
