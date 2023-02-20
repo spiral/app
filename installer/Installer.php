@@ -42,7 +42,7 @@ final class Installer extends AbstractInstaller
     public function __construct(
         IOInterface $io,
         Composer $composer,
-        ?string $projectRoot = null
+        ?string $projectRoot = null,
     ) {
         parent::__construct($io, $projectRoot);
 
@@ -57,6 +57,20 @@ final class Installer extends AbstractInstaller
         $installer = new self($event->getIO(), $event->getComposer());
 
         $installer->io->success('Setting up application preset...');
+
+        $installer->io->info(
+            <<<'WELCOME'
+                        
+   _____         _              _ 
+  / ____|       (_)            | |
+ | (___   _ __   _  _ __  __ _ | |
+  \___ \ | '_ \ | || '__|/ _` || |
+  ____) || |_) || || |  | (_| || |
+ |_____/ | .__/ |_||_|   \__,_||_|
+         | |                      
+         |_|                      
+WELCOME,
+        );
 
         do {
             try {
@@ -143,7 +157,7 @@ final class Installer extends AbstractInstaller
         $query = [
             \sprintf(
                 "\n  <question>%s</question>\n",
-                'Which application preset do you want to install?'
+                'Which application preset do you want to install?',
             ),
         ];
         foreach ($this->config as $key => $app) {
@@ -205,8 +219,8 @@ final class Installer extends AbstractInstaller
             \sprintf(
                 '- Adding package <info>%s</info> (<comment>%s</comment>)',
                 $package->getName(),
-                $package->getVersion()
-            )
+                $package->getVersion(),
+            ),
         );
 
         $versionParser = new VersionParser();
@@ -218,7 +232,7 @@ final class Installer extends AbstractInstaller
         if (\in_array($package->getName(), $this->config['require-dev'] ?? [], true)) {
             unset(
                 $this->composerDefinition['require'][$package->getName()],
-                $this->composerRequires[$package->getName()]
+                $this->composerRequires[$package->getName()],
             );
 
             $this->composerDefinition['require-dev'][$package->getName()] = $package->getVersion();
@@ -226,7 +240,7 @@ final class Installer extends AbstractInstaller
         } else {
             unset(
                 $this->composerDefinition['require-dev'][$package->getName()],
-                $this->composerDevRequires[$package->getName()]
+                $this->composerDevRequires[$package->getName()],
             );
 
             $this->composerDefinition['require'][$package->getName()] = $package->getVersion();
@@ -277,7 +291,7 @@ final class Installer extends AbstractInstaller
             $this->composerDevRequires['composer/composer'],
             $this->composerDefinition['require-dev']['composer/composer'],
             $this->composerDefinition['scripts']['pre-update-cmd'],
-            $this->composerDefinition['scripts']['pre-install-cmd']
+            $this->composerDefinition['scripts']['pre-install-cmd'],
         );
     }
 
