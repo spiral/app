@@ -13,7 +13,7 @@ final class RoadRunnerBridge extends AbstractQuestion
      * @param Option[] $options
      */
     public function __construct(
-        string $question = 'Do you need the RoadRunner?',
+        string $question = 'Do you need RoadRunner?',
         bool $required = false,
         array $options = [
             new Option(name: 'Yes', packages: [
