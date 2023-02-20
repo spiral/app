@@ -20,7 +20,7 @@ final class ExtMbString extends AbstractQuestion
                 Packages::ExtMbString,
             ]),
         ],
-        int $default = self::NONE_OPTION
+        int $default = self::NONE_OPTION,
     ) {
         parent::__construct($question, $required, $options, default: $default);
     }
