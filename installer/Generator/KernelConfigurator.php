@@ -91,7 +91,7 @@ final class KernelConfigurator extends AbstractConfigurator
             priority: 4
         );
 
-        $this->app->addGroup(
+        $this->load->addGroup(
             bootloaders: [
                 PrototypeBootloader::class,
             ],

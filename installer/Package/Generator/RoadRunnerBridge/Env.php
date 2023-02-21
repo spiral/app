@@ -16,10 +16,10 @@ final class Env implements GeneratorInterface
 
         $context->envConfigurator->addGroup(
             values: [
-                'LOGGER_FORMAT' => '"%message% %context% %extra%\n"',
+                'MONOLOG_DEFAULT_CHANNEL' => 'roadrunner',
             ],
             comment: 'RoadRunner Logger',
-            priority: 16
+            priority: 16,
         );
     }
 }

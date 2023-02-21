@@ -15,8 +15,6 @@ final class CliApplicationBootloaders implements GeneratorInterface
         $context->kernel->load->addGroup(
             bootloaders: [
                 Security\EncrypterBootloader::class,
-                Security\FiltersBootloader::class,
-                Security\GuardBootloader::class,
             ],
             comment: 'Security and validation',
             priority: 5

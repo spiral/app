@@ -19,19 +19,29 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel->addUse('Spiral\RoadRunnerBridge\Bootloader', 'RoadRunnerBridge');
 
+        $plugins = $context->application->getRoadRunnerPlugins();
+
+        $bootloaders = [
+            CacheBootloader::class,
+            LoggerBootloader::class,
+        ];
+
+        if (\in_array('jobs', $plugins, true)) {
+            $bootloaders[] = QueueBootloader::class;
+        }
+
+        if (\in_array('http', $plugins, true)) {
+            $bootloaders[] = HttpBootloader::class;
+        }
+
         $context->kernel->load->addGroup(
-            bootloaders: [
-                CacheBootloader::class,
-                HttpBootloader::class,
-                QueueBootloader::class,
-                LoggerBootloader::class,
-            ],
+            bootloaders: $bootloaders,
             comment: 'RoadRunner',
-            priority: 3
+            priority: 3,
         );
 
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
 
-        $context->application->useRoadRunnerPlugin('jobs', 'kv');
+        $context->application->useRoadRunnerPlugin('kv');
     }
 }

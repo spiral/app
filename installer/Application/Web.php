@@ -15,6 +15,7 @@ use Installer\Package\NyholmBridge;
 use Installer\Package\Package;
 use Installer\Package\RoadRunnerBridge;
 use Installer\Package\SapiBridge;
+use Installer\Package\YiiErrorHandler;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -34,9 +35,10 @@ final class Web extends AbstractApplication
         string $name = 'Web',
         array $packages = [
             new ExtMbString(),
-            new RoadRunnerBridge(),
             new NyholmBridge(),
             new SapiBridge(),
+            new YiiErrorHandler(),
+            new RoadRunnerBridge(),
         ],
         array $autoload = [
             'psr-4' => [
