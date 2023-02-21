@@ -10,7 +10,7 @@ final class YiiErrorHandler extends Package
 {
     public function __construct(
         array $generators = [
-            new Bootloaders()
+            new Bootloaders(),
         ],
     ) {
         parent::__construct(Packages::YiiErrorHandler, generators: $generators);
