@@ -27,7 +27,7 @@ return [
             // SchemaInterface::REPOSITORY => \Cycle\ORM\Select\Repository::class,
             // SchemaInterface::SCOPE => null,
             // SchemaInterface::TYPECAST_HANDLER => [
-            //    \Cycle\ORM\Parser\Typecast::class
+            //    :typecasters:,
             // ],
         ],
 

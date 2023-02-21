@@ -22,7 +22,6 @@ final class Bootloaders implements GeneratorInterface
         $plugins = $context->application->getRoadRunnerPlugins();
 
         $bootloaders = [
-            CacheBootloader::class,
             LoggerBootloader::class,
         ];
 
@@ -34,6 +33,10 @@ final class Bootloaders implements GeneratorInterface
             $bootloaders[] = HttpBootloader::class;
         }
 
+        if (\in_array('kv', $plugins, true)) {
+            $bootloaders[] = CacheBootloader::class;
+        }
+
         $context->kernel->load->addGroup(
             bootloaders: $bootloaders,
             comment: 'RoadRunner',
@@ -41,7 +44,5 @@ final class Bootloaders implements GeneratorInterface
         );
 
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
-
-        $context->application->useRoadRunnerPlugin('kv');
     }
 }

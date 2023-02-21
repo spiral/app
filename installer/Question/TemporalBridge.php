@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
+use Installer\Package\Packages;
 use Installer\Package\TemporalBridge as Package;
 use Installer\Question\Option\Option;
 
@@ -19,8 +20,13 @@ final class TemporalBridge extends AbstractQuestion
             new Option(name: 'Yes', packages: [
                 new Package(),
             ]),
+        ],
+        array $conditions = [
+            'require' => [
+                Packages::RoadRunnerBridge,
+            ],
         ]
     ) {
-        parent::__construct($question, $required, $options);
+        parent::__construct($question, $required, $options, $conditions);
     }
 }

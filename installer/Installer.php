@@ -91,10 +91,10 @@ WELCOME,
         $installer->io->success('Setting up application files...');
         $installer->setApplicationFiles();
 
-        //$installer->removeInstallerFromDefinition();
-        //$installer->updateRootPackage();
+        $installer->removeInstallerFromDefinition();
+        $installer->updateRootPackage();
 
-        //$installer->finalize();
+        $installer->finalize();
     }
 
     private function setRequiredPackages(): void

@@ -36,7 +36,6 @@ final class Web extends AbstractApplication
         array $packages = [
             new ExtMbString(),
             new NyholmBridge(),
-            new SapiBridge(),
             new YiiErrorHandler(),
             new RoadRunnerBridge(),
         ],

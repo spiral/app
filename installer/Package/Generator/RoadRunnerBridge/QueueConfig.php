@@ -11,6 +11,8 @@ final class QueueConfig implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->resource->copy('packages/roadrunner/config/queue.php', 'app/config/queue.php');
+        if (\in_array('jobs', $context->application->getRoadRunnerPlugins(), true)) {
+            $context->resource->copy('packages/roadrunner/config/queue.php', 'app/config/queue.php');
+        }
     }
 }

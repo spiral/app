@@ -5,13 +5,22 @@ declare(strict_types=1);
 namespace Tests\Feature\Controller;
 
 use Tests\TestCase;
+use Spiral\Testing\Http\FakeHttp;
 
 class HomeControllerTest extends TestCase
 {
+    private FakeHttp $http;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->http = $this->fakeHttp();
+    }
+
     public function testDefaultActionWorks(): void
     {
-        $this
-            ->fakeHttp()
+        $this->http
             ->get('/')
             ->assertOk()
             ->assertBodyContains('Welcome to Spiral Framework');
@@ -19,8 +28,7 @@ class HomeControllerTest extends TestCase
 
     public function testDefaultActionWithRuLocale(): void
     {
-        $this
-            ->fakeHttp()
+        $this->http
             ->withHeader('accept-language', 'ru')
             ->get('/')
             ->assertOk()

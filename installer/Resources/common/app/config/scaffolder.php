@@ -24,22 +24,22 @@ return [
             ],
         ],
         Declaration\ControllerDeclaration::TYPE => [
-            'namespace' => 'Api\Web\Controller',
+            'namespace' => 'Endpoint\Http',
             'postfix' => 'Controller',
             'class' => Declaration\ControllerDeclaration::class,
         ],
         Declaration\MiddlewareDeclaration::TYPE => [
-            'namespace' => 'Api\Web\Middleware',
+            'namespace' => 'Application\Http\Middleware',
             'postfix' => '',
             'class' => Declaration\MiddlewareDeclaration::class,
         ],
         Declaration\CommandDeclaration::TYPE => [
-            'namespace' => 'Api\Cli\Command',
+            'namespace' => 'Endpoint\Cli',
             'postfix' => 'Command',
             'class' => Declaration\CommandDeclaration::class,
         ],
         Declaration\JobHandlerDeclaration::TYPE => [
-            'namespace' => 'Api\Job',
+            'namespace' => 'Endpoint\Job',
             'postfix' => 'Job',
             'class' => Declaration\JobHandlerDeclaration::class,
         ],

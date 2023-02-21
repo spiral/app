@@ -39,7 +39,9 @@ return [
      */
     'drivers' => [
         'runtime' => new Config\SQLiteDriverConfig(
-            connection: new Config\SQLite\MemoryConnectionConfig(),
+            connection: new Config\SQLite\FileConnectionConfig(
+                database: directory('runtime') . '/db.sqlite'
+            ),
             queryCache: true
         ),
         // ...

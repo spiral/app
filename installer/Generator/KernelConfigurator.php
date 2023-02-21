@@ -96,7 +96,7 @@ final class KernelConfigurator extends AbstractConfigurator
                 PrototypeBootloader::class,
             ],
             comment: 'Fast code prototyping',
-            priority: 100
+            priority: 1000
         );
 
         $this->load->addGroup(

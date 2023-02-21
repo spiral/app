@@ -13,7 +13,7 @@ final class ApplicationSkeleton extends AbstractQuestion
      * @param OptionInterface[] $options
      */
     public function __construct(
-        string $question = 'Do you want to add a default application skeleton?',
+        string $question = 'Do you want to create a default application structure and fixtures?',
         bool $required = false,
         array $options = [
             new BooleanOption(name: 'Yes'),
@@ -31,7 +31,7 @@ final class ApplicationSkeleton extends AbstractQuestion
     public function getHelp(): ?string
     {
         return <<<'HELP'
-This will add a default application skeleton to your project.
+This will create a default application structure to the project and add fixtures:
     - Home controller
     - Example Console command
     - Example Queue job

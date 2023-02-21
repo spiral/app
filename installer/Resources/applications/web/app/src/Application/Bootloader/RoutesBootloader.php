@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Middleware\LocaleSelector;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
@@ -50,7 +49,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
         $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Api\\Web\\Controller')
+            ->namespaced('App\\Endpoint\\Http')
             ->defaults([
                 'controller' => 'home',
                 'action' => 'index',

@@ -26,8 +26,5 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">tests/Feature</directory>
         </testsuite>
-        <testsuite name="Modules">
-            <directory>app/src/Module/*/Test</directory>
-        </testsuite>
     </testsuites>
 </phpunit>

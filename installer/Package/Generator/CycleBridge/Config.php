@@ -10,6 +10,7 @@ use Installer\Generator\GeneratorInterface;
 use Installer\Package\DoctrineCollections;
 use Installer\Package\IlluminateCollections;
 use Installer\Package\LoophpCollections;
+use Installer\Question\ApplicationSkeleton;
 use Nette\PhpGenerator\Dumper;
 use Nette\PhpGenerator\Literal;
 
@@ -22,15 +23,25 @@ final class Config implements GeneratorInterface
         $collections = $this->getInstalledCollections($context->application);
 
         $config = \file_get_contents(
-            $context->applicationRoot . 'app/config/' . self::FILENAME
+            $context->applicationRoot . 'app/config/' . self::FILENAME,
         );
+
+        $typecasters = ['\Cycle\ORM\Parser\Typecast::class'];
+
+        if ($context->application->getOption(ApplicationSkeleton::class) === true) {
+            $typecasters[] = '\App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class';
+        }
 
         \file_put_contents(
             $context->applicationRoot . 'app/config/' . self::FILENAME,
             \str_replace(
-                [':collections:', "':collectionsFactory:'"],
-                [$collections->value, (new Dumper())->dump($this->getFactory($collections))],
-                $config
+                [':typecasters:', ':collections:', "':collectionsFactory:'"],
+                [
+                    \implode(", ", $typecasters),
+                    $collections->value,
+                    (new Dumper())->dump($this->getFactory($collections)),
+                ],
+                $config,
             ),
         );
     }

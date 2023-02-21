@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Question;
 
-use Installer\Question\Option\Option;
+use Installer\Component\Generator\Mailer\Bootloaders;
+use Installer\Component\Generator\Mailer\Env;
+use Installer\Question\Option\BooleanOption;
 use Installer\Question\Option\OptionInterface;
 
 final class Mailer extends AbstractQuestion
@@ -16,8 +18,9 @@ final class Mailer extends AbstractQuestion
         string $question = 'Do you want to use Mailer Component?',
         bool $required = false,
         array $options = [
-            new Option(name: 'Yes', packages: [
-                new \Installer\Package\Mailer(),
+            new BooleanOption(name: 'Yes', generators: [
+                new Bootloaders(),
+                new Env(),
             ]),
         ],
     ) {

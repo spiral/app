@@ -8,6 +8,7 @@ use Installer\Generator\GeneratorInterface;
 use Installer\Package\Generator\CycleBridge\Bootloaders;
 use Installer\Package\Generator\CycleBridge\Config;
 use Installer\Package\Generator\CycleBridge\Env;
+use Installer\Package\Generator\CycleBridge\Skeleton;
 
 final class CycleBridge extends Package
 {
@@ -23,13 +24,14 @@ final class CycleBridge extends Package
             new Bootloaders(),
             new Config(),
             new Env(),
+            new Skeleton(),
         ],
         array $instructions = [
             'Database configuration file: <comment>app/config/database.php</comment>',
             'Migrations configuration file: <comment>app/config/migration.php</comment>',
             'Cycle ORM configuration file: <comment>app/config/cycle.php</comment>',
             'Documentation: <comment>https://spiral.dev/docs/basics-orm</comment>',
-        ]
+        ],
     ) {
         parent::__construct(Packages::CycleBridge, $resources, $generators, $instructions);
     }

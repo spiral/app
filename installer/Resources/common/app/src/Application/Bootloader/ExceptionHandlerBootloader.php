@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Service\ErrorHandler\Handler;
+use App\Application\Exception\Handler;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
