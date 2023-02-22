@@ -55,7 +55,6 @@ final class Installer extends AbstractInstaller
     public static function install(Event $event): void
     {
         $installer = new self($event->getIO(), $event->getComposer());
-
         $installer->io->success('Setting up application preset...');
 
         $installer->io->info(

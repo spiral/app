@@ -1,24 +1,31 @@
-# My super :app_name application
+# My awesome :app_name application
 
-Was created by [spiral/installer](https://github.com/spiral/installer) with `:app_name` skeleton at **:date**.
+Hello developer! Welcome to your new awesome `:app_name` application built with the Spiral framework.
+
+We're excited that you've chosen Spiral for your project and we hope that our installer package has made the
+installation process a breeze.
+
+To help you get started, we've provided some instructions for configuring the individual packages that were installed.
+Depending on the packages you chose during the installation, you'll find the following next steps:
+
+## Next Steps
 
 :next_steps
 
 ## Usage
 
-if you need to start RoadRunner server after the project has been configured use the following command:
+To start HTTP server using RoadRunner, run the following command in your project directory:
 
 ```bash
 ./rr serve
 ```
 
+Once the server is running, you can access your application in a web browser by going to the following
+URL: http://127.0.0.1:8080.
+
 > **Note**:
-> Read more about the RoadRunner CLI commands in the [documentation](https://roadrunner.dev/docs/app-server-cli/2.x/en).
-
-<br />
-
-After starting the RoadRunner server with HTTP plugin, you will be able to access your application in a web
-browser by going to a specific URL: http://127.0.0.1:8080.
+> For more information on how to use RoadRunner with Spiral, please consult
+> the [official documentation](https://spiral.dev/docs/start-server).
 
 ## Console commands
 
@@ -43,6 +50,95 @@ composer rr:download-protoc
 # or
 ./vendor/bin/rr download-protoc-binary
 ```
+
+### Generate gRPC proto files
+
+To generate gRPC proto files, run the following command:
+
+```bash
+php app.php grpc:generate
+```
+
+## Project Structure
+
+If you chose to install the default application skeleton, your project will have the following directory structure:
+
+```
+- Endpoint
+    - Web
+        - UserController.php
+        - Filter
+            - CreateUserFilter.php
+        - Middleware
+            - LocaleMiddleware.php
+        - Interceptor
+            - ValidateFiltersInterceptor.php
+        - routes.php
+    - Console
+        - Interceptor
+            - PromptRequiredArguments.php
+        - CreateUserCommand.php
+    - RPC
+        - ...
+    - Temporal
+        - Workflow
+            - ...
+        - Activity
+            - ...
+- Application
+    - Bootloader
+        - RoutesBootloader.php
+        - UserModuleBootloader.php
+    - Exception
+        - SomeException.php
+        - Renderer
+            - ViewRenderer.php
+    - AppDirectories.php
+    - Kernel.php
+- Domain
+    - User
+        - Entity
+            - User.php
+        - Service
+            - StoreUserService.php
+        - Repository
+            - UserRepositoryInterface.php
+        - Exception
+            - UserNotFoundException.php
+- Infrastructure
+    - Persistence
+        - CycleUserRepository.php
+    - CycleORM
+        - Typecaster
+            - UuidTypecast.php
+    - Interceptor
+        - LogInterceptor.php
+        - ExceptionHandlerInterceptor.php
+```
+
+#### Here's a brief explanation of the directories and files in this structure:
+
+- **Endpoint**: This directory contains the entry points for your application, including HTTP endpoints (in the Web
+  subdirectory), command-line interfaces (in the Console subdirectory), and gRPC services (in the RPC subdirectory).
+
+- **Application**: This directory contains the core of your application, including the Kernel class that boots your
+  application, the Bootloader classes that register services with the container, and the Exception directory that
+  contains exception handling logic.
+
+- **Domain**: This directory contains your domain logic, organized by subdomains. For example, an Entity for the User
+  model, a Service for storing new users, a Repository for fetching users from the database, and an Exception for
+  handling user-related errors.
+
+- **Infrastructure**: This directory contains the infrastructure code for your application, including the Persistence
+  directory for database-related code, the CycleORM directory for ORM-related code, and the Interceptor directory for
+  global interceptors.
+
+The project structure we provided is a common structure used in many PHP applications, and it can serve as a starting
+point for your projects By following this structure, you can organize your code in a logical and maintainable
+way, making it easier to build and scale your applications over time. Of course, you may need to make adjustments to fit
+the specific needs of your project, but this structure provides a solid foundation for most applications.
+
+**Good luck with your project!**
 
 ## Useful resources
 

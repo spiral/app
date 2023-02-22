@@ -14,12 +14,9 @@ final class Env implements GeneratorInterface
         $context->envConfigurator->addValue('QUEUE_CONNECTION', 'roadrunner');
         $context->envConfigurator->addValue('CACHE_STORAGE', 'rr-local');
 
-        $context->envConfigurator->addGroup(
-            values: [
-                'MONOLOG_DEFAULT_CHANNEL' => 'roadrunner',
-            ],
-            comment: 'RoadRunner Logger',
-            priority: 16,
+        $context->envConfigurator->addValue(
+            'MONOLOG_DEFAULT_CHANNEL',
+            'default # Use "roadrunner" channel if you want to use RoadRunner logger',
         );
     }
 }

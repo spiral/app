@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 use Spiral\Storage\Storage;
 
+/**
+ * Storage component configuration.
+ *
+ * @link https://spiral.dev/docs/advanced-storage
+ */
 return [
     /**
      * -------------------------------------------------------------------------

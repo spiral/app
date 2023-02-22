@@ -6,10 +6,15 @@ namespace App\Application;
 
 use Spiral\Boot\DirectoriesInterface;
 
+/**
+ * This is a wrapper class for the Spiral\Boot\DirectoriesInterface. It provides convenient methods for
+ * getting the paths to the application directories with the ability to add a subpath to the end of the
+ * path.
+ */
 final class AppDirectories
 {
     public function __construct(
-        private readonly DirectoriesInterface $directories
+        private readonly DirectoriesInterface $directories,
     ) {
     }
 

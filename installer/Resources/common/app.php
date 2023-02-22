@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Application\Exception\Handler;
 use App\Application\Kernel;
 
 // If you forgot to configure some of this in your php.ini file,
@@ -20,7 +19,6 @@ require __DIR__ . '/vendor/autoload.php';
 // Initialize shared container, bindings, directories and etc.
 $app = Kernel::create(
     directories: ['root' => __DIR__],
-    exceptionHandler: Handler::class,
 )->run();
 
 if ($app === null) {

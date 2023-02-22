@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * Mailer Configuration
+ *
+ * @link https://spiral.dev/docs/advanced-sendit
+ */
 return [
     /**
      * The default mailer that is used to send any email messages sent by your application.

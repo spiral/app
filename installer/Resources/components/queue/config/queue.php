@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 use Spiral\Queue\Driver\SyncDriver;
 
+/**
+ * Queue configuration
+ *
+ * @link https://spiral.dev/docs/queue-configuration
+ */
 return [
     /**
      *  Default queue connection name

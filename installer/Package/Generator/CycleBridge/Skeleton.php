@@ -14,7 +14,7 @@ final class Skeleton implements GeneratorInterface
     public function process(Context $context): void
     {
         if ($context->application->getOption(ApplicationSkeleton::class) === true) {
-            $context->resource->copy('packages/cycle/src', 'app/src');
+            $context->resource->copy('packages/cycle/skeleton', 'app');
 
             $context->kernel->app->addGroup(
                 bootloaders: [

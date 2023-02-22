@@ -5,6 +5,11 @@ declare(strict_types=1);
 use Spiral\Cache\Storage\ArrayStorage;
 use Spiral\Cache\Storage\FileStorage;
 
+/**
+ * Configuration for cache component.
+ *
+ * @link https://spiral.dev/docs/basics-cache
+ */
 return [
 
     /**

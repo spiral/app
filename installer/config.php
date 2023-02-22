@@ -42,6 +42,7 @@ return [
     ),
     new Application\GRPC(
         questions: [
+            new Question\ApplicationSkeleton(),
             new Question\CycleBridge(),
             new Question\Validator(),
             //new Question\Serializer(),

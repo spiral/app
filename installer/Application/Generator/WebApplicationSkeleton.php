@@ -14,6 +14,10 @@ final class WebApplicationSkeleton implements GeneratorInterface
     {
         if ($context->application->getOption(ApplicationSkeleton::class) === true) {
             $context->resource->copy('applications/shared/app/src/Endpoint', 'app/src/Endpoint');
+
+            $context->resource->copy('components/exceptions/app.php', 'app.php');
+            $context->resource->copy('components/exceptions/app/src', 'app/src');
+
             $context->resource->copy('applications/shared/tests', 'tests');
 
             \unlink($context->applicationRoot . 'tests/Feature/.gitignore');

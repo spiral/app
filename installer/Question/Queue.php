@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Question;
 
 use Installer\Component\Generator\Queue\Config;
+use Installer\Component\Generator\Queue\Skeleton;
 use Installer\Question\Option\BooleanOption;
 
 final class Queue extends AbstractQuestion
@@ -18,6 +19,7 @@ final class Queue extends AbstractQuestion
         array $options = [
             new BooleanOption(name: 'Yes', generators: [
                 new Config(),
+                new Skeleton(),
             ]),
         ],
     ) {

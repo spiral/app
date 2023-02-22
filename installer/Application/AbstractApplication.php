@@ -97,18 +97,6 @@ abstract class AbstractApplication implements ApplicationInterface
 
     public function getGenerators(): \Generator
     {
-        // application generators
-        foreach ($this->generators as $generator) {
-            yield null => $generator;
-        }
-
-        // required packages generators
-        foreach ($this->getPackages() as $package) {
-            foreach ($package->getGenerators() as $generator) {
-                yield $package => $generator;
-            }
-        }
-
         // optional packages generators
         foreach ($this->getQuestions() as $question) {
             foreach ($question->getOptions() as $option) {
@@ -127,6 +115,18 @@ abstract class AbstractApplication implements ApplicationInterface
                     }
                 }
             }
+        }
+
+        // required packages generators
+        foreach ($this->getPackages() as $package) {
+            foreach ($package->getGenerators() as $generator) {
+                yield $package => $generator;
+            }
+        }
+
+        // application generators
+        foreach ($this->generators as $generator) {
+            yield null => $generator;
         }
     }
 
