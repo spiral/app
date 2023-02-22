@@ -37,7 +37,7 @@ final class Config implements GeneratorInterface
             \str_replace(
                 [':typecasters:', ':collections:', "':collectionsFactory:'"],
                 [
-                    \implode(", ", $typecasters),
+                    \implode(', ', $typecasters),
                     $collections->value,
                     (new Dumper())->dump($this->getFactory($collections)),
                 ],

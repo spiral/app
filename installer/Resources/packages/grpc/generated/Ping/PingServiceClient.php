@@ -15,7 +15,7 @@ class PingServiceClient implements PingServiceInterface
 
     public function PingUrl(ContextInterface $ctx, PingRequest $in): PingResponse
     {
-        [$response, $status] = $this->core->callAction(PingServiceInterface::class, '/'.self::NAME.'/PingUrl', [
+        [$response, $status] = $this->core->callAction(PingServiceInterface::class, '/' . self::NAME . '/PingUrl', [
             'in' => $in,
             'ctx' => $ctx,
             'responseClass' => \GRPC\Ping\PingResponse::class,

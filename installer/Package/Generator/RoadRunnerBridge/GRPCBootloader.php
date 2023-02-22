@@ -37,7 +37,7 @@ final class GRPCBootloader implements GeneratorInterface
             $context->applicationRoot . 'app/config/' . self::FILENAME,
             \str_replace(
                 ':services:',
-                \implode(", ", $services),
+                \implode(', ', $services),
                 $config,
             ),
         );
