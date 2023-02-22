@@ -1,14 +1,19 @@
-# Spiral Application installer
+# Spiral application installer
 
-[**Documentation**](https://spiral.dev/docs) | [Discord](https://discord.gg/V6EK4he) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/overview-contributing/)
+[**Documentation
+**](https://spiral.dev/docs) | [Discord](https://discord.gg/V6EK4he) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/overview-contributing/)
 
 ![Installer](https://user-images.githubusercontent.com/773481/208850084-891a9d6f-3e70-4a06-af57-4e63c37c9c47.png)
 
-The package has been developed for the [Spiral Framework](https://github.com/spiral/framework/), providing a convenient
-command line interface for installing and configuring the framework and any desired packages. This makes it simple for
-developers to get started with Spiral.
+### Hello developer!
 
-<br />
+Are you looking for an easier way to install [Spiral Framework](https://github.com/spiral/framework/)?
+
+This package streamlines the installation process by allowing you to install only the desired components and packages 
+for your application. Our installer handles all dependencies and configurations, making the process as smooth and 
+hassle-free as possible.
+
+This makes it super simple for you to get started with Spiral.
 
 ## Server Requirements
 
@@ -20,29 +25,12 @@ Make sure that your server is configured with following PHP version and extensio
 ## Installation
 
 ```bash
-composer create-project spiral/installer my-app
+composer create-project spiral/app my-app
 ```
 
-> **Note**:
-> Application server will be downloaded automatically (`php-curl` and `php-zip` required).
+After the project has been installed, open **README.md** file and follow the instructions.
 
-<br />
-
-After the project has been created and installed, start RoadRunner server using the following command:
-
-```bash
-cd my-app
-
-./rr serve
-```
-
-<br />
-
-Once you have started RoadRunner server, your application will be accessible in your web browser
-at  `http://localhost:8080`.
-
-> **Note**:
-> Read more about application server configuration [here](https://roadrunner.dev/docs).
+Good luck with your future project!
 
 ## License:
 
