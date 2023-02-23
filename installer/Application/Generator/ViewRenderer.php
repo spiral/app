@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Installer\Application\Generator;
 
-use App\Application\Service\ErrorHandler\ViewRenderer as Renderer;
 use Installer\Application\ApplicationInterface;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\StemplerBridge;
 use Installer\Package\TwigBridge;
+use App\Application\Exception\Renderer\ViewRenderer as Renderer;
 use Spiral\Http\ErrorHandler\PlainRenderer;
 use Spiral\Http\ErrorHandler\RendererInterface;
 
 final class ViewRenderer implements GeneratorInterface
 {
-    private const RENDERER_PATH = 'applications/shared/app/src/Application/Service/ErrorHandler/ViewRenderer.php';
-    private const TARGET_PATH = 'app/src/Application/Service/ErrorHandler/ViewRenderer.php';
+    private const RENDERER_PATH = 'applications/shared/app/src/Application/Exception/Renderer/ViewRenderer.php';
+    private const TARGET_PATH = 'app/src/Application/Exception/Renderer/ViewRenderer.php';
 
     public function process(Context $context): void
     {

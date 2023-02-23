@@ -8,7 +8,7 @@ return [
      * You can download the binary here: https://github.com/roadrunner-server/roadrunner/releases
      * Default: null
      */
-    'binaryPath' => directory('root') . '/bin/protoc-gen-php-grpc',
+    'binaryPath' => directory('root') . 'protoc-gen-php-grpc',
 
     /**
      * Path, where generated DTO files put.
@@ -20,13 +20,13 @@ return [
      * Base namespace for generated proto files.
      * Default: null
      */
-    'namespace' => '\GRPC',
+    'namespace' => 'GRPC',
 
     /**
      * Paths to proto files, that should be compiled into PHP by "grpc:generate" console command.
      */
     'services' => [
-        directory('root') . 'proto/echo.proto',
+        :services:
     ],
 
     /**

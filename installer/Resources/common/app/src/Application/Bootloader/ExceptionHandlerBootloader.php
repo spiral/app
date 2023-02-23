@@ -4,31 +4,49 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Service\ErrorHandler\Handler;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
-use Spiral\Exceptions\ExceptionHandlerInterface;
 use Spiral\Exceptions\Renderer\JsonRenderer;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
+use Spiral\Exceptions\Renderer\ConsoleRenderer;
 
+/**
+ * The exception handler bootloader is responsible for registering the exception renderers and reporters.
+ *
+ * @link https://spiral.dev/docs/basics-errors
+ */
 final class ExceptionHandlerBootloader extends Bootloader
 {
+    public function __construct(
+        private readonly ExceptionHandler $handler,
+    ) {
+    }
+
     public function init(AbstractKernel $kernel): void
     {
-        $kernel->running(static function (ExceptionHandler $handler): void {
-            $handler->addRenderer(new JsonRenderer());
+        // Register the console renderer, that will be used when the application
+        // is running in the console.
+        $this->handler->addRenderer(new ConsoleRenderer());
+
+        $kernel->running(function (): void {
+            // Register the JSON renderer, that will be used when the application is
+            // running in the HTTP context and a JSON response is expected.
+            $this->handler->addRenderer(new JsonRenderer());
         });
     }
 
     public function boot(
-        ExceptionHandlerInterface $handler,
         LoggerReporter $logger,
         FileReporter $files,
     ): void {
-        \assert($handler instanceof Handler);
-        $handler->addReporter($logger);
-        $handler->addReporter($files);
+        // Register the logger reporter, that will be used to log the exceptions using
+        // the logger component.
+        $this->handler->addReporter($logger);
+
+        // Register the file reporter. It allows you to save detailed information about an exception to a file
+        // known as snapshot.
+        $this->handler->addReporter($files);
     }
 }

@@ -13,7 +13,7 @@ final class Resource
     public function __construct(
         private readonly string $source,
         private readonly string $root,
-        private readonly IO $io
+        private readonly IO $io,
     ) {
     }
 
@@ -41,6 +41,10 @@ final class Resource
                 }
                 \closedir($handle);
             } else {
+                if (!\is_dir(\dirname($destination))) {
+                    \mkdir(\dirname($destination), 0775, true);
+                }
+
                 $this->writeInfo($destination);
                 \copy($source, $destination);
             }

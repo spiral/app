@@ -31,19 +31,22 @@ final class Bootloaders
 
     /**
      * @param class-string $bootloader
-     * @param class-string $afterBootloader
+     * @param class-string|null $afterBootloader
      */
-    public function append(string $bootloader, string $afterBootloader): void
+    public function append(string $bootloader, ?string $afterBootloader = null): void
     {
-        $founded = false;
-        foreach ($this->groups as $group) {
-            if ($group->hasBootloader($afterBootloader)) {
-                $group->append($bootloader, $afterBootloader);
-                $founded = true;
+        $found = false;
+
+        if ($afterBootloader !== null) {
+            foreach ($this->groups as $group) {
+                if ($group->hasBootloader($afterBootloader)) {
+                    $group->append($bootloader, $afterBootloader);
+                    $found = true;
+                }
             }
         }
 
-        if ($founded === false) {
+        if ($found === false) {
             $this->groups[] = new BootloaderGroup(bootloaders: [$bootloader], priority: 100);
         }
     }

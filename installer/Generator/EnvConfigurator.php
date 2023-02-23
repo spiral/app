@@ -102,27 +102,6 @@ final class EnvConfigurator
         );
         $this->addGroup(
             values: [
-                'QUEUE_CONNECTION' => 'sync',
-            ],
-            comment: 'Queue',
-            priority: 6
-        );
-        $this->addGroup(
-            values: [
-                'CACHE_STORAGE' => 'local',
-            ],
-            comment: 'Cache',
-            priority: 7
-        );
-        $this->addGroup(
-            values: [
-                'STORAGE_DEFAULT' => 'default',
-            ],
-            comment: 'Storage',
-            priority: 8
-        );
-        $this->addGroup(
-            values: [
                 'TELEMETRY_DRIVER' => 'null',
             ],
             comment: 'Telemetry',

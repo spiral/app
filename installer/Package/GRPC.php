@@ -16,6 +16,7 @@ final class GRPC extends Package
         array $generators = [],
         array $instructions = [
             'Configuration file: <comment>app/config/grpc.php</comment>',
+            'Use <comment>php app.php grpc:generate</comment> console command to generate gRPC stubs',
             'Documentation: <comment>https://spiral.dev/docs/grpc-configuration</comment>',
         ]
     ) {

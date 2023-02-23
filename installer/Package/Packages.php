@@ -6,6 +6,7 @@ namespace Installer\Package;
 
 enum Packages: string
 {
+    case YiiErrorHandler = 'spiral-packages/yii-error-handler-bridge:^1.0';
     case ExtMbString = 'ext-mbstring:*';
     case ExtGRPC = 'ext-grpc:*';
     case GRPC = 'grpc/grpc:^1.42';

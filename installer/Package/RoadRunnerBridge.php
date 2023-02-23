@@ -6,6 +6,7 @@ namespace Installer\Package;
 
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Generator\RoadRunnerBridge\Bootloaders;
+use Installer\Package\Generator\RoadRunnerBridge\CacheConfig;
 use Installer\Package\Generator\RoadRunnerBridge\Env;
 use Installer\Package\Generator\RoadRunnerBridge\QueueConfig;
 
@@ -18,6 +19,7 @@ final class RoadRunnerBridge extends Package
         array $resources = [],
         array $generators = [
             new QueueConfig(),
+            new CacheConfig(),
             new Bootloaders(),
             new Env(),
         ],

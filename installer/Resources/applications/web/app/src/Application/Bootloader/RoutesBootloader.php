@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Middleware\LocaleSelector;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
@@ -14,7 +13,13 @@ use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
+use App\Endpoint\Web\Middleware\LocaleSelector;
 
+/**
+ * A bootloader that configures the application's routes and middleware.
+ *
+ * @link https://spiral.dev/docs/http-routing
+ */
 final class RoutesBootloader extends BaseRoutesBootloader
 {
     protected const DEPENDENCIES = [
@@ -24,8 +29,11 @@ final class RoutesBootloader extends BaseRoutesBootloader
     protected function globalMiddleware(): array
     {
         return [
-            // Uncomment and add I18nBootloader to the Kernel if you want to use locales
+            // If you want to automatically detect the user's locale based on the
+            // "Accept-Language" header uncomment this middleware and add \Spiral\Bootloader\I18nBootloader
+            // to the Kernel
             // LocaleSelector::class,
+
             ErrorHandlerMiddleware::class,
             JsonPayloadMiddleware::class,
             HttpCollector::class,
@@ -39,9 +47,11 @@ final class RoutesBootloader extends BaseRoutesBootloader
                 CookiesMiddleware::class,
                 SessionMiddleware::class,
                 CsrfMiddleware::class,
+                // Uncomment this middleware if you want to authenticate users using cookies
                 // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'cookie'])
             ],
             'api' => [
+                // Uncomment this middleware if you want to authenticate users using headers
                 // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'header'])
             ],
         ];
@@ -50,7 +60,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
         $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Api\\Web\\Controller')
+            ->namespaced('App\\Endpoint\\Http')
             ->defaults([
                 'controller' => 'home',
                 'action' => 'index',

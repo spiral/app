@@ -11,6 +11,7 @@ use Installer\Generator\GeneratorInterface;
 use Installer\Package\ExtGRPC;
 use Installer\Package\ExtMbString;
 use Installer\Package\Generator\RoadRunnerBridge\GRPCBootloader;
+use Installer\Package\Generator\RoadRunnerBridge\GRPCSkeleton;
 use Installer\Package\GRPC as PackageGRPC;
 use Installer\Package\Package;
 use Installer\Package\RoadRunnerBridge;
@@ -40,7 +41,7 @@ final class GRPC extends AbstractApplication
         array $autoload = [
             'psr-4' => [
                 'App\\' => 'app/src',
-                'GRPC\\' => 'generated/GRPC',
+                'GRPC\\' => 'generated',
             ],
         ],
         array $autoloadDev = [
@@ -52,17 +53,18 @@ final class GRPC extends AbstractApplication
         array $generators = [
             new GRPCApplicationBootloaders(),
             new GRPCBootloader(),
+            new GRPCSkeleton(),
             new ViewRenderer(),
         ],
         array $resources = [
             'common' => '',
             'applications/grpc/app' => 'app',
-            'applications/grpc/proto' => 'proto',
         ],
         array $commands = [
             'rr download-protoc-binary',
         ],
-        array $instructions = []
+        array $instructions = [
+        ]
     ) {
         parent::__construct(
             name: $name,

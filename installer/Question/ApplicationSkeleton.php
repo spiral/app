@@ -13,30 +13,27 @@ final class ApplicationSkeleton extends AbstractQuestion
      * @param OptionInterface[] $options
      */
     public function __construct(
-        string $question = 'Do you want to add a default application skeleton?',
+        string $question = 'Create a default application structure and demo data?',
         bool $required = false,
         array $options = [
             new BooleanOption(name: 'Yes'),
         ],
-        int $default = 1
+        int $default = self::YES_OPTION,
     ) {
         parent::__construct(
             question: $question,
             required: $required,
             options: $options,
-            default: $default
+            default: $default,
         );
     }
 
     public function getHelp(): ?string
     {
         return <<<'HELP'
-This will add a default application skeleton to your project.
-    - Home controller
-    - Example Console command
-    - Example Queue job
-    - Views
-    - Locales
+Selecting this option will create a default application structure and demo data for your project. This includes a home 
+controller, an example console command, an example queue job, views, and locales. The demo data is intended to provide 
+you with a quick starting point for your application and can be modified or removed as needed.
 HELP;
     }
 }

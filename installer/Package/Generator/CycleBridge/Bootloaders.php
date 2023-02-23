@@ -13,6 +13,8 @@ use Spiral\Cycle\Bootloader\CycleOrmBootloader;
 use Spiral\Cycle\Bootloader\DatabaseBootloader;
 use Spiral\Cycle\Bootloader\MigrationsBootloader;
 use Spiral\Cycle\Bootloader\SchemaBootloader;
+use Spiral\Cycle\Bootloader\ScaffolderBootloader;
+use Spiral\Scaffolder\Bootloader\ScaffolderBootloader as FrameworkScaffolder;
 
 final class Bootloaders implements GeneratorInterface
 {
@@ -37,6 +39,8 @@ final class Bootloaders implements GeneratorInterface
             comment: 'ORM',
             priority: 8
         );
+
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommands::class);
+        $context->kernel->load->append(ScaffolderBootloader::class, FrameworkScaffolder::class);
     }
 }

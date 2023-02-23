@@ -19,7 +19,7 @@ final class Option extends AbstractOption
      */
     public function __construct(
         string $name,
-        array $packages = []
+        array $packages = [],
     ) {
         parent::__construct($name);
 

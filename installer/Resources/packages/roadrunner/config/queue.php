@@ -9,6 +9,11 @@ use Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo;
 use Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo;
 use Spiral\RoadRunnerBridge\Queue\Queue;
 
+/**
+ * Queue configuration
+ *
+ * @link https://spiral.dev/docs/queue-configuration and https://spiral.dev/docs/queue-roadrunner
+ */
 return [
     /**
      *  Default queue connection name

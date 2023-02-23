@@ -11,7 +11,9 @@ use Installer\Question\Option\OptionInterface;
 
 abstract class AbstractQuestion implements QuestionInterface
 {
+    protected const YES_OPTION = 1;
     protected const NONE_OPTION = 0;
+
     /**
      * @var array<int, OptionInterface>
      */
