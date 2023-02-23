@@ -59,8 +59,7 @@ final class ServiceBootloader extends Bootloader
     {
         $container->bindSingleton(
             PingServiceInterface::class,
-            static function(GRPCServicesConfig $config): PingServiceInterface
-            {
+            static function (GRPCServicesConfig $config): PingServiceInterface {
                 $service = $config->getService(PingServiceClient::class);
 
                 return new PingServiceClient(

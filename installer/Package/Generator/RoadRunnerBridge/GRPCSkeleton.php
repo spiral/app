@@ -11,7 +11,6 @@ use GRPC\Bootloader\ServiceBootloader;
 
 final class GRPCSkeleton implements GeneratorInterface
 {
-
     public function process(Context $context): void
     {
         if ($context->application->getOption(ApplicationSkeleton::class) !== true) {

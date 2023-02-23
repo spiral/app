@@ -26,7 +26,7 @@ final class GRPCServicesConfig extends InjectableConfig
     public function getService(string $name): array
     {
         return $this->config['services'][$name] ?? [
-            'host' => 'localhost'
+            'host' => 'localhost',
         ];
     }
 }
