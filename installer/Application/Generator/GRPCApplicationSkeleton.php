@@ -15,7 +15,6 @@ final class GRPCApplicationSkeleton implements GeneratorInterface
     public function process(Context $context): void
     {
         if ($context->application->getOption(ApplicationSkeleton::class) === true) {
-
             (new ExceptionSkeleton())->process($context);
             (new ConsoleSkeleton())->process($context);
 
