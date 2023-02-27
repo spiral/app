@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use installer\Resources\components\exceptions\app\src\Application\Exception\Handler;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Set;
 use Spiral\Core\Container;
@@ -27,24 +26,27 @@ class TestCase extends BaseTestCase
 
         parent::setUp();
 
-        $this->getContainer()->get(TranslatorInterface::class)->setLocale('en');
+        $container = $this->getContainer();
+
+        if ($container->has(TranslatorInterface::class)) {
+            $container->get(TranslatorInterface::class)->setLocale('en');
+        }
     }
 
     public function createAppInstance(Container $container = new Container()): TestableKernelInterface
     {
         return TestKernel::create(
             directories: $this->defineDirectories(
-                $this->rootDirectory()
+                $this->rootDirectory(),
             ),
-            exceptionHandler: Handler::class,
-            container: $container
+            container: $container,
         );
     }
 
     protected function tearDown(): void
     {
         // Uncomment this line if you want to clean up runtime directory.
-        $this->cleanUpRuntimeDirectory();
+        // $this->cleanUpRuntimeDirectory();
     }
 
     public function rootDirectory(): string
