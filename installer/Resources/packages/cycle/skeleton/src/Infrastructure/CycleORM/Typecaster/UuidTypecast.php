@@ -31,29 +31,29 @@ class UuidTypecast implements CastableInterface, UncastableInterface
         return $rules;
     }
 
-    public function cast(array $values): array
+    public function cast(array $data): array
     {
         foreach ($this->rules as $column => $rule) {
-            if (!isset($values[$column])) {
+            if (!isset($data[$column])) {
                 continue;
             }
 
-            $values[$column] = Uuid::fromString($values[$column]);
+            $data[$column] = Uuid::fromString($data[$column]);
         }
 
-        return $values;
+        return $data;
     }
 
-    public function uncast(array $values): array
+    public function uncast(array $data): array
     {
         foreach ($this->rules as $column => $rule) {
-            if (!isset($values[$column]) || !$values[$column] instanceof UuidInterface) {
+            if (!isset($data[$column]) || !$data[$column] instanceof UuidInterface) {
                 continue;
             }
 
-            $values[$column] = $values[$column]->toString();
+            $data[$column] = $data[$column]->toString();
         }
 
-        return $values;
+        return $data;
     }
 }

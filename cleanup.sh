@@ -5,6 +5,7 @@ rm -rf runtime
 rm -rf public
 rm -rf proto
 rm -rf generated
+rm -rf docker
 
 rm .env
 rm .env.sample
@@ -15,6 +16,7 @@ rm app.php
 rm composer.lock
 rm deptrac.yaml
 rm phpunit.xml
+rm docker-compose.yaml
 
 git checkout psalm.xml
 git checkout composer.json

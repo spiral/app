@@ -17,6 +17,8 @@ use Spiral\RoadRunner\GRPC\Context;
  * php app.php ping site.com
  *
  * Run `php app.php help ping` to see all available options.
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 #[AsCommand(name: 'ping', description: 'Push ping job to a queue.')]
 final class PingCommand extends Command

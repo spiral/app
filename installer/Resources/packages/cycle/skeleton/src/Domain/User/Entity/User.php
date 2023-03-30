@@ -13,6 +13,7 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 )]
 class User
 {
+    /** @psalm-suppress PropertyNotSetInConstructor */
     #[Column(type: 'primary')]
     private int $id;
 

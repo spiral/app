@@ -9,6 +9,10 @@ use App\Domain\User\Entity\User;
 use App\Domain\User\Exception\UserNotFoundException;
 use App\Domain\User\Repository\UserRepositoryInterface;
 
+/**
+ * @template TUser of User
+ * @extends Repository<TUser>
+ */
 final class CycleORMUserRepository extends Repository implements UserRepositoryInterface
 {
     public function findById(int $id): User

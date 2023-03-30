@@ -20,6 +20,8 @@ use Spiral\Queue\QueueInterface;
  * php app.php ping site.com
  *
  * Run `php app.php help ping` to see all available options.
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 #[AsCommand(name: 'ping', description: 'Simple command to demonstrate how to push a job to a queue.')]
 final class PingCommand extends Command

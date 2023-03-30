@@ -12,6 +12,8 @@ use Spiral\Console\Command;
 
 /**
  * Simple command that demonstrates how to use Cycle ORM.
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 #[AsCommand(name: 'create:user', description: 'Create a new user')]
 class CreateUserCommand extends Command
