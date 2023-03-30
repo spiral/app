@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
  * php app.php do-nothing foo --times=20
  *
  * Run `php app.php help do-nothing` to see all available options.
- * 
+ *
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[AsCommand(name: 'do-nothing', description: 'The command does nothing.')]
