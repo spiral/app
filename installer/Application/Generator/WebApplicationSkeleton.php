@@ -6,6 +6,7 @@ namespace Installer\Application\Generator;
 
 use Installer\Component\Generator\Console\Skeleton as ConsoleSkeleton;
 use Installer\Component\Generator\Exception\Skeleton as ExceptionSkeleton;
+use Installer\Component\Generator\Translator\Skeleton as TranslatorSkeleton;
 use Installer\Generator\Context;
 use Installer\Generator\GeneratorInterface;
 use Installer\Question\ApplicationSkeleton;
@@ -20,6 +21,7 @@ final class WebApplicationSkeleton implements GeneratorInterface
 
             (new ExceptionSkeleton())->process($context);
             (new ConsoleSkeleton())->process($context);
+            (new TranslatorSkeleton())->process($context);
 
             \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
         }
