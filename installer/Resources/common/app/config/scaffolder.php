@@ -15,37 +15,25 @@ return [
 
     'declarations' => [
         Declaration\BootloaderDeclaration::TYPE => [
-            'namespace' => 'Application\Bootloader',
-            'postfix' => 'Bootloader',
-            'class' => Declaration\BootloaderDeclaration::class,
+            'namespace' => 'Application\\Bootloader',
         ],
         Declaration\ConfigDeclaration::TYPE => [
-            'namespace' => 'Application\Config',
-            'postfix' => 'Config',
-            'class' => Declaration\ConfigDeclaration::class,
-            'options' => [
-                'directory' => directory('config'),
-            ],
+            'namespace' => 'Application\\Config',
         ],
         Declaration\ControllerDeclaration::TYPE => [
-            'namespace' => 'Endpoint\Web',
-            'postfix' => 'Controller',
-            'class' => Declaration\ControllerDeclaration::class,
+            'namespace' => 'Endpoint\\Web',
+        ],
+        Declaration\FilterDeclaration::TYPE => [
+            'namespace' => 'Endpoint\\Web\\Filter',
         ],
         Declaration\MiddlewareDeclaration::TYPE => [
-            'namespace' => 'Application\Http\Middleware',
-            'postfix' => '',
-            'class' => Declaration\MiddlewareDeclaration::class,
+            'namespace' => 'Endpoint\\Web\\Middleware',
         ],
         Declaration\CommandDeclaration::TYPE => [
-            'namespace' => 'Endpoint\Console',
-            'postfix' => 'Command',
-            'class' => Declaration\CommandDeclaration::class,
+            'namespace' => 'Endpoint\\Console',
         ],
         Declaration\JobHandlerDeclaration::TYPE => [
-            'namespace' => 'Endpoint\Job',
-            'postfix' => 'Job',
-            'class' => Declaration\JobHandlerDeclaration::class,
+            'namespace' => 'Endpoint\\Job',
         ],
     ],
 ];
