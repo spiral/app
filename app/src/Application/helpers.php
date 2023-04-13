@@ -9,7 +9,8 @@ use Symfony\Component\VarDumper\VarDumper;
 
 if (!\function_exists('dumprr')) {
     /**
-     * Dump value int STDERR.
+     * This function is designed to dump a value within your application while using RoadRunner server.
+     * RoadRunner does not allow data to be sent through STDIN, the output must be sent to STDERR instead.
      */
     function dumprr(mixed $value, mixed ...$values): mixed
     {

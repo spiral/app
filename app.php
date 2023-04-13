@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Application\Exception\Handler;
 use App\Application\Kernel;
-use App\Application\Service\ErrorHandler\Handler;
+
 
 // If you forgot to configure some of this in your php.ini file,
 // then don't worry, we will set the standard environment

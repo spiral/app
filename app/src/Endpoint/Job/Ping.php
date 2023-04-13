@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Api\Job;
+namespace App\Endpoint\Job;
 
 use Spiral\Queue\JobHandler;
 

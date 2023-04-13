@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Middleware\LocaleSelector;
-use Spiral\Boot\DirectoriesInterface;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
 use Spiral\Debug\StateCollector\HttpCollector;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Http\Middleware\JsonPayloadMiddleware;
-use Spiral\Router\Loader\Configurator\RoutingConfigurator;
+use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Session\Middleware\SessionMiddleware;
+use App\Endpoint\Web\Middleware\LocaleSelector;
 
+/**
+ * A bootloader that configures the application's routes and middleware.
+ *
+ * @link https://spiral.dev/docs/http-routing
+ */
 final class RoutesBootloader extends BaseRoutesBootloader
 {
-    public function __construct(
-        private readonly DirectoriesInterface $dirs
-    ) {
-    }
+    protected const DEPENDENCIES = [
+        AnnotatedRoutesBootloader::class,
+    ];
 
     protected function globalMiddleware(): array
     {
@@ -39,26 +42,13 @@ final class RoutesBootloader extends BaseRoutesBootloader
                 CookiesMiddleware::class,
                 SessionMiddleware::class,
                 CsrfMiddleware::class,
+                // Uncomment this middleware if you want to authenticate users using cookies
                 // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'cookie'])
             ],
             'api' => [
+                // Uncomment this middleware if you want to authenticate users using headers
                 // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'header'])
             ],
         ];
-    }
-
-    protected function defineRoutes(RoutingConfigurator $routes): void
-    {
-        $routes->import($this->dirs->get('app') . 'src/Api/Web/routes.php')->group('web');
-
-        $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Api\\Web\\Controller')
-            ->defaults([
-                'controller' => 'home',
-                'action' => 'index',
-            ])
-            ->middleware([
-                // SomeMiddleware::class,
-            ]);
     }
 }

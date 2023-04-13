@@ -8,7 +8,7 @@
 <define:body>
     <div class="wrapper">
         <div class="placeholder">
-            <img src="/images/404.svg" alt="Framework Logotype" width="300px"/>
+            <img src="/images/404.svg" alt="Error 404" width="300px"/>
             <h2>[[Page not found]]</h2>
 
             <homepage:links git="https://github.com/spiral/app" style="font-weight: bold;"/>

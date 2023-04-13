@@ -17,19 +17,19 @@ return [
             'namespace' => 'Application\\Config',
         ],
         Declaration\ControllerDeclaration::TYPE => [
-            'namespace' => 'Api\\Web\\Controller',
+            'namespace' => 'Endpoint\\Web',
         ],
         Declaration\FilterDeclaration::TYPE => [
-            'namespace' => 'Api\\Web\\Filter',
+            'namespace' => 'Endpoint\\Web\\Filter',
         ],
         Declaration\MiddlewareDeclaration::TYPE => [
-            'namespace' => 'Application\\Middleware',
+            'namespace' => 'Endpoint\\Web\\Middleware',
         ],
         Declaration\CommandDeclaration::TYPE => [
-            'namespace' => 'Api\\Cli\\Command',
+            'namespace' => 'Endpoint\\Console',
         ],
         Declaration\JobHandlerDeclaration::TYPE => [
-            'namespace' => 'Api\\Job',
+            'namespace' => 'Endpoint\\Job',
         ],
     ],
 ];

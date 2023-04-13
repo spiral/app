@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Api\Web\Controller;
+namespace App\Endpoint\Web;
 
-use App\Api\Job\Ping;
-use Exception;
+use App\Endpoint\Job\Ping;
 use Spiral\Prototype\Traits\PrototypeTrait;
-use Spiral\Queue\QueueInterface;
+use Spiral\Router\Annotation\Route;
 
-class HomeController
+/**
+ * Simple home page controller. It renders home page template and also provides
+ * an example of exception page.
+ */
+final class HomeController
 {
     /**
      * Read more about Prototyping:
@@ -17,24 +20,23 @@ class HomeController
      */
     use PrototypeTrait;
 
-    public function __construct(
-        private readonly QueueInterface $queue,
-    ) {
-    }
 
+    #[Route(route: '/', name: 'index')]
     public function index(): string
     {
-        return $this->views->render('home.dark.php');
+        return $this->views->render('home');
     }
 
     /**
      * Example of exception page.
      */
+    #[Route(route: '/exception', name: 'exception')]
     public function exception(): never
     {
-        throw new Exception('This is a test exception.');
+        throw new \Exception('This is a test exception.');
     }
 
+    #[Route(route: '/ping', name: 'ping')]
     public function ping(): string
     {
         $jobID = $this->queue->push(Ping::class, [
