@@ -11,7 +11,6 @@ use Spiral\Debug\StateCollector\HttpCollector;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
-use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
 use App\Endpoint\Web\Middleware\LocaleSelector;
 
@@ -55,18 +54,5 @@ final class RoutesBootloader extends BaseRoutesBootloader
                 // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'header'])
             ],
         ];
-    }
-
-    protected function defineRoutes(RoutingConfigurator $routes): void
-    {
-        $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Endpoint\\Http')
-            ->defaults([
-                'controller' => 'home',
-                'action' => 'index',
-            ])
-            ->middleware([
-                // SomeMiddleware::class,
-            ]);
     }
 }
