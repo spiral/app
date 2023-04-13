@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Application\Exception\Handler;
 use App\Application\Kernel;
 
-
 // If you forgot to configure some of this in your php.ini file,
 // then don't worry, we will set the standard environment
 // settings for you.
