@@ -18,7 +18,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         $this->beforeBooting(static function (ConfiguratorInterface $config): void {
-            if (! $config->exists('session')) {
+            if (!$config->exists('session')) {
                 return;
             }
 

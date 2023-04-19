@@ -9,7 +9,7 @@ use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
     /**
-     * Specify a default monolog handler
+     * Specify a default monolog handler.
      */
     'default' => env('MONOLOG_DEFAULT_CHANNEL', 'default'),
 
@@ -26,10 +26,10 @@ return [
     'handlers' => [
         'default' => [
             [
-                'class' => 'log.rotate',
+                'class'   => 'log.rotate',
                 'options' => [
-                    'filename' => directory('runtime') . 'logs/app.log',
-                    'level' => Logger::DEBUG,
+                    'filename' => directory('runtime').'logs/app.log',
+                    'level'    => Logger::DEBUG,
                 ],
             ],
         ],
@@ -38,9 +38,9 @@ return [
         ],
         'stdout' => [
             [
-                'class' => SyslogHandler::class,
+                'class'   => SyslogHandler::class,
                 'options' => [
-                    'ident' => 'app',
+                    'ident'    => 'app',
                     'facility' => LOG_USER,
                 ],
             ],
@@ -58,7 +58,7 @@ return [
         ],
         'stdout' => [
             [
-                'class' => PsrLogMessageProcessor::class,
+                'class'   => PsrLogMessageProcessor::class,
                 'options' => [
                     'dateFormat' => 'Y-m-d\TH:i:s.uP',
                 ],

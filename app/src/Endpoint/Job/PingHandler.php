@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 use Spiral\Queue\JobHandler;
 
 /**
- * (QueueInterface)->push('ping', ["url" => "http://site.com"]);
+ * (QueueInterface)->push('ping', ["url" => "http://site.com"]);.
  */
 final class PingHandler extends JobHandler
 {

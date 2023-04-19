@@ -24,6 +24,5 @@ final class PingCommandTest extends TestCase
         $queue->getConnection()->assertPushed(PingHandler::class, static function (array $data): bool {
             return $data['payload']->url === 'https://spiral.dev';
         });
-
     }
 }

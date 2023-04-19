@@ -11,7 +11,8 @@ use Spiral\Router\Annotation\Route;
 final class HomeController
 {
     /**
-     * Read more about Prototyping:
+     * Read more about Prototyping:.
+     *
      * @link https://spiral.dev/docs/basics-prototype
      */
     use PrototypeTrait;

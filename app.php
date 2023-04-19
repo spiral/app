@@ -14,8 +14,7 @@ use App\Application\Kernel;
 \ini_set('display_errors', 'stderr');
 
 // Register Composer's auto loader.
-require __DIR__ . '/vendor/autoload.php';
-
+require __DIR__.'/vendor/autoload.php';
 
 // Initialize shared container, bindings, directories and etc.
 $app = Kernel::create(
@@ -27,5 +26,5 @@ if ($app === null) {
     exit(255);
 }
 
-$code = (int)$app->serve();
+$code = (int) $app->serve();
 exit($code);

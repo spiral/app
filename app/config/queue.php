@@ -8,21 +8,22 @@ use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
 
 return [
     /**
-     *  Default queue connection name
+     *  Default queue connection name.
      */
     'default' => env('QUEUE_CONNECTION', 'ping-queue'),
 
     /**
-     *  Aliases for queue connections, if you want to use domain specific queues
+     *  Aliases for queue connections, if you want to use domain specific queues.
      */
     'aliases' => [
-         'ping-queue' => 'in-memory',
-         'rating-queue' => 'sync',
+        'ping-queue'   => 'in-memory',
+        'rating-queue' => 'sync',
     ],
 
     /**
      * Queue connections.
-     * Drivers: "sync", "roadrunner"
+     * Drivers: "sync", "roadrunner".
+     *
      * @link https://spiral.dev/docs/queue-configuration/#3.7/en
      */
     'connections' => [
@@ -31,7 +32,7 @@ return [
             'driver' => 'sync',
         ],
         'in-memory' => [
-            'driver' => 'roadrunner',
+            'driver'   => 'roadrunner',
             'pipeline' => 'memory',
         ],
     ],
@@ -45,7 +46,7 @@ return [
     'pipelines' => [
         'memory' => [
             'connector' => new MemoryCreateInfo('local'),
-            'consume' => true,
+            'consume'   => true,
         ],
     ],
 
@@ -55,6 +56,7 @@ return [
 
     /**
      * A serializer uses for converting job's payload from specified type to string and vice versa.
+     *
      * @link https://spiral.dev/docs/queue-jobs/#job-payload-serialization
      */
     'defaultSerializer' => 'json',
