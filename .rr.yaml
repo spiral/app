@@ -1,4 +1,4 @@
-version: '2.7'
+version: '3.0'
 
 rpc:
   listen: tcp://127.0.0.1:6001
@@ -15,6 +15,7 @@ http:
     forbid: [ ".php", ".htaccess" ]
   pool:
     num_workers: 1
+    debug: true
     supervisor:
       max_worker_memory: 100
 
@@ -30,15 +31,3 @@ kv:
     driver: memory
     config:
       interval: 60
-  redis:
-    driver: redis
-    config:
-      addrs:
-        - localhost:6379
-#grpc:
-#  listen: "tcp://0.0.0.0:9001"
-#  proto:
-#    - "first.proto"
-
-metrics:
-  address: localhost:2112

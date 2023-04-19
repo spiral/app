@@ -10,7 +10,7 @@ use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Monolog\Config\MonologConfig;
 
-class LoggingBootloader extends Bootloader
+final class LoggingBootloader extends Bootloader
 {
     public function init(MonologBootloader $monolog): void
     {

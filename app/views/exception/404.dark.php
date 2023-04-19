@@ -1,21 +1,18 @@
 <extends:layout.base title="[[Page not found]]"/>
-<use:element path="embed/links" as="homepage:links"/>
-
-<stack:push name="styles">
-    <link rel="stylesheet" href="/styles/welcome.css"/>
-</stack:push>
 
 <define:body>
-    <div class="wrapper">
-        <div class="placeholder">
-            <img src="/images/404.svg" alt="Framework Logotype" width="300px"/>
-            <h2>[[Page not found]]</h2>
+    <div class="error-code-text">404</div>
 
-            <homepage:links git="https://github.com/spiral/app" style="font-weight: bold;"/>
+    <h1 class="main-title">
+        Ooops! <span>[[Page not found]]</span>
+    </h1>
 
-            <div style="font-size: 12px; margin-top: 10px;">
-                [[This view file is located in]] <b>app/views/exception/404.dark.php</b>.
-            </div>
-        </div>
+    <p class="main-description">[[Sorry, but the page you are looking for is not found. Please, make sure you have typed the correct URL.]]</p>
+    <div class="version">
+        <span>Spiral Framework @spiralVersion</span>
+        <span>@phpVersion</span>
+        @if($debug)
+        <span>[[This view file is located in]] <b>app/views/exception/404.dark.php</b>.</span>
+        @endif
     </div>
 </define:body>

@@ -27,7 +27,7 @@ return [
      */
     'databases' => [
         'default' => [
-            'driver' => 'runtime',
+            'driver' => env('DB_DRIVER', 'pgsql'),
         ],
     ],
 
@@ -38,9 +38,20 @@ return [
      * the driver class and its connection options.
      */
     'drivers' => [
-        'runtime' => new Config\SQLiteDriverConfig(
+        'sqlite' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\MemoryConnectionConfig(),
             queryCache: true
+        ),
+        'postgres' => new Config\PostgresDriverConfig(
+            connection: new Config\Postgres\TcpConnectionConfig(
+                database: env('DB_DATABASE', 'spiral'),
+                host: env('DB_HOST', '127.0.0.1'),
+                port: (int)env('DB_PORT', 5432),
+                user: env('DB_USERNAME', 'postgres'),
+                password: env('DB_PASSWORD', ''),
+            ),
+            schema: 'public',
+            queryCache: true,
         ),
         // ...
     ],

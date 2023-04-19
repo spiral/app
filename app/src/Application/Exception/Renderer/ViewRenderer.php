@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Service\ErrorHandler;
+namespace App\Application\Exception\Renderer;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Spiral\Boot\Environment\AppEnvironment;
+use Spiral\Exceptions\Verbosity;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Header\AcceptHeader;
 use Spiral\Views\Exception\ViewException;
@@ -19,7 +21,8 @@ class ViewRenderer implements RendererInterface
 
     public function __construct(
         private readonly ViewsInterface $views,
-        private readonly ResponseFactoryInterface $responseFactory
+        private readonly ResponseFactoryInterface $responseFactory,
+        private readonly Verbosity $verbosity,
     ) {
     }
 
@@ -53,7 +56,12 @@ class ViewRenderer implements RendererInterface
             $view = $this->views->get(self::GENERAL_VIEW);
         }
 
-        $content = $view->render(['code' => $code, 'exception' => $exception]);
+        $content = $view->render([
+            'code' => $code,
+            'debug' => $this->verbosity >= Verbosity::VERBOSE,
+            'exception' => $exception
+        ]);
+
         $response->getBody()->write($content);
 
         return $response;

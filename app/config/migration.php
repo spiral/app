@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Spiral\Boot\Environment\AppEnvironment;
+
 return [
     /**
      * Directory to store migration files
@@ -16,5 +18,5 @@ return [
     /**
      * When set to true no confirmation will be requested on migration run.
      */
-    'safe' => env('APP_ENV') === 'local',
+    'safe' => spiral(AppEnvironment::class)->isProduction(),
 ];
