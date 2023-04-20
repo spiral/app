@@ -58,7 +58,7 @@ final class Configurator extends AbstractInstaller
         // We don't need MIT license file in the application, that's why we remove it.
         $conf->removeLicense();
 
-        $conf->removeInstaller();
+        //$conf->removeInstaller();
         $conf->finalize();
     }
 
