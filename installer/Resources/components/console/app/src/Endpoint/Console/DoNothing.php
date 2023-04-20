@@ -28,11 +28,7 @@ final class DoNothing extends Command
     #[Question(question: 'Provide task name')]
     private string $name;
 
-    #[Option(
-        shortcut: 't',
-        description: 'Number of times to repeat',
-        mode: InputOption::VALUE_OPTIONAL
-    )]
+    #[Option(shortcut: 't', description: 'Number of times to repeat')]
     private int $times = 10;
 
     public function __invoke(): int

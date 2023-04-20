@@ -27,5 +27,13 @@ final class Env implements GeneratorInterface
             comment: 'Cycle Bridge (Don\'t forget to set `CYCLE_SCHEMA_CACHE` to `true` in production)',
             priority: 14,
         );
+
+        $context->envConfigurator->addGroup(
+            values: [
+                'DB_CONNECTION' => 'sqlite',
+            ],
+            comment: 'Database',
+            priority: 13,
+        );
     }
 }
