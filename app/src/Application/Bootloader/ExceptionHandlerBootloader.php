@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Service\ErrorHandler\Handler;
-use App\Application\Service\ErrorHandler\ViewRenderer;
+use App\Application\Exception\Handler;
+use App\Application\Exception\Renderer\ViewRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
 use Spiral\Exceptions\ExceptionHandlerInterface;
-use Spiral\Exceptions\Renderer\ConsoleRenderer;
 use Spiral\Exceptions\Renderer\JsonRenderer;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
@@ -22,6 +21,9 @@ final class ExceptionHandlerBootloader extends Bootloader
 {
     protected const BINDINGS = [
         SuppressErrorsInterface::class => EnvSuppressErrors::class,
+
+        // This is a renderer for the default exception handler
+        // when DEBUG is set to false
         RendererInterface::class => ViewRenderer::class,
     ];
 

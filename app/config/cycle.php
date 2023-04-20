@@ -18,7 +18,7 @@ return [
 
         /**
          * The CycleORM provides the ability to manage default settings for
-         * every schema with not defined segments
+         * every schema with not defined segments.
          */
         'defaults' => [
             // SchemaInterface::MAPPER => \Cycle\ORM\Mapper\Mapper::class,
@@ -39,7 +39,7 @@ return [
 
         /**
          * Schema generators (Optional)
-         * null (default) - Will be used schema generators defined in bootloaders
+         * null (default) - Will be used schema generators defined in bootloaders.
          */
         'generators' => null,
 
@@ -61,7 +61,7 @@ return [
     'warmup' => env('CYCLE_SCHEMA_WARMUP', false),
 
     /**
-     * Custom relation types for entities
+     * Custom relation types for entities.
      */
     'customRelations' => [
         // \Cycle\ORM\Relation::EMBEDDED => [

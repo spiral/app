@@ -9,7 +9,7 @@ use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
     /**
-     * Specify a default monolog handler
+     * Specify a default monolog handler.
      */
     'default' => env('MONOLOG_DEFAULT_CHANNEL', 'default'),
 

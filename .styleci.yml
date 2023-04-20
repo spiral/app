@@ -1,4 +1,5 @@
 risky: false
+version: 8.1
 preset: psr12
 enabled:
   # Risky Fixers
@@ -12,6 +13,7 @@ enabled:
   - no_useless_else
   - no_useless_return
   - trailing_comma_in_multiline_array
+  - concat_without_spaces
 finder:
   exclude:
     - "tests"

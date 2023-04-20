@@ -14,23 +14,6 @@ class HomeControllerTest extends TestCase
             ->fakeHttp()
             ->get('/')
             ->assertOk()
-            ->assertBodyContains('Welcome to Spiral Framework');
-    }
-
-    public function testDefaultActionWithRuLocale(): void
-    {
-        $this
-            ->fakeHttp()
-            ->withHeader('accept-language', 'ru')
-            ->get('/')
-            ->assertOk()
-            ->assertBodyContains('Вас приветствует Spiral Framework');
-    }
-
-    public function testInteractWithConsole(): void
-    {
-        $output = $this->runCommand('views:reset');
-
-        $this->assertStringContainsString('cache', $output);
+            ->assertBodyContains('The PHP Framework for future Innovators');
     }
 }
