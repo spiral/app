@@ -224,6 +224,7 @@ final class Configurator extends AbstractInstaller
 
         $this->io->success('Removing Installer files ...');
         $this->recursiveRmdir($this->projectRoot . 'installer');
+        \unlink($this->projectRoot . 'cleanup.sh');
     }
 
     private function finalize(): void
