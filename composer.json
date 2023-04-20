@@ -52,7 +52,7 @@
             "php app.php configure -vv",
             "rr get-binary"
         ],
-        "psalm:config": "psalm"
+        "psalm": "psalm"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

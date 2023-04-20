@@ -19,5 +19,5 @@ return [
      * A queue connection in that any email messages will be pushed.
      */
     'queueConnection' => env('MAILER_QUEUE_CONNECTION'),
-    'queue'           => env('MAILER_QUEUE', 'local'),
+    'queue' => env('MAILER_QUEUE', 'local'),
 ];

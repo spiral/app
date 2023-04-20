@@ -36,7 +36,7 @@ return [
         ],
 
         'rr-local' => [
-            'type'   => 'roadrunner',
+            'type' => 'roadrunner',
             'driver' => 'local',
         ],
 
@@ -47,6 +47,6 @@ return [
      */
     'typeAliases' => [
         'array' => ArrayStorage::class,
-        'file'  => FileStorage::class,
+        'file' => FileStorage::class,
     ],
 ];

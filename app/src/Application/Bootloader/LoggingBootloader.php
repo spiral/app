@@ -18,27 +18,27 @@ final class LoggingBootloader extends Bootloader
         $monolog->addHandler(
             channel: ErrorHandlerMiddleware::class,
             handler: $monolog->logRotate(
-                directory('runtime') . 'logs/http.log'
-            )
+                directory('runtime').'logs/http.log',
+            ),
         );
 
         // app level errors
         $monolog->addHandler(
             channel: MonologConfig::DEFAULT_CHANNEL,
             handler: $monolog->logRotate(
-                filename: directory('runtime') . 'logs/error.log',
+                filename: directory('runtime').'logs/error.log',
                 level: Logger::ERROR,
                 maxFiles: 25,
-                bubble: false
-            )
+                bubble: false,
+            ),
         );
 
         // debug and info messages via global LoggerInterface
         $monolog->addHandler(
             channel: MonologConfig::DEFAULT_CHANNEL,
             handler: $monolog->logRotate(
-                filename: directory('runtime') . 'logs/debug.log'
-            )
+                filename: directory('runtime').'logs/debug.log',
+            ),
         );
     }
 }

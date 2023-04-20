@@ -42,7 +42,7 @@ final class LocaleSelector implements MiddlewareInterface
     }
 
     /**
-     * @return \Generator<string>
+     * @return \Generator<int, string, mixed, null>
      */
     public function fetchLocales(ServerRequestInterface $request): \Generator
     {

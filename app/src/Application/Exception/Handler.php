@@ -10,7 +10,7 @@ use Spiral\Exceptions\Renderer\ConsoleRenderer;
 /**
  * -----------------------------------------------------
  * In this file, you can modify the exception handling
- * -----------------------------------------------------.
+ * -----------------------------------------------------
  */
 final class Handler extends ExceptionHandler
 {

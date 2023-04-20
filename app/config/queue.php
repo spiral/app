@@ -16,7 +16,7 @@ return [
      *  Aliases for queue connections, if you want to use domain specific queues.
      */
     'aliases' => [
-        'ping-queue'   => 'in-memory',
+        'ping-queue' => 'in-memory',
         'rating-queue' => 'sync',
     ],
 
@@ -32,7 +32,7 @@ return [
             'driver' => 'sync',
         ],
         'in-memory' => [
-            'driver'   => 'roadrunner',
+            'driver' => 'roadrunner',
             'pipeline' => 'memory',
         ],
     ],
@@ -46,7 +46,7 @@ return [
     'pipelines' => [
         'memory' => [
             'connector' => new MemoryCreateInfo('local'),
-            'consume'   => true,
+            'consume' => true,
         ],
     ],
 

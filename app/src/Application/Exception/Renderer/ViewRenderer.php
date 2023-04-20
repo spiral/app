@@ -56,8 +56,8 @@ class ViewRenderer implements RendererInterface
         }
 
         $content = $view->render([
-            'code'      => $code,
-            'debug'     => $this->verbosity >= Verbosity::VERBOSE,
+            'code' => $code,
+            'debug' => $this->verbosity >= Verbosity::VERBOSE,
             'exception' => $exception,
         ]);
 
