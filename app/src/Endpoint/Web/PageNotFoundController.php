@@ -14,8 +14,8 @@ final class PageNotFoundController
     public function __invoke(string $path, AppEnvironment $env): string
     {
         return $this->views->render('exception/404', [
-            'path' => $path,
-            'debug' => !$env->isProduction()
+            'path'  => $path,
+            'debug' => !$env->isProduction(),
         ]);
     }
 }

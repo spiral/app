@@ -32,21 +32,21 @@ return [
         'file' => [
             // Alias for FileStorage type
             'type' => 'file',
-            'path' => directory('runtime') . 'cache',
+            'path' => directory('runtime').'cache',
         ],
 
         'rr-local' => [
-            'type' => 'roadrunner',
+            'type'   => 'roadrunner',
             'driver' => 'local',
         ],
 
     ],
 
     /**
-     * Aliases for storage types
+     * Aliases for storage types.
      */
     'typeAliases' => [
         'array' => ArrayStorage::class,
-        'file' => FileStorage::class,
+        'file'  => FileStorage::class,
     ],
 ];

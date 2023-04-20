@@ -6,6 +6,7 @@ use Spiral\Scaffolder\Declaration;
 
 /**
  * Scaffolder configuration.
+ *
  * @link https://spiral.dev/docs/basics-scaffolding
  * @see \Spiral\Scaffolder\Config\ScaffolderConfig
  */

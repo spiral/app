@@ -7,7 +7,6 @@ namespace App\Application\Exception\Renderer;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Spiral\Boot\Environment\AppEnvironment;
 use Spiral\Exceptions\Verbosity;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Header\AcceptHeader;
@@ -57,9 +56,9 @@ class ViewRenderer implements RendererInterface
         }
 
         $content = $view->render([
-            'code' => $code,
-            'debug' => $this->verbosity >= Verbosity::VERBOSE,
-            'exception' => $exception
+            'code'      => $code,
+            'debug'     => $this->verbosity >= Verbosity::VERBOSE,
+            'exception' => $exception,
         ]);
 
         $response->getBody()->write($content);
