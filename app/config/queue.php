@@ -59,7 +59,7 @@ return [
      *
      * @link https://spiral.dev/docs/queue-jobs/#job-payload-serialization
      */
-    'defaultSerializer' => 'json',
+    'defaultSerializer' => 'symfony-json',
 
     'registry' => [
         /**
@@ -81,7 +81,7 @@ return [
          * @link https://spiral.dev/docs/queue-jobs#changing-serializer
          */
         'serializers' => [
-            // 'ping' => 'json',
+            // 'ping' => 'symfony-json',
         ],
     ],
 ];

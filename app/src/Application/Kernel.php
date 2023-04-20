@@ -104,6 +104,8 @@ class Kernel extends \Spiral\Framework\Kernel
 
             // Fast code prototyping
             Prototype\PrototypeBootloader::class,
+
+            \Spiral\Serializer\Symfony\Bootloader\SerializerBootloader::class,
         ];
     }
 
