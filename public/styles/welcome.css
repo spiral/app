@@ -1,11 +1,13 @@
 .box {
+    margin-bottom: 17px;
+    padding: 46px 49px;
+    background: rgba(255, 255, 255, 0.56);
+}
+.box .items {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 33px;
-    margin-bottom: 17px;
-    padding: 46px 49px;
-    background: rgba(255, 255, 255, 0.56);
     border-radius: 10px;
 }
 
@@ -34,4 +36,38 @@
     margin: 0;
     font-size: 12px;
     line-height: 150%;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.links-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #4d5460;
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: all .25s ease-out
+}
+
+.links-item:hover {
+    color: #161b22;
+}
+
+.links-item:not(:last-child) {
+    margin-right: 6px
+}
+
+.discourse-path-1,.discourse-path-2 {
+    fill: #fff;
+}
+
+.discourse-path-3 {
+    fill: #4d5460;
 }
