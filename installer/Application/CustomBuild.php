@@ -11,6 +11,7 @@ use Installer\Application\Generator\WebApplicationEnv;
 use Installer\Application\Generator\WebApplicationSkeleton;
 use Installer\Generator\GeneratorInterface;
 use Installer\Package\Package;
+use Installer\Package\YiiErrorHandler;
 use Installer\Question\QuestionInterface;
 
 /**
@@ -43,6 +44,7 @@ final class CustomBuild extends AbstractApplication
         array $generators = [
             new CustomApplicationBootloaders(),
             new ViewRenderer(),
+            new YiiErrorHandler(),
             new WebApplicationEnv(),
             new WebApplicationSkeleton(),
         ],

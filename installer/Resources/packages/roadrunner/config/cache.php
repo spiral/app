@@ -53,7 +53,6 @@ return [
      * Aliases for storage types
      */
     'typeAliases' => [
-        'array' => ArrayStorage::class,
         'file' => FileStorage::class,
     ],
 ];
