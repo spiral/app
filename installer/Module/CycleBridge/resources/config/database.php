@@ -4,7 +4,19 @@ declare(strict_types=1);
 
 use Cycle\Database\Config;
 
+/**
+ * In this file, you may define all of your database connections, as well as specify which connection should be used
+ * by default. Most of the configuration options within this file are driven by the values of your application's
+ * environment variables.
+ *
+ * @link https://spiral.dev/docs/basics-orm#database
+ */
 return [
+    /**
+     * Log database queries through the use of the spiral/logger component.
+     *
+     * @link https://spiral.dev/docs/basics-orm#logging
+     */
     'logger' => [
         'default' => null,
         'drivers' => [
