@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Installer\Internal\Generator;
 
 use Installer\Internal\ApplicationInterface;
-use Installer\Internal\Resource;
+use Installer\Internal\Configurator\ResourceQueue;
 
 /**
  * The current state of the application files that are available for modification by the package.
@@ -18,7 +18,7 @@ final class Context
         public readonly ExceptionHandlerBootloaderConfigurator $exceptionHandlerBootloader,
         public readonly EnvConfigurator $envConfigurator,
         public readonly string $applicationRoot,
-        public readonly Resource $resource
+        public ResourceQueue $resource
     ) {
     }
 }

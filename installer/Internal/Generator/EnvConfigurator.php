@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Installer\Internal\Generator;
 
 use Installer\Internal\Resource;
-use Spiral\Files\Files;
 use Spiral\Files\FilesInterface;
 
 final class EnvConfigurator
@@ -14,26 +13,27 @@ final class EnvConfigurator
 
     /**
      * @var EnvGroup[]
+     *
      */
     private array $groups = [];
 
     public function __construct(
         private readonly string $projectRoot,
-        private readonly Resource $resource
+        private readonly Resource $resource,
+        private readonly FilesInterface $files,
     ) {
-        $this->addRequiredValues();
     }
 
     public function __destruct()
     {
-        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
+        \uasort($this->groups, static fn(EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
 
         $groups = \array_map(
-            static fn (EnvGroup $group) => $group->render(),
+            static fn(EnvGroup $group): string => $group->render(),
             \array_values($this->groups)
         );
 
-        (new Files())->write(
+        $this->files->write(
             $this->projectRoot . self::FILENAME,
             \ltrim(\implode(PHP_EOL, $groups)),
             FilesInterface::RUNTIME
@@ -72,44 +72,5 @@ final class EnvConfigurator
         }
 
         return $this;
-    }
-
-    private function addRequiredValues(): void
-    {
-        $this->addGroup(
-            values: ['APP_ENV' => 'local'],
-            comment: 'Environment (prod or local)',
-            priority: 1
-        );
-        $this->addGroup(
-            values: ['DEBUG' => true],
-            comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
-            priority: 2
-        );
-        $this->addGroup(
-            values: ['VERBOSITY_LEVEL' => 'verbose # basic, verbose, debug'],
-            comment: 'Verbosity level',
-            priority: 3
-        );
-        $this->addGroup(
-            values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
-            comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
-            priority: 4
-        );
-        $this->addGroup(
-            values: [
-                'MONOLOG_DEFAULT_CHANNEL' => 'default',
-                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
-            ],
-            comment: 'Monolog',
-            priority: 5
-        );
-        $this->addGroup(
-            values: [
-                'TELEMETRY_DRIVER' => 'null',
-            ],
-            comment: 'Telemetry',
-            priority: 9
-        );
     }
 }

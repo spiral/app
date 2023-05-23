@@ -137,7 +137,7 @@ abstract class AbstractApplication implements ApplicationInterface
 
         // application generators
         foreach ($this->generators as $generator) {
-            yield null => $generator;
+            yield $this => $generator;
         }
     }
 

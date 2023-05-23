@@ -8,12 +8,14 @@ use Installer\Internal\ApplicationInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
+use Spiral\Files\FilesInterface;
 
 final class ReadmeGenerator
 {
     public function __construct(
         private readonly string $filePath,
         private readonly ApplicationInterface $application,
+        private readonly FilesInterface $files,
     ) {
     }
 
@@ -54,7 +56,11 @@ final class ReadmeGenerator
             $content
         );
 
-        \file_put_contents($this->filePath, $content);
+        $this->files->write(
+            $this->filePath,
+            $content,
+            FilesInterface::RUNTIME
+        );
     }
 
     public function generateForApplication(): \Traversable

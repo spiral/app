@@ -6,12 +6,11 @@ namespace Installer\Internal;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
-use Composer\Package\BasePackage;
-use Composer\Package\Link;
-use Composer\Package\RootPackageInterface;
-use Composer\Package\Version\VersionParser;
+use Composer\Json\JsonFile;
 use Composer\Script\Event;
 use Installer\Internal\Installer\AbstractInstaller;
+use Installer\Internal\Installer\ApplicationState;
+use Installer\Internal\Installer\ComposerFile;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -21,23 +20,6 @@ final class Installer extends AbstractInstaller
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
     private ApplicationInterface $application;
-    private RootPackageInterface $rootPackage;
-
-    /** @var Link[] */
-    private array $composerRequires = [];
-
-    /** @var Link[] */
-    private array $composerDevRequires = [];
-
-    /** @var array<string, BasePackage::STABILITY_*> */
-    private array $stabilityFlags = [];
-
-    private readonly bool $verbose;
-
-    /**
-     * @var class-string<Package>[]
-     */
-    private array $installedPackages = [];
 
     /**
      * @throws ParsingException
@@ -49,12 +31,20 @@ final class Installer extends AbstractInstaller
     ) {
         parent::__construct($io, $projectRoot);
 
-        $this->rootPackage = $composer->getPackage();
-        $this->composerRequires = $this->rootPackage->getRequires();
-        $this->composerDevRequires = $this->rootPackage->getDevRequires();
-        $this->stabilityFlags = $this->rootPackage->getStabilityFlags();
+        $this->applicationState = new ApplicationState(
+            \realpath(__DIR__),
+            $this->projectRoot,
+            new ComposerFile(
+                new JsonFile($this->composerFile),
+                $composer->getPackage()
+            )
+        );
     }
 
+    /**
+     * @throws ParsingException
+     * @throws \Exception
+     */
     public static function install(Event $event): void
     {
         $installer = new self($event->getIO(), $event->getComposer());
@@ -85,32 +75,11 @@ WELCOME,
         } while (true);
 
         $installer->io->success('Setting up required packages...');
-        $installer->setRequiredPackages();
-
         $installer->io->success('Setting up optional packages...');
         $installer->promptForOptionalPackages();
 
-        $installer->io->success('Setting up application files...');
-        $installer->setApplicationFiles();
-
-        $installer->removeInstallerFromDefinition();
-        $installer->updateRootPackage();
-
-        $installer->finalize();
-    }
-
-    private function setRequiredPackages(): void
-    {
-        foreach ($this->application->getPackages() as $package) {
-            $this->addPackage($package);
-        }
-    }
-
-    private function setApplicationFiles(): void
-    {
-        $resource = $this->resource->withSource($this->application->getResourcesPath());
-        foreach ($this->application->getResources() as $source => $target) {
-            $resource->copy($source, $target);
+        foreach ($installer->applicationState->persist() as $message) {
+            $installer->io->success($message);
         }
     }
 
@@ -147,11 +116,11 @@ WELCOME,
         switch (true) {
             case $option instanceof Option:
                 foreach ($option->getPackages() as $package) {
-                    $this->addPackage($package);
+                    $this->applicationState->addPackage($package);
                 }
                 break;
             case $option instanceof BooleanOption:
-                $this->addBooleanAnswer($question, $option);
+                $this->applicationState->addBooleanAnswer($question, $option);
         }
     }
 
@@ -180,8 +149,7 @@ WELCOME,
         }
 
         $this->application = $this->config[$type];
-
-        $this->composerDefinition['extra']['spiral']['application-type'] = $type;
+        $this->applicationState->setApplication($this->application, $type);
     }
 
     private function askQuestion(QuestionInterface $question): int
@@ -214,118 +182,5 @@ WELCOME,
         }
 
         return (int)$answer;
-    }
-
-    private function addPackage(Package $package): void
-    {
-        // If package is already installed, skip it
-        if (\in_array($package::class, $this->installedPackages, true)) {
-            return;
-        }
-
-        $this->io->debug(
-            \sprintf(
-                '- Adding package <info>%s</info> (<comment>%s</comment>)',
-                $package->getName(),
-                $package->getVersion(),
-            ),
-        );
-
-        $versionParser = new VersionParser();
-        $constraint = $versionParser->parseConstraints($package->getVersion());
-
-        $link = new Link('__root__', $package->getName(), $constraint, 'requires', $package->getVersion());
-
-        /** @psalm-suppress PossiblyInvalidArgument */
-        if ($package->isDev() || \in_array($package->getName(), $this->config['require-dev'] ?? [], true)) {
-            unset(
-                $this->composerDefinition['require'][$package->getName()],
-                $this->composerRequires[$package->getName()],
-            );
-
-            $this->composerDefinition['require-dev'][$package->getName()] = $package->getVersion();
-            $this->composerDevRequires[$package->getName()] = $link;
-        } else {
-            unset(
-                $this->composerDefinition['require-dev'][$package->getName()],
-                $this->composerDevRequires[$package->getName()],
-            );
-
-            $this->composerDefinition['require'][$package->getName()] = $package->getVersion();
-            $this->composerRequires[$package->getName()] = $link;
-        }
-
-        $stability = match (VersionParser::parseStability($package->getVersion())) {
-            'dev' => BasePackage::STABILITY_DEV,
-            'alpha' => BasePackage::STABILITY_ALPHA,
-            'beta' => BasePackage::STABILITY_BETA,
-            'RC' => BasePackage::STABILITY_RC,
-            default => null
-        };
-
-        if ($stability !== null) {
-            $this->stabilityFlags[$package->getName()] = $stability;
-        }
-
-        // Add package to the extra section
-        if (!\in_array($package, $this->composerDefinition['extra']['spiral']['packages'] ?? [], true)) {
-            $this->composerDefinition['extra']['spiral']['packages'][] = $package->getName();
-        }
-
-        // Package resources
-        $resource = $this->resource->withSource($package->getResourcesPath());
-        foreach ($package->getResources() as $source => $target) {
-            $resource->copy($source, $target);
-        }
-
-        // Mark package as installed to prevent duplication of resources and dependencies
-        $this->installedPackages[] = $package::class;
-
-        // Register dependent packages
-        foreach ($package->getDependencies() as $dependency) {
-            $this->addPackage($dependency);
-        }
-    }
-
-    private function updateRootPackage(): void
-    {
-        $autoload = $this->application->getAutoload();
-        $autoload['psr-4']['Installer\\'] = 'installer';
-
-        $this->rootPackage->setRequires($this->composerRequires);
-        $this->rootPackage->setDevRequires($this->composerDevRequires);
-        $this->rootPackage->setStabilityFlags($this->stabilityFlags);
-        $this->rootPackage->setAutoload($autoload);
-        $this->rootPackage->setDevAutoload($this->application->getAutoloadDev());
-        $this->rootPackage->setExtra($this->composerDefinition['extra'] ?? []);
-    }
-
-    private function removeInstallerFromDefinition(): void
-    {
-        $this->io->success('Removing Installer from composer.json ...');
-
-        unset(
-            $this->composerDevRequires['composer/composer'],
-            $this->composerDefinition['require-dev']['composer/composer'],
-            $this->composerDefinition['scripts']['pre-update-cmd'],
-            $this->composerDefinition['scripts']['pre-install-cmd'],
-        );
-    }
-
-    private function finalize(): void
-    {
-        $this->composerDefinition['autoload'] = $this->application->getAutoload();
-        $this->composerDefinition['autoload-dev'] = $this->application->getAutoloadDev();
-        $this->composerDefinition['autoload']['psr-4']['Installer\\'] = 'installer';
-
-        $this->composerJson->write($this->composerDefinition);
-    }
-
-    private function addBooleanAnswer(QuestionInterface $question, BooleanOption $answer): void
-    {
-        // Add option to the extra section
-        if (!\array_key_exists($question::class, $this->composerDefinition['extra']['spiral']['options'] ?? [])) {
-            $this->composerDefinition['extra']['spiral']['options'][$question::class] = $answer->value;
-        }
     }
 }

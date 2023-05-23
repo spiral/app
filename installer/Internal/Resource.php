@@ -4,35 +4,22 @@ declare(strict_types=1);
 
 namespace Installer\Internal;
 
-use Installer\Internal\Console\IO;
-
 final class Resource
 {
     private const ENV_SAMPLE = '.env.sample';
 
     public function __construct(
-        private readonly string $source,
         private readonly string $root,
-        private readonly IO $io,
     ) {
-    }
-
-    /**
-     * Create a new instance with a different source path.
-     * It is useful when you want to copy resources from a specific module directory.
-     */
-    public function withSource(string $source): self
-    {
-        return new self($source, $this->root, $this->io);
     }
 
     /**
      * Copy a resource file or directory to the project root.
      * If the resource is a directory, it will be copied recursively.
      */
-    public function copy(string $resource, string $target): self
+    public function copy(string $resource, string $target): \Generator
     {
-        $copy = function (string $source, string $destination) use (&$copy): void {
+        $copy = function (string $source, string $destination) use (&$copy): \Generator {
             if (\is_dir($source)) {
                 $handle = \opendir($source);
                 while ($file = \readdir($handle)) {
@@ -44,7 +31,7 @@ final class Resource
                             }
                             $copy($source . '/' . $file, $destination . '/' . $file);
                         } else {
-                            $this->writeInfo($destination . '/' . $file);
+                            yield $destination . '/' . $file;
                             if (!\is_dir($destination)) {
                                 \mkdir($destination, 0775, true);
                             }
@@ -58,32 +45,19 @@ final class Resource
                     \mkdir(\dirname($destination), 0775, true);
                 }
 
-                $this->writeInfo($destination);
+                yield $destination;
                 \copy($source, $destination);
             }
         };
 
-        $copy($this->source . $resource, $this->root . $target);
-
-        return $this;
+        yield from $copy($resource, $this->root . $target);
     }
 
     /**
      * Copy the .env.sample file to the project root.
      */
-    public function createEnv(): self
+    public function createEnv(): void
     {
         \copy($this->root . self::ENV_SAMPLE, $this->root . '.env');
-
-        return $this;
-    }
-
-    private function writeInfo(string $destination): void
-    {
-        if (!$this->io->isVerbose()) {
-            return;
-        }
-
-        $this->io->write(\sprintf('  - Copying <info>%s</info>', $destination));
     }
 }

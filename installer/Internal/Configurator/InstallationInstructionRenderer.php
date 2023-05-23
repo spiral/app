@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Installer\Internal\Configurator;
 
 use Installer\Internal\ApplicationInterface;
-use Installer\Internal\Console\IO;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -13,58 +12,55 @@ use Installer\Internal\Question\QuestionInterface;
 final class InstallationInstructionRenderer
 {
     public function __construct(
-        private readonly IO $io,
         private readonly ApplicationInterface $application,
     ) {
     }
 
-    public function render(): void
+    public function render(): \Generator
     {
-        $this->io->info('Installation complete!');
-        $this->io->write('');
-        $this->io->comment('Next steps:');
+        yield 'info' => 'Installation complete!';
+        yield 'write' => '';
+        yield 'comment' => 'Next steps:';
 
-        $this->renderForApplication();
+        yield from $this->renderForApplication();
 
         foreach ($this->application->getPackages() as $package) {
-            $this->renderForPackage($package);
+            yield from $this->renderForPackage($package);
         }
 
         foreach ($this->application->getQuestions() as $question) {
-            $this->renderForQuestion($question);
+            yield from $this->renderForQuestion($question);
         }
     }
 
-    public function renderForApplication(): void
+    public function renderForApplication(): \Generator
     {
         foreach ($this->application->getInstructions() as $index => $instruction) {
-            $this->io->write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
+            yield 'write' => \sprintf('  %s. %s', (int)$index + 1, $instruction);
         }
     }
 
-    public function renderForPackage(Package $package): void
+    public function renderForPackage(Package $package): \Generator
     {
         if ($package->getInstructions() === []) {
             return;
         }
 
-        $this->io->comment($package->getTitle());
+        yield 'comment' => $package->getTitle();
 
         foreach ($package->getInstructions() as $index => $instruction) {
-            $this->io->write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
+            yield 'write' => \sprintf('  %s. %s', (int)$index + 1, $instruction);
         }
     }
 
-    public function renderForQuestion(QuestionInterface $question): \Traversable
+    public function renderForQuestion(QuestionInterface $question): \Generator
     {
         foreach ($question->getOptions() as $option) {
             foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
                 if ($this->application->isPackageInstalled($package)) {
-                    $this->renderForPackage($package);
+                    yield from $this->renderForPackage($package);
                 }
             }
         }
     }
-
-
 }

@@ -6,11 +6,14 @@ namespace Installer\Internal;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Kernel;
+use Composer\Composer;
 use Composer\IO\IOInterface;
+use Composer\Json\JsonFile;
 use Composer\Script\Event;
 use Installer\Internal\Configurator\BashCommandExecutor;
 use Installer\Internal\Configurator\InstallationInstructionRenderer;
 use Installer\Internal\Configurator\ReadmeGenerator;
+use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Configurator\RoadRunnerConfigGenerator;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\EnvConfigurator;
@@ -18,35 +21,114 @@ use Installer\Internal\Generator\ExceptionHandlerBootloaderConfigurator;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Generator\KernelConfigurator;
 use Installer\Internal\Installer\AbstractInstaller;
+use Installer\Internal\Installer\ComposerFile;
+use Seld\JsonLint\ParsingException;
 use Spiral\Core\Container;
+use Spiral\Files\Files;
+use Symfony\Component\Process\Process;
 
 final class Configurator extends AbstractInstaller
 {
-    private ApplicationInterface $application;
-    private Container $container;
-    private Context $context;
+    private readonly ApplicationInterface $application;
+    private readonly Container $container;
+    private readonly Context $context;
+    private readonly ComposerFile $composer;
+    private readonly FilesInterface $files;
 
-    public function __construct(IOInterface $io, ?string $projectRoot = null)
-    {
+    public function __construct(
+        IOInterface $io,
+        Composer $composer,
+        ?string $projectRoot = null
+    ) {
         parent::__construct($io, $projectRoot);
 
+        $this->files = new Files();
         $this->container = new Container();
-        $applicationType = $this->config[$this->getApplicationType()] ?? null;
-        if (!$applicationType instanceof ApplicationInterface) {
-            throw new \InvalidArgumentException('Invalid application type!');
-        }
-        $this->application = $applicationType;
+        $this->composer = new ComposerFile(
+            new JsonFile($this->composerFile),
+            $composer->getPackage()
+        );
 
-        if ($this->application instanceof AbstractApplication) {
-            $this->application->setInstalled($this->composerDefinition['extra']['spiral'] ?? []);
-        }
-
-        $this->setContext();
+        $this->application = $this->getApplicationType();
+        $this->context = $this->buildContext();
     }
 
+    private function buildContext(): Context
+    {
+        return new Context(
+            application: $this->application,
+            kernel: new KernelConfigurator(Kernel::class),
+            exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
+            envConfigurator: $this->buildEnvConfigurator(),
+            applicationRoot: $this->projectRoot,
+            resource: new ResourceQueue($this->projectRoot)
+        );
+    }
+
+    private function buildEnvConfigurator(): EnvConfigurator
+    {
+        return (new EnvConfigurator(
+            projectRoot: $this->projectRoot,
+            resource: $this->resource,
+            files: $this->files,
+        ))->addGroup(
+            values: ['APP_ENV' => 'local'],
+            comment: 'Environment (prod or local)',
+            priority: 1
+        )->addGroup(
+            values: ['DEBUG' => true],
+            comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
+            priority: 2
+        )->addGroup(
+            values: ['VERBOSITY_LEVEL' => 'verbose # basic, verbose, debug'],
+            comment: 'Verbosity level',
+            priority: 3
+        )->addGroup(
+            values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
+            comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
+            priority: 4
+        )->addGroup(
+            values: [
+                'MONOLOG_DEFAULT_CHANNEL' => 'default',
+                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
+            ],
+            comment: 'Monolog',
+            priority: 5
+        )->addGroup(
+            values: [
+                'TELEMETRY_DRIVER' => 'null',
+            ],
+            comment: 'Telemetry',
+            priority: 9
+        );
+    }
+
+    private function getApplicationType(): ApplicationInterface
+    {
+        if ($this->composer->getApplicationType() === null) {
+            throw new \InvalidArgumentException('Application type is not defined!');
+        }
+
+        $application = $this->config[$this->composer->getApplicationType()] ?? null;
+
+        if (!$application instanceof ApplicationInterface) {
+            throw new \InvalidArgumentException('Invalid application type!');
+        }
+
+        if ($application instanceof AbstractApplication) {
+            $application->setInstalled($this->composer->getInstalledPackages());
+        }
+
+        return $application;
+    }
+
+    /**
+     * @throws ParsingException
+     * @throws \Exception
+     */
     public static function configure(Event $event): void
     {
-        $conf = new self($event->getIO());
+        $conf = new self($event->getIO(), $event->getComposer());
 
         $conf->runGenerators();
         $conf->createRoadRunnerConfig();
@@ -57,90 +139,113 @@ final class Configurator extends AbstractInstaller
 
         // We don't need MIT license file in the application, that's why we remove it.
         $conf->removeLicense();
-
         $conf->removeInstaller();
-        $conf->finalize();
     }
 
+    /**
+     * Run application generators.
+     * It will run at first all the generators for packages that chosen by user, then for application default packages
+     * and then for application itself.
+     */
     private function runGenerators(): void
     {
-        foreach ($this->application->getGenerators() as $generator) {
+        foreach ($this->application->getGenerators() as $object => $generator) {
             if (!$generator instanceof GeneratorInterface) {
-                $generator = $this->container->get($generator);
+                try {
+                    $generator = $this->container->get($generator);
+                } catch (\Throwable $e) {
+                    $this->io->error(
+                        \sprintf('Unable to create generator %s. Reason [%s]', $generator::class, $e->getMessage())
+                    );
+                }
+            }
+
+            $sourceRoot = match (true) {
+                $object instanceof ApplicationInterface => $object->getResourcesPath(),
+                $object instanceof Package => $object->getResourcesPath(),
+                default => null,
+            };
+
+            if ($sourceRoot !== null) {
+                $this->context->resource->setSourceRoot($sourceRoot);
             }
 
             $generator->process($this->context);
+            $this->context->resource->setSourceRoot($this->projectRoot);
         }
-    }
 
-    private function getApplicationType(): int
-    {
-        return $this->composerDefinition['extra']['spiral']['application-type'] ?? 1;
-    }
+        foreach ($this->context->resource as $source => $destination) {
+            $this->io->write(\sprintf('Copying %s => %s ....', $source, $destination));
 
-    private function setContext(): void
-    {
-        $this->context = new Context(
-            application: $this->application,
-            kernel: new KernelConfigurator(Kernel::class),
-            exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
-            envConfigurator: new EnvConfigurator($this->projectRoot, $this->resource),
-            applicationRoot: $this->projectRoot,
-            resource: $this->resource
-        );
+            foreach ($this->resource->copy($source, $destination) as $sourceFile => $destinationFile) {
+                $this->io->comment(\sprintf('%s => %s copied.', $sourceFile, $destinationFile));
+            }
+        }
     }
 
     private function runCommands(): void
     {
-        (new BashCommandExecutor($this->io))
-            ->execute($this->application->getCommands());
+        $executor = new BashCommandExecutor;
+
+        foreach ($executor->execute($this->application->getCommands()) as $type => $output) {
+            match ($type) {
+                Process::ERR => $this->io->error($output),
+                Process::OUT => $this->io->write($output),
+            };
+        }
     }
 
     private function createRoadRunnerConfig(): void
     {
-        (new RoadRunnerConfigGenerator($this->io))
-            ->generate($this->application->getRoadRunnerPlugins());
+        $generator = new RoadRunnerConfigGenerator;
+
+        foreach ($generator->generate($this->application->getRoadRunnerPlugins()) as $type => $output) {
+            match ($type) {
+                Process::ERR => $this->io->error($output),
+                Process::OUT => $this->io->write($output),
+            };
+        }
     }
 
     private function updateReadme(): void
     {
         (new ReadmeGenerator(
-            $this->projectRoot . '/README.md',
-            $this->application
+            filePath: $this->projectRoot . '/README.md',
+            application: $this->application,
+            files: $this->files,
         ))->generate();
     }
 
     private function showInstructions(): void
     {
-        (new InstallationInstructionRenderer($this->io, $this->application))
-            ->render();
+        $renderer = new InstallationInstructionRenderer($this->application);
+
+        foreach ($renderer->render() as $type => $message) {
+            $this->io->{$type}($message);
+        }
     }
 
     private function removeLicense(): void
     {
-        \unlink($this->projectRoot . 'LICENSE');
+        $this->files->delete($this->projectRoot . 'LICENSE');
     }
 
+    /**
+     * @throws \Exception
+     */
     private function removeInstaller(): void
     {
-        $this->io->info('Removing Configurator from composer.json ...');
-
-        unset(
-            $this->composerDefinition['scripts']['post-install-cmd'],
-            $this->composerDefinition['scripts']['post-update-cmd'],
-            $this->composerDefinition['extra']['spiral']
+        $result = $this->composer->removeInstaller(
+            $this->application->getAutoload(),
+            $this->application->getAutoloadDev()
         );
 
+        foreach ($result as $message) {
+            $this->io->success($message);
+        }
+
         $this->io->success('Removing Installer files ...');
-        $this->recursiveRmdir($this->projectRoot . 'installer');
-        \unlink($this->projectRoot . 'cleanup.sh');
-    }
-
-    private function finalize(): void
-    {
-        $this->composerDefinition['autoload'] = $this->application->getAutoload();
-        $this->composerDefinition['autoload-dev'] = $this->application->getAutoloadDev();
-
-        $this->composerJson->write($this->composerDefinition);
+        $this->files->deleteDirectory($this->projectRoot . 'installer');
+        $this->files->delete($this->projectRoot . 'cleanup.sh');
     }
 }
