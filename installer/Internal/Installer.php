@@ -132,11 +132,13 @@ WELCOME,
                 'Which application preset do you want to install?',
             ),
         ];
+
         foreach ($this->config as $key => $app) {
             if ($app instanceof ApplicationInterface) {
                 $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int)$key + 1, $app->getName());
             }
         }
+
         $query[] = \sprintf('  Make your selection <comment>(default: %s)</comment>: ', 1);
 
         return (int)$this->io->ask(\implode($query), 1) - 1;

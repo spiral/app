@@ -4,10 +4,20 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
-use Symfony\Component\Process\Process;
+use Installer\Internal\Console\Output;
+use Installer\Internal\ProcessExecutorInterface;
 
 final class RoadRunnerConfigGenerator
 {
+    public function __construct(
+        private readonly ProcessExecutorInterface $executor,
+    ) {
+    }
+
+    /**
+     * @param string[] $plugins
+     * @return \Generator<Output>
+     */
     public function generate(array $plugins): \Generator
     {
         $options = '';
@@ -15,6 +25,6 @@ final class RoadRunnerConfigGenerator
             $options = ' -p ' . \implode(' -p ', $plugins);
         }
 
-        yield from (new Process(\explode(' ', 'rr make-config' . $options)))->getIterator();
+        yield from $this->executor->execute('rr make-config' . $options);
     }
 }

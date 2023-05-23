@@ -19,7 +19,6 @@ final class EnvConfigurator
 
     public function __construct(
         private readonly string $projectRoot,
-        private readonly Resource $resource,
         private readonly FilesInterface $files,
     ) {
     }
@@ -39,7 +38,13 @@ final class EnvConfigurator
             FilesInterface::RUNTIME
         );
 
-        $this->resource->createEnv();
+        /**
+         * Copy the .env.sample file to the project root.
+         */
+        $this->files->copy(
+            $this->projectRoot . self::FILENAME,
+            $this->projectRoot . '.env',
+        );
     }
 
     /**

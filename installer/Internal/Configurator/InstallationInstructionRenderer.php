@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Internal\Configurator;
 
 use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Console\Output;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -16,11 +17,14 @@ final class InstallationInstructionRenderer
     ) {
     }
 
+    /**
+     * @return \Generator<Output>
+     */
     public function render(): \Generator
     {
-        yield 'info' => 'Installation complete!';
-        yield 'write' => '';
-        yield 'comment' => 'Next steps:';
+        yield Output::success('Installation complete!');
+        yield Output::write('');
+        yield Output::comment('Next steps:');
 
         yield from $this->renderForApplication();
 
@@ -33,26 +37,35 @@ final class InstallationInstructionRenderer
         }
     }
 
+    /**
+     * @return \Generator<Output>
+     */
     public function renderForApplication(): \Generator
     {
         foreach ($this->application->getInstructions() as $index => $instruction) {
-            yield 'write' => \sprintf('  %s. %s', (int)$index + 1, $instruction);
+            yield Output::write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
         }
     }
 
+    /**
+     * @return \Generator<Output>
+     */
     public function renderForPackage(Package $package): \Generator
     {
         if ($package->getInstructions() === []) {
             return;
         }
 
-        yield 'comment' => $package->getTitle();
+        yield Output::comment($package->getTitle());
 
         foreach ($package->getInstructions() as $index => $instruction) {
-            yield 'write' => \sprintf('  %s. %s', (int)$index + 1, $instruction);
+            yield Output::write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
         }
     }
 
+    /**
+     * @return \Generator<Output>
+     */
     public function renderForQuestion(QuestionInterface $question): \Generator
     {
         foreach ($question->getOptions() as $option) {

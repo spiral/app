@@ -25,7 +25,6 @@ use Installer\Internal\Installer\ComposerFile;
 use Seld\JsonLint\ParsingException;
 use Spiral\Core\Container;
 use Spiral\Files\Files;
-use Symfony\Component\Process\Process;
 
 final class Configurator extends AbstractInstaller
 {
@@ -34,6 +33,7 @@ final class Configurator extends AbstractInstaller
     private readonly Context $context;
     private readonly ComposerFile $composer;
     private readonly FilesInterface $files;
+    private ProcessExecutor $processExecutor;
 
     public function __construct(
         IOInterface $io,
@@ -51,6 +51,7 @@ final class Configurator extends AbstractInstaller
 
         $this->application = $this->getApplicationType();
         $this->context = $this->buildContext();
+        $this->processExecutor = new ProcessExecutor();
     }
 
     private function buildContext(): Context
@@ -69,7 +70,6 @@ final class Configurator extends AbstractInstaller
     {
         return (new EnvConfigurator(
             projectRoot: $this->projectRoot,
-            resource: $this->resource,
             files: $this->files,
         ))->addGroup(
             values: ['APP_ENV' => 'local'],
@@ -185,25 +185,19 @@ final class Configurator extends AbstractInstaller
 
     private function runCommands(): void
     {
-        $executor = new BashCommandExecutor;
-
-        foreach ($executor->execute($this->application->getCommands()) as $type => $output) {
-            match ($type) {
-                Process::ERR => $this->io->error($output),
-                Process::OUT => $this->io->write($output),
-            };
+        foreach ($this->application->getCommands() as $command) {
+            foreach ($this->processExecutor->execute($command) as $output) {
+                $output->send($this->io);
+            }
         }
     }
 
     private function createRoadRunnerConfig(): void
     {
-        $generator = new RoadRunnerConfigGenerator;
+        $generator = new RoadRunnerConfigGenerator($this->processExecutor);
 
-        foreach ($generator->generate($this->application->getRoadRunnerPlugins()) as $type => $output) {
-            match ($type) {
-                Process::ERR => $this->io->error($output),
-                Process::OUT => $this->io->write($output),
-            };
+        foreach ($generator->generate($this->application->getRoadRunnerPlugins()) as $output) {
+            $output->send($this->io);
         }
     }
 
@@ -220,8 +214,8 @@ final class Configurator extends AbstractInstaller
     {
         $renderer = new InstallationInstructionRenderer($this->application);
 
-        foreach ($renderer->render() as $type => $message) {
-            $this->io->{$type}($message);
+        foreach ($renderer->render() as $output) {
+            $output->send($this->io);
         }
     }
 
@@ -240,12 +234,13 @@ final class Configurator extends AbstractInstaller
             $this->application->getAutoloadDev()
         );
 
-        foreach ($result as $message) {
-            $this->io->success($message);
+        foreach ($result as $output) {
+            $output->send($this->io);
         }
 
-        $this->io->success('Removing Installer files ...');
         $this->files->deleteDirectory($this->projectRoot . 'installer');
         $this->files->delete($this->projectRoot . 'cleanup.sh');
+
+        $this->io->success('Installer removed.');
     }
 }

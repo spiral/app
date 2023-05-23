@@ -52,12 +52,4 @@ final class Resource
 
         yield from $copy($resource, $this->root . $target);
     }
-
-    /**
-     * Copy the .env.sample file to the project root.
-     */
-    public function createEnv(): void
-    {
-        \copy($this->root . self::ENV_SAMPLE, $this->root . '.env');
-    }
 }

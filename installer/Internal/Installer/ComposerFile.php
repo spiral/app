@@ -9,6 +9,7 @@ use Composer\Package\BasePackage;
 use Composer\Package\Link;
 use Composer\Package\RootPackageInterface;
 use Composer\Package\Version\VersionParser;
+use Installer\Internal\Console\Output;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
@@ -105,6 +106,7 @@ final class ComposerFile
     }
 
     /**
+     * @return \Generator<Output>
      * @throws \Exception
      */
     public function persist(array $autoload, array $autoloadDev): \Generator
@@ -120,7 +122,7 @@ final class ComposerFile
         $this->package->setDevAutoload($autoloadDev);
         $this->package->setExtra($this->composerDefinition['extra'] ?? []);
 
-        yield 'Storing composer.json ...';
+        yield Output::comment('Storing composer.json ...');
 
         $this->composerDefinition['autoload'] = $autoload;
         $this->composerDefinition['autoload-dev'] = $autoloadDev;
@@ -128,15 +130,16 @@ final class ComposerFile
 
         $this->jsonFile->write($this->composerDefinition);
 
-        yield 'composer.json file updated.';
+        yield Output::success('composer.json file updated.');
     }
 
     /**
+     * @return \Generator<Output>
      * @throws \Exception
      */
     public function removeInstaller(array $autoload, array $autoloadDev): \Generator
     {
-        yield 'Removing Configurator from composer.json ...';
+        yield Output::comment('Removing Configurator from composer.json ...');
 
         unset(
             $this->composerDefinition['scripts']['post-install-cmd'],
@@ -150,9 +153,12 @@ final class ComposerFile
         $this->jsonFile->write($this->composerDefinition);
     }
 
+    /**
+     * @return \Generator<Output>
+     */
     private function removeInstallerFromDefinition(): \Generator
     {
-        yield 'Removing Installer from composer.json ...';
+        yield Output::comment('Removing Installer from composer.json ...');
 
         unset(
             $this->composerDevRequires['composer/composer'],

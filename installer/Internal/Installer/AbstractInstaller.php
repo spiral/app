@@ -40,7 +40,6 @@ abstract class AbstractInstaller
         $this->projectRoot = \rtrim($this->projectRoot, '/\\') . '/';
 
         $this->config = require __DIR__ . '/config.php';
-
-        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/', $this->projectRoot);
+        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/');
     }
 }
