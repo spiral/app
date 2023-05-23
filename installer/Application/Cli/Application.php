@@ -12,6 +12,8 @@ use Installer\Internal\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
+use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 
 /**
  * @psalm-import-type AutoloadRules from PackageInterface
@@ -44,6 +46,8 @@ final class Application extends AbstractApplication
             new Bootloaders(),
             new ViewRenderer(),
             new Skeleton(),
+            new ConsoleSkeleton(),
+            new ExceptionSkeleton(),
         ],
         array $resources = [
             '/../../Custom/resources/common' => '',

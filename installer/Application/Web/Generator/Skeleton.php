@@ -6,8 +6,6 @@ namespace Installer\Application\Web\Generator;
 
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
-use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
-use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 
 final class Skeleton implements GeneratorInterface
 {
@@ -19,9 +17,6 @@ final class Skeleton implements GeneratorInterface
 
         $context->resource->copy('skeleton/app/src/Endpoint', 'app/src/Endpoint');
         $context->resource->copy('skeleton/tests', 'tests');
-
-        (new ExceptionSkeleton())->process($context);
-        (new ConsoleSkeleton())->process($context);
 
         \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
     }

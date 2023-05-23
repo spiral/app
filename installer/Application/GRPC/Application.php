@@ -11,6 +11,8 @@ use Installer\Internal\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
+use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
 use Installer\Module\RoadRunnerBridge\Common\Package as RoadRunnerBridgePackage;
 use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader;
@@ -53,6 +55,8 @@ final class Application extends AbstractApplication
             new Bootloaders(),
             new GRPCBootloader(),
             new GRPCSkeleton(),
+            new ConsoleSkeleton(),
+            new ExceptionSkeleton(),
             new ViewRenderer(),
         ],
         array $resources = [

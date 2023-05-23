@@ -13,7 +13,9 @@ use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
 use Installer\Module\ErrorHandler\Yii\Package as YiiErrorHandlerPackage;
+use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
 use Installer\Module\Psr7Implementation\Nyholm\Package as NyholmPsr7Implementation;
 use Installer\Module\RoadRunnerBridge\Common\Package as RoadRunnerBridgePackage;
@@ -55,6 +57,8 @@ final class Application extends AbstractApplication
             new ViewRenderer(),
             new Env(),
             new Skeleton(),
+            new ConsoleSkeleton(),
+            new ExceptionSkeleton(),
         ],
         array $resources = [
             '/../../Custom/resources/common' => '',
