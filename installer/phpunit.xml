@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         colors="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnError="false"
+         stderr="true"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false"
+>
+    <coverage/>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">Tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="memory_limit" value="-1"/>
+    </php>
+</phpunit>

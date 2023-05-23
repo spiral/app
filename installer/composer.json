@@ -1,0 +1,19 @@
+{
+    "require-dev": {
+        "composer/composer": "^2.4",
+        "phpunit/phpunit": "^10.1",
+        "vimeo/psalm": "^5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Installer\\Application\\": "Application",
+            "Installer\\Internal\\": "Internal",
+            "Installer\\Module\\": "Module"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "Tests"
+        }
+    }
+}
