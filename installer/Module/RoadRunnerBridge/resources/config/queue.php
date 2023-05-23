@@ -18,7 +18,7 @@ return [
     /**
      *  Default queue connection name
      */
-    'default' => env('QUEUE_CONNECTION', 'roadrunner'),
+    'default' => env('QUEUE_CONNECTION', 'in-memory'),
 
     /**
      *  Aliases for queue connections, if you want to use domain specific queues
