@@ -14,6 +14,8 @@ use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
 use App\Endpoint\Web\Middleware\LocaleSelector;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * A bootloader that configures the application's routes and middleware.
@@ -59,14 +61,11 @@ final class RoutesBootloader extends BaseRoutesBootloader
 
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
-        $routes->default('/[<controller>[/<action>]]')
-            ->namespaced('App\\Endpoint\\Http')
-            ->defaults([
-                'controller' => 'home',
-                'action' => 'index',
-            ])
-            ->middleware([
-                // SomeMiddleware::class,
-            ]);
+        // Fallback route if no other route matched
+        // Will show 404 page
+        // $routes->default('/<path:.*>')
+        //    ->callable(function (ServerRequestInterface $r, ResponseInterface $response) {
+        //        return $response->withStatus(404)->withBody('Not found');
+        //    });
     }
 }

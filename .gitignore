@@ -7,3 +7,4 @@ protoc-gen-php-grpc*
 .phpunit.result.cache
 .phpunit.cache
 .deptrac.cache
+.phpunit.cache/
