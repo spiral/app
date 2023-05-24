@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
@@ -13,8 +15,6 @@ use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * A bootloader that configures the application's routes and middleware.
@@ -29,12 +29,22 @@ final class RoutesBootloader extends BaseRoutesBootloader
 
     protected function globalMiddleware(): array
     {
-        return [];
+        return [];return [
+            ErrorHandlerMiddleware::class,
+            JsonPayloadMiddleware::class,
+            HttpCollector::class,
+        ];
     }
 
     protected function middlewareGroups(): array
     {
-        return [];
+        return [];return [
+            'web' => [
+                CookiesMiddleware::class,
+                SessionMiddleware::class,
+                CsrfMiddleware::class
+            ],
+        ];
     }
 
     protected function defineRoutes(RoutingConfigurator $routes): void

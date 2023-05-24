@@ -12,7 +12,5 @@ use Spiral\Core\CoreInterface;
  */
 final class AppBootloader extends DomainBootloader
 {
-    protected const SINGLETONS = [
-        CoreInterface::class => [self::class, 'domainCore']
-    ];
+    protected const SINGLETONS = [CoreInterface::class => [self::class, 'domainCore']];
 }

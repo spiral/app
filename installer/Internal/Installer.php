@@ -7,12 +7,15 @@ namespace Installer\Internal;
 use Composer\Composer;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
+use Installer\Internal\Configurator\CopyTask;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Console\IOInterface;
+use Installer\Internal\Console\Output;
 use Installer\Internal\Installer\AbstractInstaller;
 use Installer\Internal\Installer\ApplicationState;
 use Installer\Internal\Installer\ComposerFile;
 use Installer\Internal\Installer\ComposerStorage;
+use Installer\Internal\Installer\ComposerStorageInterface;
 use Installer\Internal\Installer\InteractionsInterface;
 use Installer\Internal\Installer\IOInteractions;
 use Installer\Internal\Question\Option\BooleanOption;
@@ -29,16 +32,53 @@ final class Installer extends AbstractInstaller
      * @throws ParsingException
      * @throws \Exception
      */
-    public static function install(Event $event): void
+    public static function install(Event $event, ?InteractionsInterface $interactions = null): void
     {
         $installer = new self(
             new IO($event->getIO()),
-            $event->getComposer()
+            $event->getComposer(),
+            $interactions
         );
 
-        $installer->io->success('Setting up application preset...');
+        $installer->run();
+    }
 
-        $installer->io->info(
+    /**
+     * @throws ParsingException
+     */
+    public function __construct(
+        IOInterface $io,
+        Composer $composer,
+        ?string $projectRoot = null,
+        ?InteractionsInterface $interactions = null,
+        ?ComposerStorageInterface $composerStorage = null
+    ) {
+        parent::__construct($io, $projectRoot);
+
+        $this->applicationState = new ApplicationState(
+            $this->projectRoot,
+            $composerFile = new ComposerFile(
+                $composerStorage ?? new ComposerStorage(new JsonFile($this->composerFile)),
+                $composer->getPackage()
+            )
+        );
+
+        $this->interactions = $interactions ?? new IOInteractions(
+            $this->io,
+            $this->config,
+            $composerFile->getDefinition()
+        );
+    }
+
+    /**
+     * @throws \Exception
+     * @internal
+     */
+    public function run(): void
+    {
+        $this->io->success('Setting up application preset...');
+
+        $this->io->info(
             <<<'WELCOME'
 
    _____         _              _
@@ -54,48 +94,28 @@ WELCOME,
 
         do {
             try {
-                $type = $installer->interactions->requestApplicationType();
-                $installer->setApplicationType($type);
+                $type = $this->interactions->requestApplicationType();
+                $this->setApplicationType($type);
                 break;
             } catch (\InvalidArgumentException $e) {
-                $installer->io->error($e->getMessage());
+                $this->io->error($e->getMessage());
             }
         } while (true);
 
-        $installer->io->success('Setting up required packages...');
-        $installer->io->success('Setting up optional packages...');
+        $this->io->success('Setting up required packages...');
+        $this->io->success('Setting up optional packages...');
 
-        $installer->promptForOptionalPackages();
+        $this->promptForOptionalPackages();
 
-        foreach ($installer->applicationState->persist() as $message) {
-            $installer->io->success($message);
+        foreach ($this->applicationState->persist() as $output) {
+            if ($output instanceof Output) {
+                $output->send($this->io);
+            } elseif ($output instanceof CopyTask) {
+                $this->io->comment((string)$output);
+            } else {
+                throw new \LogicException('Invalid output type!');
+            }
         }
-    }
-
-    /**
-     * @throws ParsingException
-     */
-    public function __construct(
-        IOInterface $io,
-        Composer $composer,
-        ?string $projectRoot = null,
-        ?InteractionsInterface $interactions = null,
-    ) {
-        parent::__construct($io, $projectRoot);
-
-        $this->applicationState = new ApplicationState(
-            $this->projectRoot,
-            $composerFile = new ComposerFile(
-                new ComposerStorage(new JsonFile($this->composerFile)),
-                $composer->getPackage()
-            )
-        );
-
-        $this->interactions = $interactions ?? new IOInteractions(
-            $this->io,
-            $this->config,
-            $composerFile->getDefinition()
-        );
     }
 
     private function promptForOptionalPackages(): void

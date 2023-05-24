@@ -61,7 +61,7 @@ final class IOInteractions implements InteractionsInterface
                 }
 
                 if (!$question->hasOption($answer)) {
-                    throw new \InvalidArgumentException('Invalid package!');
+                    throw new \InvalidArgumentException('Invalid answer!');
                 }
                 break;
             } catch (\InvalidArgumentException $e) {

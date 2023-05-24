@@ -6,7 +6,7 @@ namespace Installer\Module\Storage;
 
 use Installer\Internal\Question\AbstractQuestion;
 use Installer\Internal\Question\Option\BooleanOption;
-use installer\Module\Storage\Generator\Config;
+use Installer\Module\Storage\Generator\Config;
 
 final class Question extends AbstractQuestion
 {

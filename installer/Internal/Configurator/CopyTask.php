@@ -44,7 +44,6 @@ final class CopyTask implements \Stringable
         }
 
         return $sourceRoot . '/' . $source;
-
     }
 
     public function getFullDestination(): string
@@ -61,6 +60,11 @@ final class CopyTask implements \Stringable
 
     public function __toString(): string
     {
-        return "{$this->getFullSource()} -> {$this->getFullDestination()}";
+        return \sprintf(
+            'Copy [%s:%s] -> [%s]',
+            $this->getFullSource(),
+            (\is_dir($this->getFullSource()) ? 'dir' : \file_exists($this->getFullSource())) ? 'file' : 'missing',
+            $this->getFullDestination(),
+        );
     }
 }

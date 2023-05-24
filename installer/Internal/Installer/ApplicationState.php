@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Internal\Installer;
 
 use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Configurator\CopyTask;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
@@ -26,7 +27,7 @@ final class ApplicationState
         $this->resource = new Resource($applicationPath);
     }
 
-    public function setApplication(ApplicationInterface $application, int $type): \Generator
+    public function setApplication(ApplicationInterface $application, int $type): void
     {
         $this->application = $application;
         $this->composer->setApplicationType($type);
@@ -78,23 +79,20 @@ final class ApplicationState
     private function copyFiles(): \Generator
     {
         foreach ($this->application->getResources() as $source => $target) {
-            $this->resource->copy(
+            yield from $this->resource->copy(
                 \rtrim($this->application->getResourcesPath(), '/') . '/' . \ltrim($source, '/'),
                 $target
             );
-            yield $source => $target;
         }
 
         foreach ($this->installedPackages as $package) {
             // Package resources
 
             foreach ($package->getResources() as $source => $target) {
-                $this->resource->copy(
+                yield from $this->resource->copy(
                     \rtrim($package->getResourcesPath() . '/') . \ltrim($source, '/'),
                     $target
                 );
-
-                yield $source => $target;
             }
         }
     }

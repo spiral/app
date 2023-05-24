@@ -15,13 +15,18 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $contains = false;
         foreach ($queue as $task) {
-            if ((string)$task === "$source -> $destination") {
+            if ($task->getFullSource() === $source && $task->getFullDestination() === $destination) {
                 $contains = true;
                 break;
             }
         }
 
         $this->assertTrue($contains, "ResourceQueue does not contain $source -> $destination");
+    }
+
+    protected function getConfig(): array
+    {
+        return require_once __DIR__ . '/../config.php';
     }
 
     protected function tearDown(): void

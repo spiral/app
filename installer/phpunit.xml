@@ -15,6 +15,9 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">Tests/Unit</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">Tests/Feature</directory>
+        </testsuite>
     </testsuites>
     <php>
         <ini name="error_reporting" value="-1"/>

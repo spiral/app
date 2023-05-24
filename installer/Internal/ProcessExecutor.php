@@ -11,7 +11,10 @@ final class ProcessExecutor implements ProcessExecutorInterface
 {
     public function execute(string $command): \Generator
     {
-        foreach ((new Process(\explode(' ', $command)))->getIterator() as $type => $data) {
+        $process = (new Process(\explode(' ', $command)));
+        $process->start();
+
+        foreach ($process->getIterator() as $type => $data) {
             yield match ($type) {
                 Process::OUT => Output::write($data),
                 Process::ERR => Output::error($data),

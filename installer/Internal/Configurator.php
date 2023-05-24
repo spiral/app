@@ -20,9 +20,11 @@ use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Installer\AbstractInstaller;
 use Installer\Internal\Installer\ComposerFile;
 use Installer\Internal\Installer\ComposerStorage;
+use Installer\Internal\Installer\ComposerStorageInterface;
 use Seld\JsonLint\ParsingException;
 use Spiral\Core\Container;
 use Spiral\Files\Files;
+use Spiral\Files\FilesInterface;
 use Spiral\Reactor\Writer;
 
 final class Configurator extends AbstractInstaller
@@ -34,20 +36,7 @@ final class Configurator extends AbstractInstaller
     public static function configure(Event $event): void
     {
         $conf = new self(new IO($event->getIO()), $event->getComposer());
-
-        $conf->runGenerators();
-        $conf->createRoadRunnerConfig();
-        $conf->runCommands();
-        $conf->showInstructions();
-
-        $conf->updateReadme();
-
-        // We don't need MIT license file in the application, that's why we remove it.
-        $conf->removeLicense();
-        $conf->removeInstaller();
-
-        // Create .env file
-        $conf->context->envConfigurator->persist();
+        $conf->run();
     }
 
     private readonly ApplicationInterface $application;
@@ -60,20 +49,39 @@ final class Configurator extends AbstractInstaller
     public function __construct(
         IOInterface $io,
         Composer $composer,
-        ?string $projectRoot = null
+        ?string $projectRoot = null,
+        ?FilesInterface $files = null,
+        ?ComposerStorageInterface $composerStorage = null
     ) {
         parent::__construct($io, $projectRoot);
 
-        $this->files = new Files();
+        $this->files = $files ?? new Files();
         $this->container = new Container();
         $this->composer = new ComposerFile(
-            new ComposerStorage(new JsonFile($this->composerFile)),
+            $composerStorage ?? new ComposerStorage(new JsonFile($this->composerFile)),
             $composer->getPackage()
         );
 
         $this->application = $this->getApplicationType();
         $this->context = $this->buildContext();
         $this->processExecutor = new ProcessExecutor();
+    }
+
+    public function run(): void
+    {
+        $this->runGenerators();
+        $this->createRoadRunnerConfig();
+        $this->runCommands();
+        $this->showInstructions();
+
+        $this->updateReadme();
+
+        // We don't need MIT license file in the application, that's why we remove it.
+        $this->removeLicense();
+        $this->removeInstaller();
+
+        // Create .env file
+        $this->context->envConfigurator->persist();
     }
 
     private function buildContext(): Generator\Context

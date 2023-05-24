@@ -58,6 +58,6 @@ final class CopyTaskTest extends TestCase
     public function testItConvertsToString(): void
     {
         $task = new CopyTask('source', 'destination', 'root', 'destRoot');
-        $this->assertEquals('root/source -> destRoot/destination', (string)$task);
+        $this->assertEquals('Copy [root/source:missing] -> [destRoot/destination]', (string)$task);
     }
 }
