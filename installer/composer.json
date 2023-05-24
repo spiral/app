@@ -1,8 +1,13 @@
 {
     "require-dev": {
+        "nette/php-generator": "^4.0",
+        "spiral/reactor": "^3.7",
+        "spiral/core": "^3.7",
+        "spiral/files": "^3.7",
         "composer/composer": "^2.4",
         "phpunit/phpunit": "^10.1",
-        "vimeo/psalm": "^5.9"
+        "vimeo/psalm": "^5.9",
+        "mockery/mockery": "^1.5"
     },
     "autoload": {
         "psr-4": {

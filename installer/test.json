@@ -13,7 +13,6 @@
         "spiral/framework": "^3.7"
     },
     "require-dev": {
-        "composer/composer": "^2.4",
         "spiral/dumper": "^3.0",
         "spiral/testing": "^2.3",
         "vimeo/psalm": "^5.9"
@@ -23,13 +22,12 @@
             "Installer\\": "installer"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests"
-        }
-    },
+    "autoload-dev": [],
     "extra": {
-        "publish-cmd": "php app.php publish"
+        "publish-cmd": "php app.php publish",
+        "spiral": {
+            "application-type": 1
+        }
     },
     "config": {
         "sort-packages": true,
@@ -38,8 +36,6 @@
         }
     },
     "scripts": {
-        "pre-install-cmd": "Installer\\Installer::install",
-        "pre-update-cmd": "Installer\\Installer::install",
         "post-install-cmd": "Installer\\Configurator::configure",
         "post-update-cmd": "Installer\\Configurator::configure",
         "post-create-project-cmd": [

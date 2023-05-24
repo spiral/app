@@ -4,33 +4,55 @@ declare(strict_types=1);
 
 namespace Installer\Internal;
 
-use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Kernel;
 use Composer\Composer;
-use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
-use Installer\Internal\Configurator\BashCommandExecutor;
 use Installer\Internal\Configurator\InstallationInstructionRenderer;
 use Installer\Internal\Configurator\ReadmeGenerator;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Configurator\RoadRunnerConfigGenerator;
-use Installer\Internal\Generator\Context;
-use Installer\Internal\Generator\EnvConfigurator;
-use Installer\Internal\Generator\ExceptionHandlerBootloaderConfigurator;
+use Installer\Internal\Console\IO;
+use Installer\Internal\Console\IOInterface;
+use Installer\Internal\Generator;
+use Installer\Internal\Generator\Bootloader\RoutesBootloaderConfigurator;
 use Installer\Internal\Generator\GeneratorInterface;
-use Installer\Internal\Generator\KernelConfigurator;
 use Installer\Internal\Installer\AbstractInstaller;
 use Installer\Internal\Installer\ComposerFile;
+use Installer\Internal\Installer\ComposerStorage;
 use Seld\JsonLint\ParsingException;
 use Spiral\Core\Container;
 use Spiral\Files\Files;
+use Spiral\Reactor\Writer;
 
 final class Configurator extends AbstractInstaller
 {
+    /**
+     * @throws ParsingException
+     * @throws \Exception
+     */
+    public static function configure(Event $event): void
+    {
+        $conf = new self(new IO($event->getIO()), $event->getComposer());
+
+        $conf->runGenerators();
+        $conf->createRoadRunnerConfig();
+        $conf->runCommands();
+        $conf->showInstructions();
+
+        $conf->updateReadme();
+
+        // We don't need MIT license file in the application, that's why we remove it.
+        $conf->removeLicense();
+        $conf->removeInstaller();
+
+        // Create .env file
+        $conf->context->envConfigurator->persist();
+    }
+
     private readonly ApplicationInterface $application;
     private readonly Container $container;
-    private readonly Context $context;
+    private readonly Generator\Context $context;
     private readonly ComposerFile $composer;
     private readonly FilesInterface $files;
     private ProcessExecutor $processExecutor;
@@ -45,7 +67,7 @@ final class Configurator extends AbstractInstaller
         $this->files = new Files();
         $this->container = new Container();
         $this->composer = new ComposerFile(
-            new JsonFile($this->composerFile),
+            new ComposerStorage(new JsonFile($this->composerFile)),
             $composer->getPackage()
         );
 
@@ -54,21 +76,34 @@ final class Configurator extends AbstractInstaller
         $this->processExecutor = new ProcessExecutor();
     }
 
-    private function buildContext(): Context
+    private function buildContext(): Generator\Context
     {
-        return new Context(
+        $writer = new Writer($this->files);
+
+        return new Generator\Context(
             application: $this->application,
-            kernel: new KernelConfigurator(Kernel::class),
-            exceptionHandlerBootloader: new ExceptionHandlerBootloaderConfigurator(ExceptionHandlerBootloader::class),
+            kernel: new Generator\Kernel\Configurator(
+                kernelClass: Kernel::class,
+                writer: $writer
+            ),
+            exceptionHandlerBootloader: new Generator\Bootloader\ExceptionHandlerBootloaderConfigurator(
+                writer: $writer
+            ),
+            routesBootloader: new RoutesBootloaderConfigurator(
+                writer: $writer
+            ),
+            domainInterceptors: new Generator\Bootloader\DomainInterceptorsConfigurator(
+                writer: $writer
+            ),
             envConfigurator: $this->buildEnvConfigurator(),
             applicationRoot: $this->projectRoot,
             resource: new ResourceQueue($this->projectRoot)
         );
     }
 
-    private function buildEnvConfigurator(): EnvConfigurator
+    private function buildEnvConfigurator(): Generator\Env\Generator
     {
-        return (new EnvConfigurator(
+        return (new Generator\Env\Generator(
             projectRoot: $this->projectRoot,
             files: $this->files,
         ))->addGroup(
@@ -123,26 +158,6 @@ final class Configurator extends AbstractInstaller
     }
 
     /**
-     * @throws ParsingException
-     * @throws \Exception
-     */
-    public static function configure(Event $event): void
-    {
-        $conf = new self($event->getIO(), $event->getComposer());
-
-        $conf->runGenerators();
-        $conf->createRoadRunnerConfig();
-        $conf->runCommands();
-        $conf->showInstructions();
-
-        $conf->updateReadme();
-
-        // We don't need MIT license file in the application, that's why we remove it.
-        $conf->removeLicense();
-        $conf->removeInstaller();
-    }
-
-    /**
      * Run application generators.
      * It will run at first all the generators for packages that chosen by user, then for application default packages
      * and then for application itself.
@@ -174,11 +189,16 @@ final class Configurator extends AbstractInstaller
             $this->context->resource->setSourceRoot($this->projectRoot);
         }
 
-        foreach ($this->context->resource as $source => $destination) {
-            $this->io->write(\sprintf('Copying %s => %s ....', $source, $destination));
+        foreach ($this->context->resource as $task) {
+            $this->io->write(\sprintf('Copying %s ....', (string)$task));
 
-            foreach ($this->resource->copy($source, $destination) as $sourceFile => $destinationFile) {
-                $this->io->comment(\sprintf('%s => %s copied.', $sourceFile, $destinationFile));
+            foreach (
+                $this->resource->copy(
+                    $task->getFullSource(),
+                    $task->getFullDestination()
+                ) as $copyTask
+            ) {
+                $this->io->comment(\sprintf('%s copied.', (string)$copyTask));
             }
         }
     }

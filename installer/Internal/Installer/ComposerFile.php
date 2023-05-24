@@ -23,33 +23,35 @@ final class ComposerFile
     private array $composerDevRequires = [];
     /** @var array<string, BasePackage::STABILITY_*> */
     private array $stabilityFlags = [];
-    private array $composerDefinition = [];
+    private array $definition;
 
-    /**
-     * @throws ParsingException
-     */
     public function __construct(
-        private readonly JsonFile $jsonFile,
+        private readonly ComposerStorageInterface $storage,
         private readonly RootPackageInterface $package,
     ) {
-        $this->composerDefinition = $this->jsonFile->read();
+        $this->definition = $this->storage->read();
+    }
+
+    public function getDefinition(): array
+    {
+        return $this->definition;
     }
 
     public function setApplicationType(int $type): void
     {
-        $this->composerDefinition['extra']['spiral']['application-type'] = $type;
+        $this->definition['extra']['spiral']['application-type'] = $type;
     }
 
     public function getApplicationType(): ?int
     {
-        return $this->composerDefinition['extra']['spiral']['application-type'] ?? null;
+        return $this->definition['extra']['spiral']['application-type'] ?? null;
     }
 
     public function addQuestionAnswer(QuestionInterface $question, BooleanOption $answer): void
     {
         // Add option to the extra section
-        if (!\array_key_exists($question::class, $this->composerDefinition['extra']['spiral']['options'] ?? [])) {
-            $this->composerDefinition['extra']['spiral']['options'][$question::class] = $answer->value;
+        if (!\array_key_exists($question::class, $this->definition['extra']['spiral']['options'] ?? [])) {
+            $this->definition['extra']['spiral']['options'][$question::class] = $answer->value;
         }
     }
 
@@ -63,19 +65,19 @@ final class ComposerFile
         /** @psalm-suppress PossiblyInvalidArgument */
         if ($package->isDev() || \in_array($package->getName(), $this->config['require-dev'] ?? [], true)) {
             unset(
-                $this->composerDefinition['require'][$package->getName()],
+                $this->definition['require'][$package->getName()],
                 $this->composerRequires[$package->getName()],
             );
 
-            $this->composerDefinition['require-dev'][$package->getName()] = $package->getVersion();
+            $this->definition['require-dev'][$package->getName()] = $package->getVersion();
             $this->composerDevRequires[$package->getName()] = $link;
         } else {
             unset(
-                $this->composerDefinition['require-dev'][$package->getName()],
+                $this->definition['require-dev'][$package->getName()],
                 $this->composerDevRequires[$package->getName()],
             );
 
-            $this->composerDefinition['require'][$package->getName()] = $package->getVersion();
+            $this->definition['require'][$package->getName()] = $package->getVersion();
             $this->composerRequires[$package->getName()] = $link;
         }
 
@@ -92,8 +94,8 @@ final class ComposerFile
         }
 
         // Add package to the extra section
-        if (!\in_array($package->getName(), $this->composerDefinition['extra']['spiral']['packages'] ?? [], true)) {
-            $this->composerDefinition['extra']['spiral']['packages'][] = $package->getName();
+        if (!\in_array($package->getName(), $this->definition['extra']['spiral']['packages'] ?? [], true)) {
+            $this->definition['extra']['spiral']['packages'][] = $package->getName();
         }
     }
 
@@ -102,7 +104,7 @@ final class ComposerFile
      */
     public function getInstalledPackages(): array
     {
-        return $this->composerDefinition['extra']['spiral']['packages'] ?? [];
+        return $this->definition['extra']['spiral']['packages'] ?? [];
     }
 
     /**
@@ -120,15 +122,15 @@ final class ComposerFile
         $this->package->setStabilityFlags($this->stabilityFlags);
         $this->package->setAutoload($autoload);
         $this->package->setDevAutoload($autoloadDev);
-        $this->package->setExtra($this->composerDefinition['extra'] ?? []);
+        $this->package->setExtra($this->definition['extra'] ?? []);
 
         yield Output::comment('Storing composer.json ...');
 
-        $this->composerDefinition['autoload'] = $autoload;
-        $this->composerDefinition['autoload-dev'] = $autoloadDev;
-        $this->composerDefinition['autoload']['psr-4']['Installer\\'] = 'installer';
+        $this->definition['autoload'] = $autoload;
+        $this->definition['autoload-dev'] = $autoloadDev;
+        $this->definition['autoload']['psr-4']['Installer\\'] = 'installer';
 
-        $this->jsonFile->write($this->composerDefinition);
+        $this->storage->write($this->definition);
 
         yield Output::success('composer.json file updated.');
     }
@@ -142,15 +144,15 @@ final class ComposerFile
         yield Output::comment('Removing Configurator from composer.json ...');
 
         unset(
-            $this->composerDefinition['scripts']['post-install-cmd'],
-            $this->composerDefinition['scripts']['post-update-cmd'],
-            $this->composerDefinition['extra']['spiral']
+            $this->definition['scripts']['post-install-cmd'],
+            $this->definition['scripts']['post-update-cmd'],
+            $this->definition['extra']['spiral']
         );
 
-        $this->composerDefinition['autoload'] = $autoload;
-        $this->composerDefinition['autoload-dev'] = $autoloadDev;
+        $this->definition['autoload'] = $autoload;
+        $this->definition['autoload-dev'] = $autoloadDev;
 
-        $this->jsonFile->write($this->composerDefinition);
+        $this->storage->write($this->definition);
     }
 
     /**
@@ -162,9 +164,9 @@ final class ComposerFile
 
         unset(
             $this->composerDevRequires['composer/composer'],
-            $this->composerDefinition['require-dev']['composer/composer'],
-            $this->composerDefinition['scripts']['pre-update-cmd'],
-            $this->composerDefinition['scripts']['pre-install-cmd'],
+            $this->definition['require-dev']['composer/composer'],
+            $this->definition['scripts']['pre-update-cmd'],
+            $this->definition['scripts']['pre-install-cmd'],
         );
     }
 }

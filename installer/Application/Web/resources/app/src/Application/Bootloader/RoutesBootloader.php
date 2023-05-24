@@ -13,7 +13,6 @@ use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
-use App\Endpoint\Web\Middleware\LocaleSelector;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -30,33 +29,12 @@ final class RoutesBootloader extends BaseRoutesBootloader
 
     protected function globalMiddleware(): array
     {
-        return [
-            // If you want to automatically detect the user's locale based on the
-            // "Accept-Language" header uncomment this middleware and add \Spiral\Bootloader\I18nBootloader
-            // to the Kernel
-            // LocaleSelector::class,
-
-            ErrorHandlerMiddleware::class,
-            JsonPayloadMiddleware::class,
-            HttpCollector::class,
-        ];
+        return [];
     }
 
     protected function middlewareGroups(): array
     {
-        return [
-            'web' => [
-                CookiesMiddleware::class,
-                SessionMiddleware::class,
-                CsrfMiddleware::class,
-                // Uncomment this middleware if you want to authenticate users using cookies
-                // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'cookie'])
-            ],
-            'api' => [
-                // Uncomment this middleware if you want to authenticate users using headers
-                // new Autowire(AuthTransportMiddleware::class, ['transportName' => 'header'])
-            ],
-        ];
+        return [];
     }
 
     protected function defineRoutes(RoutingConfigurator $routes): void

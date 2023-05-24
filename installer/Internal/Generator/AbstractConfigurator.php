@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator;
 
-use Spiral\Files\Files;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\PhpNamespace;
 use Spiral\Reactor\Writer;
@@ -20,6 +19,7 @@ abstract class AbstractConfigurator
      */
     public function __construct(
         string $class,
+        private readonly Writer $writer,
     ) {
         $this->reflection = new \ReflectionClass($class);
         $this->declaration = FileDeclaration::fromCode(\file_get_contents($this->reflection->getFileName()));
@@ -35,6 +35,6 @@ abstract class AbstractConfigurator
 
     protected function write(): void
     {
-        (new Writer(new Files()))->write($this->reflection->getFileName(), $this->declaration);
+        $this->writer->write($this->reflection->getFileName(), $this->declaration);
     }
 }

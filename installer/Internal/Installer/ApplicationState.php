@@ -20,11 +20,10 @@ final class ApplicationState
     private Resource $resource;
 
     public function __construct(
-        string $sourcePath,
         string $applicationPath,
         private readonly ComposerFile $composer,
     ) {
-        $this->resource = new Resource($sourcePath, $applicationPath);
+        $this->resource = new Resource($applicationPath);
     }
 
     public function setApplication(ApplicationInterface $application, int $type): \Generator

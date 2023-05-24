@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
+use splQueue;
 use Traversable;
 
-final class ResourceQueue implements \IteratorAggregate
+final class ResourceQueue implements \IteratorAggregate, \Countable
 {
-    private const SOURCE = 0;
-    private const DESTINATION = 1;
-
+    /**
+     * @param splQueue<CopyTask> $queue
+     */
     public function __construct(
         private string $sourceRoot,
-        private readonly \splQueue $queue = new \splQueue()
+        private readonly splQueue $queue = new splQueue()
     ) {
+        $queue->setIteratorMode(SplQueue::IT_MODE_DELETE);
     }
 
     public function setSourceRoot(string $sourceRoot): self
@@ -26,18 +28,29 @@ final class ResourceQueue implements \IteratorAggregate
 
     public function copy(string $source, string $destination): self
     {
-        $this->queue->push([
-            self::SOURCE => \rtrim($this->sourceRoot, '/') . '/' . \ltrim($source, '/'),
-            self::DESTINATION => $destination,
-        ]);
+        $this->queue->push(
+            new CopyTask(
+                source: \ltrim($source, '/'),
+                destination: \ltrim($destination, '/'),
+                sourceRoot: \rtrim($this->sourceRoot, '/'),
+            )
+        );
 
         return $this;
     }
 
+    /**
+     * @return Traversable<array-key, CopyTask>
+     */
     public function getIterator(): Traversable
     {
         foreach ($this->queue as $item) {
-            yield $item[self::SOURCE] => $item[self::DESTINATION];
+            yield $item;
         }
+    }
+
+    public function count(): int
+    {
+        return $this->queue->count();
     }
 }

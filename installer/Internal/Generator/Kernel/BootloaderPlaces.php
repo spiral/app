@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal\Generator;
+namespace Installer\Internal\Generator\Kernel;
 
 enum BootloaderPlaces: string
 {

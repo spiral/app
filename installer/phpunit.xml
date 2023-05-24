@@ -7,7 +7,6 @@
          processIsolation="false"
          stopOnFailure="false"
          stopOnError="false"
-         stderr="true"
          cacheDirectory=".phpunit.cache"
          backupStaticProperties="false"
 >

@@ -2,31 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal\Generator;
+namespace Installer\Internal\Generator\Kernel;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Bootloader\LoggingBootloader;
+use Installer\Internal\Generator\AbstractConfigurator;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader\CommandBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
+use Spiral\Reactor\Writer;
 use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
-final class KernelConfigurator extends AbstractConfigurator
+final class Configurator extends AbstractConfigurator
 {
     /**
      * @param class-string $kernelClass
      */
     public function __construct(
         string $kernelClass,
-        public readonly Bootloaders $system = new Bootloaders(BootloaderPlaces::System),
-        public readonly Bootloaders $load = new Bootloaders(BootloaderPlaces::Load),
-        public readonly Bootloaders $app = new Bootloaders(BootloaderPlaces::App)
+        Writer $writer,
+        public readonly Bootloaders $system = new MethodBasedBootloaders(BootloaderPlaces::System),
+        public readonly Bootloaders $load = new MethodBasedBootloaders(BootloaderPlaces::Load),
+        public readonly Bootloaders $app = new MethodBasedBootloaders(BootloaderPlaces::App)
     ) {
-        parent::__construct($kernelClass);
+        parent::__construct($kernelClass, $writer);
 
         $this->addRequiredSystemBootloaders();
         $this->addRequiredLoadBootloaders();

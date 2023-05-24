@@ -24,10 +24,8 @@ final class ViewRenderer implements GeneratorInterface
 
         if ($this->isTemplateEngineInstalled($context->application)) {
             $context->resource->copy(self::RENDERER_PATH, self::TARGET_PATH);
-            $context->exceptionHandlerBootloader->addUse(Renderer::class);
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, Renderer::class);
         } else {
-            $context->exceptionHandlerBootloader->addUse(PlainRenderer::class);
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, PlainRenderer::class);
         }
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Internal;
 
+use Installer\Internal\Configurator\CopyTask;
+
 final class Resource
 {
     private const ENV_SAMPLE = '.env.sample';
@@ -16,6 +18,8 @@ final class Resource
     /**
      * Copy a resource file or directory to the project root.
      * If the resource is a directory, it will be copied recursively.
+     *
+     * @return \Generator<array-key, CopyTask>
      */
     public function copy(string $resource, string $target): \Generator
     {
@@ -31,11 +35,12 @@ final class Resource
                             }
                             $copy($source . '/' . $file, $destination . '/' . $file);
                         } else {
-                            yield $destination . '/' . $file;
                             if (!\is_dir($destination)) {
                                 \mkdir($destination, 0775, true);
                             }
                             \copy($source . '/' . $file, $destination . '/' . $file);
+
+                            yield new CopyTask($source . '/' . $file, $destination . '/' . $file);
                         }
                     }
                 }
@@ -45,8 +50,8 @@ final class Resource
                     \mkdir(\dirname($destination), 0775, true);
                 }
 
-                yield $destination;
                 \copy($source, $destination);
+                yield new CopyTask($source, $destination);
             }
         };
 

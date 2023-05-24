@@ -17,7 +17,7 @@ final class Output implements \Stringable
         return \sprintf('[%s] %s', $this->type, $this->message);
     }
 
-    public function send(IO $output): void
+    public function send(IOInterface $output): void
     {
         $output->{$this->type}($this->message);
     }

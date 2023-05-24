@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Console;
 
-use Composer\IO\IOInterface;
+use Composer\IO\IOInterface as ComposerIOInterface;
 
-final class IO
+final class IO implements IOInterface
 {
     public function __construct(
-        private readonly IOInterface $io,
+        private readonly ComposerIOInterface $io,
     ) {
     }
 
@@ -28,27 +28,27 @@ final class IO
         $this->io->write(\sprintf('  <question>%s</question>', $title));
     }
 
-    public function write(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function write(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         $this->io->write($message, $newline, $verbosity);
     }
 
-    public function error(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function error(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         $this->io->write(\sprintf('  <error>%s</error>', $message), $newline, $verbosity);
     }
 
-    public function comment(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function comment(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         $this->io->write(\sprintf('  <comment>%s</comment>', $message), $newline, $verbosity);
     }
 
-    public function info(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function info(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         $this->io->write(\sprintf('  <info>%s</info>', $message), $newline, $verbosity);
     }
 
-    public function success(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function success(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         if (!$this->isVerbose()) {
             return;
@@ -57,7 +57,7 @@ final class IO
         $this->io->write(\sprintf('  <info>%s</info>', $message), $newline, $verbosity);
     }
 
-    public function debug(string $message, bool $newline = true, int $verbosity = IOInterface::NORMAL): void
+    public function debug(string $message, bool $newline = true, int $verbosity = ComposerIOInterface::NORMAL): void
     {
         if (!$this->isVerbose()) {
             return;
