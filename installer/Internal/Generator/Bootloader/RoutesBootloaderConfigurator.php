@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Installer\Internal\Generator\Bootloader;
 
 use App\Application\Bootloader\RoutesBootloader;
+use Installer\Internal\ClassMetadataInterface;
 use Installer\Internal\Generator\Kernel\ClassListGroup;
+use Installer\Internal\ReflectionClassMetadata;
 use Nette\PhpGenerator\Literal;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
@@ -14,8 +16,6 @@ use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Reactor\Exception\ReactorException;
 use Spiral\Reactor\Writer;
-use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
-use Spiral\Router\Loader\Configurator\RoutingConfigurator;
 use Spiral\Session\Middleware\SessionMiddleware;
 
 final class RoutesBootloaderConfigurator extends BootloaderConfigurator
@@ -25,8 +25,10 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
     /** @var array<non-empty-string, ClassListGroup> */
     private array $middlewareGroups = [];
 
-    public function __construct(Writer $writer, string $class = RoutesBootloader::class)
-    {
+    public function __construct(
+        Writer $writer,
+        ClassMetadataInterface $class = new ReflectionClassMetadata(RoutesBootloader::class),
+    ) {
         parent::__construct($class, $writer);
 
         $this->globalMiddleware = new ClassListGroup([
@@ -85,7 +87,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
 
     private function injectGlobalMiddleware(): void
     {
-        $class = $this->declaration->getClass($this->reflection->getName());
+        $class = $this->declaration->getClass($this->class->getName());
 
         foreach ($this->globalMiddleware as $middleware) {
             $this->namespace->addUse($middleware);
@@ -109,7 +111,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
 
         $string = new Literal($string);
 
-        $method->addBody(
+        $method->setBody(
             <<<PHP
             return [
             $string,
@@ -120,7 +122,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
 
     private function injectGroupMiddleware(): void
     {
-        $class = $this->declaration->getClass($this->reflection->getName());
+        $class = $this->declaration->getClass($this->class->getName());
 
         try {
             $method = $class->getMethod('middlewareGroups');
@@ -160,7 +162,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
 
         $string = new Literal(\rtrim($string));
 
-        $method->addBody(
+        $method->setBody(
             <<<PHP
             return [
             $string

@@ -15,6 +15,9 @@ final class QueueConfig implements GeneratorInterface
             return;
         }
 
+        $context->envConfigurator
+            ->addValue('QUEUE_CONNECTION', 'in-memory');
+
         $context->resource
             ->copy('config/queue.php', 'app/config/queue.php');
     }

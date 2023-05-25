@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Installer\Internal;
 
 use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Generator\Env\EnvGroup;
 
 final class Config
 {
@@ -67,5 +68,13 @@ final class Config
     public function definedRequireDevPackage(string $package): bool
     {
         return \in_array($package, $this->getRequireDevPackages(), true);
+    }
+
+    /**
+     * @return EnvGroup[]
+     */
+    public function getDefaultEnv(): array
+    {
+        return $this->config['env'] ?? [];
     }
 }

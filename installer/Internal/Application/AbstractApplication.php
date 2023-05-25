@@ -7,7 +7,6 @@ namespace Installer\Internal\Application;
 use Composer\Package\PackageInterface;
 use Installer\Application\ApplicationSkeleton;
 use Installer\Internal\Generator\GeneratorInterface;
-use Installer\Internal\HasResourcesInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
@@ -171,7 +170,7 @@ abstract class AbstractApplication implements ApplicationInterface
 
     public function isRoadRunnerPluginRequired(string $plugin): bool
     {
-        return \in_array($plugin, $this->roadRunnerPlugins, true);
+        return \in_array($plugin, $this->getRoadRunnerPlugins(), true);
     }
 
     public function isPackageInstalled(Package $package): bool

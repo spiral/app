@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Kernel;
 
 use Installer\Internal\Generator\Kernel\Configurator;
+use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\Writer;
 use Tests\Fixtures\Kernel;
@@ -22,8 +23,8 @@ final class ConfiguratorTest extends TestCase
         $this->files = \Mockery::mock(FilesInterface::class);
 
         $this->configurator = new Configurator(
-            Kernel::class,
             new Writer($this->files),
+            new ReflectionClassMetadata(Kernel::class),
         );
     }
 

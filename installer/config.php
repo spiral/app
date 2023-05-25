@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Installer\Application;
+use Installer\Internal\Generator\Env\EnvGroup;
 use Installer\Module;
 
 return [
@@ -86,6 +87,43 @@ return [
         */
     ],
     'directories' => [
-        ':common:' => __DIR__ .'/Application/Common/resources'
+        ':common:' => __DIR__ . '/Application/Common/resources'
     ],
+    'env' => [
+        new EnvGroup(
+            values: ['APP_ENV' => 'local'],
+            comment: 'Environment (prod or local)',
+            priority: 1
+        ),
+        new EnvGroup(
+            values: ['DEBUG' => true],
+            comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
+            priority: 2
+        ),
+        new EnvGroup(
+            values: ['VERBOSITY_LEVEL' => 'verbose # basic, verbose, debug'],
+            comment: 'Verbosity level',
+            priority: 3
+        ),
+        new EnvGroup(
+            values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
+            comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
+            priority: 4
+        ),
+        new EnvGroup(
+            values: [
+                'MONOLOG_DEFAULT_CHANNEL' => 'default',
+                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
+            ],
+            comment: 'Monolog',
+            priority: 5
+        ),
+        new EnvGroup(
+            values: [
+                'TELEMETRY_DRIVER' => 'null',
+            ],
+            comment: 'Telemetry',
+            priority: 9
+        )
+    ]
 ];

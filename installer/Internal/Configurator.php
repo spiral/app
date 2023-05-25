@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Installer\Internal;
 
+use App\Application\Bootloader\AppBootloader;
+use App\Application\Bootloader\ExceptionHandlerBootloader;
+use App\Application\Bootloader\RoutesBootloader;
 use App\Application\Kernel;
 use Composer\Composer;
 use Composer\Json\JsonFile;
@@ -37,7 +40,11 @@ final class Configurator extends AbstractInstaller
      */
     public static function configure(Event $event): void
     {
-        $conf = new self(new IO($event->getIO()), $event->getComposer());
+        $conf = new self(
+            new IO($event->getIO()),
+            $event->getComposer(),
+        );
+
         $conf->run();
     }
 
@@ -51,9 +58,10 @@ final class Configurator extends AbstractInstaller
     public function __construct(
         IOInterface $io,
         Composer $composer,
+        private readonly ClassMetadataRepositoryInterface $classMetadata = new ReflectionClassMetadataRepository(),
         ?string $projectRoot = null,
         ?FilesInterface $files = null,
-        ?ComposerStorageInterface $composerStorage = null
+        ?ComposerStorageInterface $composerStorage = null,
     ) {
         parent::__construct($io, $projectRoot);
 
@@ -94,17 +102,20 @@ final class Configurator extends AbstractInstaller
         return new Generator\Context(
             application: $this->application,
             kernel: new Generator\Kernel\Configurator(
-                kernelClass: Kernel::class,
-                writer: $writer
+                writer: $writer,
+                class: $this->classMetadata->getMetaData(Kernel::class),
             ),
             exceptionHandlerBootloader: new Generator\Bootloader\ExceptionHandlerBootloaderConfigurator(
-                writer: $writer
+                writer: $writer,
+                class: $this->classMetadata->getMetaData(ExceptionHandlerBootloader::class),
             ),
             routesBootloader: new RoutesBootloaderConfigurator(
-                writer: $writer
+                writer: $writer,
+                class: $this->classMetadata->getMetaData(RoutesBootloader::class),
             ),
             domainInterceptors: new Generator\Bootloader\DomainInterceptorsConfigurator(
-                writer: $writer
+                writer: $writer,
+                class: $this->classMetadata->getMetaData(AppBootloader::class),
             ),
             envConfigurator: $this->buildEnvConfigurator(),
             applicationRoot: $this->projectRoot,
@@ -116,39 +127,20 @@ final class Configurator extends AbstractInstaller
 
     private function buildEnvConfigurator(): Generator\Env\Generator
     {
-        return (new Generator\Env\Generator(
+        $generator = new Generator\Env\Generator(
             projectRoot: $this->projectRoot,
             files: $this->files,
-        ))->addGroup(
-            values: ['APP_ENV' => 'local'],
-            comment: 'Environment (prod or local)',
-            priority: 1
-        )->addGroup(
-            values: ['DEBUG' => true],
-            comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
-            priority: 2
-        )->addGroup(
-            values: ['VERBOSITY_LEVEL' => 'verbose # basic, verbose, debug'],
-            comment: 'Verbosity level',
-            priority: 3
-        )->addGroup(
-            values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
-            comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
-            priority: 4
-        )->addGroup(
-            values: [
-                'MONOLOG_DEFAULT_CHANNEL' => 'default',
-                'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
-            ],
-            comment: 'Monolog',
-            priority: 5
-        )->addGroup(
-            values: [
-                'TELEMETRY_DRIVER' => 'null',
-            ],
-            comment: 'Telemetry',
-            priority: 9
         );
+
+        foreach ($this->config->getDefaultEnv() as $group) {
+            $generator->addGroup(
+                $group->values,
+                $group->comment,
+                $group->priority,
+            );
+        }
+
+        return $generator;
     }
 
     private function getApplicationType(): ApplicationInterface
@@ -269,8 +261,13 @@ final class Configurator extends AbstractInstaller
             $output->send($this->io);
         }
 
-        $this->files->deleteDirectory($this->projectRoot . 'installer');
-        $this->files->delete($this->projectRoot . 'cleanup.sh');
+        if ($this->files->isDirectory($this->projectRoot . 'installer')) {
+            $this->files->deleteDirectory($this->projectRoot . 'installer');
+        }
+
+        if ($this->files->isFile($this->projectRoot . 'cleanup.sh')) {
+            $this->files->delete($this->projectRoot . 'cleanup.sh');
+        }
 
         $this->io->success('Installer removed.');
     }

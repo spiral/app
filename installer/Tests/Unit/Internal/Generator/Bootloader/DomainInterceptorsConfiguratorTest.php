@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Bootloader;
 
 use Installer\Internal\Generator\Bootloader\DomainInterceptorsConfigurator;
+use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\Writer;
 use Tests\Fixtures\RoutesBootloader;
@@ -25,7 +26,7 @@ final class DomainInterceptorsConfiguratorTest extends TestCase
     {
         $configurator = new DomainInterceptorsConfigurator(
             new Writer($this->files),
-            RoutesBootloader::class,
+            new ReflectionClassMetadata(RoutesBootloader::class),
         );
 
         $this->files->shouldReceive('write')
@@ -59,7 +60,7 @@ final class DomainInterceptorsConfiguratorTest extends TestCase
     {
         $configurator = new DomainInterceptorsConfigurator(
             new Writer($this->files),
-            RoutesBootloader::class,
+            new ReflectionClassMetadata(RoutesBootloader::class),
         );
 
         $configurator->addInterceptor('App\Interceptor\FirstInterceptor');

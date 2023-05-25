@@ -13,8 +13,8 @@ final class EnvGroup implements \Stringable, \IteratorAggregate
      * @param ?non-empty-string $comment
      */
     public function __construct(
-        private array $values = [],
-        private readonly ?string $comment = null,
+        public array $values = [],
+        public readonly ?string $comment = null,
         public readonly int $priority = 0
     ) {
     }

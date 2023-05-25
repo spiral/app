@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Bootloader;
 
 use Installer\Internal\Generator\Bootloader\ExceptionHandlerBootloaderConfigurator;
+use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\Writer;
 use Tests\Fixtures\ExceptionHandlerBootloader;
@@ -25,7 +26,7 @@ final class ExceptionHandlerBootloaderConfiguratorTest extends TestCase
     {
         $configurator = new ExceptionHandlerBootloaderConfigurator(
             new Writer($this->files),
-            ExceptionHandlerBootloader::class,
+            new ReflectionClassMetadata(ExceptionHandlerBootloader::class),
         );
 
         $configurator->addBinding('Foo', 'Bar');

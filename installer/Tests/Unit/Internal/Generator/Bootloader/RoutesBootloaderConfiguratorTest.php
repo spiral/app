@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Bootloader;
 
 use Installer\Internal\Generator\Bootloader\RoutesBootloaderConfigurator;
+use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\Writer;
 use Tests\Fixtures\RoutesBootloader;
@@ -25,7 +26,7 @@ final class RoutesBootloaderConfiguratorTest extends TestCase
     {
         $configurator = new RoutesBootloaderConfigurator(
             new Writer($this->files),
-            RoutesBootloader::class,
+            new ReflectionClassMetadata(RoutesBootloader::class),
         );
 
         $this->files->shouldReceive('write')
@@ -82,7 +83,7 @@ final class RoutesBootloaderConfiguratorTest extends TestCase
     {
         $configurator = new RoutesBootloaderConfigurator(
             new Writer($this->files),
-            RoutesBootloader::class,
+            new ReflectionClassMetadata(RoutesBootloader::class),
         );
 
         $configurator->addGlobalMiddleware(['TestMiddleware'], \Spiral\Http\Middleware\JsonPayloadMiddleware::class);
@@ -143,7 +144,7 @@ final class RoutesBootloaderConfiguratorTest extends TestCase
     {
         $configurator = new RoutesBootloaderConfigurator(
             new Writer($this->files),
-            RoutesBootloader::class,
+            new ReflectionClassMetadata(RoutesBootloader::class),
         );
 
         $configurator->addMiddlewareGroup('api', ['TestMiddleware']);

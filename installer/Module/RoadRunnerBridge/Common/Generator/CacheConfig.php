@@ -16,6 +16,9 @@ final class CacheConfig implements GeneratorInterface
             return;
         }
 
+        $context->envConfigurator
+            ->addValue('CACHE_STORAGE', 'rr-local');
+
         $context->resource
             ->copy('config/cache.php', 'app/config/cache.php');
     }

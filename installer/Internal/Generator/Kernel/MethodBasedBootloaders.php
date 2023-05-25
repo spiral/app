@@ -55,7 +55,7 @@ final class MethodBasedBootloaders extends Bootloaders
 
         $string = new Literal($string);
 
-        $method->addBody(
+        $method->setBody(
             <<<PHP
             return [
             $string,

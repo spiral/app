@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator;
 
+use Installer\Internal\ClassMetadataInterface;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\PhpNamespace;
 use Spiral\Reactor\Writer;
@@ -11,19 +12,14 @@ use Spiral\Reactor\Writer;
 abstract class AbstractConfigurator
 {
     protected FileDeclaration $declaration;
-    protected \ReflectionClass $reflection;
     protected PhpNamespace $namespace;
 
-    /**
-     * @param class-string $class
-     */
     public function __construct(
-        string $class,
+        protected readonly ClassMetadataInterface $class,
         private readonly Writer $writer,
     ) {
-        $this->reflection = new \ReflectionClass($class);
-        $this->declaration = FileDeclaration::fromCode(\file_get_contents($this->reflection->getFileName()));
-        $this->namespace = $this->declaration->getNamespaces()->get($this->reflection->getNamespaceName());
+        $this->declaration = FileDeclaration::fromCode(\file_get_contents($this->class->getPath()));
+        $this->namespace = $this->declaration->getNamespaces()->get($this->class->getNamespace());
     }
 
     public function addUse(string $name, ?string $alias = null): self
@@ -35,6 +31,6 @@ abstract class AbstractConfigurator
 
     protected function write(): void
     {
-        $this->writer->write($this->reflection->getFileName(), $this->declaration);
+        $this->writer->write($this->class->getPath(), $this->declaration);
     }
 }

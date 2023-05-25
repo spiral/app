@@ -13,28 +13,28 @@ final class CopyTaskTest extends TestCase
     {
         $task = new CopyTask('source', 'destination', 'root');
 
-        $this->assertEquals('root/source', $task->getFullSource());
+        $this->assertEquals('/root/source', $task->getFullSource());
     }
 
     public function testItReturnsFullSourceWhenSourceRootIsNotProvided(): void
     {
         $task = new CopyTask('source', 'destination');
 
-        $this->assertEquals('source', $task->getFullSource());
+        $this->assertEquals('/source', $task->getFullSource());
     }
 
     public function testItReturnsFullDestination(): void
     {
         $task = new CopyTask('source', 'destination', '', 'destRoot');
 
-        $this->assertEquals('destRoot/destination', $task->getFullDestination());
+        $this->assertEquals('/destRoot/destination', $task->getFullDestination());
     }
 
     public function testItReturnsFullSourceWhenDestinationRootIsNotProvided(): void
     {
         $task = new CopyTask('source', 'destination');
 
-        $this->assertEquals('destination', $task->getFullDestination());
+        $this->assertEquals('/destination', $task->getFullDestination());
     }
 
     public function testIitCreatesACopyTaskWithSourceRoot(): void
@@ -42,8 +42,8 @@ final class CopyTaskTest extends TestCase
         $task = new CopyTask('source', 'destination', 'root');
         $taskWithRoot = $task->withSourceRoot('root2');
 
-        $this->assertEquals('root2/source', $taskWithRoot->getFullSource());
-        $this->assertEquals('destination', $taskWithRoot->getFullDestination());
+        $this->assertEquals('/root2/source', $taskWithRoot->getFullSource());
+        $this->assertEquals('/destination', $taskWithRoot->getFullDestination());
     }
 
     public function testItCreatesACopyTaskWithDestinationRoot(): void
@@ -51,13 +51,13 @@ final class CopyTaskTest extends TestCase
         $task = new CopyTask('source', 'destination', '', 'destRoot');
         $taskWithRoot = $task->withDestinationRoot('destRoot2');
 
-        $this->assertEquals('source', $taskWithRoot->getFullSource());
-        $this->assertEquals('destRoot2/destination', $taskWithRoot->getFullDestination());
+        $this->assertEquals('/source', $taskWithRoot->getFullSource());
+        $this->assertEquals('/destRoot2/destination', $taskWithRoot->getFullDestination());
     }
 
     public function testItConvertsToString(): void
     {
         $task = new CopyTask('source', 'destination', 'root', 'destRoot');
-        $this->assertEquals('Copy [root/source:missing] -> [destRoot/destination]', (string)$task);
+        $this->assertEquals('Copy [/root/source:missing] -> [/destRoot/destination]', (string)$task);
     }
 }

@@ -6,7 +6,9 @@ namespace Installer\Internal\Generator\Kernel;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Bootloader\LoggingBootloader;
+use Installer\Internal\ClassMetadataInterface;
 use Installer\Internal\Generator\AbstractConfigurator;
+use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader\CommandBootloader;
 use Spiral\Bootloader\SnapshotsBootloader;
@@ -19,17 +21,14 @@ use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
 final class Configurator extends AbstractConfigurator
 {
-    /**
-     * @param class-string $kernelClass
-     */
     public function __construct(
-        string $kernelClass,
         Writer $writer,
+        ClassMetadataInterface $class = new ReflectionClassMetadata(Kernel::class),
         public readonly Bootloaders $system = new MethodBasedBootloaders(BootloaderPlaces::System),
         public readonly Bootloaders $load = new MethodBasedBootloaders(BootloaderPlaces::Load),
         public readonly Bootloaders $app = new MethodBasedBootloaders(BootloaderPlaces::App)
     ) {
-        parent::__construct($kernelClass, $writer);
+        parent::__construct($class, $writer);
 
         $this->addRequiredSystemBootloaders();
         $this->addRequiredLoadBootloaders();
@@ -40,7 +39,7 @@ final class Configurator extends AbstractConfigurator
         /** @var Bootloaders $bootloaders */
         foreach ([$this->system, $this->load, $this->app] as $bootloaders) {
             $bootloaders->updateDeclaration(
-                $this->declaration->getClass($this->reflection->getName()),
+                $this->declaration->getClass($this->class->getName()),
                 $this->namespace
             );
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator\Bootloader;
 
+use Installer\Internal\ClassMetadataInterface;
 use Installer\Internal\Generator\AbstractConfigurator;
 use Spiral\Reactor\Writer;
 
@@ -13,7 +14,7 @@ class BootloaderConfigurator extends AbstractConfigurator
     private array $constants = [];
 
     public function __construct(
-        string $class,
+        ClassMetadataInterface $class,
         Writer $writer
     ) {
         parent::__construct($class, $writer);
@@ -41,7 +42,7 @@ class BootloaderConfigurator extends AbstractConfigurator
 
     private function inject(): void
     {
-        $class = $this->declaration->getClass($this->reflection->getName());
+        $class = $this->declaration->getClass($this->class->getName());
         foreach ($this->constants as $constant) {
             $constant->inject($class, $this->namespace);
         }

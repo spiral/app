@@ -49,6 +49,11 @@ class Package implements HasResourcesInterface
         return $this->version;
     }
 
+    public function isDev(): bool
+    {
+        return $this->isDev;
+    }
+
     public function getResources(): array
     {
         return $this->resources;
@@ -107,11 +112,6 @@ class Package implements HasResourcesInterface
         $this->name = $parts[0];
         $this->title = $package->name;
         $this->version = $parts[1];
-    }
-
-    public function isDev(): bool
-    {
-        return $this->isDev;
     }
 
     /**

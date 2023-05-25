@@ -29,8 +29,8 @@ final class ResourceQueueTest extends TestCase
 
         $this->assertResourceQueueContains(
             $resourceQueue,
-            'test_source_root/test_source',
-            'test_destination'
+            '/test_source_root/test_source',
+            '/test_destination'
         );
     }
 
@@ -44,14 +44,14 @@ final class ResourceQueueTest extends TestCase
 
         $this->assertResourceQueueContains(
             $resourceQueue,
-            'test_source_root/test_source',
-            'test_destination'
+            '/test_source_root/test_source',
+            '/test_destination'
         );
 
         $this->assertResourceQueueContains(
             $resourceQueue,
-            'test_source_root_2/test_source',
-            'test_destination'
+            '/test_source_root_2/test_source',
+            '/test_destination'
         );
     }
 }
