@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Config;
 use Installer\Internal\Installer\InteractionsInterface;
 use Installer\Internal\Question\Option\OptionInterface;
 use Installer\Internal\Question\QuestionInterface;
@@ -16,14 +17,11 @@ final class FakeInteractions implements InteractionsInterface
     /**@var array<array-key, array{0: QuestionInterface, 1: OptionInterface}> */
     private array $answers = [];
 
-    /**
-     * @param array<array-key, ApplicationInterface> $config
-     */
     public function __construct(
         string $applicationClass,
-        private readonly array $config,
+        private readonly Config $config,
     ) {
-        foreach ($config as $i => $application) {
+        foreach ($config->getApplications() as $i => $application) {
             if ($application instanceof $applicationClass) {
                 $this->type = $i;
                 return;
@@ -35,7 +33,7 @@ final class FakeInteractions implements InteractionsInterface
 
     public function addAnswer(string $question, int|string|bool $answer): void
     {
-        foreach ($this->config[$this->type]->getQuestions() as $q) {
+        foreach ($this->config->getApplication($this->type)->getQuestions() as $q) {
             if ($q instanceof $question) {
                 $question = $q;
                 break;

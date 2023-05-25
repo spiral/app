@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Installer;
 
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
 
 interface InteractionsInterface
 {

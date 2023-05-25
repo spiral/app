@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Installer;
 
-use Composer\Json\JsonFile;
 use Composer\Package\BasePackage;
 use Composer\Package\Link;
 use Composer\Package\RootPackageInterface;
 use Composer\Package\Version\VersionParser;
+use Installer\Internal\Config;
 use Installer\Internal\Console\Output;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
-use Seld\JsonLint\ParsingException;
 
 final class ComposerFile
 {
@@ -28,6 +27,7 @@ final class ComposerFile
     public function __construct(
         private readonly ComposerStorageInterface $storage,
         private readonly RootPackageInterface $package,
+        private readonly Config $config,
     ) {
         $this->definition = $this->storage->read();
     }
@@ -63,7 +63,7 @@ final class ComposerFile
         $link = new Link('__root__', $package->getName(), $constraint, 'requires', $package->getVersion());
 
         /** @psalm-suppress PossiblyInvalidArgument */
-        if ($package->isDev() || \in_array($package->getName(), $this->config['require-dev'] ?? [], true)) {
+        if ($package->isDev() || $this->config->definedRequireDevPackage($package->getName())) {
             unset(
                 $this->definition['require'][$package->getName()],
                 $this->composerRequires[$package->getName()],
@@ -105,6 +105,11 @@ final class ComposerFile
     public function getInstalledPackages(): array
     {
         return $this->definition['extra']['spiral']['packages'] ?? [];
+    }
+
+    public function getInstalledOptions(): array
+    {
+        return $this->definition['extra']['spiral']['options'] ?? [];
     }
 
     /**

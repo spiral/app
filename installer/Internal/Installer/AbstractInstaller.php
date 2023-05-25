@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Installer\Internal\Installer;
 
 use Composer\Factory;
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Config;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Resource;
 use Seld\JsonLint\ParsingException;
 
 abstract class AbstractInstaller
 {
-    /**
-     * @var array<int|string, ApplicationInterface|list<string>>
-     */
-    protected array $config;
+    protected Config $config;
     protected string $projectRoot;
     protected Resource $resource;
     protected ApplicationState $applicationState;
@@ -32,8 +29,10 @@ abstract class AbstractInstaller
 
         $this->projectRoot = $projectRoot ?? \str_replace('\\', '/', \realpath(\dirname($this->composerFile)));
         $this->projectRoot = \rtrim($this->projectRoot, '/\\') . '/';
-
-        $this->config = require __DIR__ . '/../../config.php';
-        $this->resource = new Resource(\realpath(__DIR__) . '/Resources/');
+        $this->config = new Config(__DIR__ . '/../../config.php');
+        $this->resource = new Resource(
+            $this->projectRoot,
+            $this->config->getDirectories()
+        );
     }
 }

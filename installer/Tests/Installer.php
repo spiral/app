@@ -8,26 +8,46 @@ use Composer\Composer;
 use Composer\IO\BufferIO;
 use Composer\Json\JsonFile;
 use Composer\Package\RootPackage;
+use Installer\Application\ApplicationSkeleton;
+use Installer\Internal\Config;
 use Installer\Internal\Configurator;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Installer\ComposerStorageInterface;
+use Installer\Module\RoadRunnerBridge\Question;
 use Seld\JsonLint\ParsingException;
 use Spiral\Files\FilesInterface;
 
-final class Installer
+final class Installer implements \Stringable
 {
-    public static function create(string $applicationClass): self
-    {
-        $config = require_once __DIR__ . '/../config.php';
-
+    public static function create(
+        Config $config,
+        string $applicationClass,
+        string $appPath,
+    ): self {
         return new self(
-            new FakeInteractions($applicationClass, $config)
+            new FakeInteractions($applicationClass, $config),
+            $appPath
         );
     }
 
     private function __construct(
         private readonly FakeInteractions $interactions,
+        private readonly string $appPath,
     ) {
+    }
+
+    public function withRoadRunner(): self
+    {
+        $this->addAnswer(Question::class, true);
+
+        return $this;
+    }
+
+    public function withSkeleton(): self
+    {
+        $this->addAnswer(ApplicationSkeleton::class, true);
+
+        return $this;
     }
 
     public function addAnswer(string $question, int|string|bool $answer): self
@@ -40,8 +60,9 @@ final class Installer
     /**
      * @throws ParsingException
      */
-    public function run(): string
+    public function run(): InstallationResult
     {
+        $appPath = $this->appPath . '/' . (string)$this;
         $buffer = new BufferIO();
         $composer = new Composer();
         $composerJson = new JsonFile(__DIR__ . '/Fixtures/composer.json');
@@ -72,7 +93,7 @@ final class Installer
         $installer = new \Installer\Internal\Installer(
             new IO($buffer),
             $composer,
-            $projectRoot = __DIR__ . '/App',
+            $appPath,
             $this->interactions,
             $storage
         );
@@ -82,7 +103,7 @@ final class Installer
         $configurator = new Configurator(
             new IO($buffer),
             $composer,
-            $projectRoot,
+            $appPath,
             new class($buffer) implements FilesInterface {
                 public function __construct(
                     private readonly BufferIO $buffer,
@@ -228,6 +249,14 @@ final class Installer
 
         $configurator->run();
 
-        return $buffer->getOutput();
+        return new InstallationResult(
+            $appPath,
+            $buffer->getOutput(),
+        );
+    }
+
+    public function __toString(): string
+    {
+        return 'installer-' . $this->interactions->requestApplicationType() . '-' . \md5(\microtime());
     }
 }

@@ -13,8 +13,9 @@ final class ResourceQueue implements \IteratorAggregate, \Countable
      * @param splQueue<CopyTask> $queue
      */
     public function __construct(
-        private string $sourceRoot,
-        private readonly splQueue $queue = new splQueue()
+        private string $sourceRoot = '',
+        private readonly splQueue $queue = new splQueue(),
+        private readonly array $directoriesMap = [],
     ) {
         $queue->setIteratorMode(SplQueue::IT_MODE_DELETE);
     }
@@ -28,6 +29,12 @@ final class ResourceQueue implements \IteratorAggregate, \Countable
 
     public function copy(string $source, string $destination): self
     {
+        foreach ($this->directoriesMap as $alias => $path) {
+            if (\str_starts_with($source, $alias)) {
+                $source = \str_replace($alias, $path, $source);
+            }
+        }
+
         $this->queue->push(
             new CopyTask(
                 source: \ltrim($source, '/'),

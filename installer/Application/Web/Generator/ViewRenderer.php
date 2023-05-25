@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Installer\Application\Web\Generator;
 
 use App\Application\Exception\Renderer\ViewRenderer as Renderer;
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Module\TemplateEngines\Stempler\Package as StemplerPackage;

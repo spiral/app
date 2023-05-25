@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Installer;
 
-use Installer\Internal\ApplicationInterface;
-use Installer\Internal\Configurator\CopyTask;
+use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
@@ -18,13 +18,11 @@ final class ApplicationState
     /** @var array<class-string<Package>, Package> */
     private array $installedPackages = [];
 
-    private Resource $resource;
-
     public function __construct(
         string $applicationPath,
         private readonly ComposerFile $composer,
+        private readonly ResourceQueue $resource,
     ) {
-        $this->resource = new Resource($applicationPath);
     }
 
     public function setApplication(ApplicationInterface $application, int $type): void
@@ -80,7 +78,7 @@ final class ApplicationState
     {
         foreach ($this->application->getResources() as $source => $target) {
             yield from $this->resource->copy(
-                \rtrim($this->application->getResourcesPath(), '/') . '/' . \ltrim($source, '/'),
+                $source,
                 $target
             );
         }

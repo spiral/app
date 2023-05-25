@@ -36,26 +36,12 @@ final class CopyTask implements \Stringable
 
     public function getFullSource(): string
     {
-        $sourceRoot = \rtrim($this->sourceRoot, '/');
-        $source = \ltrim($this->source, '/');
-
-        if ($sourceRoot === '') {
-            return $source;
-        }
-
-        return $sourceRoot . '/' . $source;
+        return $this->normalizePath($this->sourceRoot, $this->source);
     }
 
     public function getFullDestination(): string
     {
-        $destinationRoot = \rtrim($this->destinationRoot, '/');
-        $destination = \ltrim($this->destination, '/');
-
-        if ($destinationRoot === '') {
-            return $destination;
-        }
-
-        return $destinationRoot . '/' . $destination;
+        return $this->normalizePath($this->destinationRoot, $this->destination);
     }
 
     public function __toString(): string
@@ -63,8 +49,32 @@ final class CopyTask implements \Stringable
         return \sprintf(
             'Copy [%s:%s] -> [%s]',
             $this->getFullSource(),
-            (\is_dir($this->getFullSource()) ? 'dir' : \file_exists($this->getFullSource())) ? 'file' : 'missing',
+            $this->detectType($this->getFullSource()),
             $this->getFullDestination(),
         );
+    }
+
+    public function normalizePath(string $root, string $path): string
+    {
+        $sourceRoot = \trim($root, '/');
+        $source = \ltrim($path, '/');
+
+        if ($sourceRoot === '') {
+            return '/' . $source;
+        }
+
+        return '/' . $sourceRoot . '/' . $source;
+    }
+
+    public function detectType(string $path): string
+    {
+        $type = 'missing';
+        if (\is_dir($path)) {
+            $type = 'dir';
+        } elseif (\is_file($path)) {
+            $type = 'file';
+        }
+
+        return $type;
     }
 }

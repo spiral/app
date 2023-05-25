@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Console\Output;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;

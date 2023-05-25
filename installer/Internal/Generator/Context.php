@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator;
 
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Generator\Bootloader\DomainInterceptorsConfigurator;
 use Installer\Internal\Generator\Bootloader\ExceptionHandlerBootloaderConfigurator;
@@ -25,7 +25,7 @@ final class Context
         public readonly DomainInterceptorsConfigurator $domainInterceptors,
         public readonly Generator $envConfigurator,
         public readonly string $applicationRoot,
-        public ResourceQueue $resource
+        public readonly ResourceQueue $resource
     ) {
     }
 }

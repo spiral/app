@@ -7,7 +7,7 @@ namespace Installer\Internal;
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Generator\GeneratorInterface;
 
-class Package
+class Package implements HasResourcesInterface
 {
     private readonly bool $isDev;
     private readonly string $name;
@@ -56,13 +56,15 @@ class Package
 
     public function getResourcesPath(): string
     {
-        $path = __DIR__ . '/resources/';
+        $dir = \dirname((new \ReflectionClass($this))->getFileName());
+
+        $path = \rtrim($dir, '/') . '/resources/';
 
         if (\is_dir($path)) {
             return $path;
         }
 
-        return __DIR__;
+        return $dir;
     }
 
     /**

@@ -7,7 +7,9 @@ namespace Installer\Internal;
 use Composer\Composer;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\CopyTask;
+use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Console\Output;
@@ -59,8 +61,10 @@ final class Installer extends AbstractInstaller
             $this->projectRoot,
             $composerFile = new ComposerFile(
                 $composerStorage ?? new ComposerStorage(new JsonFile($this->composerFile)),
-                $composer->getPackage()
-            )
+                $composer->getPackage(),
+                $this->config,
+            ),
+            new ResourceQueue(directoriesMap: $this->config->getDirectories())
         );
 
         $this->interactions = $interactions ?? new IOInteractions(
@@ -111,7 +115,9 @@ WELCOME,
             if ($output instanceof Output) {
                 $output->send($this->io);
             } elseif ($output instanceof CopyTask) {
-                $this->io->comment((string)$output);
+                foreach ($this->resource->copy($output->getFullSource(), $output->getFullDestination()) as $copyTask) {
+                    $this->io->write((string) $copyTask);
+                }
             } else {
                 throw new \LogicException('Invalid output type!');
             }
@@ -135,11 +141,11 @@ WELCOME,
 
     private function setApplicationType(int $type): void
     {
-        if (!isset($this->config[$type]) || !$this->config[$type] instanceof ApplicationInterface) {
+        try {
+            $this->application = $this->config->getApplication($type);
+            $this->applicationState->setApplication($this->application, $type);
+        } catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException('Invalid preset! Please select one of the available presets.');
         }
-
-        $this->application = $this->config[$type];
-        $this->applicationState->setApplication($this->application, $type);
     }
 }

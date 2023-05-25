@@ -8,6 +8,8 @@ use App\Application\Kernel;
 use Composer\Composer;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
+use Installer\Internal\Application\AbstractApplication;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\InstallationInstructionRenderer;
 use Installer\Internal\Configurator\ReadmeGenerator;
 use Installer\Internal\Configurator\ResourceQueue;
@@ -59,7 +61,8 @@ final class Configurator extends AbstractInstaller
         $this->container = new Container();
         $this->composer = new ComposerFile(
             $composerStorage ?? new ComposerStorage(new JsonFile($this->composerFile)),
-            $composer->getPackage()
+            $composer->getPackage(),
+            $this->config,
         );
 
         $this->application = $this->getApplicationType();
@@ -105,7 +108,9 @@ final class Configurator extends AbstractInstaller
             ),
             envConfigurator: $this->buildEnvConfigurator(),
             applicationRoot: $this->projectRoot,
-            resource: new ResourceQueue($this->projectRoot)
+            resource: new ResourceQueue(
+                directoriesMap: $this->config->getDirectories()
+            )
         );
     }
 
@@ -152,14 +157,13 @@ final class Configurator extends AbstractInstaller
             throw new \InvalidArgumentException('Application type is not defined!');
         }
 
-        $application = $this->config[$this->composer->getApplicationType()] ?? null;
-
-        if (!$application instanceof ApplicationInterface) {
-            throw new \InvalidArgumentException('Invalid application type!');
-        }
+        $application = $this->config->getApplication($this->composer->getApplicationType());
 
         if ($application instanceof AbstractApplication) {
-            $application->setInstalled($this->composer->getInstalledPackages());
+            $application->setInstalled(
+                $this->composer->getInstalledPackages(),
+                $this->composer->getInstalledOptions(),
+            );
         }
 
         return $application;
@@ -184,8 +188,7 @@ final class Configurator extends AbstractInstaller
             }
 
             $sourceRoot = match (true) {
-                $object instanceof ApplicationInterface => $object->getResourcesPath(),
-                $object instanceof Package => $object->getResourcesPath(),
+                $object instanceof HasResourcesInterface => $object->getResourcesPath(),
                 default => null,
             };
 
@@ -193,13 +196,13 @@ final class Configurator extends AbstractInstaller
                 $this->context->resource->setSourceRoot($sourceRoot);
             }
 
+            $this->io->write('Running generator ' . $generator::class);
             $generator->process($this->context);
-            $this->context->resource->setSourceRoot($this->projectRoot);
+
+            $this->context->resource->setSourceRoot('');
         }
 
         foreach ($this->context->resource as $task) {
-            $this->io->write(\sprintf('Copying %s ....', (string)$task));
-
             foreach (
                 $this->resource->copy(
                     $task->getFullSource(),

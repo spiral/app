@@ -15,8 +15,7 @@ final class Skeleton implements GeneratorInterface
             return;
         }
 
-        $context->resource->copy('skeleton/app/src/Endpoint', 'app/src/Endpoint');
-        $context->resource->copy('skeleton/tests', 'tests');
+        $context->resource->copy(':web:/skeleton', '');
 
         \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
     }

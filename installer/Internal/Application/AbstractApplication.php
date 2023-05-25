@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal;
+namespace Installer\Internal\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Application\ApplicationSkeleton;
 use Installer\Internal\Generator\GeneratorInterface;
+use Installer\Internal\HasResourcesInterface;
+use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -97,13 +99,16 @@ abstract class AbstractApplication implements ApplicationInterface
 
     public function getResourcesPath(): string
     {
-        $path = __DIR__ . '/resources/';
+        $refl = new \ReflectionClass($this);
+        $dir = \dirname($refl->getFileName());
+
+        $path = \rtrim($dir, '/') . '/resources/';
 
         if (\is_dir($path)) {
             return $path;
         }
 
-        return __DIR__;
+        return $dir;
     }
 
     public function getGenerators(): \Generator
@@ -189,13 +194,12 @@ abstract class AbstractApplication implements ApplicationInterface
 
     /**
      * @internal
-     *
      * Don't use this method. It is called only once by the Installer
      */
-    public function setInstalled(array $installed): void
+    public function setInstalled(array $packages, array $options): void
     {
-        $this->installedPackages = $installed['packages'] ?? [];
-        $this->options = $installed['options'] ?? [];
+        $this->installedPackages = $packages;
+        $this->options = $options;
     }
 
     protected function getDefaultInstructions(): array

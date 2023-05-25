@@ -9,7 +9,7 @@ use Installer\Application\Custom\Generator\Bootloaders;
 use Installer\Application\Web\Generator\Env;
 use Installer\Application\Web\Generator\Skeleton;
 use Installer\Application\Web\Generator\ViewRenderer;
-use Installer\Internal\AbstractApplication;
+use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
@@ -48,7 +48,7 @@ final class Application extends AbstractApplication
             new Skeleton(),
         ],
         array $resources = [
-            '/../../Custom/resources/common' => '',
+            ':common:' => '',
         ],
         array $commands = [],
         array $instructions = []

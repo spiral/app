@@ -16,6 +16,6 @@ final class Skeleton implements GeneratorInterface
         }
 
         $context->resource
-            ->copy('app/src/Endpoint/Console', 'app/src/Endpoint/Console');
+            ->copy(':cli:/skeleton', '');
     }
 }

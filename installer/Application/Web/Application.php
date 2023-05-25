@@ -10,7 +10,7 @@ use Installer\Application\Web\Generator\Bootloaders;
 use Installer\Application\Web\Generator\Env;
 use Installer\Application\Web\Generator\Skeleton;
 use Installer\Application\Web\Generator\ViewRenderer;
-use Installer\Internal\AbstractApplication;
+use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Question\QuestionInterface;
 use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
@@ -61,9 +61,9 @@ final class Application extends AbstractApplication
             new ExceptionSkeleton(),
         ],
         array $resources = [
-            '/../../Custom/resources/common' => '',
-            'app' => 'app',
-            'public' => 'public',
+            ':common:' => '',
+            ':web:/app' => 'app',
+            ':web:/public' => 'public',
         ],
         array $commands = [],
         array $instructions = []

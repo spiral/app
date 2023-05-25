@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Internal\Installer;
 
-use Composer\Json\JsonFile;
 use Composer\Package\RootPackage;
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Console\Output;
@@ -27,13 +26,15 @@ final class ComposerFileTest extends TestCase
 
         $this->storage = \Mockery::mock(ComposerStorageInterface::class);
 
-        $json = new JsonFile(__DIR__ . '/../../../Fixtures/composer.json');
-        $this->storage->shouldReceive('read')
-            ->once()->andReturn($json->read());
+        $this->storage
+            ->shouldReceive('read')
+            ->once()
+            ->andReturn($this->getComposerJson());
 
         $this->composer = new ComposerFile(
             $this->storage,
             $this->package = new RootPackage('spiral/app', '1.0.0', '1.0.0'),
+            $this->getConfig()
         );
     }
 

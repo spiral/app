@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal;
+namespace Installer\Internal\Application;
 
 use Composer\Package\PackageInterface;
 use Installer\Internal\Generator\GeneratorInterface;
+use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
 
 /**

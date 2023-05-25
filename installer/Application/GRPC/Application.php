@@ -7,7 +7,7 @@ namespace Installer\Application\GRPC;
 use Composer\Package\PackageInterface;
 use Installer\Application\GRPC\Generator\Bootloaders;
 use Installer\Application\Web\Generator\ViewRenderer;
-use Installer\Internal\AbstractApplication;
+use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
@@ -60,7 +60,7 @@ final class Application extends AbstractApplication
             new ViewRenderer(),
         ],
         array $resources = [
-            '/../../Custom/resources/common' => '',
+            ':common:' => '',
         ],
         array $commands = [
             'rr download-protoc-binary',

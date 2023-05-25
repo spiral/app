@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Module\CycleBridge\Generator;
 
-use Installer\Application\ApplicationSkeleton;
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Module\CycleBridge\Collections\DoctrineCollections;

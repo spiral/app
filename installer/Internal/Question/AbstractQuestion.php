@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Installer\Internal\Question;
 
 use Installer\Application\ComposerPackages;
+use Installer\Internal\HasResourcesInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\Option\OptionInterface;
 
-abstract class AbstractQuestion implements QuestionInterface
+abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterface
 {
     protected const YES_OPTION = 1;
     protected const NONE_OPTION = 0;
@@ -70,6 +71,19 @@ abstract class AbstractQuestion implements QuestionInterface
         $ask[] = \sprintf('  Make your selection <comment>(default: %s)</comment>: ', $this->default);
 
         return \implode($ask);
+    }
+
+    public function getResourcesPath(): string
+    {
+        $dir = \dirname((new \ReflectionClass($this))->getFileName());
+
+        $path = \rtrim($dir, '/') . '/resources/';
+
+        if (\is_dir($path)) {
+            return $path;
+        }
+
+        return $dir;
     }
 
     public function isRequired(): bool

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Installer;
 
-use Installer\Internal\ApplicationInterface;
+use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Config;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Question\Option\OptionInterface;
 use Installer\Internal\Question\QuestionInterface;
@@ -13,7 +14,7 @@ final class IOInteractions implements InteractionsInterface
 {
     public function __construct(
         private readonly IOInterface $io,
-        private readonly array $config,
+        private readonly Config $config,
         private readonly array $composerDefinition,
     ) {
     }
@@ -27,7 +28,7 @@ final class IOInteractions implements InteractionsInterface
             ),
         ];
 
-        foreach ($this->config as $key => $app) {
+        foreach ($this->config->getApplications() as $key => $app) {
             if ($app instanceof ApplicationInterface) {
                 $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int)$key + 1, $app->getName());
             }
