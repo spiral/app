@@ -14,7 +14,6 @@
     },
     "require-dev": {
         "composer/composer": "^2.4",
-        "spiral/dumper": "^3.0",
         "spiral/testing": "^2.3",
         "vimeo/psalm": "^5.9"
     },

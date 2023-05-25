@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator\Kernel;
 
+use Installer\Internal\EventStorage;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Partial\PhpNamespace;
 
@@ -15,7 +16,8 @@ abstract class Bootloaders
     protected array $groups = [];
 
     public function __construct(
-        public readonly BootloaderPlaces $place
+        public readonly BootloaderPlaces $place,
+        protected readonly ?EventStorage $eventStorage = null,
     ) {
     }
 

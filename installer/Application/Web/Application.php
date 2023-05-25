@@ -14,6 +14,7 @@ use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Question\QuestionInterface;
 use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
+use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\ErrorHandler\Yii\Package as YiiErrorHandlerPackage;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
@@ -40,6 +41,7 @@ final class Application extends AbstractApplication
             new NyholmPsr7Implementation(),
             new RoadRunnerBridgePackage(),
             new YiiErrorHandlerPackage(),
+            new DumperPackage(),
         ],
         array $autoload = [
             'psr-4' => [

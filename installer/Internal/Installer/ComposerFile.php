@@ -10,6 +10,7 @@ use Composer\Package\RootPackageInterface;
 use Composer\Package\Version\VersionParser;
 use Installer\Internal\Config;
 use Installer\Internal\Console\Output;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;

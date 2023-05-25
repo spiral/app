@@ -16,13 +16,18 @@ final class Constant
 
     public function __construct(
         public readonly string $name,
-        private readonly bool $protected = true,
+        public readonly bool $protected = true,
     ) {
     }
 
     public function addValue(Value $binding): void
     {
         $this->values[] = $binding;
+    }
+
+    public function getValues(): array
+    {
+        return $this->values;
     }
 
     public function inject(ClassDeclaration $class, PhpNamespace $namespace): void

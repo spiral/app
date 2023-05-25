@@ -12,6 +12,7 @@ use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
 use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
+use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
 use Installer\Module\RoadRunnerBridge\Common\Package as RoadRunnerBridgePackage;
@@ -38,6 +39,7 @@ final class Application extends AbstractApplication
             new ExtMbStringPackage(),
             new RoadRunnerGRPCPackage(),
             new RoadRunnerBridgePackage([]),
+            new DumperPackage(),
         ],
         array $autoload = [
             'psr-4' => [

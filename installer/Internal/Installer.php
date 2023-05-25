@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Installer\Internal;
 
 use Composer\Composer;
+use Composer\Factory;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
 use Installer\Internal\Application\ApplicationInterface;
-use Installer\Internal\Configurator\CopyTask;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Console\Output;
+use Installer\Internal\Events\CopyEvent;
 use Installer\Internal\Installer\AbstractInstaller;
 use Installer\Internal\Installer\ApplicationState;
 use Installer\Internal\Installer\ComposerFile;
@@ -38,6 +39,7 @@ final class Installer extends AbstractInstaller
     {
         $installer = new self(
             new IO($event->getIO()),
+            Factory::getComposerFile(),
             $event->getComposer(),
             $interactions
         );
@@ -50,12 +52,14 @@ final class Installer extends AbstractInstaller
      */
     public function __construct(
         IOInterface $io,
+        string $composerFilePath,
         Composer $composer,
         ?string $projectRoot = null,
         ?InteractionsInterface $interactions = null,
-        ?ComposerStorageInterface $composerStorage = null
+        ?ComposerStorageInterface $composerStorage = null,
+        private readonly ?EventStorage $eventStorage = null,
     ) {
-        parent::__construct($io, $projectRoot);
+        parent::__construct($io, $composerFilePath, $projectRoot);
 
         $this->applicationState = new ApplicationState(
             $this->projectRoot,
@@ -64,7 +68,8 @@ final class Installer extends AbstractInstaller
                 $composer->getPackage(),
                 $this->config,
             ),
-            new ResourceQueue(directoriesMap: $this->config->getDirectories())
+            new ResourceQueue(directoriesMap: $this->config->getDirectories()),
+            $this->eventStorage,
         );
 
         $this->interactions = $interactions ?? new IOInteractions(
@@ -112,11 +117,14 @@ WELCOME,
         $this->promptForOptionalPackages();
 
         foreach ($this->applicationState->persist() as $output) {
+            $this->eventStorage?->addEvent($output);
+
             if ($output instanceof Output) {
                 $output->send($this->io);
-            } elseif ($output instanceof CopyTask) {
+            } elseif ($output instanceof CopyEvent) {
                 foreach ($this->resource->copy($output->getFullSource(), $output->getFullDestination()) as $copyTask) {
-                    $this->io->write((string) $copyTask);
+                    $this->eventStorage?->addEvent($copyTask);
+                    $this->io->write((string)$copyTask);
                 }
             } else {
                 throw new \LogicException('Invalid output type!');
@@ -130,6 +138,7 @@ WELCOME,
             switch (true) {
                 case $option instanceof Option:
                     foreach ($option->getPackages() as $package) {
+                        $this->eventStorage?->addEvent($package);
                         $this->applicationState->addPackage($package);
                     }
                     break;
@@ -143,6 +152,9 @@ WELCOME,
     {
         try {
             $this->application = $this->config->getApplication($type);
+
+            $this->eventStorage?->addEvent($this->application);
+
             $this->applicationState->setApplication($this->application, $type);
         } catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException('Invalid preset! Please select one of the available presets.');

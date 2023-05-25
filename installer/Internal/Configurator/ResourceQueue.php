@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
+use Installer\Internal\Events\CopyEvent;
 use splQueue;
 use Traversable;
 
 final class ResourceQueue implements \IteratorAggregate, \Countable
 {
     /**
-     * @param splQueue<CopyTask> $queue
+     * @param splQueue<CopyEvent> $queue
      */
     public function __construct(
         private string $sourceRoot = '',
@@ -36,7 +37,7 @@ final class ResourceQueue implements \IteratorAggregate, \Countable
         }
 
         $this->queue->push(
-            new CopyTask(
+            new CopyEvent(
                 source: \ltrim($source, '/'),
                 destination: \ltrim($destination, '/'),
                 sourceRoot: \rtrim($this->sourceRoot, '/'),
@@ -47,7 +48,7 @@ final class ResourceQueue implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Traversable<array-key, CopyTask>
+     * @return Traversable<array-key, CopyEvent>
      */
     public function getIterator(): Traversable
     {

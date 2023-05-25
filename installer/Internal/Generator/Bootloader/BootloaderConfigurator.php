@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Installer\Internal\Generator\Bootloader;
 
 use Installer\Internal\ClassMetadataInterface;
+use Installer\Internal\Events\ConstantInjected;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Generator\AbstractConfigurator;
 use Spiral\Reactor\Writer;
 
@@ -15,7 +17,8 @@ class BootloaderConfigurator extends AbstractConfigurator
 
     public function __construct(
         ClassMetadataInterface $class,
-        Writer $writer
+        Writer $writer,
+        protected readonly ?EventStorage $eventStorage = null
     ) {
         parent::__construct($class, $writer);
     }
@@ -44,6 +47,7 @@ class BootloaderConfigurator extends AbstractConfigurator
     {
         $class = $this->declaration->getClass($this->class->getName());
         foreach ($this->constants as $constant) {
+            $this->eventStorage?->addEvent(new ConstantInjected($this->class->getName(), $constant));
             $constant->inject($class, $this->namespace);
         }
     }

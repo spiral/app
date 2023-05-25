@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
-use Installer\Internal\Console\Output;
+use Installer\Internal\Process\Output;
 use Installer\Internal\ProcessExecutorInterface;
 
 final class RoadRunnerConfigGenerator
@@ -16,15 +16,14 @@ final class RoadRunnerConfigGenerator
 
     /**
      * @param string[] $plugins
-     * @return \Generator<Output>
      */
-    public function generate(array $plugins): \Generator
+    public function generate(array $plugins): Output
     {
         $options = '';
         if (\count($plugins) > 0) {
             $options = ' -p ' . \implode(' -p ', $plugins);
         }
 
-        yield from $this->executor->execute('rr make-config' . $options);
+        return $this->executor->execute('rr make-config' . $options);
     }
 }

@@ -7,6 +7,7 @@ namespace Installer\Internal\Generator\Kernel;
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use App\Application\Bootloader\LoggingBootloader;
 use Installer\Internal\ClassMetadataInterface;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Generator\AbstractConfigurator;
 use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Boot\Bootloader\CoreBootloader;
@@ -21,14 +22,23 @@ use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
 final class Configurator extends AbstractConfigurator
 {
+    public readonly Bootloaders $system;
+    public readonly Bootloaders $load;
+    public readonly Bootloaders $app;
+
     public function __construct(
         Writer $writer,
         ClassMetadataInterface $class = new ReflectionClassMetadata(Kernel::class),
-        public readonly Bootloaders $system = new MethodBasedBootloaders(BootloaderPlaces::System),
-        public readonly Bootloaders $load = new MethodBasedBootloaders(BootloaderPlaces::Load),
-        public readonly Bootloaders $app = new MethodBasedBootloaders(BootloaderPlaces::App)
+        ?Bootloaders $system = null,
+        ?Bootloaders $load = null,
+        ?Bootloaders $app = null,
+        ?EventStorage $eventStorage = null,
     ) {
         parent::__construct($class, $writer);
+
+        $this->system = $system ?? new MethodBasedBootloaders(BootloaderPlaces::System, $eventStorage);
+        $this->load = $load ?? new MethodBasedBootloaders(BootloaderPlaces::Load, $eventStorage);
+        $this->app = $app ?? new MethodBasedBootloaders(BootloaderPlaces::App, $eventStorage);
 
         $this->addRequiredSystemBootloaders();
         $this->addRequiredLoadBootloaders();

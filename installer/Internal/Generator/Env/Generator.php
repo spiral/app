@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator\Env;
 
+use Installer\Internal\Events\EnvGenerated;
+use Installer\Internal\EventStorage;
 use Spiral\Files\FilesInterface;
 use Traversable;
 
@@ -17,6 +19,7 @@ final class Generator implements \Stringable, \IteratorAggregate
     public function __construct(
         private readonly string $projectRoot,
         private readonly FilesInterface $files,
+        private readonly ?EventStorage $eventStorage = null,
     ) {
     }
 
@@ -62,21 +65,27 @@ final class Generator implements \Stringable, \IteratorAggregate
         return $this;
     }
 
-    public function persist(): void
+    public function persist(): string
     {
         $this->files->write(
-            $this->projectRoot . self::FILENAME,
-            (string)$this,
+            $path = $this->projectRoot . self::FILENAME,
+            $content = (string)$this,
             FilesInterface::RUNTIME
         );
+
+        $this->eventStorage?->addEvent(new EnvGenerated($path, $this->groups));
 
         /**
          * Copy the .env.sample file to the project root.
          */
         $this->files->copy(
             $this->projectRoot . self::FILENAME,
-            $this->projectRoot . '.env',
+            $path = $this->projectRoot . '.env',
         );
+
+        $this->eventStorage?->addEvent(new EnvGenerated($path, $this->groups));
+
+        return $content;
     }
 
     public function __toString(): string

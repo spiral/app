@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Installer\Internal\Configurator;
 
 use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Events\ReadmeGenerated;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -13,13 +15,13 @@ use Spiral\Files\FilesInterface;
 final class ReadmeGenerator
 {
     public function __construct(
-        private readonly string $filePath,
+        public readonly string $filePath,
         private readonly ApplicationInterface $application,
         private readonly FilesInterface $files,
     ) {
     }
 
-    public function generate(): void
+    public function generate(?EventStorage $eventStorage = null): void
     {
         if (!\file_exists($this->filePath)) {
             return;
@@ -61,6 +63,8 @@ final class ReadmeGenerator
             $content,
             FilesInterface::RUNTIME
         );
+
+        $eventStorage?->addEvent(new ReadmeGenerated($this->filePath, $content));
     }
 
     public function generateForApplication(): \Traversable

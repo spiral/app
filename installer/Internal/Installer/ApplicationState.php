@@ -6,6 +6,8 @@ namespace Installer\Internal\Installer;
 
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\ResourceQueue;
+use Installer\Internal\Events\PackageRegistered;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
@@ -22,6 +24,7 @@ final class ApplicationState
         string $applicationPath,
         private readonly ComposerFile $composer,
         private readonly ResourceQueue $resource,
+        private readonly ?EventStorage $eventStorage = null,
     ) {
     }
 
@@ -50,6 +53,12 @@ final class ApplicationState
         }
 
         $this->composer->addPackage($package);
+
+        $this->eventStorage?->addEvent(new PackageRegistered(
+            $package->getName(),
+            $package->getVersion(),
+            $package->isDev()
+        ));
 
         // Mark package as installed to prevent duplication of resources and dependencies
         $this->installedPackages[$package::class] = $package;

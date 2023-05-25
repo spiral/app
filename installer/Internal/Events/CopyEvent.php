@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal\Configurator;
+namespace Installer\Internal\Events;
 
-final class CopyTask implements \Stringable
+final class CopyEvent implements \Stringable
 {
     public function __construct(
         public readonly string $source,

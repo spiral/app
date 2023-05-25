@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Generator\Kernel;
 
+use Installer\Internal\Events\BootloadersInjected;
 use Nette\PhpGenerator\Literal;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Exception\ReactorException;
@@ -61,6 +62,10 @@ final class MethodBasedBootloaders extends Bootloaders
             $string,
             ];
             PHP
+        );
+
+        $this->eventStorage?->addEvent(
+            new BootloadersInjected($class->getName(), $this->place, $this->groups)
         );
     }
 }

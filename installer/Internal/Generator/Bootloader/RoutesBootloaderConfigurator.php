@@ -6,6 +6,8 @@ namespace Installer\Internal\Generator\Bootloader;
 
 use App\Application\Bootloader\RoutesBootloader;
 use Installer\Internal\ClassMetadataInterface;
+use Installer\Internal\Events\MiddlewareInjected;
+use Installer\Internal\EventStorage;
 use Installer\Internal\Generator\Kernel\ClassListGroup;
 use Installer\Internal\ReflectionClassMetadata;
 use Nette\PhpGenerator\Literal;
@@ -28,8 +30,9 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
     public function __construct(
         Writer $writer,
         ClassMetadataInterface $class = new ReflectionClassMetadata(RoutesBootloader::class),
+        ?EventStorage $eventStorage = null,
     ) {
-        parent::__construct($class, $writer);
+        parent::__construct($class, $writer,$eventStorage);
 
         $this->globalMiddleware = new ClassListGroup([
             ErrorHandlerMiddleware::class,
@@ -118,6 +121,12 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             ];
             PHP
         );
+
+        $this->eventStorage?->addEvent(new MiddlewareInjected(
+            $this->class->getName(),
+            'global',
+            $this->globalMiddleware
+        ));
     }
 
     private function injectGroupMiddleware(): void
@@ -150,6 +159,12 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             );
 
             $string .= PHP_EOL . '],' . PHP_EOL;
+
+            $this->eventStorage?->addEvent(new MiddlewareInjected(
+                $this->class->getName(),
+                $name,
+                $group
+            ));
         }
 
         $string = \implode(

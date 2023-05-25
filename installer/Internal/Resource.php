@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal;
 
-use Installer\Internal\Configurator\CopyTask;
+use Installer\Internal\Events\CopyEvent;
 
 final class Resource
 {
@@ -18,7 +18,7 @@ final class Resource
      * Copy a resource file or directory to the project root.
      * If the resource is a directory, it will be copied recursively.
      *
-     * @return \Generator<array-key, CopyTask>
+     * @return \Generator<array-key, CopyEvent>
      */
     public function copy(string $resource, string $target): \Generator
     {
@@ -44,7 +44,7 @@ final class Resource
                             }
                             \copy($source . '/' . $file, $destination . '/' . $file);
 
-                            yield new CopyTask($source . '/' . $file, $destination . '/' . $file);
+                            yield new CopyEvent($source . '/' . $file, $destination . '/' . $file);
                         }
                     }
                 }
@@ -55,7 +55,7 @@ final class Resource
                 }
 
                 \copy($source, $destination);
-                yield new CopyTask($source, $destination);
+                yield new CopyEvent($source, $destination);
             }
         };
 

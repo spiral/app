@@ -6,6 +6,7 @@ namespace Installer\Internal\Generator\Bootloader;
 
 use App\Application\Bootloader\ExceptionHandlerBootloader;
 use Installer\Internal\ClassMetadataInterface;
+use Installer\Internal\EventStorage;
 use Installer\Internal\ReflectionClassMetadata;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\EnvSuppressErrors;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
@@ -16,8 +17,9 @@ final class ExceptionHandlerBootloaderConfigurator extends BootloaderConfigurato
     public function __construct(
         Writer $writer,
         ClassMetadataInterface $class = new ReflectionClassMetadata(ExceptionHandlerBootloader::class),
+        ?EventStorage $eventStorage = null,
     ) {
-        parent::__construct($class, $writer);
+        parent::__construct($class, $writer, $eventStorage);
 
         $this->addBinding(SuppressErrorsInterface::class, EnvSuppressErrors::class);
     }
