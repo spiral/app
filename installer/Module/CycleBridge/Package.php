@@ -10,6 +10,7 @@ use Installer\Internal\Package as BasePackage;
 use Installer\Module\CycleBridge\Generator\Bootloaders;
 use Installer\Module\CycleBridge\Generator\Config;
 use Installer\Module\CycleBridge\Generator\Env;
+use Installer\Module\CycleBridge\Generator\Interceptors;
 use Installer\Module\CycleBridge\Generator\Skeleton;
 
 final class Package extends BasePackage
@@ -24,6 +25,7 @@ final class Package extends BasePackage
         ],
         array $generators = [
             new Bootloaders(),
+            new Interceptors(),
             new Config(),
             new Env(),
             new Skeleton(),

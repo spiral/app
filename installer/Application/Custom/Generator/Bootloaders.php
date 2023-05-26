@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Application\Custom\Generator;
 
+use App\Application\Bootloader\AppBootloader;
 use App\Application\Bootloader\RoutesBootloader;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
@@ -43,6 +44,14 @@ final class Bootloaders implements GeneratorInterface
             ],
             comment: 'Configure route groups, middleware for route groups',
             priority: 101
+        );
+
+        $context->kernel->app->addGroup(
+            bootloaders: [
+                AppBootloader::class,
+            ],
+            comment: 'Application domain',
+            priority: 1
         );
     }
 }
