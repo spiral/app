@@ -20,7 +20,7 @@ final class ClassMethodBinding extends Value
 
         return \implode(' => ', [
             $namespace->simplifyName($this->alias) . '::class',
-            \sprintf("[self::class, '%s']", $this->methodName)
+            \sprintf("[self::class, '%s']", $this->methodName),
         ]);
     }
 }

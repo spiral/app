@@ -14,5 +14,5 @@ enabled:
   - trailing_comma_in_multiline_array
 finder:
   exclude:
-    - "tests"
-    - "public"
+    - "Tests"
+    - "installer/Module/RoadRunnerBridge/resources/config/grpc.php"

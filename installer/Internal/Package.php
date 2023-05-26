@@ -88,6 +88,14 @@ class Package implements HasResourcesInterface
         return $this->instructions;
     }
 
+    /**
+     * @return Package[]
+     */
+    public function getDependencies(): array
+    {
+        return $this->dependencies;
+    }
+
     private function setPackage(ComposerPackages $package): void
     {
         $string = $package->value;
@@ -112,13 +120,5 @@ class Package implements HasResourcesInterface
         $this->name = $parts[0];
         $this->title = $package->name;
         $this->version = $parts[1];
-    }
-
-    /**
-     * @return Package[]
-     */
-    public function getDependencies(): array
-    {
-        return $this->dependencies;
     }
 }

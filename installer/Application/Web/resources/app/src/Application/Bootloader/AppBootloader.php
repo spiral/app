@@ -12,5 +12,4 @@ use Spiral\Core\CoreInterface;
  */
 final class AppBootloader extends DomainBootloader
 {
-
 }

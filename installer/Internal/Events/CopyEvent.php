@@ -14,6 +14,16 @@ final class CopyEvent implements \Stringable
     ) {
     }
 
+    public function __toString(): string
+    {
+        return \sprintf(
+            'Copy [%s:%s] -> [%s]',
+            $this->getFullSource(),
+            $this->detectType($this->getFullSource()),
+            $this->getFullDestination(),
+        );
+    }
+
     public function withSourceRoot(string $sourceRoot): self
     {
         return new self(
@@ -42,16 +52,6 @@ final class CopyEvent implements \Stringable
     public function getFullDestination(): string
     {
         return $this->normalizePath($this->destinationRoot, $this->destination);
-    }
-
-    public function __toString(): string
-    {
-        return \sprintf(
-            'Copy [%s:%s] -> [%s]',
-            $this->getFullSource(),
-            $this->detectType($this->getFullSource()),
-            $this->getFullDestination(),
-        );
     }
 
     public function normalizePath(string $root, string $path): string

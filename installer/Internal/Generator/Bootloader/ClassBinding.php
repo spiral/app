@@ -15,7 +15,7 @@ final class ClassBinding extends Value
 
         return \implode(' => ', [
             $namespace->simplifyName($this->alias) . '::class',
-            $namespace->simplifyName($this->value) . '::class'
+            $namespace->simplifyName($this->value) . '::class',
         ]);
     }
 }

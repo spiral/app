@@ -43,7 +43,7 @@ final class Constant
         }
 
         $bindings = \array_map(
-            static fn(Value $binding): string => $binding->render($namespace),
+            static fn (Value $binding): string => $binding->render($namespace),
             $this->values,
         );
 

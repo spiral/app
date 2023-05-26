@@ -19,22 +19,6 @@ final class EnvGroup implements \Stringable, \IteratorAggregate
     ) {
     }
 
-    /**
-     * @param non-empty-string $key
-     */
-    public function addValue(string $key, mixed $value): void
-    {
-        $this->values[$key] = $value;
-    }
-
-    /**
-     * @param non-empty-string $key
-     */
-    public function hasValue(string $key): bool
-    {
-        return isset($this->values[$key]);
-    }
-
     public function __toString(): string
     {
         $comment = $this->comment !== null ? PHP_EOL . '# ' . $this->comment . PHP_EOL : PHP_EOL;
@@ -62,6 +46,22 @@ final class EnvGroup implements \Stringable, \IteratorAggregate
         }
 
         return $comment . \implode(PHP_EOL, $values);
+    }
+
+    /**
+     * @param non-empty-string $key
+     */
+    public function addValue(string $key, mixed $value): void
+    {
+        $this->values[$key] = $value;
+    }
+
+    /**
+     * @param non-empty-string $key
+     */
+    public function hasValue(string $key): bool
+    {
+        return isset($this->values[$key]);
     }
 
     public function getIterator(): Traversable

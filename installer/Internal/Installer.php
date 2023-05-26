@@ -33,22 +33,6 @@ final class Installer extends AbstractInstaller
 
     /**
      * @throws ParsingException
-     * @throws \Exception
-     */
-    public static function install(Event $event, ?InteractionsInterface $interactions = null): void
-    {
-        $installer = new self(
-            new IO($event->getIO()),
-            Factory::getComposerFile(),
-            $event->getComposer(),
-            $interactions
-        );
-
-        $installer->run();
-    }
-
-    /**
-     * @throws ParsingException
      */
     public function __construct(
         IOInterface $io,
@@ -77,6 +61,22 @@ final class Installer extends AbstractInstaller
             $this->config,
             $composerFile->getDefinition()
         );
+    }
+
+    /**
+     * @throws ParsingException
+     * @throws \Exception
+     */
+    public static function install(Event $event, ?InteractionsInterface $interactions = null): void
+    {
+        $installer = new self(
+            new IO($event->getIO()),
+            Factory::getComposerFile(),
+            $event->getComposer(),
+            $interactions
+        );
+
+        $installer->run();
     }
 
     /**

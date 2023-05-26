@@ -37,21 +37,6 @@ use Spiral\Reactor\Writer;
 
 final class Configurator extends AbstractInstaller
 {
-    /**
-     * @throws ParsingException
-     * @throws \Exception
-     */
-    public static function configure(Event $event): void
-    {
-        $conf = new self(
-            new IO($event->getIO()),
-            Factory::getComposerFile(),
-            $event->getComposer(),
-        );
-
-        $conf->run();
-    }
-
     private readonly ApplicationInterface $application;
     private readonly Container $container;
     private Generator\Context $context;
@@ -82,6 +67,21 @@ final class Configurator extends AbstractInstaller
         $this->application = $this->getApplicationType();
         $this->context = $this->buildContext();
         $this->processExecutor = new ProcessExecutor();
+    }
+
+    /**
+     * @throws ParsingException
+     * @throws \Exception
+     */
+    public static function configure(Event $event): void
+    {
+        $conf = new self(
+            new IO($event->getIO()),
+            Factory::getComposerFile(),
+            $event->getComposer(),
+        );
+
+        $conf->run();
     }
 
     public function run(): void

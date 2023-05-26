@@ -23,15 +23,15 @@ class BootloaderConfigurator extends AbstractConfigurator
         parent::__construct($class, $writer);
     }
 
-    protected function registerConstant(string $name): void
-    {
-        $this->constants[$name] = new Constant($name);
-    }
-
     public function __destruct()
     {
         $this->inject();
         $this->write();
+    }
+
+    protected function registerConstant(string $name): void
+    {
+        $this->constants[$name] = new Constant($name);
     }
 
     protected function append(string $constant, Value $binding): void

@@ -32,7 +32,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         ClassMetadataInterface $class = new ReflectionClassMetadata(RoutesBootloader::class),
         ?EventStorage $eventStorage = null,
     ) {
-        parent::__construct($class, $writer,$eventStorage);
+        parent::__construct($class, $writer, $eventStorage);
 
         $this->globalMiddleware = new ClassListGroup([
             ErrorHandlerMiddleware::class,
@@ -107,7 +107,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         $string = \implode(
             PHP_EOL,
             \array_map(
-                static fn(string $line) => '    ' . $line,
+                static fn (string $line) => '    ' . $line,
                 \explode(PHP_EOL, \trim($this->globalMiddleware->render($this->namespace)))
             )
         );
@@ -153,7 +153,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             $string .= \implode(
                 PHP_EOL,
                 \array_map(
-                    static fn(string $line) => '    ' . $line,
+                    static fn (string $line) => '    ' . $line,
                     \explode(PHP_EOL, \trim($group->render($this->namespace)))
                 )
             );
@@ -170,7 +170,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         $string = \implode(
             PHP_EOL,
             \array_map(
-                static fn(string $line) => '    ' . $line,
+                static fn (string $line) => '    ' . $line,
                 \explode(PHP_EOL, $string)
             )
         );
