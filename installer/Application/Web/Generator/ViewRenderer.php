@@ -15,7 +15,6 @@ use Spiral\Http\ErrorHandler\RendererInterface;
 
 final class ViewRenderer implements GeneratorInterface
 {
-    private const RENDERER_PATH = 'applications/shared/app/src/Application/Exception/Renderer/ViewRenderer.php';
     private const TARGET_PATH = 'app/src/Application/Exception/Renderer/ViewRenderer.php';
 
     public function process(Context $context): void
@@ -23,7 +22,10 @@ final class ViewRenderer implements GeneratorInterface
         $context->exceptionHandlerBootloader->addUse(RendererInterface::class);
 
         if ($this->isTemplateEngineInstalled($context->application)) {
-            $context->resource->copy(self::RENDERER_PATH, self::TARGET_PATH);
+            $context->resource->copy(
+                \dirname(__DIR__) . '/Generator/resources/ViewRenderer.php',
+                self::TARGET_PATH
+            );
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, Renderer::class);
         } else {
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, PlainRenderer::class);

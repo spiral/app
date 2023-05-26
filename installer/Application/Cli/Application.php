@@ -7,7 +7,6 @@ namespace Installer\Application\Cli;
 use Composer\Package\PackageInterface;
 use Installer\Application\Cli\Generator\Bootloaders;
 use Installer\Application\Cli\Generator\Skeleton;
-use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
@@ -49,7 +48,6 @@ final class Application extends AbstractApplication
         array $questions = [],
         array $generators = [
             new Bootloaders(),
-            new ViewRenderer(),
             new Skeleton(),
             new ConsoleSkeleton(),
             new ExceptionSkeleton(),
