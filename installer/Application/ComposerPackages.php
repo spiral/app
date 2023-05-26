@@ -32,4 +32,5 @@ enum ComposerPackages: string
     case LeagueEvent = 'spiral-packages/league-event:^1.0';
     case SymfonySerializer = 'spiral-packages/symfony-serializer:^2.0';
     case LaravelSerializableClosure = 'spiral-packages/serializable-closure:^1.0';
+    case DataGridBridge = 'spiral/data-grid-bridge:^3.0.1';
 }

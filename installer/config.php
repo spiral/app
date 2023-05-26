@@ -21,6 +21,7 @@ return [
                 new Module\Mailer\Question(),
                 new Module\Storage\Question(),
                 new Module\TemplateEngines\Question(default: 1),
+                new Module\DataGridBridge\Question(),
                 new Module\EventDispatcher\Question(),
                 new Module\Scheduler\Question(),
                 new Module\TemporalBridge\Question(),
