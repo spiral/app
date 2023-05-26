@@ -8,6 +8,7 @@ use Composer\Package\PackageInterface;
 use Installer\Application\Package;
 use Installer\Application\Web\Generator\Bootloaders;
 use Installer\Application\Web\Generator\Env;
+use Installer\Application\Web\Generator\Interceptors;
 use Installer\Application\Web\Generator\Skeleton;
 use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\Application\AbstractApplication;
@@ -56,6 +57,7 @@ final class Application extends AbstractApplication
         array $questions = [],
         array $generators = [
             new Bootloaders(),
+            new Interceptors(),
             new ViewRenderer(),
             new Env(),
             new Skeleton(),
