@@ -7,6 +7,7 @@ namespace Installer\Module\Validators\Symfony;
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
 use Installer\Module\Validators\Symfony\Generator\Bootloaders;
+use Installer\Module\Validators\Symfony\Generator\Middlewares;
 
 final class Package extends BasePackage
 {
@@ -16,6 +17,7 @@ final class Package extends BasePackage
             package: ComposerPackages::SymfonyValidator,
             generators: [
                 new Bootloaders(),
+                new Middlewares(),
             ],
             instructions: [
                 'Read more about validation in the Spiral Framework: <comment>https://spiral.dev/docs/validation-factory</comment>',
