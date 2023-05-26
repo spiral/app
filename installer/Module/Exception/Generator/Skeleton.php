@@ -16,7 +16,7 @@ final class Skeleton implements GeneratorInterface
         }
 
         $context->resource
-            ->copy('app.php', 'app.php')
-            ->copy('app/src', 'app/src');
+            ->copy(\dirname(__DIR__) . '/resources/app.php', 'app.php')
+            ->copy(\dirname(__DIR__) . '/resources/app/src', 'app/src');
     }
 }
