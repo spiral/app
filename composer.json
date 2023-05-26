@@ -37,10 +37,10 @@
         }
     },
     "scripts": {
-        "pre-install-cmd": "Installer\\Installer::install",
-        "pre-update-cmd": "Installer\\Installer::install",
-        "post-install-cmd": "Installer\\Configurator::configure",
-        "post-update-cmd": "Installer\\Configurator::configure",
+        "pre-install-cmd": "Installer\\Internal\\Installer::install",
+        "pre-update-cmd": "Installer\\Internal\\Installer::install",
+        "post-install-cmd": "Installer\\Internal\\Configurator::configure",
+        "post-update-cmd": "Installer\\Internal\\Configurator::configure",
         "post-create-project-cmd": [
             "php app.php encrypt:key -m .env",
             "php app.php configure --quiet",
