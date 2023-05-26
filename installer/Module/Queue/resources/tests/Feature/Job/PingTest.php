@@ -25,7 +25,7 @@ class PingTest extends TestCase
 
         $this->connection->assertPushed(
             Ping::class,
-            fn(array $data) => $data['handler'] instanceof Ping && $data['payload']['value'] === 'hello world'
+            fn (array $data) => $data['handler'] instanceof Ping && $data['payload']['value'] === 'hello world'
         );
     }
 }

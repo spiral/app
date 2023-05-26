@@ -87,7 +87,7 @@ return [
         */
     ],
     'directories' => [
-        ':common:' => __DIR__ . '/Application/Common/resources'
+        ':common:' => __DIR__ . '/Application/Common/resources',
     ],
     'env' => [
         new EnvGroup(
@@ -124,6 +124,6 @@ return [
             ],
             comment: 'Telemetry',
             priority: 9
-        )
-    ]
+        ),
+    ],
 ];

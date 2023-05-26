@@ -25,10 +25,10 @@ final class Generator implements \Stringable, \IteratorAggregate
 
     public function __toString(): string
     {
-        \uasort($this->groups, static fn(EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
+        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
 
         $groups = \array_map(
-            static fn(EnvGroup $group): string => (string)$group,
+            static fn (EnvGroup $group): string => (string)$group,
             $this->groups
         );
 
@@ -100,6 +100,13 @@ final class Generator implements \Stringable, \IteratorAggregate
         return $content;
     }
 
+    public function getIterator(): Traversable
+    {
+        foreach ($this->groups as $group) {
+            yield from $group;
+        }
+    }
+
     private function keyExists(string $key): bool
     {
         foreach ($this->groups as $group) {
@@ -109,12 +116,5 @@ final class Generator implements \Stringable, \IteratorAggregate
         }
 
         return false;
-    }
-
-    public function getIterator(): Traversable
-    {
-        foreach ($this->groups as $group) {
-            yield from $group;
-        }
     }
 }

@@ -15,4 +15,5 @@ enabled:
 finder:
   exclude:
     - "Tests"
-    - "installer/Module/RoadRunnerBridge/resources/config/grpc.php"
+    - "installer/Application/Common/resources/tests"
+    - "installer/Module/RoadRunnerBridge/resources/config"
