@@ -56,8 +56,17 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
     /**
      * @param class-string[] $middleware
      */
-    public function addGlobalMiddleware(array $middleware, ?string $afterMiddleware = null): void
-    {
+    public function addGlobalMiddleware(
+        array $middleware,
+        ?string $afterMiddleware = null,
+        ?string $beforeMiddleware = null
+    ): void {
+        if ($beforeMiddleware !== null) {
+            $this->globalMiddleware->prepend($middleware[0], $beforeMiddleware);
+            $afterMiddleware = $middleware[0];
+            unset($middleware[0]);
+        }
+
         foreach ($middleware as $class) {
             $this->globalMiddleware->append($class, $afterMiddleware);
             $afterMiddleware = $class;
@@ -68,10 +77,20 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
      * @param non-empty-string $name
      * @param class-string[] $middleware
      */
-    public function addMiddlewareGroup(string $name, array $middleware, ?string $afterMiddleware = null): void
-    {
+    public function addMiddlewareGroup(
+        string $name,
+        array $middleware,
+        ?string $afterMiddleware = null,
+        ?string $beforeMiddleware = null
+    ): void {
         if (!isset($this->middlewareGroups[$name])) {
             $this->middlewareGroups[$name] = new ClassListGroup();
+        }
+
+        if ($beforeMiddleware !== null) {
+            $this->middlewareGroups[$name]->prepend($middleware[0], $beforeMiddleware);
+            $afterMiddleware = $middleware[0];
+            unset($middleware[0]);
         }
 
         foreach ($middleware as $class) {

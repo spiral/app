@@ -6,7 +6,6 @@ namespace Installer\Module\TemplateEngines\Stempler\Generator;
 
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
-use Spiral\Bootloader\Views\TranslatedCacheBootloader;
 use Spiral\Stempler\Bootloader\StemplerBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
 
@@ -16,16 +15,14 @@ final class Bootloaders implements GeneratorInterface
     {
         $context->kernel
             ->addUse(ViewsBootloader::class)
-            ->addUse(TranslatedCacheBootloader::class)
             ->addUse(StemplerBootloader::class);
 
         $context->kernel->load->addGroup(
             bootloaders: [
                 ViewsBootloader::class,
-                TranslatedCacheBootloader::class,
                 StemplerBootloader::class,
             ],
-            comment: 'Views and view translation',
+            comment: 'Views',
             priority: 12
         );
     }

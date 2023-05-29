@@ -24,6 +24,7 @@ return [
                 new Module\DataGridBridge\Question(),
                 new Module\EventDispatcher\Question(),
                 new Module\Scheduler\Question(),
+                new Module\Translator\Question(),
                 new Module\TemporalBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
                 new Module\SentryBridge\Question(),

@@ -22,7 +22,7 @@ final class Bootloaders implements GeneratorInterface
                 SerializerBootloader::class,
             ],
             comment: 'Serializer',
-            priority: 14
+            priority: 15
         );
     }
 }

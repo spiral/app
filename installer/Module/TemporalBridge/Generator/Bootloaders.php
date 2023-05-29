@@ -21,7 +21,7 @@ final class Bootloaders implements GeneratorInterface
                 TemporalBridgeBootloader::class,
             ],
             comment: 'Temporal',
-            priority: 13
+            priority: 16
         );
 
         $context->application->useRoadRunnerPlugin('temporal');
