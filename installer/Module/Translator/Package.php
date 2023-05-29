@@ -19,7 +19,7 @@ final class Package extends BasePackage
             resources: [
                 'config' => 'app/config',
                 'locale' => 'app/locale',
-                'src' => 'app/src'
+                'src' => 'app/src',
             ],
             generators: [
                 new Bootloaders(),
