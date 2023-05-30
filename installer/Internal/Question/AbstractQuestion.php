@@ -6,7 +6,7 @@ namespace Installer\Internal\Question;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\HasResourcesInterface;
-use Installer\Internal\Package;
+use Installer\Internal\Installer\ApplicationState;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\Option\OptionInterface;
 
@@ -21,23 +21,17 @@ abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterf
     private array $options = [];
 
     /**
-     * @var array{require?: Package[], require-dev?: Package[]}
-     */
-    private array $conditions = [];
-
-    /**
      * @param array<int, OptionInterface> $options
-     * @param array{require?: ComposerPackages[], require-dev?: ComposerPackages[]} $conditions
+     * @param ComposerPackages[] $depends
      */
     public function __construct(
         private readonly string $question,
         private readonly bool $required,
         array $options,
-        array $conditions = [],
+        private readonly array $depends = [],
         private readonly int $default = self::NONE_OPTION
     ) {
         $this->setOptions($options);
-        $this->setConditions($conditions);
     }
 
     public function getHelp(): ?string
@@ -109,34 +103,16 @@ abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterf
         return $this->hasOption($key) ? $this->options[$key] : throw new \InvalidArgumentException('Invalid option!');
     }
 
-    /**
-     * @return array{require?: Package[], require-dev?: Package[]}
-     */
-    public function getConditions(): array
-    {
-        return $this->conditions;
-    }
-
     public function getDefault(): int
     {
         return $this->default;
     }
 
-    public function canAsk(array $composerDefinition): bool
+    public function canAsk(ApplicationState $state): bool
     {
-        if (isset($this->conditions['require'])) {
-            foreach ($this->conditions['require'] as $package) {
-                if (!\array_key_exists($package->getName(), $composerDefinition['require'])) {
-                    return false;
-                }
-            }
-        }
-
-        if (isset($this->conditions['require-dev'])) {
-            foreach ($this->conditions['require-dev'] as $package) {
-                if (!\array_key_exists($package->getName(), $composerDefinition['require-dev'])) {
-                    return false;
-                }
+        foreach ($this->depends as $package) {
+            if (!$state->isPackageInstalled($package)) {
+                return false;
             }
         }
 
@@ -161,20 +137,6 @@ abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterf
             $this->options[self::NONE_OPTION] = new Option(
                 name: \count($this->options) === 1 ? 'No' : 'None of the above'
             );
-        }
-    }
-
-    /**
-     * @param array{require?: ComposerPackages[], require-dev?: ComposerPackages[]} $conditions
-     */
-    private function setConditions(array $conditions): void
-    {
-        foreach ($conditions['require'] ?? [] as $package) {
-            $this->conditions['require'][] = new Package($package);
-        }
-
-        foreach ($conditions['require-dev'] ?? [] as $package) {
-            $this->conditions['require-dev'][] = new Package($package);
         }
     }
 }

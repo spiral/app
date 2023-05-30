@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Question;
 
+use Installer\Internal\Installer\ApplicationState;
 use Installer\Internal\Question\Option\OptionInterface;
 
 interface QuestionInterface
@@ -26,9 +27,7 @@ interface QuestionInterface
 
     public function getOption(int $key): OptionInterface;
 
-    public function getConditions(): array;
-
     public function getDefault(): int;
 
-    public function canAsk(array $composerDefinition): bool;
+    public function canAsk(ApplicationState $state): bool;
 }

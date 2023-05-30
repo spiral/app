@@ -28,10 +28,8 @@ final class CollectionsQuestion extends AbstractQuestion
             ]),
             new Option(name: 'Use PHP array as the collection'),
         ],
-        array $conditions = [
-            'require' => [
-                ComposerPackages::CycleBridge,
-            ],
+        array $depends = [
+            ComposerPackages::CycleBridge,
         ],
         int $default = self::NONE_OPTION
     ) {
@@ -39,7 +37,7 @@ final class CollectionsQuestion extends AbstractQuestion
             question: $question,
             required: $required,
             options: $options,
-            conditions: $conditions,
+            depends: $depends,
             default: $default
         );
     }

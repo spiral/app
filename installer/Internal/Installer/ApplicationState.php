@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Installer;
 
+use Installer\Application\ComposerPackages;
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Events\PackageRegistered;
@@ -11,7 +12,6 @@ use Installer\Internal\EventStorage;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
-use Installer\Internal\Resource;
 
 final class ApplicationState
 {
@@ -81,6 +81,17 @@ final class ApplicationState
             $this->application->getAutoload(),
             $this->application->getAutoloadDev(),
         );
+    }
+
+    public function isPackageInstalled(ComposerPackages $package): bool
+    {
+        foreach ($this->installedPackages as $installedPackage) {
+            if ($installedPackage->getName() === (new Package($package))->getName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function copyFiles(): \Generator

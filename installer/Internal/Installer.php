@@ -56,11 +56,7 @@ final class Installer extends AbstractInstaller
             $this->eventStorage,
         );
 
-        $this->interactions = $interactions ?? new IOInteractions(
-            $this->io,
-            $this->config,
-            $composerFile->getDefinition()
-        );
+        $this->interactions = $interactions ?? new IOInteractions($this->io, $this->config, $this->applicationState);
     }
 
     /**

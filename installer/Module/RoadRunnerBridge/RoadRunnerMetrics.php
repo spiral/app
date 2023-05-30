@@ -26,12 +26,10 @@ final class RoadRunnerMetrics extends AbstractQuestion
                 ]
             ),
         ],
-        array $conditions = [
-            'require' => [
-                ComposerPackages::RoadRunnerBridge,
-            ],
+        array $depends = [
+            ComposerPackages::RoadRunnerBridge,
         ]
     ) {
-        parent::__construct($question, $required, $options, $conditions);
+        parent::__construct($question, $required, $options, $depends);
     }
 }

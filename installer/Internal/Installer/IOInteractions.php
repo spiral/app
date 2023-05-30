@@ -15,7 +15,7 @@ final class IOInteractions implements InteractionsInterface
     public function __construct(
         private readonly IOInterface $io,
         private readonly Config $config,
-        private readonly array $composerDefinition,
+        private readonly ApplicationState $applicationState
     ) {
     }
 
@@ -42,7 +42,7 @@ final class IOInteractions implements InteractionsInterface
     public function promptForOptionalPackages(ApplicationInterface $application): \Generator
     {
         foreach ($application->getQuestions() as $question) {
-            if ($question->canAsk($this->composerDefinition)) {
+            if ($question->canAsk($this->applicationState)) {
                 yield from $this->promptForOptionalPackage($question);
             }
         }

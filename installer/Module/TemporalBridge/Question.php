@@ -21,12 +21,10 @@ final class Question extends AbstractQuestion
                 new Package(),
             ]),
         ],
-        array $conditions = [
-            'require' => [
-                ComposerPackages::RoadRunnerBridge,
-            ],
+        array $depends = [
+            ComposerPackages::RoadRunnerBridge,
         ]
     ) {
-        parent::__construct($question, $required, $options, $conditions);
+        parent::__construct($question, $required, $options, $depends);
     }
 }
