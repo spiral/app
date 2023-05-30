@@ -120,11 +120,15 @@ WELCOME,
             $this->eventStorage?->addEvent($output);
 
             if ($output instanceof Output) {
-                $output->send($this->io);
+                if ($this->io->isVerbose()) {
+                    $output->send($this->io);
+                }
             } elseif ($output instanceof CopyEvent) {
                 foreach ($this->resource->copy($output->getFullSource(), $output->getFullDestination()) as $copyTask) {
                     $this->eventStorage?->addEvent($copyTask);
-                    $this->io->write((string)$copyTask);
+                    if ($this->io->isVerbose()) {
+                        $this->io->write((string)$copyTask);
+                    }
                 }
             } else {
                 throw new \LogicException('Invalid output type!');

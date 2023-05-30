@@ -202,7 +202,9 @@ final class Configurator extends AbstractInstaller
                 $this->context->resource->setSourceRoot($sourceRoot);
             }
 
-            $this->io->write('Running generator ' . $generator::class);
+            if ($this->io->isVerbose()) {
+                $this->io->write('Running generator ' . $generator::class);
+            }
 
             $generator->process($this->context);
 
@@ -218,7 +220,9 @@ final class Configurator extends AbstractInstaller
                 ) as $copyEvent
             ) {
                 $this->eventStorage?->addEvent($copyEvent);
-                $this->io->comment(\sprintf('%s copied.', (string)$copyEvent));
+                if ($this->io->isVerbose()) {
+                    $this->io->comment(\sprintf('%s copied.', (string)$copyEvent));
+                }
             }
         }
     }
@@ -292,7 +296,9 @@ final class Configurator extends AbstractInstaller
 
         foreach ($result as $output) {
             $this->eventStorage?->addEvent($output);
-            $output->send($this->io);
+            if ($this->io->isVerbose()) {
+                $output->send($this->io);
+            }
         }
 
         if ($this->files->isDirectory($this->projectRoot . 'installer')) {
