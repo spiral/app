@@ -95,6 +95,7 @@ final class Configurator extends AbstractInstaller
 
         // We don't need MIT license file in the application, that's why we remove it.
         $this->removeLicense();
+        $this->removeGitHubActions();
         $this->removeInstaller();
 
         // Create .env file
@@ -286,6 +287,17 @@ final class Configurator extends AbstractInstaller
         );
 
         $this->files->delete($file);
+    }
+
+    private function removeGitHubActions(): void
+    {
+        $directory = $this->projectRoot . '.github';
+
+        $this->eventStorage?->addEvent(
+            new DeleteEvent($directory)
+        );
+
+        $this->files->deleteDirectory($directory);
     }
 
     /**

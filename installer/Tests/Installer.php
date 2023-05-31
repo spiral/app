@@ -73,6 +73,7 @@ final class Installer implements \Stringable
         $composerJson = $appPath . '/composer.json';
 
         $files->ensureDirectory($appPath);
+        $files->ensureDirectory($appPath . '/' . '.github');
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
 
         $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
