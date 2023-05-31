@@ -22,5 +22,10 @@
         "psr-4": {
             "Tests\\": "Tests"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "spiral/composer-publish-plugin": true
+        }
     }
 }
