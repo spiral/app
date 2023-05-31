@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - installer
-  pull_request: installer
+  pull_request:
+    branches:
+      - installer
 
   workflow_dispatch:
 
