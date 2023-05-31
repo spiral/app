@@ -1,4 +1,7 @@
 {
+    "name": "spiral/app",
+    "license": "MIT",
+    "description": "Spiral Application installer",
     "require-dev": {
         "nette/php-generator": "^4.0",
         "spiral/framework": "^3.7",
