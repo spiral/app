@@ -118,20 +118,24 @@ final class Configurator extends AbstractInstaller
                 class: $this->classMetadata->getMetaData(ExceptionHandlerBootloader::class),
                 eventStorage: $this->eventStorage,
             ),
-            routesBootloader: new RoutesBootloaderConfigurator(
-                writer: $writer,
-                class: $this->classMetadata->getMetaData(RoutesBootloader::class),
-                eventStorage: $this->eventStorage,
-            ),
-            domainInterceptors: new Generator\Bootloader\DomainInterceptorsConfigurator(
-                writer: $writer,
-                class: $this->classMetadata->getMetaData(AppBootloader::class),
-            ),
             envConfigurator: $this->buildEnvConfigurator(),
             applicationRoot: $this->projectRoot,
             resource: new ResourceQueue(
                 directoriesMap: $this->config->getDirectories()
-            )
+            ),
+            domainInterceptors: \file_exists($this->classMetadata->getMetaData(AppBootloader::class)->getPath())
+                ? new Generator\Bootloader\DomainInterceptorsConfigurator(
+                    writer: $writer,
+                    class: $this->classMetadata->getMetaData(AppBootloader::class),
+                )
+                : null,
+            routesBootloader: \file_exists($this->classMetadata->getMetaData(RoutesBootloader::class)->getPath())
+                ? new RoutesBootloaderConfigurator(
+                    writer: $writer,
+                    class: $this->classMetadata->getMetaData(RoutesBootloader::class),
+                    eventStorage: $this->eventStorage,
+                )
+                : null,
         );
     }
 

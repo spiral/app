@@ -12,7 +12,7 @@ final class Interceptors implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->domainInterceptors->addUse(GridInterceptor::class);
-        $context->domainInterceptors->addInterceptor(GridInterceptor::class);
+        $context->domainInterceptors?->addUse(GridInterceptor::class);
+        $context->domainInterceptors?->addInterceptor(GridInterceptor::class);
     }
 }

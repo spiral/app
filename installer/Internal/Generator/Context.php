@@ -21,11 +21,11 @@ final class Context
         public readonly ApplicationInterface $application,
         public readonly Configurator $kernel,
         public readonly ExceptionHandlerBootloaderConfigurator $exceptionHandlerBootloader,
-        public readonly RoutesBootloaderConfigurator $routesBootloader,
-        public readonly DomainInterceptorsConfigurator $domainInterceptors,
         public readonly Generator $envConfigurator,
         public readonly string $applicationRoot,
-        public readonly ResourceQueue $resource
+        public readonly ResourceQueue $resource,
+        public readonly ?DomainInterceptorsConfigurator $domainInterceptors = null,
+        public readonly ?RoutesBootloaderConfigurator $routesBootloader = null,
     ) {
     }
 }

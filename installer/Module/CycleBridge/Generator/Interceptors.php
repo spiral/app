@@ -12,7 +12,7 @@ final class Interceptors implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->domainInterceptors->addUse(CycleInterceptor::class);
-        $context->domainInterceptors->addInterceptor(CycleInterceptor::class);
+        $context->domainInterceptors?->addUse(CycleInterceptor::class);
+        $context->domainInterceptors?->addInterceptor(CycleInterceptor::class);
     }
 }

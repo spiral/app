@@ -13,9 +13,9 @@ final class Middlewares implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->routesBootloader->addUse(LocaleSelector::class);
+        $context->routesBootloader?->addUse(LocaleSelector::class);
 
-        $context->routesBootloader->addGlobalMiddleware(
+        $context->routesBootloader?->addGlobalMiddleware(
             middleware: [LocaleSelector::class],
             beforeMiddleware: ErrorHandlerMiddleware::class
         );

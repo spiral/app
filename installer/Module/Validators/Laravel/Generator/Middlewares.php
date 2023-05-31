@@ -12,6 +12,6 @@ final class Middlewares implements GeneratorInterface
 {
     public function process(Context $context): void
     {
-        $context->routesBootloader->addMiddlewareGroup('web', [ValidationHandlerMiddleware::class]);
+        $context->routesBootloader?->addMiddlewareGroup('web', [ValidationHandlerMiddleware::class]);
     }
 }
