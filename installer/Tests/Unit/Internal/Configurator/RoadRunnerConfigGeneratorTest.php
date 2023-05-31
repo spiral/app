@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Configurator;
 
 use Installer\Internal\Configurator\RoadRunnerConfigGenerator;
-use Installer\Internal\Console\Output;
+use Installer\Internal\Process\Output;
 use Installer\Internal\ProcessExecutorInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
 final class RoadRunnerConfigGeneratorTest extends TestCase
@@ -33,16 +34,14 @@ final class RoadRunnerConfigGeneratorTest extends TestCase
         $executor->shouldReceive('execute')
             ->with($expected)
             ->andReturn(
-                (function () {
-                    yield Output::success('test');
-                })()
+                new Output('test', (static fn  () => yield Process::OUT => 'test')())
             );
 
         $generator = new RoadRunnerConfigGenerator($executor);
 
         $this->assertSame(
-            '[success] test',
-            (string)$generator->generate($plugins)->current()
+            '[write] test',
+            (string) $generator->generate($plugins)->getIterator()->current()
         );
     }
 }

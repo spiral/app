@@ -16,11 +16,9 @@ use Tests\Feature\InstallerTestCase;
 
 final class WebTest extends InstallerTestCase
 {
-    private \Tests\InstallationResult $result;
-
     public function testInstall(): void
     {
-        $this->result = $this
+        $result = $this
             ->install(Application::class)
             ->withSkeleton()
             ->addAnswer(Module\SapiBridge\Question::class, true)
@@ -29,7 +27,7 @@ final class WebTest extends InstallerTestCase
             //->addAnswer(Module\Mailer\Question::class, true)
             ->run();
 
-        $this->result
+        $result
             ->assertDeleted('LICENSE')
             ->assertGeneratorProcessed(\Installer\Module\SapiBridge\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(\Installer\Module\Mailer\Generator\Bootloaders::class)
@@ -51,13 +49,6 @@ final class WebTest extends InstallerTestCase
             ->assertReadmeContains('The settings for RoadRunner are in a file named .rr.yaml at the main folder of the app.');
 
         // Store log for debugging in application directory
-        $this->result->storeLog();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        //$this->result->cleanup();
+        $result->storeLog();
     }
 }

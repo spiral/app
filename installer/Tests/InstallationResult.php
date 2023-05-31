@@ -35,7 +35,7 @@ final class InstallationResult
             if ($event instanceof BootloadersInjected && (!$place || $event->place === $place)) {
                 foreach ($event->group as $group) {
                     if ($group->hasClass($class)) {
-                        Assert::fail(
+                        $this->fail(
                             \sprintf('Bootloader "%s" was registered in "%s" section', $class, $event->place->value)
                         );
                     }
@@ -62,7 +62,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Bootloader "%s" was not registered in "%s" section', $class, $event->place->value));
+        $this->fail(\sprintf('Bootloader "%s" was not registered in "%s" section', $class, $event->place->value));
     }
 
     public function assertInterceptorNotRegistered(string $interceptor): self
@@ -71,7 +71,7 @@ final class InstallationResult
             if ($event instanceof ConstantInjected && $event->constant->name === 'INTERCEPTORS' && $event->constant) {
                 foreach ($event->constant->getValues() as $value) {
                     if ($value instanceof ClassName && $value->class === $interceptor) {
-                        Assert::fail(\sprintf('Interceptor "%s" was registered', $interceptor));
+                        $this->fail(\sprintf('Interceptor "%s" was registered', $interceptor));
                     }
                 }
             }
@@ -96,7 +96,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Interceptor "%s" was not registered', $interceptor));
+        $this->fail(\sprintf('Interceptor "%s" was not registered', $interceptor));
     }
 
     public function assertMiddlewareNotRegistered(string $middleware, string $group = 'global'): self
@@ -106,7 +106,7 @@ final class InstallationResult
                 && $event->group === $group
                 && $event->middleware->hasClass($middleware)
             ) {
-                Assert::fail(\sprintf('Middleware "%s" was registered in "%s" group', $middleware, $group));
+                $this->fail(\sprintf('Middleware "%s" was registered in "%s" group', $middleware, $group));
             }
         }
 
@@ -128,7 +128,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Middleware "%s" was not registered in "%s" group', $middleware, $group));
+        $this->fail(\sprintf('Middleware "%s" was not registered in "%s" group', $middleware, $group));
     }
 
     public function assertEnvNotDefined(string $name): self
@@ -138,7 +138,7 @@ final class InstallationResult
                 foreach ($event->envs as $group) {
                     foreach ($group as $key => $v) {
                         if ($key === $name) {
-                            Assert::fail(\sprintf('Env "%s" was defined with value "%s"', $name, $v));
+                            $this->fail(\sprintf('Env "%s" was defined with value "%s"', $name, $v));
                         }
                     }
                 }
@@ -163,7 +163,7 @@ final class InstallationResult
                                 return $this;
                             }
 
-                            Assert::fail(
+                            $this->fail(
                                 \sprintf('Env "%s" was defined with value "%s" instead of "%s"', $name, $v, $value)
                             );
                         }
@@ -172,14 +172,14 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Env "%s" was not defined', $name));
+        $this->fail(\sprintf('Env "%s" was not defined', $name));
     }
 
     public function assertPackageNotInstalled(string $package): self
     {
         foreach ($this->events as $event) {
             if ($event instanceof PackageRegistered && $event->name === $package) {
-                Assert::fail(\sprintf('Package "%s" was not installed', $package));
+                $this->fail(\sprintf('Package "%s" was not installed', $package));
             }
         }
 
@@ -198,7 +198,7 @@ final class InstallationResult
                     return $this;
                 }
 
-                Assert::fail(
+                $this->fail(
                     \sprintf(
                         'Package "%s" was installed with version "%s" instead of "%s"',
                         $package,
@@ -209,7 +209,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Package "%s" was not installed', $package));
+        $this->fail(\sprintf('Package "%s" was not installed', $package));
     }
 
     public function assertGeneratorProcessed(string $class): self
@@ -222,14 +222,14 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Generator "%s" was not processed', $class));
+        $this->fail(\sprintf('Generator "%s" was not processed', $class));
     }
 
     public function assertGeneratorNotProcessed(string $class): self
     {
         foreach ($this->events as $event) {
             if ($event instanceof GeneratorInterface && $event instanceof $class) {
-                Assert::fail(\sprintf('Generator "%s" was processed', $class));
+                $this->fail(\sprintf('Generator "%s" was processed', $class));
             }
         }
 
@@ -248,7 +248,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Message "%s" was not shown', $message));
+        $this->fail(\sprintf('Message "%s" was not shown', $message));
     }
 
     public function assertCommandExecuted(string $command): self
@@ -261,14 +261,14 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Command "%s" was not executed', $command));
+        $this->fail(\sprintf('Command "%s" was not executed', $command));
     }
 
     public function assertCommandNotExecuted(string $command): self
     {
         foreach ($this->events as $event) {
             if ($event instanceof Output && $event->command === $command) {
-                Assert::fail(\sprintf('Command "%s" was not executed', $command));
+                $this->fail(\sprintf('Command "%s" was not executed', $command));
             }
         }
 
@@ -282,7 +282,7 @@ final class InstallationResult
         foreach ($this->events as $event) {
             if ($event instanceof CopyEvent) {
                 if (\str_ends_with($event->getFullSource(), $path)) {
-                    Assert::fail(\sprintf('File "%s" was copied', $path));
+                    $this->fail(\sprintf('File "%s" was copied', $path));
                 }
             }
         }
@@ -304,7 +304,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('File "%s" was not deleted', $file));
+        $this->fail(\sprintf('File "%s" was not deleted', $file));
     }
 
     public function assertFileExists(string $path): self
@@ -332,7 +332,7 @@ final class InstallationResult
                         return $this;
                     }
 
-                    Assert::fail(
+                    $this->fail(
                         \sprintf(
                             'File "%s" was copied to "%s" instead of "%s"',
                             $path,
@@ -344,7 +344,7 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('File "%s" was not copied to "%s"', $path, $destination));
+        $this->fail(\sprintf('File "%s" was not copied to "%s"', $path, $destination));
     }
 
     public function assertReadmeContains(string $text): self
@@ -377,5 +377,12 @@ final class InstallationResult
     public function cleanup(): void
     {
         $this->files->deleteDirectory($this->appPath);
+    }
+
+    private function fail(string $message = ''): never
+    {
+        $this->cleanup();
+
+        Assert::fail($message);
     }
 }
