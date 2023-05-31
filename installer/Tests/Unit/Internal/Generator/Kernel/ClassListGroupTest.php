@@ -11,6 +11,7 @@ use Tests\TestCase;
 final class ClassListGroupTest extends TestCase
 {
     protected ClassListGroup $group;
+    protected PhpNamespace $namespace;
 
     public function setUp(): void
     {

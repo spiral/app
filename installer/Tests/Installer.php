@@ -15,6 +15,7 @@ use Installer\Internal\EventStorage;
 use Installer\Module\RoadRunnerBridge\Question;
 use Seld\JsonLint\ParsingException;
 use Spiral\Files\Files;
+use Symfony\Component\Console\Output\StreamOutput;
 
 final class Installer implements \Stringable
 {
@@ -74,7 +75,7 @@ final class Installer implements \Stringable
         $files->ensureDirectory($appPath);
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
 
-        $buffer = new BufferIO();
+        $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
         $composer = new Composer();
 
         $composer->setPackage(new RootPackage('spiral/app', '1.0.0', '1.0.0'));

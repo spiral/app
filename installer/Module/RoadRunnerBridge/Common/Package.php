@@ -33,4 +33,9 @@ final class Package extends BasePackage
             ],
         );
     }
+
+    public function getResourcesPath(): string
+    {
+        return dirname(__DIR__) . '/resources';
+    }
 }

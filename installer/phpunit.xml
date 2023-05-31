@@ -9,14 +9,16 @@
          stopOnError="false"
          cacheDirectory=".phpunit.cache"
          backupStaticProperties="false"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
 >
     <coverage/>
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">Tests/Unit</directory>
+            <directory>Tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory suffix="Test.php">Tests/Feature</directory>
+            <directory>Tests/Feature</directory>
         </testsuite>
     </testsuites>
     <php>
