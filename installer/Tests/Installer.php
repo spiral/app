@@ -18,6 +18,8 @@ use Spiral\Files\Files;
 
 final class Installer implements \Stringable
 {
+    private string $applicationUniqueHash;
+
     public static function create(
         Config $config,
         string $applicationClass,
@@ -35,6 +37,7 @@ final class Installer implements \Stringable
         private readonly EventStorage $eventStorage,
         private readonly string $appPath,
     ) {
+        $this->applicationUniqueHash = \md5(\microtime());
     }
 
     public function withRoadRunner(): self
@@ -101,7 +104,8 @@ final class Installer implements \Stringable
 
         return new InstallationResult(
             $files,
-            $appPath,
+            (string) $this,
+            $this->appPath,
             $buffer->getOutput(),
             $this->eventStorage->getEvents(),
         );
@@ -109,6 +113,6 @@ final class Installer implements \Stringable
 
     public function __toString(): string
     {
-        return 'installer-' . $this->interactions->requestApplicationType() . '-' . \md5(\microtime());
+        return 'installer-' . $this->interactions->requestApplicationType() . '-' . $this->applicationUniqueHash;
     }
 }

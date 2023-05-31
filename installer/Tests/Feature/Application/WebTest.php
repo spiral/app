@@ -24,7 +24,7 @@ final class WebTest extends InstallerTestCase
             ->addAnswer(Module\SapiBridge\Question::class, true)
             ->addAnswer(Module\Cache\Question::class, true)
             ->addAnswer(Module\Queue\Question::class, true)
-            //->addAnswer(Module\Mailer\Question::class, true)
+            ->addAnswer(Module\Translator\Question::class, true)
             ->run();
 
         $result
@@ -36,13 +36,16 @@ final class WebTest extends InstallerTestCase
             ->assertEnvDefined('QUEUE_CONNECTION', 'in-memory')
             ->assertEnvNotDefined('MAILER_FROM')
             ->assertFileExists('app/config/queue.php')
-            ->assertCopied('Web/resources/app/locale/ru/messages.en.php', 'app/locale/ru/messages.en.php')
+            ->assertCopied(
+                'Module/Translator/resources/locale/ru/messages.en.php',
+                'app/locale/ru/messages.en.php'
+            )
             ->assertBootloaderRegistered(SapiBootloader::class)
             ->assertBootloaderNotRegistered(MailerBootloader::class)
             ->assertMiddlewareRegistered(ErrorHandlerMiddleware::class)
             ->assertMiddlewareNotRegistered(HttpCollector::class, 'web')
             ->assertMiddlewareRegistered(SessionMiddleware::class, 'web')
-            ->assertMiddlewareNotRegistered(LocaleSelector::class)
+            ->assertMiddlewareRegistered(LocaleSelector::class)
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http -p jobs -p kv')

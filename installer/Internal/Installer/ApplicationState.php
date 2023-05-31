@@ -108,7 +108,7 @@ final class ApplicationState
 
             foreach ($package->getResources() as $source => $target) {
                 yield from $this->resource->copy(
-                    \rtrim($package->getResourcesPath() . '/') . \ltrim($source, '/'),
+                    \rtrim($package->getResourcesPath(), '/') . '/' . \ltrim($source, '/'),
                     $target
                 );
             }
