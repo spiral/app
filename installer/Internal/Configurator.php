@@ -106,6 +106,12 @@ final class Configurator extends AbstractInstaller
     private function buildContext(): Generator\Context
     {
         $writer = new Writer($this->files);
+        $appBootloaderMetadata = \class_exists(AppBootloader::class)
+            ? $this->classMetadata->getMetaData(AppBootloader::class)
+            : null;
+        $routesBootloaderMetadata = \class_exists(RoutesBootloader::class)
+            ? $this->classMetadata->getMetaData(RoutesBootloader::class)
+            : null;
 
         return new Generator\Context(
             application: $this->application,
@@ -124,13 +130,13 @@ final class Configurator extends AbstractInstaller
             resource: new ResourceQueue(
                 directoriesMap: $this->config->getDirectories()
             ),
-            domainInterceptors: \file_exists($this->classMetadata->getMetaData(AppBootloader::class)->getPath())
+            domainInterceptors: $appBootloaderMetadata !== null && \file_exists($appBootloaderMetadata->getPath())
                 ? new Generator\Bootloader\DomainInterceptorsConfigurator(
                     writer: $writer,
                     class: $this->classMetadata->getMetaData(AppBootloader::class),
                 )
                 : null,
-            routesBootloader: \file_exists($this->classMetadata->getMetaData(RoutesBootloader::class)->getPath())
+            routesBootloader: $routesBootloaderMetadata !== null && \file_exists($routesBootloaderMetadata->getPath())
                 ? new RoutesBootloaderConfigurator(
                     writer: $writer,
                     class: $this->classMetadata->getMetaData(RoutesBootloader::class),

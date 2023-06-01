@@ -10,7 +10,8 @@
     },
     "require": {
         "php": ">=8.1",
-        "spiral/framework": "^3.7"
+        "spiral/framework": "^3.7",
+        "spiral/roadrunner-cli": "^2.5"
     },
     "require-dev": {
         "composer/composer": "^2.4",

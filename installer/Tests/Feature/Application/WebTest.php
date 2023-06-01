@@ -29,6 +29,7 @@ final class WebTest extends InstallerTestCase
 
         $result
             ->assertDeleted('LICENSE')
+            ->assertDeleted('.github')
             ->assertGeneratorProcessed(\Installer\Module\SapiBridge\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(\Installer\Module\Mailer\Generator\Bootloaders::class)
             ->assertPackageInstalled('ext-sockets')
