@@ -15,6 +15,8 @@ final class Skeleton implements GeneratorInterface
             return;
         }
 
-        \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
+        if (\file_exists($context->applicationRoot . 'tests/Feature/.gitignore')) {
+            \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
+        }
     }
 }

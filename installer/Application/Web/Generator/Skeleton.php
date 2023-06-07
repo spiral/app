@@ -17,6 +17,8 @@ final class Skeleton implements GeneratorInterface
 
         $context->resource->copy(':web:/skeleton', '');
 
-        \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
+        if (\file_exists($context->applicationRoot . 'tests/Feature/.gitignore')) {
+            \unlink($context->applicationRoot . 'tests/Feature/.gitignore');
+        }
     }
 }

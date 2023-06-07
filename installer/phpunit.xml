@@ -24,5 +24,8 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>
+        <env name="RUN_APPLICATION_TESTS" value="true"/>
+        <env name="DELETE_TEST_APPLICATION" value="true"/>
+        <env name="DELETE_APPLICATION_LOGS" value="true"/>
     </php>
 </phpunit>

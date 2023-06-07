@@ -47,7 +47,7 @@ final class Installer extends AbstractInstaller
 
         $this->applicationState = new ApplicationState(
             $this->projectRoot,
-            $composerFile = new ComposerFile(
+            new ComposerFile(
                 $composerStorage ?? new ComposerStorage(new JsonFile($this->composerFile)),
                 $composer->getPackage(),
                 $this->config,

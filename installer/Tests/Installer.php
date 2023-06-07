@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Composer\Composer;
+use Composer\Console\Application;
 use Composer\IO\BufferIO;
 use Composer\Package\RootPackage;
 use Installer\Application\ApplicationSkeleton;
@@ -15,6 +16,7 @@ use Installer\Internal\EventStorage;
 use Installer\Module\RoadRunnerBridge\Question;
 use Seld\JsonLint\ParsingException;
 use Spiral\Files\Files;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
 
 final class Installer implements \Stringable
@@ -73,7 +75,6 @@ final class Installer implements \Stringable
         $composerJson = $appPath . '/composer.json';
 
         $files->ensureDirectory($appPath);
-        $files->ensureDirectory($appPath . '/' . '.github');
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
 
         $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
@@ -92,6 +93,10 @@ final class Installer implements \Stringable
 
         $installer->run();
 
+        if ((bool) \getenv('RUN_APPLICATION_TESTS')) {
+            $this->installDependencies($appPath);
+        }
+
         $configurator = new Configurator(
             io: new IO($buffer),
             composerFilePath: $composerJson,
@@ -103,6 +108,10 @@ final class Installer implements \Stringable
         );
 
         $configurator->run();
+
+        if ((bool) \getenv('RUN_APPLICATION_TESTS')) {
+            $this->runPostCreateProjectScripts($appPath);
+        }
 
         return new InstallationResult(
             $files,
@@ -116,5 +125,31 @@ final class Installer implements \Stringable
     public function __toString(): string
     {
         return 'installer-' . $this->interactions->requestApplicationType() . '-' . $this->applicationUniqueHash;
+    }
+
+    private function installDependencies(string $appPath): void
+    {
+        $application = new Application();
+        $application->setAutoExit(false);
+
+        $application->run(new ArrayInput([
+            'command' => 'install',
+            '--working-dir' => $appPath,
+            '--no-scripts',
+            '--quiet'
+        ]));
+    }
+
+    private function runPostCreateProjectScripts(string $appPath): void
+    {
+        $application = new Application();
+        $application->setAutoExit(false);
+
+        $application->run(new ArrayInput([
+            'command' => 'run-script',
+            'script' => 'post-create-project-cmd',
+            '--working-dir' => $appPath,
+            '--quiet'
+        ]));
     }
 }

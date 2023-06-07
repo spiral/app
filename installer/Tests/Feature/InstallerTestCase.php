@@ -10,24 +10,30 @@ use Tests\TestCase;
 
 abstract class InstallerTestCase extends TestCase
 {
-    protected ?string $testApplicationPath = null;
+    protected ?string $testApplication = null;
 
     public function install(string $applicationClass): Installer
     {
         $app = Installer::create($this->getConfig(), $applicationClass, $this->getAppPath());
 
-        $this->testApplicationPath = $this->getAppPath() . '/' . (string) $app;
+        $this->testApplication = (string) $app;
 
         return $app;
     }
 
     protected function tearDown(): void
     {
-        if ($this->testApplicationPath !== null) {
-            $files = new Files();
-            $files->deleteDirectory($this->testApplicationPath);
+        if ($this->testApplication !== null) {
+            if ((bool) \getenv('DELETE_TEST_APPLICATION')) {
+                $files = new Files();
+                $files->deleteDirectory($this->getAppPath() . '/' . $this->testApplication);
+            }
 
-            $this->testApplicationPath = null;
+            if ((bool) \getenv('DELETE_APPLICATION_LOGS')) {
+                $files->delete($this->getAppPath() . '/logs/install-' . $this->testApplication . '.log');
+            }
+
+            $this->testApplication = null;
         }
 
         parent::tearDown();

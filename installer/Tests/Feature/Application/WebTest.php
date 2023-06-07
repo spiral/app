@@ -27,6 +27,9 @@ final class WebTest extends InstallerTestCase
             ->addAnswer(Module\Translator\Question::class, true)
             ->run();
 
+        // Store log for debugging in application directory
+        $result->storeLog();
+
         $result
             ->assertDeleted('LICENSE')
             ->assertDeleted('.github')
@@ -51,8 +54,5 @@ final class WebTest extends InstallerTestCase
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http -p jobs -p kv')
             ->assertReadmeContains('The settings for RoadRunner are in a file named .rr.yaml at the main folder of the app.');
-
-        // Store log for debugging in application directory
-        $result->storeLog();
     }
 }

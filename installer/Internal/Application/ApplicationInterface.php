@@ -73,6 +73,10 @@ interface ApplicationInterface
 
     public function isPackageInstalled(Package $package): bool;
 
+    public function hasRoutesBootloader(): bool;
+
+    public function hasAppBootloader(): bool;
+
     /**
      * @param class-string $question
      */

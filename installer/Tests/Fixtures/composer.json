@@ -10,7 +10,8 @@
     },
     "require": {
         "php": ">=8.1",
-        "spiral/framework": "^3.7"
+        "spiral/framework": "^3.7",
+        "spiral/roadrunner-cli": "^2.5"
     },
     "require-dev": {
         "composer/composer": "^2.4",
@@ -37,15 +38,13 @@
         }
     },
     "scripts": {
-        "pre-install-cmd": "Installer\\Installer::install",
-        "pre-update-cmd": "Installer\\Installer::install",
-        "post-install-cmd": "Installer\\Configurator::configure",
-        "post-update-cmd": "Installer\\Configurator::configure",
+        "pre-install-cmd": "Installer\\Internal\\Installer::install",
+        "pre-update-cmd": "Installer\\Internal\\Installer::install",
+        "post-install-cmd": "Installer\\Internal\\Configurator::configure",
+        "post-update-cmd": "Installer\\Internal\\Configurator::configure",
         "post-create-project-cmd": [
             "php app.php encrypt:key -m .env",
-            "php app.php configure --quiet",
-            "rr get-binary --quiet",
-            "composer dump-autoload"
+            "php app.php configure --quiet"
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",

@@ -86,4 +86,14 @@ final class Application extends AbstractApplication
 
         $this->useRoadRunnerPlugin('http');
     }
+
+    public function hasAppBootloader(): bool
+    {
+        return true;
+    }
+
+    public function hasRoutesBootloader(): bool
+    {
+        return true;
+    }
 }

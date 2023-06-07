@@ -191,6 +191,16 @@ abstract class AbstractApplication implements ApplicationInterface
         return $this->getOption(ApplicationSkeleton::class) === true;
     }
 
+    public function hasAppBootloader(): bool
+    {
+        return false;
+    }
+
+    public function hasRoutesBootloader(): bool
+    {
+        return false;
+    }
+
     /**
      * @internal
      * Don't use this method. It is called only once by the Installer

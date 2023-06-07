@@ -106,12 +106,6 @@ final class Configurator extends AbstractInstaller
     private function buildContext(): Generator\Context
     {
         $writer = new Writer($this->files);
-        $appBootloaderMetadata = \class_exists(AppBootloader::class)
-            ? $this->classMetadata->getMetaData(AppBootloader::class)
-            : null;
-        $routesBootloaderMetadata = \class_exists(RoutesBootloader::class)
-            ? $this->classMetadata->getMetaData(RoutesBootloader::class)
-            : null;
 
         return new Generator\Context(
             application: $this->application,
@@ -130,13 +124,13 @@ final class Configurator extends AbstractInstaller
             resource: new ResourceQueue(
                 directoriesMap: $this->config->getDirectories()
             ),
-            domainInterceptors: $appBootloaderMetadata !== null && \file_exists($appBootloaderMetadata->getPath())
+            domainInterceptors: $this->application->hasAppBootloader()
                 ? new Generator\Bootloader\DomainInterceptorsConfigurator(
                     writer: $writer,
                     class: $this->classMetadata->getMetaData(AppBootloader::class),
                 )
                 : null,
-            routesBootloader: $routesBootloaderMetadata !== null && \file_exists($routesBootloaderMetadata->getPath())
+            routesBootloader: $this->application->hasRoutesBootloader()
                 ? new RoutesBootloaderConfigurator(
                     writer: $writer,
                     class: $this->classMetadata->getMetaData(RoutesBootloader::class),
@@ -303,7 +297,9 @@ final class Configurator extends AbstractInstaller
             new DeleteEvent($directory)
         );
 
-        $this->files->deleteDirectory($directory);
+        if ($this->files->isDirectory($directory)) {
+            $this->files->deleteDirectory($directory);
+        }
     }
 
     /**
