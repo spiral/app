@@ -23,7 +23,7 @@ class HomeControllerTest extends TestCase
         $this->http
             ->get('/')
             ->assertOk()
-            ->assertBodyContains('Welcome to Spiral Framework');
+            ->assertBodyContains('The PHP Framework for future Innovators');
     }
 
     public function testDefaultActionWithRuLocale(): void
@@ -32,7 +32,7 @@ class HomeControllerTest extends TestCase
             ->withHeader('accept-language', 'ru')
             ->get('/')
             ->assertOk()
-            ->assertBodyContains('Вас приветствует Spiral Framework');
+            ->assertBodyContains('PHP Framework для будущих инноваторов');
     }
 
     public function testInteractWithConsole(): void

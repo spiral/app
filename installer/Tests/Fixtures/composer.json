@@ -48,7 +48,7 @@
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
-        "test": "vendor/bin/phpunit",
+        "test": "vendor/bin/phpunit --no-output",
         "test-coverage": "vendor/bin/phpunit --coverage",
         "psalm:config": "psalm"
     },

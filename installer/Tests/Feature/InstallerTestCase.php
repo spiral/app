@@ -24,8 +24,9 @@ abstract class InstallerTestCase extends TestCase
     protected function tearDown(): void
     {
         if ($this->testApplication !== null) {
+            $files = new Files();
+
             if ((bool) \getenv('DELETE_TEST_APPLICATION')) {
-                $files = new Files();
                 $files->deleteDirectory($this->getAppPath() . '/' . $this->testApplication);
             }
 

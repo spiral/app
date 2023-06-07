@@ -17,6 +17,7 @@ use Installer\Module\RoadRunnerBridge\Question;
 use Seld\JsonLint\ParsingException;
 use Spiral\Files\Files;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\StreamOutput;
 
 final class Installer implements \Stringable
@@ -111,6 +112,7 @@ final class Installer implements \Stringable
 
         if ((bool) \getenv('RUN_APPLICATION_TESTS')) {
             $this->runPostCreateProjectScripts($appPath);
+            $testsResult = $this->runTests($appPath);
         }
 
         return new InstallationResult(
@@ -119,6 +121,9 @@ final class Installer implements \Stringable
             $this->appPath,
             $buffer->getOutput(),
             $this->eventStorage->getEvents(),
+            isset($testsResult)
+                ? $testsResult === 0
+                : null
         );
     }
 
@@ -151,5 +156,18 @@ final class Installer implements \Stringable
             '--working-dir' => $appPath,
             '--quiet'
         ]));
+    }
+
+    private function runTests(string $appPath): int
+    {
+        $application = new Application();
+        $application->setAutoExit(false);
+
+        return $application->run(new ArrayInput([
+            'command' => 'run-script',
+            'script' => 'test',
+            '--working-dir' => $appPath,
+            '-v'
+        ]), new NullOutput());
     }
 }

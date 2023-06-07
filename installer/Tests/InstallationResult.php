@@ -27,7 +27,11 @@ final class InstallationResult
         private readonly string $rootPath,
         public readonly string $log,
         private readonly array $events,
+        ?bool $testsSuccess = null,
     ) {
+        if ($testsSuccess !== null) {
+            Assert::assertTrue($testsSuccess, 'Application tests execution failure');
+        }
     }
 
     public function assertBootloaderNotRegistered(string $class, ?BootloaderPlaces $place = null): self

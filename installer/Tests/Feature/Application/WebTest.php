@@ -25,6 +25,7 @@ final class WebTest extends InstallerTestCase
             ->addAnswer(Module\Cache\Question::class, true)
             ->addAnswer(Module\Queue\Question::class, true)
             ->addAnswer(Module\Translator\Question::class, true)
+            ->addAnswer(Module\TemplateEngines\Question::class, 1)
             ->run();
 
         // Store log for debugging in application directory
