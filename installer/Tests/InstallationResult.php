@@ -67,7 +67,9 @@ final class InstallationResult
             }
         }
 
-        Assert::fail(\sprintf('Bootloader "%s" was not registered in "%s" section', $class, $event->place->value));
+        $place !== null
+            ? Assert::fail(\sprintf('Bootloader "%s" was not registered in "%s" section', $class, $place->value))
+            : Assert::fail(\sprintf('Bootloader "%s" was not registered', $class));
     }
 
     public function assertInterceptorNotRegistered(string $interceptor): self
