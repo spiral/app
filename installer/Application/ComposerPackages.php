@@ -34,4 +34,5 @@ enum ComposerPackages: string
     case LaravelSerializableClosure = 'spiral-packages/serializable-closure:^1.0';
     case DataGridBridge = 'spiral/data-grid-bridge:^3.0.1';
     case Translator = 'spiral/translator:^3.7';
+    case Views = 'spiral/views:^3.7';
 }

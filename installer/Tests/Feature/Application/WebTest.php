@@ -117,6 +117,7 @@ final class WebTest extends InstallerTestCase
             ->assertGeneratorNotProcessed(Module\Serializers\SymfonySerializer\Generator\Env::class)
             ->assertGeneratorNotProcessed(Module\Storage\Generator\Config::class)
             ->assertGeneratorNotProcessed(Module\TemplateEngines\Twig\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(Module\TemplateEngines\PlainPHP\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\TemporalBridge\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\TemporalBridge\Generator\Env::class)
             ->assertGeneratorNotProcessed(Module\Validators\Symfony\Generator\Bootloaders::class)
@@ -186,5 +187,114 @@ final class WebTest extends InstallerTestCase
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http')
             ->assertReadmeContains('The settings for RoadRunner are in a file named .rr.yaml at the main folder of the app.');
+    }
+
+    public function testStemplerTemplateEngine(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->addAnswer(Module\TemplateEngines\Question::class, 1)
+            ->run();
+
+        $result->storeLog();
+
+        $result
+            ->assertPackageInstalled('spiral/stempler-bridge')
+            ->assertPackageNotInstalled('spiral/twig-bridge')
+
+            ->assertGeneratorProcessed(\Installer\Module\TemplateEngines\Stempler\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\PlainPHP\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\Twig\Generator\Bootloaders::class)
+
+            ->assertBootloaderRegistered(\Spiral\Stempler\Bootloader\StemplerBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Views\Bootloader\ViewsBootloader::class)
+            ->assertBootloaderNotRegistered(\Spiral\Twig\Bootloader\TwigBootloader::class)
+
+            ->assertCopied(
+                'Module/TemplateEngines/Stempler/resources/config/views/stempler.php',
+                'app/config/views/stempler.php'
+            )
+            ->assertCopied(
+                'Module/TemplateEngines/Stempler/resources/views/layout/base.dark.php',
+                'app/views/layout/base.dark.php'
+            )
+            ->assertCopied(
+                'Module/TemplateEngines/Stempler/resources/views/home.dark.php',
+                'app/views/home.dark.php'
+            )
+            ->assertNotCopied('Module/TemplateEngines/PlainPHP/resources/views/home.php')
+            ->assertNotCopied('Module/TemplateEngines/Twig/resources/views/layout/base.twig')
+            ->assertNotCopied('Module/TemplateEngines/Twig/resources/views/home.twig')
+        ;
+    }
+
+    public function testTwigTemplateEngine(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->addAnswer(Module\TemplateEngines\Question::class, 2)
+            ->run();
+
+        $result->storeLog();
+
+        $result
+            ->assertPackageInstalled('spiral/twig-bridge')
+            ->assertPackageNotInstalled('spiral/stempler-bridge')
+
+            ->assertGeneratorProcessed(\Installer\Module\TemplateEngines\Twig\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\Stempler\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\PlainPHP\Generator\Bootloaders::class)
+
+            ->assertBootloaderRegistered(\Spiral\Twig\Bootloader\TwigBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Views\Bootloader\ViewsBootloader::class)
+            ->assertBootloaderNotRegistered(\Spiral\Stempler\Bootloader\StemplerBootloader::class)
+
+            ->assertCopied(
+                'Module/TemplateEngines/Twig/resources/views/layout/base.twig',
+                'app/views/layout/base.twig'
+            )
+            ->assertCopied(
+                'Module/TemplateEngines/Twig/resources/views/home.twig',
+                'app/views/home.twig'
+            )
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/config/views/stempler.php')
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/views/layout/base.dark.php')
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/views/home.dark.php')
+            ->assertNotCopied('Module/TemplateEngines/PlainPHP/resources/views/home.php')
+        ;
+    }
+
+    public function testPlainPHPTemplateEngine(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->addAnswer(Module\TemplateEngines\Question::class, 3)
+            ->run();
+
+        $result->storeLog();
+
+        $result
+            ->assertPackageInstalled('spiral/views')
+            ->assertPackageNotInstalled('spiral/stempler-bridge')
+            ->assertPackageNotInstalled('spiral/twig-bridge')
+
+            ->assertGeneratorProcessed(\Installer\Module\TemplateEngines\PlainPHP\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\Stempler\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Module\TemplateEngines\Twig\Generator\Bootloaders::class)
+
+            ->assertBootloaderRegistered(\Spiral\Views\Bootloader\ViewsBootloader::class)
+            ->assertBootloaderNotRegistered(\Spiral\Twig\Bootloader\TwigBootloader::class)
+            ->assertBootloaderNotRegistered(\Spiral\Stempler\Bootloader\StemplerBootloader::class)
+
+            ->assertCopied(
+                'Module/TemplateEngines/PlainPHP/resources/views/home.php',
+                'app/views/home.php'
+            )
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/config/views/stempler.php')
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/views/layout/base.dark.php')
+            ->assertNotCopied('Module/TemplateEngines/Stempler/resources/views/home.dark.php')
+            ->assertNotCopied('Module/TemplateEngines/Twig/resources/views/layout/base.twig')
+            ->assertNotCopied('Module/TemplateEngines/Twig/resources/views/home.twig')
+        ;
     }
 }
