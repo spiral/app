@@ -96,6 +96,9 @@ final class WebTest extends InstallerTestCase
             ->assertGeneratorProcessed(Module\Validators\Spiral\Generator\Middlewares::class)
 
             // not processed generators
+            ->assertGeneratorNotProcessed(\Installer\Application\Cli\Generator\Bootloaders::class)
+            ->assertGeneratorNotProcessed(\Installer\Application\Cli\Generator\Skeleton::class)
+            ->assertGeneratorNotProcessed(\Installer\Application\GRPC\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\Cache\Generator\Config::class)
             ->assertGeneratorNotProcessed(Module\DataGridBridge\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\DataGridBridge\Generator\Interceptors::class)
@@ -126,6 +129,26 @@ final class WebTest extends InstallerTestCase
             ->assertGeneratorNotProcessed(Module\Validators\Laravel\Generator\Middlewares::class)
 
             // registered bootloaders
+            ->assertBootloaderRegistered(\Spiral\Boot\Bootloader\CoreBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\DotEnv\Bootloader\DotenvBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Monolog\Bootloader\MonologBootloader::class)
+            ->assertBootloaderRegistered(\App\Application\Bootloader\LoggingBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\SnapshotsBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\CommandBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Scaffolder\Bootloader\ScaffolderBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Prototype\Bootloader\PrototypeBootloader::class)
+            ->assertBootloaderRegistered(\App\Application\Bootloader\AppBootloader::class)
+            ->assertBootloaderRegistered(\App\Application\Bootloader\RoutesBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Security\EncrypterBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Security\FiltersBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Security\GuardBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\RouterBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\JsonPayloadsBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\CookiesBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\SessionBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\CsrfBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Bootloader\Http\PaginationBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\AnnotatedBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\CommandBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\CycleOrmBootloader::class)
@@ -171,6 +194,11 @@ final class WebTest extends InstallerTestCase
             ->assertEnvNotDefined('QUEUE_CONNECTION', 'in-memory')
             ->assertEnvNotDefined('MAILER_FROM')
             ->assertFileNotExists('app/config/queue.php')
+
+            ->assertCopied(
+                'Application/Cli/resources/skeleton/app/src/Endpoint/Console/DoNothing.php',
+                'app/src/Endpoint/Console/DoNothing.php'
+            )
             ->assertCopied(
                 'Application/Web/Generator/resources/ViewRenderer.php',
                 'app/src/Application/Exception/Renderer/ViewRenderer.php'
@@ -179,6 +207,7 @@ final class WebTest extends InstallerTestCase
                 'Module/Translator/resources/locale/ru/messages.en.php',
                 'app/locale/ru/messages.en.php'
             )
+
             ->assertMiddlewareRegistered(ErrorHandlerMiddleware::class)
             ->assertMiddlewareNotRegistered(HttpCollector::class, 'web')
             ->assertMiddlewareRegistered(SessionMiddleware::class, 'web')

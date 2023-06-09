@@ -15,6 +15,7 @@ use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
 use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
+use Installer\Module\RoadRunnerBridge\Common\RoadRunnerCliPackage;
 
 /**
  * @psalm-import-type AutoloadRules from PackageInterface
@@ -34,6 +35,7 @@ final class Application extends AbstractApplication
         array $packages = [
             new ExtMbStringPackage(),
             new DumperPackage(),
+            new RoadRunnerCliPackage()
         ],
         array $autoload = [
             'psr-4' => [

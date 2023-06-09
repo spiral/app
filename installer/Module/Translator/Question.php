@@ -20,7 +20,7 @@ final class Question extends AbstractQuestion
                 new Package(),
             ]),
         ],
-        int $default = self::YES_OPTION,
+        int $default = self::NONE_OPTION,
     ) {
         parent::__construct(
             question: $question,
