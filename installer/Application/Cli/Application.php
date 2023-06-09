@@ -35,7 +35,7 @@ final class Application extends AbstractApplication
         array $packages = [
             new ExtMbStringPackage(),
             new DumperPackage(),
-            new RoadRunnerCliPackage()
+            new RoadRunnerCliPackage(),
         ],
         array $autoload = [
             'psr-4' => [
