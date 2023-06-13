@@ -31,7 +31,7 @@ return [
      * Paths to proto files, that should be compiled into PHP by "grpc:generate" console command.
      */
     'services' => [
-        :services:
+        // directory('root') . '/proto/service.proto'
     ],
 
     /**

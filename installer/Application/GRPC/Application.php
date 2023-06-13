@@ -17,8 +17,6 @@ use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
 use Installer\Module\Psr7Implementation\Nyholm\Package as NyholmPsr7Implementation;
 use Installer\Module\RoadRunnerBridge\Common\Package as RoadRunnerBridgePackage;
-use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader;
-use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCSkeleton;
 use Installer\Module\RoadRunnerBridge\GRPC\Package as RoadRunnerGRPCPackage;
 
 /**
@@ -57,8 +55,6 @@ final class Application extends AbstractApplication
         array $questions = [],
         array $generators = [
             new Bootloaders(),
-            new GRPCBootloader(),
-            new GRPCSkeleton(),
             new ConsoleSkeleton(),
             new ExceptionSkeleton(),
             new ViewRenderer(),

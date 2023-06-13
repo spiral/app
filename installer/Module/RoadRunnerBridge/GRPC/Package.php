@@ -6,6 +6,8 @@ namespace Installer\Module\RoadRunnerBridge\GRPC;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCSkeleton;
 
 final class Package extends BasePackage
 {
@@ -13,6 +15,10 @@ final class Package extends BasePackage
     {
         parent::__construct(
             package: ComposerPackages::GRPC,
+            generators: [
+                new GRPCBootloader(),
+                new GRPCSkeleton(),
+            ],
             instructions: [
                 'Configuration file: <comment>app/config/grpc.php</comment>',
                 'Use <comment>php app.php grpc:generate</comment> console command to generate gRPC stubs',
@@ -20,7 +26,12 @@ final class Package extends BasePackage
             ],
             dependencies: [
                 new ExtGRPC(),
-            ],
+            ]
         );
+    }
+
+    public function getResourcesPath(): string
+    {
+        return dirname(__DIR__) . '/resources';
     }
 }
