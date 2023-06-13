@@ -31,6 +31,9 @@ final class ComposerFile
         private readonly Config $config,
     ) {
         $this->definition = $this->storage->read();
+        $this->composerRequires = $this->package->getRequires();
+        $this->composerDevRequires = $this->package->getDevRequires();
+        $this->stabilityFlags = $this->package->getStabilityFlags();
     }
 
     public function getDefinition(): array
