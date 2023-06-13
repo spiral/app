@@ -29,12 +29,12 @@ final class ConsoleTest extends InstallerTestCase
             ->assertPackageInstalled('ext-mbstring')
             ->assertPackageInstalled('spiral/dumper')
             ->assertPackageInstalled('spiral/roadrunner-cli')
+            ->assertPackageInstalled('spiral/nyholm-bridge')
 
             // not installed packages
             ->assertPackageNotInstalled('ext-sockets')
             ->assertPackageNotInstalled('ext-grpc')
             ->assertPackageNotInstalled('grpc/grpc')
-            ->assertPackageNotInstalled('spiral/nyholm-bridge')
             ->assertPackageNotInstalled('spiral/roadrunner-bridge')
             ->assertPackageNotInstalled('spiral/sapi-bridge')
             ->assertPackageNotInstalled('loophp/collection')
@@ -64,6 +64,7 @@ final class ConsoleTest extends InstallerTestCase
             ->assertGeneratorProcessed(Module\Console\Generator\Skeleton::class)
             ->assertGeneratorProcessed(Module\Exception\Generator\Skeleton::class)
             ->assertGeneratorProcessed(Module\Dumper\Generator\Bootloaders::class)
+            ->assertGeneratorProcessed(Module\Psr7Implementation\Nyholm\Generator\Bootloaders::class)
 
             // not processed generators
             ->assertGeneratorNotProcessed(\Installer\Application\Web\Generator\Bootloaders::class)
@@ -85,7 +86,6 @@ final class ConsoleTest extends InstallerTestCase
             ->assertGeneratorNotProcessed(Module\EventDispatcher\League\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\Mailer\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\Mailer\Generator\Config::class)
-            ->assertGeneratorNotProcessed(Module\Psr7Implementation\Nyholm\Generator\Bootloaders::class)
             ->assertGeneratorNotProcessed(Module\Queue\Generator\Config::class)
             ->assertGeneratorNotProcessed(Module\Queue\Generator\Skeleton::class)
             ->assertGeneratorNotProcessed(Module\RoadRunnerBridge\Common\Generator\Bootloaders::class)
@@ -130,6 +130,7 @@ final class ConsoleTest extends InstallerTestCase
             ->assertBootloaderRegistered(\Spiral\Scaffolder\Bootloader\ScaffolderBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Prototype\Bootloader\PrototypeBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Bootloader\Security\EncrypterBootloader::class)
+            ->assertBootloaderRegistered(\Spiral\Nyholm\Bootloader\NyholmBootloader::class)
 
             // not registered bootloaders
             ->assertBootloaderNotRegistered(\App\Application\Bootloader\AppBootloader::class)
@@ -155,7 +156,6 @@ final class ConsoleTest extends InstallerTestCase
             ->assertBootloaderNotRegistered(\Spiral\Events\Bootloader\EventsBootloader::class)
             ->assertBootloaderNotRegistered(\Spiral\League\Event\Bootloader\EventBootloader::class)
             ->assertBootloaderNotRegistered(\Spiral\SendIt\Bootloader\MailerBootloader::class)
-            ->assertBootloaderNotRegistered(\Spiral\Nyholm\Bootloader\NyholmBootloader::class)
             ->assertBootloaderNotRegistered(\Spiral\RoadRunnerBridge\Bootloader\CacheBootloader::class)
             ->assertBootloaderNotRegistered(\Spiral\RoadRunnerBridge\Bootloader\CommandBootloader::class)
             ->assertBootloaderNotRegistered(\Spiral\RoadRunnerBridge\Bootloader\HttpBootloader::class)

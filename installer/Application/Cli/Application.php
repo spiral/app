@@ -15,6 +15,7 @@ use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
 use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
+use Installer\Module\Psr7Implementation\Nyholm\Package as NyholmPsr7Implementation;
 use Installer\Module\RoadRunnerBridge\Common\RoadRunnerCliPackage;
 
 /**
@@ -34,6 +35,7 @@ final class Application extends AbstractApplication
         string $name = 'Cli',
         array $packages = [
             new ExtMbStringPackage(),
+            new NyholmPsr7Implementation(),
             new DumperPackage(),
             new RoadRunnerCliPackage(),
         ],
