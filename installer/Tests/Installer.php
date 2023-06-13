@@ -168,6 +168,6 @@ final class Installer implements \Stringable
             'script' => 'test',
             '--working-dir' => $appPath,
             '-v'
-        ]));
+        ]), new NullOutput());
     }
 }
