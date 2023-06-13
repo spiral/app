@@ -8,7 +8,7 @@ use Installer\Application\ComposerPackages;
 use Installer\Internal\Question\AbstractQuestion;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
-use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\Bootloaders;
 
 final class RoadRunnerGRPC extends AbstractQuestion
 {
@@ -22,7 +22,7 @@ final class RoadRunnerGRPC extends AbstractQuestion
             new BooleanOption(
                 name: 'Yes',
                 generators: [
-                    new GRPCBootloader(),
+                    new Bootloaders(),
                 ]
             ),
         ],

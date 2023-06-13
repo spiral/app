@@ -64,8 +64,9 @@ final class GRPCTest extends InstallerTestCase
 
             // processed generators
             ->assertGeneratorProcessed(\Installer\Application\GRPC\Generator\Bootloaders::class)
-            ->assertGeneratorProcessed(Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader::class)
-            ->assertGeneratorProcessed(Module\RoadRunnerBridge\GRPC\Generator\GRPCSkeleton::class)
+            ->assertGeneratorProcessed(Module\RoadRunnerBridge\GRPC\Generator\Bootloaders::class)
+            ->assertGeneratorProcessed(Module\RoadRunnerBridge\GRPC\Generator\Skeleton::class)
+            ->assertGeneratorProcessed(Module\RoadRunnerBridge\GRPC\Generator\Config::class)
             ->assertGeneratorProcessed(ConsoleSkeleton::class)
             ->assertGeneratorProcessed(ExceptionSkeleton::class)
             ->assertGeneratorProcessed(Module\Dumper\Generator\Bootloaders::class)
@@ -190,6 +191,74 @@ final class GRPCTest extends InstallerTestCase
             ->assertEnvNotDefined('MAILER_FROM')
             ->assertFileNotExists('app/config/queue.php')
 
+            ->assertCopied(
+                'Application/Common/resources/app/config/scaffolder.php',
+                'app/config/scaffolder.php'
+            )
+            ->assertCopied(
+                'Application/Common/resources/app/src/Application/Bootloader/LoggingBootloader.php',
+                'app/src/Application/Bootloader/LoggingBootloader.php'
+            )
+            ->assertCopied(
+                'Application/Common/resources/app/src/Application/Bootloader/ExceptionHandlerBootloader.php',
+                'app/src/Application/Bootloader/ExceptionHandlerBootloader.php'
+            )
+            ->assertCopied(
+                'Application/Common/resources/app/src/Application/Kernel.php',
+                'app/src/Application/Kernel.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/proto/service.proto',
+                'proto/service.proto'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Ping/PingServiceClient.php',
+                'generated/Ping/PingServiceClient.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Ping/PingResponse.php',
+                'generated/Ping/PingResponse.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Ping/PingRequest.php',
+                'generated/Ping/PingRequest.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Ping/PingServiceInterface.php',
+                'generated/Ping/PingServiceInterface.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Ping/GPBMetadata/Service.php',
+                'generated/Ping/GPBMetadata/Service.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Config/GRPCServicesConfig.php',
+                'generated/Config/GRPCServicesConfig.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/generated/Bootloader/ServiceBootloader.php',
+                'generated/Bootloader/ServiceBootloader.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/app/src/Endpoint/RPC/PingService.php',
+                'app/src/Endpoint/RPC/PingService.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/grpc/app/src/Endpoint/Console/PingCommand.php',
+                'app/src/Endpoint/Console/PingCommand.php'
+            )
+            ->assertCopied(
+                'Module/RoadRunnerBridge/resources/config/grpc_services.php',
+                '/app/config/grpc.php'
+            )
+            ->assertCopied(
+                'Module/Exception/resources/app.php',
+                'app.php'
+            )
+            ->assertCopied(
+                'Module/Exception/resources/app/src/Application/Exception/Handler.php',
+                'app/src/Application/Exception/Handler.php'
+            )
             ->assertCopied(
                 'Application/Cli/resources/skeleton/app/src/Endpoint/Console/DoNothing.php',
                 'app/src/Endpoint/Console/DoNothing.php'

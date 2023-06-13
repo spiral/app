@@ -6,8 +6,10 @@ namespace Installer\Module\RoadRunnerBridge\GRPC;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
-use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCBootloader;
-use Installer\Module\RoadRunnerBridge\GRPC\Generator\GRPCSkeleton;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\Bootloaders;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\Config;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\Services;
+use Installer\Module\RoadRunnerBridge\GRPC\Generator\Skeleton;
 
 final class Package extends BasePackage
 {
@@ -16,8 +18,10 @@ final class Package extends BasePackage
         parent::__construct(
             package: ComposerPackages::GRPC,
             generators: [
-                new GRPCBootloader(),
-                new GRPCSkeleton(),
+                new Bootloaders(),
+                new Skeleton(),
+                new Config(),
+              //  new Services(),
             ],
             instructions: [
                 'Configuration file: <comment>app/config/grpc.php</comment>',

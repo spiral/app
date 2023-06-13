@@ -30,7 +30,9 @@ return [
     /**
      * Paths to proto files, that should be compiled into PHP by "grpc:generate" console command.
      */
-    'services' => [],
+    'services' => [
+        directory('root') . '/proto/service.proto'
+    ],
 
     /**
      * Root path for all proto files in which imports will be searched.

@@ -8,7 +8,7 @@ use GRPC\Bootloader\ServiceBootloader;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
 
-final class GRPCSkeleton implements GeneratorInterface
+final class Skeleton implements GeneratorInterface
 {
     public function process(Context $context): void
     {
