@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * Configuration for gRPC.
+ *
+ * @link https://spiral.dev/docs/grpc-configuration#configuration
+ */
 return [
     /**
      * Path to protoc-gen-php-grpc library.

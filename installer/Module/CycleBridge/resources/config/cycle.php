@@ -7,6 +7,11 @@ use Cycle\ORM\Collection\DoctrineCollectionFactory;
 use Cycle\ORM\Collection\IlluminateCollectionFactory;
 use Cycle\ORM\Collection\LoophpCollectionFactory;
 
+/**
+ * Configuration for Cycle ORM.
+ *
+ * @link https://spiral.dev/docs/basics-orm#orm
+ */
 return [
     'schema' => [
         /**

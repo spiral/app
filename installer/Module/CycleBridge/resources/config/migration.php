@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+/**
+ * Migrations configuration.
+ *
+ * @link https://spiral.dev/docs/basics-orm#migrations
+ */
 return [
     /**
      * Directory to store migration files
