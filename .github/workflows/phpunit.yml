@@ -35,7 +35,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: ${{ inputs.extensions }}
+          extensions: pdo, pdo_sqlite, sockets, grpc
+          tools: pecl
 
       - name: Validate Composer
         run: composer validate
