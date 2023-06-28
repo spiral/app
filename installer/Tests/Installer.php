@@ -19,10 +19,12 @@ use Spiral\Files\Files;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\StreamOutput;
+use Tests\Module\AbstractModule;
 
 final class Installer implements \Stringable
 {
     private string $applicationUniqueHash;
+    private array $modules = [];
 
     public static function create(
         Config $config,
@@ -61,6 +63,13 @@ final class Installer implements \Stringable
     public function addAnswer(string $question, int|string|bool $answer): self
     {
         $this->interactions->addAnswer($question, $answer);
+
+        return $this;
+    }
+
+    public function addModule(AbstractModule $module): self
+    {
+        $this->modules[] = $module;
 
         return $this;
     }
@@ -121,6 +130,7 @@ final class Installer implements \Stringable
             $this->appPath,
             $buffer->getOutput(),
             $this->eventStorage->getEvents(),
+            new InstallationModuleResult($this->modules),
             isset($testsResult)
                 ? $testsResult === 0
                 : null

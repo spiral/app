@@ -27,11 +27,14 @@ final class InstallationResult
         private readonly string $rootPath,
         public readonly string $log,
         private readonly array $events,
+        InstallationModuleResult $installationModuleResult,
         ?bool $testsSuccess = null,
     ) {
         if ($testsSuccess !== null) {
             Assert::assertTrue($testsSuccess, 'Application tests execution failure');
         }
+
+        $installationModuleResult->runTests($this);
     }
 
     public function assertBootloaderNotRegistered(string $class, ?BootloaderPlaces $place = null): self
@@ -157,7 +160,7 @@ final class InstallationResult
         return $this;
     }
 
-    public function assertEnvDefined(string $name, string $value): self
+    public function assertEnvDefined(string $name, mixed $value): self
     {
         foreach ($this->events as $event) {
             if ($event instanceof EnvGenerated) {

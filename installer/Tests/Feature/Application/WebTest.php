@@ -13,6 +13,7 @@ use Spiral\Debug\StateCollector\HttpCollector;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Session\Middleware\SessionMiddleware;
 use Tests\Feature\InstallerTestCase;
+use Tests\Module\CycleBridge;
 
 final class WebTest extends InstallerTestCase
 {
@@ -26,6 +27,7 @@ final class WebTest extends InstallerTestCase
             ->addAnswer(Module\Validators\Question::class, 1)
             ->addAnswer(Module\TemplateEngines\Question::class, 1)
             ->addAnswer(Module\Translator\Question::class, 1)
+            ->addModule(new CycleBridge())
             ->run();
 
         $result->storeLog();
@@ -43,7 +45,6 @@ final class WebTest extends InstallerTestCase
             ->assertPackageInstalled('spiral/roadrunner-bridge')
             ->assertPackageInstalled('spiral/roadrunner-cli')
             ->assertPackageInstalled('spiral-packages/yii-error-handler-bridge')
-            ->assertPackageInstalled('spiral/cycle-bridge')
             ->assertPackageInstalled('doctrine/collections')
             ->assertPackageInstalled('spiral/validator')
             ->assertPackageInstalled('spiral/stempler-bridge')
@@ -75,12 +76,6 @@ final class WebTest extends InstallerTestCase
             ->assertGeneratorProcessed(\Installer\Application\Web\Generator\Skeleton::class)
             ->assertGeneratorProcessed(ConsoleSkeleton::class)
             ->assertGeneratorProcessed(ExceptionSkeleton::class)
-            ->assertGeneratorProcessed(Module\CycleBridge\Generator\Bootloaders::class)
-            //->assertGeneratorProcessed(Module\CycleBridge\Generator\Collections::class)
-            ->assertGeneratorProcessed(Module\CycleBridge\Generator\Config::class)
-            ->assertGeneratorProcessed(Module\CycleBridge\Generator\Env::class)
-            ->assertGeneratorProcessed(Module\CycleBridge\Generator\Interceptors::class)
-            ->assertGeneratorProcessed(Module\CycleBridge\Generator\Skeleton::class)
             ->assertGeneratorProcessed(Module\Dumper\Generator\Bootloaders::class)
             ->assertGeneratorProcessed(Module\ErrorHandler\Yii\Generator\Bootloaders::class)
             ->assertGeneratorProcessed(Module\Psr7Implementation\Nyholm\Generator\Bootloaders::class)
@@ -150,13 +145,6 @@ final class WebTest extends InstallerTestCase
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\SessionBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\CsrfBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\PaginationBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\AnnotatedBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\CommandBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\CycleOrmBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\DatabaseBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\MigrationsBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\ScaffolderBootloader::class)
-            ->assertBootloaderRegistered(\Spiral\Cycle\Bootloader\SchemaBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Debug\Bootloader\DumperBootloader::class)
             ->assertBootloaderRegistered(\Spiral\YiiErrorHandler\Bootloader\YiiErrorHandlerBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Nyholm\Bootloader\NyholmBootloader::class)
