@@ -44,7 +44,7 @@ final class InstallationModuleResult
             }
 
             foreach ($module->getCopiedResources() as $path => $destination) {
-                $result->assertCopied($path, $destination);
+                $result->assertCopied($module->getResourcesPath() . $path, $destination);
             }
 
             foreach ($module->getRemovedResources() as $path) {
@@ -79,7 +79,7 @@ final class InstallationModuleResult
             }
 
             foreach ($module->getCopiedResources() as $path => $_) {
-                $result->assertNotCopied($path);
+                $result->assertNotCopied($module->getResourcesPath() . $path);
             }
 
             foreach ($module->getRemovedResources() as $path) {

@@ -27,4 +27,6 @@ interface ModuleInterface
     public function getMiddleware(): array;
 
     public function getEnvironmentVariables(): array;
+
+    public function getResourcesPath(): string;
 }

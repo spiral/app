@@ -53,4 +53,9 @@ abstract class AbstractModule implements ModuleInterface
     {
         return [];
     }
+
+    public function getResourcesPath(): string
+    {
+        return $this->package->getResourcesPath();
+    }
 }
