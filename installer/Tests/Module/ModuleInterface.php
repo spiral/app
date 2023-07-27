@@ -4,29 +4,32 @@ declare(strict_types=1);
 
 namespace Tests\Module;
 
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Generator\GeneratorInterface;
 
 interface ModuleInterface
 {
-    public function getPackage(): string;
+    public function getPackage(): ?string;
 
     /**
      * @return array<class-string<GeneratorInterface>>
      */
-    public function getGenerators(): array;
+    public function getGenerators(ApplicationInterface $application): array;
 
     /**
      * @return array<class-string>
      */
-    public function getBootloaders(): array;
+    public function getBootloaders(ApplicationInterface $application): array;
 
-    public function getCopiedResources(): array;
+    public function getCopiedResources(ApplicationInterface $application): array;
 
-    public function getRemovedResources(): array;
+    public function getRemovedResources(ApplicationInterface $application): array;
 
-    public function getMiddleware(): array;
+    public function getMiddleware(ApplicationInterface $application): array;
 
-    public function getEnvironmentVariables(): array;
+    public function getInterceptors(ApplicationInterface $application): array;
 
-    public function getResourcesPath(): string;
+    public function getEnvironmentVariables(ApplicationInterface $application): array;
+
+    public function getResourcesPath(): ?string;
 }

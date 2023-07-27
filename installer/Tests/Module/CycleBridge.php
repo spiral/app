@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Module;
 
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Module\CycleBridge\Package;
+use Installer\Module\DataGridBridge\Package as DataGridPackage;
 use Spiral\Cycle\Bootloader\AnnotatedBootloader;
 use Spiral\Cycle\Bootloader\CommandBootloader;
 use Spiral\Cycle\Bootloader\CycleOrmBootloader;
@@ -21,21 +23,24 @@ final class CycleBridge extends AbstractModule
         parent::__construct(new Package());
     }
 
-    public function getBootloaders(): array
+    public function getBootloaders(ApplicationInterface $application): array
     {
-        return [
+        $bootloaders = [
             AnnotatedBootloader::class,
             CommandBootloader::class,
             CycleOrmBootloader::class,
             DatabaseBootloader::class,
-           // DataGridBootloader::class,
             MigrationsBootloader::class,
             ScaffolderBootloader::class,
             SchemaBootloader::class,
         ];
+
+        return $application->isPackageInstalled(new DataGridPackage())
+            ? $bootloaders + [DataGridBootloader::class]
+            : $bootloaders;
     }
 
-    public function getEnvironmentVariables(): array
+    public function getEnvironmentVariables(ApplicationInterface $application): array
     {
         return [
             'SAFE_MIGRATIONS' => true,

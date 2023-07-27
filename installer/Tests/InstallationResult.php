@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Events\BootloadersInjected;
 use Installer\Internal\Events\ConstantInjected;
 use Installer\Internal\Events\CopyEvent;
@@ -28,13 +29,14 @@ final class InstallationResult
         public readonly string $log,
         private readonly array $events,
         InstallationModuleResult $installationModuleResult,
+        ApplicationInterface $application,
         ?bool $testsSuccess = null,
     ) {
         if ($testsSuccess !== null) {
             Assert::assertTrue($testsSuccess, 'Application tests execution failure');
         }
 
-        $installationModuleResult->runTests($this);
+        $installationModuleResult->runTests($this, $application);
     }
 
     public function assertBootloaderNotRegistered(string $class, ?BootloaderPlaces $place = null): self

@@ -131,6 +131,7 @@ final class Installer implements \Stringable
             $buffer->getOutput(),
             $this->eventStorage->getEvents(),
             new InstallationModuleResult($this->modules),
+            (new \ReflectionProperty($configurator, 'application'))->getValue($configurator),
             isset($testsResult)
                 ? $testsResult === 0
                 : null

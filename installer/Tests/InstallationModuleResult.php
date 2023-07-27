@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Installer\Internal\Application\ApplicationInterface;
 use Spiral\Tokenizer\ClassLocator;
 use Symfony\Component\Finder\Finder;
 use Tests\Module\AbstractModule;
@@ -24,73 +25,92 @@ final class InstallationModuleResult
         $this->collectModules();
     }
 
-    public function runTests(InstallationResult $result): void
+    public function runTests(InstallationResult $result, ApplicationInterface $application): void
     {
-        $this->testInstalledModules($result);
-        $this->testNotInstalledModules($result);
+        $this->testInstalledModules($result, $application);
+        $this->testNotInstalledModules($result, $application);
     }
 
-    private function testInstalledModules(InstallationResult $result): void
+    private function testInstalledModules(InstallationResult $result, ApplicationInterface $application): void
     {
         foreach ($this->installedModules as $module) {
-            $result->assertPackageInstalled($module->getPackage());
+            if ($module->getPackage() !== null) {
+                $result->assertPackageInstalled($module->getPackage());
+            }
 
-            foreach ($module->getGenerators() as $generator) {
+            foreach ($module->getGenerators($application) as $generator) {
                 $result->assertGeneratorProcessed($generator);
             }
 
-            foreach ($module->getBootloaders() as $bootloader) {
+            foreach ($module->getBootloaders($application) as $bootloader) {
                 $result->assertBootloaderRegistered($bootloader);
             }
 
-            foreach ($module->getCopiedResources() as $path => $destination) {
-                $result->assertCopied($module->getResourcesPath() . $path, $destination);
+            if ($module->getResourcesPath() !== null) {
+                foreach ($module->getCopiedResources($application) as $path => $destination) {
+                    $result->assertCopied(
+                        \rtrim($module->getResourcesPath(), '/') . '/'. \ltrim($path, '/'),
+                        $destination
+                    );
+                }
             }
 
-            foreach ($module->getRemovedResources() as $path) {
+            foreach ($module->getRemovedResources($application) as $path) {
                 $result->assertDeleted($path);
             }
 
-            foreach ($module->getMiddleware() as $middleware) {
+            foreach ($module->getMiddleware($application) as $middleware) {
                 $result->assertMiddlewareRegistered($middleware);
             }
 
-            foreach ($module->getEnvironmentVariables() as $name => $value) {
+            foreach ($module->getInterceptors($application) as $interceptor) {
+                $result->assertInterceptorRegistered($interceptor);
+            }
+
+            foreach ($module->getEnvironmentVariables($application) as $name => $value) {
                 $result->assertEnvDefined($name, $value);
             }
         }
     }
 
-    private function testNotInstalledModules(InstallationResult $result): void
+    private function testNotInstalledModules(InstallationResult $result, ApplicationInterface $application): void
     {
         foreach ($this->modules as $module) {
             if ($this->isModuleInstalled($module)) {
                 continue;
             }
 
-            $result->assertPackageNotInstalled($module->getPackage());
+            if ($module->getPackage() !== null) {
+                $result->assertPackageNotInstalled($module->getPackage());
+            }
 
-            foreach ($module->getGenerators() as $generator) {
+            foreach ($module->getGenerators($application) as $generator) {
                 $result->assertGeneratorNotProcessed($generator);
             }
 
-            foreach ($module->getBootloaders() as $bootloader) {
+            foreach ($module->getBootloaders($application) as $bootloader) {
                 $result->assertBootloaderNotRegistered($bootloader);
             }
 
-            foreach ($module->getCopiedResources() as $path => $_) {
-                $result->assertNotCopied($module->getResourcesPath() . $path);
+            if ($module->getResourcesPath() !== null) {
+                foreach ($module->getCopiedResources($application) as $path => $_) {
+                    $result->assertNotCopied($module->getResourcesPath() . $path);
+                }
             }
 
-            foreach ($module->getRemovedResources() as $path) {
+            foreach ($module->getRemovedResources($application) as $path) {
                 $result->assertFileExists($path);
             }
 
-            foreach ($module->getMiddleware() as $middleware) {
+            foreach ($module->getMiddleware($application) as $middleware) {
                 $result->assertMiddlewareNotRegistered($middleware);
             }
 
-            foreach ($module->getEnvironmentVariables() as $name => $_) {
+            foreach ($module->getInterceptors($application) as $interceptor) {
+                $result->assertInterceptorNotRegistered($interceptor);
+            }
+
+            foreach ($module->getEnvironmentVariables($application) as $name => $_) {
                 $result->assertEnvNotDefined($name);
             }
         }
