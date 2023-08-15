@@ -16,6 +16,8 @@ final class InstallationModuleResult
      */
     private array $modules = [];
 
+    private array $registeredBootloaders = [];
+
     /**
      * @param array<AbstractModule> $installedModules
      */
@@ -44,6 +46,7 @@ final class InstallationModuleResult
 
             foreach ($module->getBootloaders($application) as $bootloader) {
                 $result->assertBootloaderRegistered($bootloader);
+                $this->registeredBootloaders[] = $bootloader;
             }
 
             if ($module->getResourcesPath() !== null) {
@@ -89,7 +92,9 @@ final class InstallationModuleResult
             }
 
             foreach ($module->getBootloaders($application) as $bootloader) {
-                $result->assertBootloaderNotRegistered($bootloader);
+                if (!\in_array($bootloader, $this->registeredBootloaders, true)) {
+                    $result->assertBootloaderNotRegistered($bootloader);
+                }
             }
 
             if ($module->getResourcesPath() !== null) {
