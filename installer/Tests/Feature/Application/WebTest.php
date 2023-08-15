@@ -37,6 +37,8 @@ final class WebTest extends InstallerTestCase
             ->addModule(new TestModule\Dumper())
             ->addModule(new TestModule\Exception())
             ->addModule(new TestModule\TemplateEngines\Stempler())
+            ->addModule(new TestModule\Translator())
+            ->addModule(new TestModule\Validators\Spiral())
             ->run();
 
         $result->storeLog();

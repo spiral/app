@@ -17,6 +17,7 @@ final class InstallationModuleResult
     private array $modules = [];
 
     private array $registeredBootloaders = [];
+    private array $registeredMiddleware = [];
 
     /**
      * @param array<AbstractModule> $installedModules
@@ -62,8 +63,11 @@ final class InstallationModuleResult
                 $result->assertDeleted($path);
             }
 
-            foreach ($module->getMiddleware($application) as $middleware) {
-                $result->assertMiddlewareRegistered($middleware);
+            foreach ($module->getMiddleware($application) as $group => $middleware) {
+                foreach ($middleware as $class) {
+                    $result->assertMiddlewareRegistered($class, $group);
+                    $this->registeredMiddleware[$group][] = $class;
+                }
             }
 
             foreach ($module->getInterceptors($application) as $interceptor) {
@@ -107,8 +111,12 @@ final class InstallationModuleResult
                 $result->assertFileExists($path);
             }
 
-            foreach ($module->getMiddleware($application) as $middleware) {
-                $result->assertMiddlewareNotRegistered($middleware);
+            foreach ($module->getMiddleware($application) as $group => $middleware) {
+                foreach ($middleware as $class) {
+                    if (!\in_array($class, $this->registeredMiddleware[$group] ?? [], true)) {
+                        $result->assertMiddlewareNotRegistered($class, $group);
+                    }
+                }
             }
 
             foreach ($module->getInterceptors($application) as $interceptor) {
