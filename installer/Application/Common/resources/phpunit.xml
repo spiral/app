@@ -30,6 +30,7 @@
         <env name="QUEUE_CONNECTION" value="sync" />
         <env name="CACHE_STORAGE" value="local" />
         <env name="APP_ENV" value="testing" />
+        <env name="TOKENIZER_CACHE_TARGETS" value="true" />
         <env name="TELEMETRY_DRIVER" value="null" />
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>

@@ -143,8 +143,10 @@ the specific needs of your project, but this structure provides a solid foundati
 ## Useful resources
 
 - [**Spiral Framework documentation**](https://spiral.dev/docs)
+- [**Roadmap of Learning Spiral Framework**](https://spiral.dev/roadmap) - For all the newcomers who are eager to dive into the Spiral Environment, this roadmap will be your guiding star. We understand the challenges beginners face, and with this structured path, our aim is to simplify your learning journey.
 - [**RoadRunner documentation**](https://roadrunner.dev/docs)
-- [Community packages](https://github.com/spiral-packages).
+- [Community packages](https://github.com/spiral-packages)
+- [Buggregator](https://github.com/buggregator/server) — OpenSource tool that offers a range of debugging features for Long running PHP applications.
 - [Birddog](https://github.com/roadrunner-server/birddog) — OpenSource tool for monitoring RoadRunner instances.
 - [Support us](https://github.com/sponsors/roadrunner-server)
 - [Contributing](https://spiral.dev/docs/about-contributing/)

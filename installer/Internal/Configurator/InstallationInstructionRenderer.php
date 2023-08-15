@@ -14,6 +14,7 @@ final class InstallationInstructionRenderer
 {
     public function __construct(
         private readonly ApplicationInterface $application,
+        private readonly string $projectRoot,
     ) {
     }
 
@@ -42,9 +43,12 @@ final class InstallationInstructionRenderer
      */
     public function renderForApplication(): \Generator
     {
-        foreach ($this->application->getInstructions() as $index => $instruction) {
-            yield Output::write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
-        }
+        yield Output::write(\sprintf('  1. Go to the project root directory', \rtrim($this->projectRoot, '/')));
+        yield Output::write('');
+        yield Output::write(\sprintf('     <info>cd %s</info>', $this->projectRoot));
+        yield Output::write('');
+        yield Output::write(\sprintf('  2. Read more about the project configuration in the project readme file: <info>%s/README.md</info>', \rtrim($this->projectRoot, '/')));
+        yield Output::write('');
     }
 
     /**

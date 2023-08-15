@@ -270,7 +270,7 @@ final class Configurator extends AbstractInstaller
 
     private function showInstructions(): void
     {
-        $renderer = new InstallationInstructionRenderer($this->application);
+        $renderer = new InstallationInstructionRenderer($this->application, $this->projectRoot);
 
         foreach ($renderer->render() as $output) {
             $this->eventStorage?->addEvent($output);
