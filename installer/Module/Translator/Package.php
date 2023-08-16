@@ -37,8 +37,8 @@ final class Package extends BasePackage
             Section::Configuration->value => [
                 new ListBlock([
                     'Documentation: https://spiral.dev/docs/advanced-i18n',
-                ], $this->getTitle())
-            ]
+                ], $this->getTitle()),
+            ],
         ];
     }
 }

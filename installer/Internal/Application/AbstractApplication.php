@@ -219,8 +219,8 @@ abstract class AbstractApplication implements ApplicationInterface
             Section::Configuration->value => [
                 new ListBlock([
                     'Please, configure the environment variables in the `.env` file at the application\'s root.',
-                ], 'Environment variables')
-            ]
+                ], 'Environment variables'),
+            ],
         ];
     }
 }

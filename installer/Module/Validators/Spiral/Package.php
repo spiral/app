@@ -31,8 +31,8 @@ final class Package extends BasePackage
                 new ListBlock([
                     'Read more about validation in the Spiral Framework: https://spiral.dev/docs/validation-factory',
                     'Documentation: https://spiral.dev/docs/validation-spiral',
-                ], $this->getTitle())
-            ]
+                ], $this->getTitle()),
+            ],
         ];
     }
 }

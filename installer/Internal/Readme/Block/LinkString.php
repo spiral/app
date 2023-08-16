@@ -14,6 +14,6 @@ final class LinkString implements \Stringable
 
     public function __toString(): string
     {
-        return \sprintf("[%s](%s)", $this->content, $this->link);
+        return \sprintf('[%s](%s)', $this->content, $this->link);
     }
 }

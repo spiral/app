@@ -103,7 +103,7 @@ final class Application extends AbstractApplication
         return \array_merge(parent::getDefaultReadme(), [
             Section::Usage->value => [
 
-            ]
+            ],
         ]);
     }
 }

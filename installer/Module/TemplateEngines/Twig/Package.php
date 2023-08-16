@@ -32,8 +32,8 @@ final class Package extends BasePackage
                 new ListBlock([
                     'Read more about views in the Spiral Framework: https://spiral.dev/docs/views-configuration',
                     'Documentation: https://spiral.dev/docs/views-twig',
-                ], $this->getTitle())
-            ]
+                ], $this->getTitle()),
+            ],
         ];
     }
 }

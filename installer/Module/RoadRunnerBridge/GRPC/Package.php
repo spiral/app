@@ -44,7 +44,7 @@ final class Package extends BasePackage
             Section::ConsoleCommands->value => [
                 new FileBlock(__DIR__ . '/../readme/grpc/install_protoc.md'),
                 new FileBlock(__DIR__ . '/../readme/grpc/generate_proto.md'),
-            ]
+            ],
         ];
     }
 

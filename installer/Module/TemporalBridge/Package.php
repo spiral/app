@@ -33,8 +33,8 @@ final class Package extends BasePackage
             Section::Configuration->value => [
                 new ListBlock([
                     'Documentation: https://spiral.dev/docs/temporal-configuration',
-                ], $this->getTitle())
-            ]
+                ], $this->getTitle()),
+            ],
         ];
     }
 }
