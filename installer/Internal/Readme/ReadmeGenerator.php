@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Installer\Internal\Configurator;
+namespace Installer\Internal\Readme;
 
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Events\ReadmeGenerated;
 use Installer\Internal\EventStorage;
+use Installer\Internal\Generator\Context;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -17,6 +18,7 @@ final class ReadmeGenerator
     public function __construct(
         public readonly string $filePath,
         private readonly ApplicationInterface $application,
+        private readonly Context $context,
         private readonly FilesInterface $files,
     ) {
     }
@@ -31,37 +33,51 @@ final class ReadmeGenerator
         $content = \str_replace(':app_name', $this->application->getName(), $content);
         $content = \str_replace(':date', (new \DateTime())->format('r'), $content);
 
+        $nextStepsContent = '';
 
-        $nextSteps = ['## Configuration'];
-
-        foreach ($this->generateForApplication() as $line) {
-            $nextSteps[] = $line;
+        foreach ($this->generateForApplication() as $section => $line) {
+            $nextSteps[$section][] = $line;
         }
 
         // from required packages
         foreach ($this->application->getPackages() as $package) {
-            foreach ($this->generateForPackage($package) as $line) {
-                $nextSteps[] = $line;
+            foreach ($this->generateForPackage($package) as $section => $line) {
+                $nextSteps[$section][] = $line;
             }
         }
 
         // from installed optional packages
         foreach ($this->application->getQuestions() as $question) {
-            foreach ($this->generateForQuestion($question) as $line) {
-                $nextSteps[] = $line;
+            foreach ($this->generateForQuestion($question) as $section => $line) {
+                $nextSteps[$section][] = $line;
+            }
+        }
+
+        foreach ($this->generateForContext() as $section => $line) {
+            $nextSteps[$section][] = $line;
+        }
+
+        foreach (Section::cases() as $case) {
+            if (!isset($nextSteps[$case->value]) || \count($nextSteps[$case->value]) === 0) {
+                continue;
+            }
+
+            $nextStepsContent .= \sprintf("## %s\n\n", $case->value);
+            foreach ($nextSteps[$case->value] as $instruction) {
+                $nextStepsContent .= $instruction;
             }
         }
 
         $content = \str_replace(
             ':next_steps',
-            \implode(\PHP_EOL, $nextSteps),
-            $content
+            \trim($nextStepsContent, "\n"),
+            $content,
         );
 
         $this->files->write(
             $this->filePath,
             $content,
-            FilesInterface::RUNTIME
+            FilesInterface::RUNTIME,
         );
 
         $eventStorage?->addEvent(new ReadmeGenerated($this->filePath, $content));
@@ -69,21 +85,21 @@ final class ReadmeGenerator
 
     public function generateForApplication(): \Traversable
     {
-        foreach ($this->application->getInstructions() as $index => $instruction) {
-            yield \sprintf('%d. %s', (int)$index + 1, \strip_tags($instruction));
+        foreach ($this->application->getReadme() as $section => $instructions) {
+            foreach ($instructions as $instruction) {
+                yield $section => $instruction;
+            }
         }
     }
 
     public function generateForPackage(Package $package): \Traversable
     {
-        if ($package->getInstructions() === []) {
-            return;
-        }
+        $readme = $package->getReadme();
 
-        yield \sprintf('### %s', $package->getTitle());
-
-        foreach ($package->getInstructions() as $index => $instruction) {
-            yield \sprintf('%s. %s', (int)$index + 1, \strip_tags($instruction));
+        foreach ($readme as $section => $instructions) {
+            foreach ($instructions as $instruction) {
+                yield $section => $instruction;
+            }
         }
     }
 
@@ -94,6 +110,15 @@ final class ReadmeGenerator
                 if ($this->application->isPackageInstalled($package)) {
                     yield from $this->generateForPackage($package);
                 }
+            }
+        }
+    }
+
+    private function generateForContext(): \Traversable
+    {
+        foreach ($this->context->readme as $section => $instructions) {
+            foreach ($instructions as $instruction) {
+                yield $section => $instruction;
             }
         }
     }

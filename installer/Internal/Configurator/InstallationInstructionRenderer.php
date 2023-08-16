@@ -28,14 +28,6 @@ final class InstallationInstructionRenderer
         yield Output::comment('Next steps:');
 
         yield from $this->renderForApplication();
-
-        foreach ($this->application->getPackages() as $package) {
-            yield from $this->renderForPackage($package);
-        }
-
-        foreach ($this->application->getQuestions() as $question) {
-            yield from $this->renderForQuestion($question);
-        }
     }
 
     /**
@@ -49,35 +41,5 @@ final class InstallationInstructionRenderer
         yield Output::write('');
         yield Output::write(\sprintf('  2. Read more about the project configuration in the project readme file: <info>%s/README.md</info>', \rtrim($this->projectRoot, '/')));
         yield Output::write('');
-    }
-
-    /**
-     * @return \Generator<Output>
-     */
-    public function renderForPackage(Package $package): \Generator
-    {
-        if ($package->getInstructions() === []) {
-            return;
-        }
-
-        yield Output::comment($package->getTitle());
-
-        foreach ($package->getInstructions() as $index => $instruction) {
-            yield Output::write(\sprintf('  %s. %s', (int)$index + 1, $instruction));
-        }
-    }
-
-    /**
-     * @return \Generator<Output>
-     */
-    public function renderForQuestion(QuestionInterface $question): \Generator
-    {
-        foreach ($question->getOptions() as $option) {
-            foreach ($option instanceof Option ? $option->getPackages() : [] as $package) {
-                if ($this->application->isPackageInstalled($package)) {
-                    yield from $this->renderForPackage($package);
-                }
-            }
-        }
     }
 }

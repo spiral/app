@@ -42,9 +42,9 @@ interface ApplicationInterface
     public function getResourcesPath(): string;
 
     /**
-     * @return non-empty-string[]
+     * @return array<non-empty-string, non-empty-string[]>
      */
-    public function getInstructions(): array;
+    public function getReadme(): array;
 
     /**
      * @return \Generator<Package|null|QuestionInterface, GeneratorInterface|class-string<GeneratorInterface>>

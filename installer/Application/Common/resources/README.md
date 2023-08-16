@@ -8,56 +8,18 @@ installation process a breeze.
 To help you get started, we've provided some instructions for configuring the individual packages that were installed.
 Depending on the packages you chose during the installation, you'll find the following next steps:
 
-## Next Steps
-
 :next_steps
 
-## Usage
+## Useful resources
 
-To start HTTP server using RoadRunner, run the following command in your project directory:
-
-```bash
-./rr serve
-```
-
-Once the server is running, you can access your application in a web browser by going to the following
-URL: http://127.0.0.1:8080.
-
-> **Note**:
-> For more information on how to use RoadRunner with Spiral, please consult
-> the [official documentation](https://spiral.dev/docs/start-server).
-
-## Console commands
-
-### Download or update RoadRunner
-
-Allows to install the latest version of the RoadRunner compatible with your environment (operating system, processor
-architecture, runtime, etc...).
-
-```bash
-composer rr:download
-# or
-./vendor/bin/rr get-binary
-```
-
-### Download or update protoc-gen GRPC plugin
-
-Allows to install the latest version of the `protoc-gen-php-grpc` file compatible with your environment (operating
-system, processor architecture, runtime, etc...).
-
-```bash
-composer rr:download-protoc
-# or
-./vendor/bin/rr download-protoc-binary
-```
-
-### Generate gRPC proto files
-
-To generate gRPC proto files, run the following command:
-
-```bash
-php app.php grpc:generate
-```
+- [**Spiral Framework documentation**](https://spiral.dev/docs)
+- [**Roadmap of Learning Spiral Framework**](https://spiral.dev/roadmap) - For all the newcomers who are eager to dive into the Spiral Environment, this roadmap will be your guiding star. We understand the challenges beginners face, and with this structured path, our aim is to simplify your learning journey.
+- [**RoadRunner documentation**](https://roadrunner.dev/docs)
+- [Community packages](https://github.com/spiral-packages)
+- [Buggregator](https://github.com/buggregator/server) — OpenSource tool that offers a range of debugging features for Long running PHP applications.
+- [Birddog](https://github.com/roadrunner-server/birddog) — OpenSource tool for monitoring RoadRunner instances.
+- [Support us](https://github.com/sponsors/roadrunner-server)
+- [Contributing](https://spiral.dev/docs/about-contributing/)
 
 ## Project Structure
 
@@ -139,17 +101,6 @@ way, making it easier to build and scale your applications over time. Of course,
 the specific needs of your project, but this structure provides a solid foundation for most applications.
 
 **Good luck with your project!**
-
-## Useful resources
-
-- [**Spiral Framework documentation**](https://spiral.dev/docs)
-- [**Roadmap of Learning Spiral Framework**](https://spiral.dev/roadmap) - For all the newcomers who are eager to dive into the Spiral Environment, this roadmap will be your guiding star. We understand the challenges beginners face, and with this structured path, our aim is to simplify your learning journey.
-- [**RoadRunner documentation**](https://roadrunner.dev/docs)
-- [Community packages](https://github.com/spiral-packages)
-- [Buggregator](https://github.com/buggregator/server) — OpenSource tool that offers a range of debugging features for Long running PHP applications.
-- [Birddog](https://github.com/roadrunner-server/birddog) — OpenSource tool for monitoring RoadRunner instances.
-- [Support us](https://github.com/sponsors/roadrunner-server)
-- [Contributing](https://spiral.dev/docs/about-contributing/)
 
 ## Support
 

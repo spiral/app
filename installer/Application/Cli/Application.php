@@ -71,7 +71,7 @@ final class Application extends AbstractApplication
             resources: $resources,
             generators: $generators,
             commands: $commands,
-            instructions: $instructions
+            readme: $instructions
         );
     }
 }

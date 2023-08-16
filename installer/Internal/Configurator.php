@@ -15,13 +15,11 @@ use Composer\Script\Event;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Configurator\InstallationInstructionRenderer;
-use Installer\Internal\Configurator\ReadmeGenerator;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Configurator\RoadRunnerConfigGenerator;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Events\DeleteEvent;
-use Installer\Internal\Generator;
 use Installer\Internal\Generator\Bootloader\RoutesBootloaderConfigurator;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Installer\AbstractInstaller;
@@ -29,6 +27,7 @@ use Installer\Internal\Installer\ComposerFile;
 use Installer\Internal\Installer\ComposerStorage;
 use Installer\Internal\Installer\ComposerStorageInterface;
 use Installer\Internal\Process\ProcessExecutor;
+use Installer\Internal\Readme\ReadmeGenerator;
 use Seld\JsonLint\ParsingException;
 use Spiral\Core\Container;
 use Spiral\Files\Files;
@@ -264,6 +263,7 @@ final class Configurator extends AbstractInstaller
         (new ReadmeGenerator(
             filePath: $path = $this->projectRoot . '/README.md',
             application: $this->application,
+            context: $this->context,
             files: $this->files,
         ))->generate($this->eventStorage);
     }

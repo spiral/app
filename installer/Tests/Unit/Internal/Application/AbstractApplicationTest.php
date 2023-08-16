@@ -58,7 +58,7 @@ final class AbstractApplicationTest extends TestCase
             commands: $this->commands = [
                 'foo' => 'bar'
             ],
-            instructions: $this->instructions = [
+            readme: $this->instructions = [
                 'foo' => 'bar'
             ]
         );
@@ -89,7 +89,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->instructions,
-            $this->app->getInstructions()
+            $this->app->getReadme()
         );
     }
 
@@ -197,7 +197,7 @@ final class AbstractApplicationTest extends TestCase
             [
                 'Some default instruction',
             ],
-            $app->getInstructions()
+            $app->getReadme()
         );
     }
 }

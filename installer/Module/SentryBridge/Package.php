@@ -6,6 +6,8 @@ namespace Installer\Module\SentryBridge;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 use Installer\Module\SentryBridge\Generator\Bootloaders;
 use Installer\Module\SentryBridge\Generator\Env;
 
@@ -19,10 +21,18 @@ final class Package extends BasePackage
                 new Bootloaders(),
                 new Env(),
             ],
-            instructions: [
-                'Configure the <comment>`SENTRY_DSN`</comment> environment variable to enable Sentry error reporting.',
-                'Documentation: <comment>https://spiral.dev/docs/basics-errors</comment>',
-            ]
         );
+    }
+
+    public function getReadme(): array
+    {
+        return [
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Configure the `SENTRY_DSN` environment variable to enable Sentry error reporting.',
+                    'Documentation: https://spiral.dev/docs/basics-errors',
+                ], $this->getTitle()),
+            ],
+        ];
     }
 }

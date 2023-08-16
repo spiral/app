@@ -6,6 +6,8 @@ namespace Installer\Module\EventDispatcher\League;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 use Installer\Module\EventDispatcher\League\Generator\Bootloaders;
 
 final class Package extends BasePackage
@@ -17,9 +19,17 @@ final class Package extends BasePackage
             generators: [
                 new Bootloaders(),
             ],
-            instructions: [
-                'Documentation: <comment>https://spiral.dev/docs/advanced-events</comment>',
-            ]
         );
+    }
+
+    public function getReadme(): array
+    {
+        return [
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Documentation: https://spiral.dev/docs/advanced-events',
+                ], $this->getTitle()),
+            ],
+        ];
     }
 }

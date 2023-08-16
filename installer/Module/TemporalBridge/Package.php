@@ -6,6 +6,8 @@ namespace Installer\Module\TemporalBridge;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 use Installer\Module\TemporalBridge\Generator\Bootloaders;
 use Installer\Module\TemporalBridge\Generator\Env;
 
@@ -22,9 +24,17 @@ final class Package extends BasePackage
                 new Bootloaders(),
                 new Env(),
             ],
-            instructions: [
-                'Documentation: <comment>https://spiral.dev/docs/temporal-configuration</comment>',
-            ]
         );
+    }
+
+    public function getReadme(): array
+    {
+        return [
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Documentation: https://spiral.dev/docs/temporal-configuration',
+                ], $this->getTitle())
+            ]
+        ];
     }
 }

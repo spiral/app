@@ -22,7 +22,7 @@ class Package implements HasResourcesInterface
         ComposerPackages $package,
         private readonly array $resources = [],
         private readonly array $generators = [],
-        private readonly array $instructions = [],
+        private readonly array $readme = [],
         private readonly array $dependencies = [],
     ) {
         $this->setPackage($package);
@@ -81,11 +81,11 @@ class Package implements HasResourcesInterface
     }
 
     /**
-     * @return non-empty-string[]
+     * @return array<non-empty-string, non-empty-string[]>
      */
-    public function getInstructions(): array
+    public function getReadme(): array
     {
-        return $this->instructions;
+        return $this->readme;
     }
 
     /**

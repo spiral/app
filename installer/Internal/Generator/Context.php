@@ -26,6 +26,7 @@ final class Context
         public readonly ResourceQueue $resource,
         public readonly ?DomainInterceptorsConfigurator $domainInterceptors = null,
         public readonly ?RoutesBootloaderConfigurator $routesBootloader = null,
+        public array $readme = [],
     ) {
     }
 }

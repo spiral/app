@@ -14,6 +14,7 @@ use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Internal\Readme\Section;
 use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
 use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\ErrorHandler\Yii\Package as YiiErrorHandlerPackage;
@@ -81,7 +82,7 @@ final class Application extends AbstractApplication
             resources: $resources,
             generators: $generators,
             commands: $commands,
-            instructions: $instructions
+            readme: $instructions
         );
 
         $this->useRoadRunnerPlugin('http');
@@ -95,5 +96,14 @@ final class Application extends AbstractApplication
     public function hasRoutesBootloader(): bool
     {
         return true;
+    }
+
+    protected function getDefaultReadme(): array
+    {
+        return \array_merge(parent::getDefaultReadme(), [
+            Section::Usage->value => [
+
+            ]
+        ]);
     }
 }

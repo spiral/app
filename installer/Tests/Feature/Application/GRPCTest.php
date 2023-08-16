@@ -108,6 +108,9 @@ final class GRPCTest extends InstallerTestCase
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr download-protoc-binary')
-            ->assertReadmeContains('The settings for RoadRunner are in a file named .rr.yaml at the main folder of the app.');
+            ->assertReadmeContains('### GRPC')
+            ->assertReadmeContains('- Configuration file: `app/config/grpc.php`')
+            ->assertReadmeContains('Download or update protoc-gen GRPC plugin')
+            ->assertReadmeContains('Generate gRPC proto files');
     }
 }

@@ -94,7 +94,12 @@ final class WebTest extends InstallerTestCase
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http')
-            ->assertReadmeContains('The settings for RoadRunner are in a file named .rr.yaml at the main folder of the app.');
+            ->assertReadmeContains('RoadRunnerBridge')
+            ->assertReadmeContains('The settings for RoadRunner are in a file `.rr.yaml` at the main folder of the app.')
+            ->assertReadmeContains('RoadRunner HTTP server')
+            ->assertReadmeContains('Download or update RoadRunner')
+            ->assertReadmeNotContains('Generate gRPC proto files')
+            ->assertReadmeNotContains('RoadRunner Queue server');
     }
 
     public function testStemplerTemplateEngine(): void

@@ -11,6 +11,8 @@ use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 
 /**
  * @psalm-import-type AutoloadRules from PackageInterface
@@ -42,7 +44,7 @@ abstract class AbstractApplication implements ApplicationInterface
         private readonly array $resources = [],
         private readonly array $generators = [],
         private readonly array $commands = [],
-        private readonly array $instructions = []
+        private readonly array $readme = []
     ) {
     }
 
@@ -70,9 +72,9 @@ abstract class AbstractApplication implements ApplicationInterface
     /**
      * @return non-empty-string[]
      */
-    public function getInstructions(): array
+    public function getReadme(): array
     {
-        return $this->instructions === [] ? $this->getDefaultInstructions() : $this->instructions;
+        return $this->readme === [] ? $this->getDefaultReadme() : $this->readme;
     }
 
     /**
@@ -211,11 +213,14 @@ abstract class AbstractApplication implements ApplicationInterface
         $this->options = $options;
     }
 
-    protected function getDefaultInstructions(): array
+    protected function getDefaultReadme(): array
     {
         return [
-            'Please, configure the environment variables in the <comment>.env</comment> file at the application\'s root.',
-            'Read documentation about Spiral Framework: <comment>https://spiral.dev/docs</comment></info>',
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Please, configure the environment variables in the `.env` file at the application\'s root.',
+                ], 'Environment variables')
+            ]
         ];
     }
 }

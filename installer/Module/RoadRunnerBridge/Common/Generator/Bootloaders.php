@@ -6,6 +6,8 @@ namespace Installer\Module\RoadRunnerBridge\Common\Generator;
 
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
+use Installer\Internal\Readme\Block\FileBlock;
+use Installer\Internal\Readme\Section;
 use Spiral\Bootloader\CommandBootloader as FrameworkCommand;
 use Spiral\RoadRunnerBridge\Bootloader\CacheBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\CommandBootloader;
@@ -27,10 +29,12 @@ final class Bootloaders implements GeneratorInterface
 
         if (\in_array('jobs', $plugins, true)) {
             $bootloaders[] = QueueBootloader::class;
+            $context->readme[Section::Usage->value][] = new FileBlock(__DIR__ . '/../../readme/queue/usage.md');
         }
 
         if (\in_array('http', $plugins, true)) {
             $bootloaders[] = HttpBootloader::class;
+            $context->readme[Section::Usage->value][] = new FileBlock(__DIR__ . '/../../readme/http/usage.md');
         }
 
         if (\in_array('kv', $plugins, true)) {

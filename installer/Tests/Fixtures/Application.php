@@ -8,7 +8,7 @@ use Installer\Internal\Application\AbstractApplication;
 
 final class Application extends AbstractApplication
 {
-    protected function getDefaultInstructions(): array
+    protected function getDefaultReadme(): array
     {
         return [
             'Some default instruction',

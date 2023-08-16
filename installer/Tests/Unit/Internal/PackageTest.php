@@ -29,7 +29,7 @@ final class PackageTest extends TestCase
             generators: $this->generators = [
                 new Config()
             ],
-            instructions: $this->instructions = [
+            readme: $this->instructions = [
                 'foo' => 'bar'
             ],
             dependencies: $this->dependencies = [
@@ -65,7 +65,7 @@ final class PackageTest extends TestCase
 
     public function testGetInstructions(): void
     {
-        $this->assertSame($this->instructions, $this->package->getInstructions());
+        $this->assertSame($this->instructions, $this->package->getReadme());
     }
 
     public function testGetDependencies(): void

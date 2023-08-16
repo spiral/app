@@ -6,6 +6,8 @@ namespace Installer\Module\Translator;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 use Installer\Module\Translator\Generator\Bootloaders;
 use Installer\Module\Translator\Generator\Env;
 use Installer\Module\Translator\Generator\Middlewares;
@@ -26,9 +28,17 @@ final class Package extends BasePackage
                 new Env(),
                 new Middlewares(),
             ],
-            instructions: [
-                'Documentation: <comment>https://spiral.dev/docs/advanced-i18n</comment>',
-            ]
         );
+    }
+
+    public function getReadme(): array
+    {
+        return [
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Documentation: https://spiral.dev/docs/advanced-i18n',
+                ], $this->getTitle())
+            ]
+        ];
     }
 }
