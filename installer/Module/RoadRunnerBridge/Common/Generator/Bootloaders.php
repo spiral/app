@@ -11,9 +11,11 @@ use Installer\Internal\Readme\Section;
 use Spiral\Bootloader\CommandBootloader as FrameworkCommand;
 use Spiral\RoadRunnerBridge\Bootloader\CacheBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\CommandBootloader;
+use Spiral\RoadRunnerBridge\Bootloader\ScaffolderBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\HttpBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\LoggerBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\QueueBootloader;
+use Spiral\Scaffolder\Bootloader\ScaffolderBootloader as FrameworkScaffolder;
 
 final class Bootloaders implements GeneratorInterface
 {
@@ -48,5 +50,6 @@ final class Bootloaders implements GeneratorInterface
         );
 
         $context->kernel->load->append(CommandBootloader::class, FrameworkCommand::class);
+        $context->kernel->load->append(ScaffolderBootloader::class, FrameworkScaffolder::class);
     }
 }

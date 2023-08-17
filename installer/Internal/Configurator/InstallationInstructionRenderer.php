@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Configurator;
 
-use Installer\Internal\Application\ApplicationInterface;
 use Installer\Internal\Console\Output;
-use Installer\Internal\Package;
-use Installer\Internal\Question\Option\Option;
-use Installer\Internal\Question\QuestionInterface;
 
 final class InstallationInstructionRenderer
 {
     public function __construct(
-        private readonly ApplicationInterface $application,
         private readonly string $projectRoot,
     ) {
     }

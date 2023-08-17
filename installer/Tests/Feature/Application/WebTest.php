@@ -77,16 +77,14 @@ final class WebTest extends InstallerTestCase
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\SessionBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\CsrfBootloader::class)
             ->assertBootloaderRegistered(\Spiral\Bootloader\Http\PaginationBootloader::class)
-
             ->assertCopied(
                 'Application/Web/Generator/resources/ViewRenderer.php',
-                'app/src/Application/Exception/Renderer/ViewRenderer.php'
+                'app/src/Application/Exception/Renderer/ViewRenderer.php',
             )
             ->assertCopied(
                 'Module/Translator/resources/locale/ru/messages.en.php',
-                'app/locale/ru/messages.en.php'
+                'app/locale/ru/messages.en.php',
             )
-
             ->assertMiddlewareRegistered(ErrorHandlerMiddleware::class)
             ->assertMiddlewareNotRegistered(HttpCollector::class, 'web')
             ->assertMiddlewareRegistered(SessionMiddleware::class, 'web')
@@ -95,7 +93,9 @@ final class WebTest extends InstallerTestCase
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http')
             ->assertReadmeContains('RoadRunnerBridge')
-            ->assertReadmeContains('The settings for RoadRunner are in a file `.rr.yaml` at the main folder of the app.')
+            ->assertReadmeContains(
+                'The settings for RoadRunner are in a file `.rr.yaml` at the main folder of the app.',
+            )
             ->assertReadmeContains('RoadRunner HTTP server')
             ->assertReadmeContains('Download or update RoadRunner')
             ->assertReadmeNotContains('Generate gRPC proto files')

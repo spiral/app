@@ -43,7 +43,7 @@ final class Bootloaders implements GeneratorInterface
                 RoutesBootloader::class,
             ],
             comment: 'Configure route groups, middleware for route groups',
-            priority: 101
+            priority: 1000
         );
 
         $context->kernel->app->addGroup(

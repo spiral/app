@@ -11,6 +11,7 @@ use Spiral\RoadRunnerBridge\Bootloader\CommandBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\HttpBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\LoggerBootloader;
 use Spiral\RoadRunnerBridge\Bootloader\QueueBootloader;
+use Spiral\RoadRunnerBridge\Bootloader\ScaffolderBootloader;
 
 final class RoadRunnerBridge extends AbstractModule
 {
@@ -26,6 +27,7 @@ final class RoadRunnerBridge extends AbstractModule
         $bootloaders = [
             LoggerBootloader::class,
             CommandBootloader::class,
+            ScaffolderBootloader::class,
         ];
 
         if (\in_array('jobs', $plugins, true)) {

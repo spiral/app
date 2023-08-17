@@ -121,7 +121,7 @@ final class Configurator extends AbstractInstaller
             envConfigurator: $this->buildEnvConfigurator(),
             applicationRoot: $this->projectRoot,
             resource: new ResourceQueue(
-                directoriesMap: $this->config->getDirectories()
+                directoriesMap: $this->config->getDirectories(),
             ),
             domainInterceptors: $this->application->hasAppBootloader()
                 ? new Generator\Bootloader\DomainInterceptorsConfigurator(
@@ -192,7 +192,7 @@ final class Configurator extends AbstractInstaller
                     $generator = $this->container->get($generator);
                 } catch (\Throwable $e) {
                     $this->io->error(
-                        \sprintf('Unable to create generator %s. Reason [%s]', $generator::class, $e->getMessage())
+                        \sprintf('Unable to create generator %s. Reason [%s]', $generator::class, $e->getMessage()),
                     );
                 }
             }
@@ -220,7 +220,7 @@ final class Configurator extends AbstractInstaller
             foreach (
                 $this->resource->copy(
                     $task->getFullSource(),
-                    $task->getFullDestination()
+                    $task->getFullDestination(),
                 ) as $copyEvent
             ) {
                 $this->eventStorage?->addEvent($copyEvent);
@@ -270,7 +270,7 @@ final class Configurator extends AbstractInstaller
 
     private function showInstructions(): void
     {
-        $renderer = new InstallationInstructionRenderer($this->application, $this->projectRoot);
+        $renderer = new InstallationInstructionRenderer($this->projectRoot);
 
         foreach ($renderer->render() as $output) {
             $this->eventStorage?->addEvent($output);
@@ -283,7 +283,7 @@ final class Configurator extends AbstractInstaller
         $file = $this->projectRoot . 'LICENSE';
 
         $this->eventStorage?->addEvent(
-            new DeleteEvent($file)
+            new DeleteEvent($file),
         );
 
         $this->files->delete($file);
@@ -294,7 +294,7 @@ final class Configurator extends AbstractInstaller
         $directory = $this->projectRoot . '.github';
 
         $this->eventStorage?->addEvent(
-            new DeleteEvent($directory)
+            new DeleteEvent($directory),
         );
 
         if ($this->files->isDirectory($directory)) {
@@ -309,7 +309,7 @@ final class Configurator extends AbstractInstaller
     {
         $result = $this->composer->removeInstaller(
             $this->application->getAutoload(),
-            $this->application->getAutoloadDev()
+            $this->application->getAutoloadDev(),
         );
 
         foreach ($result as $output) {
@@ -323,7 +323,7 @@ final class Configurator extends AbstractInstaller
             $installerPath = $this->projectRoot . 'installer';
 
             $this->eventStorage?->addEvent(
-                new DeleteEvent($installerPath)
+                new DeleteEvent($installerPath),
             );
             $this->files->deleteDirectory($installerPath);
         }
@@ -332,7 +332,7 @@ final class Configurator extends AbstractInstaller
             $cleanupPath = $this->projectRoot . 'cleanup.sh';
 
             $this->eventStorage?->addEvent(
-                new DeleteEvent($cleanupPath)
+                new DeleteEvent($cleanupPath),
             );
             $this->files->delete($cleanupPath);
         }
