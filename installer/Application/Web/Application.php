@@ -14,6 +14,7 @@ use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Question\QuestionInterface;
+use Installer\Internal\Readme\Block\FileBlock;
 use Installer\Internal\Readme\Section;
 use Installer\Module\Console\Generator\Skeleton as ConsoleSkeleton;
 use Installer\Module\Dumper\Package as DumperPackage;
@@ -102,7 +103,7 @@ final class Application extends AbstractApplication
     {
         return \array_merge(parent::getDefaultReadme(), [
             Section::Usage->value => [
-
+                new FileBlock(__DIR__ . '/readme/usage.md'),
             ],
         ]);
     }
