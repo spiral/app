@@ -1,0 +1,31 @@
+{
+    "name": "spiral/app",
+    "license": "MIT",
+    "description": "Spiral Application installer",
+    "require-dev": {
+        "nette/php-generator": "^4.0",
+        "spiral/framework": "^3.7",
+        "spiral/nyholm-bridge": "^1.0",
+        "composer/composer": "^2.4",
+        "phpunit/phpunit": "^10.1",
+        "vimeo/psalm": "^5.9",
+        "mockery/mockery": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Installer\\Application\\": "Application",
+            "Installer\\Internal\\": "Internal",
+            "Installer\\Module\\": "Module"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "Tests"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "spiral/composer-publish-plugin": true
+        }
+    }
+}

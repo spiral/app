@@ -14,5 +14,6 @@ enabled:
   - trailing_comma_in_multiline_array
 finder:
   exclude:
-    - "tests"
-    - "public"
+    - "Tests"
+    - "installer/Application/Common/resources/tests"
+    - "installer/Module/RoadRunnerBridge/resources/config"
