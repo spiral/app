@@ -14,7 +14,7 @@ if (!\function_exists('dd')) {
 
         foreach ($vars as $var) {
             $throwable->addDump(
-                $dumper->dump((new VarCloner)->cloneVar($var), true)
+                $dumper->dump((new VarCloner())->cloneVar($var), true)
             );
         }
 
