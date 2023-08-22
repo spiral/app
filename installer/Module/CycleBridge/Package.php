@@ -7,6 +7,8 @@ namespace Installer\Module\CycleBridge;
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package as BasePackage;
+use Installer\Internal\Readme\Block\ListBlock;
+use Installer\Internal\Readme\Section;
 use Installer\Module\CycleBridge\Generator\Bootloaders;
 use Installer\Module\CycleBridge\Generator\Config;
 use Installer\Module\CycleBridge\Generator\Env;
@@ -30,13 +32,21 @@ final class Package extends BasePackage
             new Env(),
             new Skeleton(),
         ],
-        array $instructions = [
-            'Database configuration file: <comment>app/config/database.php</comment>',
-            'Migrations configuration file: <comment>app/config/migration.php</comment>',
-            'Cycle ORM configuration file: <comment>app/config/cycle.php</comment>',
-            'Documentation: <comment>https://spiral.dev/docs/basics-orm</comment>',
-        ],
     ) {
-        parent::__construct(ComposerPackages::CycleBridge, $resources, $generators, $instructions);
+        parent::__construct(ComposerPackages::CycleBridge, $resources, $generators);
+    }
+
+    public function getReadme(): array
+    {
+        return [
+            Section::Configuration->value => [
+                new ListBlock([
+                    'Database configuration file: `app/config/database.php`',
+                    'Migrations configuration file: `app/config/migration.php`',
+                    'Cycle ORM configuration file: `app/config/cycle.php`',
+                    'Documentation: `https://spiral.dev/docs/basics-orm`'
+                ], $this->getTitle())
+            ],
+        ];
     }
 }
