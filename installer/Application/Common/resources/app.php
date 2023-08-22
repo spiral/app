@@ -12,6 +12,9 @@ use App\Application\Kernel;
 \error_reporting((E_ALL | E_STRICT) ^ E_DEPRECATED);
 \ini_set('display_errors', 'stderr');
 
+// Application helper functions. Must be included before composer's autoloader.
+require __DIR__ . '/functions.php';
+
 // Register Composer's auto loader.
 require __DIR__ . '/vendor/autoload.php';
 
