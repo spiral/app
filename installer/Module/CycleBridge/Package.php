@@ -44,7 +44,7 @@ final class Package extends BasePackage
                     'Database configuration file: `app/config/database.php`',
                     'Migrations configuration file: `app/config/migration.php`',
                     'Cycle ORM configuration file: `app/config/cycle.php`',
-                    'Documentation: `https://spiral.dev/docs/basics-orm`'
+                    'Documentation: `https://spiral.dev/docs/basics-orm`',
                 ], $this->getTitle()),
             ],
         ];
