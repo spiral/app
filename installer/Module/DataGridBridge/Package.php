@@ -33,7 +33,7 @@ final class Package extends BasePackage
             Section::Configuration->value => [
                 new ListBlock([
                     'Documentation: `https://spiral.dev/docs/component-data-grid`',
-                ], $this->getTitle())
+                ], $this->getTitle()),
             ],
         ];
     }
