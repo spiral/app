@@ -11,7 +11,7 @@ enum ComposerPackages: string
     case ExtGRPC = 'ext-grpc:*';
     case ExtSockets = 'ext-sockets:*';
     case GRPC = 'grpc/grpc:^1.42';
-    case Dumper = 'dev:spiral/dumper:^3.0';
+    case Dumper = 'dev:spiral/dumper:^3.2';
     case RoadRunnerBridge = 'spiral/roadrunner-bridge:^3.0';
     case RoadRunnerCli = 'spiral/roadrunner-cli:^2.5';
     case NyholmBridge = 'spiral/nyholm-bridge:^1.3';
