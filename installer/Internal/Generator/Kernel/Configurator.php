@@ -66,8 +66,8 @@ final class Configurator extends AbstractConfigurator
         $this->system->addGroup(
             bootloaders: [
                 CoreBootloader::class,
-                TokenizerListenerBootloader::class,
                 DotenvBootloader::class,
+                TokenizerListenerBootloader::class,
             ],
         );
     }
