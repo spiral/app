@@ -25,8 +25,8 @@ class Kernel extends \Spiral\Framework\Kernel
     {
         return [
             CoreBootloader::class,
-            TokenizerListenerBootloader::class,
             DotenvBootloader::class,
+            TokenizerListenerBootloader::class,
         ];
     }
 
