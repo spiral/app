@@ -137,8 +137,8 @@ final class ConfiguratorTest extends TestCase
                         {
                             return [
                                 CoreBootloader::class,
-                                TokenizerListenerBootloader::class,
                                 DotenvBootloader::class,
+                                TokenizerListenerBootloader::class,
                             ];
                         }
 
