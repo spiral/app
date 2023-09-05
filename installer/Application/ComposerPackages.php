@@ -11,7 +11,7 @@ enum ComposerPackages: string
     case ExtGRPC = 'ext-grpc:*';
     case ExtSockets = 'ext-sockets:*';
     case GRPC = 'grpc/grpc:^1.42';
-    case Dumper = 'dev:spiral/dumper:^3.2';
+    case Dumper = 'dev:spiral/dumper:^3.2.1';
     case RoadRunnerBridge = 'spiral/roadrunner-bridge:^3.0';
     case RoadRunnerCli = 'spiral/roadrunner-cli:^2.5';
     case NyholmBridge = 'spiral/nyholm-bridge:^1.3';
@@ -27,12 +27,13 @@ enum ComposerPackages: string
     case Scheduler = 'spiral-packages/scheduler:^2.1';
     case TemporalBridge = 'spiral/temporal-bridge:^2.2';
     case SentryBridge = 'spiral/sentry-bridge:^2.1';
-    case StemplerBridge = 'spiral/stempler-bridge:^3.7';
+    case StemplerBridge = 'spiral/stempler-bridge:^3.8';
     case TwigBridge = 'spiral/twig-bridge:^2.0.1';
     case LeagueEvent = 'spiral-packages/league-event:^1.0.1';
     case SymfonySerializer = 'spiral-packages/symfony-serializer:^2.0.1';
     case LaravelSerializableClosure = 'spiral-packages/serializable-closure:^1.0';
     case DataGridBridge = 'spiral/data-grid-bridge:^3.0.1';
-    case Translator = 'spiral/translator:^3.7';
-    case Views = 'spiral/views:^3.7';
+    case Translator = 'spiral/translator:^3.8';
+    case Views = 'spiral/views:^3.8';
+    case Http = 'spiral/http:^3.8';
 }

@@ -25,18 +25,12 @@ final class Bootloaders implements GeneratorInterface
             priority: 5
         );
 
-        $context->kernel->load->addGroup(
-            bootloaders: [
-                Http\RouterBootloader::class,
-                Http\JsonPayloadsBootloader::class,
-                Http\CookiesBootloader::class,
-                Http\SessionBootloader::class,
-                Http\CsrfBootloader::class,
-                Http\PaginationBootloader::class,
-            ],
-            comment: 'HTTP extensions',
-            priority: 6
-        );
+        $context->kernel->load->append(Http\RouterBootloader::class, Http\HttpBootloader::class);
+        $context->kernel->load->append(Http\JsonPayloadsBootloader::class, Http\RouterBootloader::class);
+        $context->kernel->load->append(Http\CookiesBootloader::class, Http\JsonPayloadsBootloader::class);
+        $context->kernel->load->append(Http\SessionBootloader::class, Http\CookiesBootloader::class);
+        $context->kernel->load->append(Http\CsrfBootloader::class, Http\SessionBootloader::class);
+        $context->kernel->load->append(Http\PaginationBootloader::class, Http\CsrfBootloader::class);
 
         $context->kernel->load->addGroup(
             bootloaders: [

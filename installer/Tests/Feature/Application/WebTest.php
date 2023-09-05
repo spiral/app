@@ -39,6 +39,7 @@ final class WebTest extends InstallerTestCase
             ->addModule(new TestModule\TemplateEngines\Stempler())
             ->addModule(new TestModule\Translator())
             ->addModule(new TestModule\Validators\Spiral())
+            ->addModule(new TestModule\Http())
             ->run();
 
         $result->storeLog();
@@ -117,6 +118,7 @@ final class WebTest extends InstallerTestCase
             ->addModule(new TestModule\ExtMbString())
             ->addModule(new TestModule\Exception())
             ->addModule(new TestModule\TemplateEngines\Stempler())
+            ->addModule(new TestModule\Http())
             ->run();
 
         $result->storeLog();
@@ -137,6 +139,7 @@ final class WebTest extends InstallerTestCase
             ->addModule(new TestModule\ExtMbString())
             ->addModule(new TestModule\Exception())
             ->addModule(new TestModule\TemplateEngines\Twig())
+            ->addModule(new TestModule\Http())
             ->run();
 
         $result->storeLog();
@@ -157,6 +160,7 @@ final class WebTest extends InstallerTestCase
             ->addModule(new TestModule\ExtMbString())
             ->addModule(new TestModule\Exception())
             ->addModule(new TestModule\TemplateEngines\PlainPHP())
+            ->addModule(new TestModule\Http())
             ->run();
 
         $result->storeLog();
