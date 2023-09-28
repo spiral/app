@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Installer\Application\Web;
 
 use Composer\Package\PackageInterface;
-use Installer\Application\Package;
 use Installer\Application\Web\Generator\Bootloaders;
 use Installer\Application\Web\Generator\Env;
 use Installer\Application\Web\Generator\Interceptors;
@@ -13,6 +12,7 @@ use Installer\Application\Web\Generator\Skeleton;
 use Installer\Application\Web\Generator\ViewRenderer;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Generator\GeneratorInterface;
+use Installer\Internal\Package;
 use Installer\Internal\Question\QuestionInterface;
 use Installer\Internal\Readme\Block\FileBlock;
 use Installer\Internal\Readme\Section;
@@ -21,6 +21,7 @@ use Installer\Module\Dumper\Package as DumperPackage;
 use Installer\Module\ErrorHandler\Yii\Package as YiiErrorHandlerPackage;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Installer\Module\ExtMbString\Package as ExtMbStringPackage;
+use Installer\Module\Http\Package as HttpPackage;
 use Installer\Module\Psr7Implementation\Nyholm\Package as NyholmPsr7Implementation;
 use Installer\Module\RoadRunnerBridge\Common\Package as RoadRunnerBridgePackage;
 
@@ -40,6 +41,7 @@ final class Application extends AbstractApplication
     public function __construct(
         string $name = 'Web',
         array $packages = [
+            new HttpPackage(),
             new ExtMbStringPackage(),
             new NyholmPsr7Implementation(),
             new RoadRunnerBridgePackage(),

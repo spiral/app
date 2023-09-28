@@ -6,7 +6,9 @@ namespace Tests\Module;
 
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Module\Dumper\Package;
+use Installer\Module\Http\Package as HttpPackage;
 use Spiral\Debug\Bootloader\DumperBootloader;
+use Spiral\Debug\Middleware\DumperMiddleware;
 
 final class Dumper extends AbstractModule
 {
@@ -19,6 +21,19 @@ final class Dumper extends AbstractModule
     {
         return [
             DumperBootloader::class,
+        ];
+    }
+
+    public function getMiddleware(ApplicationInterface $application): array
+    {
+        if (!$application->isPackageInstalled(new HttpPackage())) {
+            return [];
+        }
+
+        return [
+            'global' => [
+                DumperMiddleware::class
+            ]
         ];
     }
 }

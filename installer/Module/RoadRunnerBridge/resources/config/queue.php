@@ -32,7 +32,7 @@ return [
      * Queue connections
      * Drivers: "sync", "roadrunner"
      *
-     * @link https://spiral.dev/docs/queue-configuration/#3.7/en
+     * @link https://spiral.dev/docs/queue-configuration
      */
     'connections' => [
         'sync' => [

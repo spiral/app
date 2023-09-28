@@ -279,7 +279,7 @@
                 </a>
             </nav>
         </div>
-        <div class="version"><span>Spiral Framework v3.7</span> <span>PHP <?=PHP_VERSION?></span></div>
+        <div class="version"><span>Spiral Framework v3.8</span> <span>PHP <?=PHP_VERSION?></span></div>
 
         <div class="logo">
             <a href="https://spiral.dev/">
