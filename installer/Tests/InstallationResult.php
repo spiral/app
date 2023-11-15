@@ -337,7 +337,7 @@ final class InstallationResult
     {
         foreach ($this->events as $event) {
             if ($event instanceof CopyEvent) {
-                if (\str_ends_with($event->getFullSource(), $path)) {
+                if (\str_ends_with(\str_replace('\\', '/', $event->getFullSource()), \str_replace('\\', '/', $path))) {
                     if (\str_ends_with($event->getFullDestination(), $destination)) {
                         Assert::assertTrue(true);
 
