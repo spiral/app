@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Bootloader;
 
 use Installer\Internal\Generator\Bootloader\ClassBinding;
+use Nette\PhpGenerator\Printer;
 use Spiral\Reactor\Partial\PhpNamespace;
 use Tests\TestCase;
 
@@ -22,6 +23,9 @@ final class ClassBindingTest extends TestCase
             $binding->render($namespace = new PhpNamespace('App'))
         );
 
+        $printer = new Printer();
+        $printer->omitEmptyNamespaces = false;
+
         $this->assertSame(
             <<<PHP
             namespace App;
@@ -30,7 +34,7 @@ final class ClassBindingTest extends TestCase
 
 
             PHP,
-            (string)$namespace
+            $printer->printNamespace($namespace->getElement())
         );
     }
 }
