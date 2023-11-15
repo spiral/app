@@ -3,7 +3,7 @@
     "license": "MIT",
     "description": "Spiral Application installer",
     "require-dev": {
-        "nette/php-generator": "^4.0",
+        "nette/php-generator": "^4.1.2",
         "spiral/framework": "^3.8",
         "spiral/nyholm-bridge": "^1.0",
         "composer/composer": "^2.4",
