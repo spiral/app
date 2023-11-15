@@ -60,10 +60,12 @@ final class CopyEvent implements \Stringable
         $source = \ltrim($path, '/');
 
         if ($sourceRoot === '') {
-            return '/' . $source;
+            return \file_exists($source) ? $source : '/' . $source;
         }
 
-        return '/' . $sourceRoot . '/' . $source;
+        return \file_exists($sourceRoot . '/' . $source)
+            ? $sourceRoot . '/' . $source
+            : '/' . $sourceRoot . '/' . $source;
     }
 
     public function detectType(string $path): string
