@@ -52,7 +52,11 @@ return [
     'drivers' => [
         'sqlite' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\MemoryConnectionConfig(),
-            queryCache: true
+            queryCache: env('DB_QUERY_CACHE', true),
+            options: [
+                'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
+            ],
         ),
         'pgsql' => new Config\PostgresDriverConfig(
             connection: new Config\Postgres\TcpConnectionConfig(
@@ -62,8 +66,12 @@ return [
                 user: env('DB_USERNAME', 'postgres'),
                 password: env('DB_PASSWORD', ''),
             ),
-            schema: 'public',
-            queryCache: true,
+            schema: env('DB_SCHEMA', 'public'),
+            queryCache: env('DB_QUERY_CACHE', true),
+            options: [
+                'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
+            ],
         ),
         'mysql' => new Config\MySQLDriverConfig(
             connection: new Config\MySQL\TcpConnectionConfig(
@@ -73,7 +81,11 @@ return [
                 user: env('DB_USERNAME', 'root'),
                 password: env('DB_PASSWORD', ''),
             ),
-            queryCache: true,
+            queryCache: env('DB_QUERY_CACHE', true),
+            options: [
+                'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
+            ],
         ),
         // ...
     ],

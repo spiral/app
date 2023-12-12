@@ -46,7 +46,9 @@ final class CycleBridge extends AbstractModule
             'SAFE_MIGRATIONS' => true,
             'CYCLE_SCHEMA_CACHE' => false,
             'CYCLE_SCHEMA_WARMUP' => false,
-            'DB_CONNECTION' => 'sqlite'
+            'DB_CONNECTION' => 'sqlite',
+            'DB_LOG_QUERY_PARAMETERS' => false,
+            'DB_WITH_DATETIME_MICROSECONDS' => false,
         ];
     }
 }

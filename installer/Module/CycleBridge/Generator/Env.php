@@ -31,6 +31,8 @@ final class Env implements GeneratorInterface
         $context->envConfigurator->addGroup(
             values: [
                 'DB_CONNECTION' => 'sqlite',
+                'DB_LOG_QUERY_PARAMETERS' => false,
+                'DB_WITH_DATETIME_MICROSECONDS' => false,
             ],
             comment: 'Database',
             priority: 13,
