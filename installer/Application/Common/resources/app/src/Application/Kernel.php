@@ -10,17 +10,11 @@ use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Nyholm\Bootloader\NyholmBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
-use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
 use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
-use Spiral\YiiErrorHandler\Bootloader\YiiErrorHandlerBootloader;
 
 class Kernel extends \Spiral\Framework\Kernel
 {
-    protected const SYSTEM = [];
-    protected const LOAD = [];
-    protected const APP = [];
-
     public function defineSystemBootloaders(): array
     {
         return [
@@ -35,15 +29,10 @@ class Kernel extends \Spiral\Framework\Kernel
         return [
             // Logging and exceptions handling
             MonologBootloader::class,
-            YiiErrorHandlerBootloader::class,
             Bootloader\ExceptionHandlerBootloader::class,
 
             // Application specific logs
             Bootloader\LoggingBootloader::class,
-
-            // RoadRunner
-            RoadRunnerBridge\LoggerBootloader::class,
-            RoadRunnerBridge\HttpBootloader::class,
 
             // Core Services
             Framework\SnapshotsBootloader::class,
@@ -65,7 +54,6 @@ class Kernel extends \Spiral\Framework\Kernel
 
             // Console commands
             Framework\CommandBootloader::class,
-            RoadRunnerBridge\CommandBootloader::class,
             ScaffolderBootloader::class,
 
             // Configure route groups, middleware for route groups
