@@ -6,6 +6,7 @@ namespace App\Application\Bootloader;
 
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
+use Spiral\Boot\Environment\AppEnvironment;
 use Spiral\Exceptions\ExceptionHandler;
 use Spiral\Exceptions\Renderer\ConsoleRenderer;
 use Spiral\Exceptions\Renderer\JsonRenderer;
@@ -46,7 +47,7 @@ final class ExceptionHandlerBootloader extends Bootloader
         });
     }
 
-    public function boot(LoggerReporter $logger, FileReporter $files): void
+    public function boot(LoggerReporter $logger, FileReporter $files, AppEnvironment $appEnv): void
     {
         // Register the logger reporter, that will be used to log the exceptions using
         // the logger component.
@@ -54,6 +55,8 @@ final class ExceptionHandlerBootloader extends Bootloader
 
         // Register the file reporter. It allows you to save detailed information about an exception to a file
         // known as snapshot.
-        $this->handler->addReporter($files);
+        if ($appEnv->isLocal()) {
+            $this->handler->addReporter($files);
+        }
     }
 }
