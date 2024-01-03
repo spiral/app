@@ -52,6 +52,10 @@
             "php app.php configure -vv",
             "rr get-binary"
         ],
+        "serve": [
+          "Composer\\Config::disableProcessTimeout",
+          "rr serve"
+        ],
         "psalm": "psalm"
     },
     "minimum-stability": "dev",
