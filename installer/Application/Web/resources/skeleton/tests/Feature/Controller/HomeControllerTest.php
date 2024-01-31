@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller;
 
+use Spiral\Bootloader\I18nBootloader;
 use Tests\TestCase;
 use Spiral\Testing\Http\FakeHttp;
 
@@ -20,19 +21,26 @@ class HomeControllerTest extends TestCase
 
     public function testDefaultActionWorks(): void
     {
-        $this->http
-            ->get('/')
-            ->assertOk()
-            ->assertBodyContains('The PHP Framework for future Innovators');
+        $response = $this->http->get('/')->assertOk();
+
+        $this->assertStringContainsString(
+            'The PHP Framework for future Innovators',
+            \strip_tags((string) $response->getOriginalResponse()->getBody())
+        );
     }
 
     public function testDefaultActionWithRuLocale(): void
     {
-        $this->http
-            ->withHeader('accept-language', 'ru')
-            ->get('/')
-            ->assertOk()
-            ->assertBodyContains('PHP Framework для будущих инноваторов');
+        if (!\in_array(I18nBootloader::class, $this->getRegisteredBootloaders())) {
+            $this->markTestSkipped('Component `spiral/translator` is not installed.');
+        }
+
+        $response = $this->http->withHeader('accept-language', 'ru')->get('/')->assertOk();
+
+        $this->assertStringContainsString(
+            'PHP Framework для будущих инноваторов',
+            \strip_tags((string) $response->getOriginalResponse()->getBody())
+        );
     }
 
     public function testInteractWithConsole(): void
