@@ -3,9 +3,9 @@
     : null;
 ?>
 <!DOCTYPE html>
-<html lang="<?=$translator?->getLocale()?>>">
+<html lang="<?=$translator?->getLocale() ?? 'en'?>>">
 <head>
-    <title><?=$translator?->trans('The PHP Framework for future Innovators')?></title>
+    <title><?=$translator?->trans('The PHP Framework for future Innovators') ?? 'The PHP Framework for future Innovators'?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
