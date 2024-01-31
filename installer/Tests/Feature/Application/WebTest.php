@@ -107,6 +107,7 @@ final class WebTest extends InstallerTestCase
     {
         $result = $this
             ->install(Application::class)
+            ->withSkeleton()
             ->addAnswer(Module\TemplateEngines\Question::class, 1)
             ->addModule(new TestModule\Console())
             ->addModule(new TestModule\RoadRunnerBridge())
@@ -128,6 +129,7 @@ final class WebTest extends InstallerTestCase
     {
         $result = $this
             ->install(Application::class)
+            ->withSkeleton()
             ->addAnswer(Module\TemplateEngines\Question::class, 2)
             ->addModule(new TestModule\Console())
             ->addModule(new TestModule\RoadRunnerBridge())
@@ -149,7 +151,78 @@ final class WebTest extends InstallerTestCase
     {
         $result = $this
             ->install(Application::class)
+            ->withSkeleton()
             ->addAnswer(Module\TemplateEngines\Question::class, 3)
+            ->addModule(new TestModule\Console())
+            ->addModule(new TestModule\RoadRunnerBridge())
+            ->addModule(new TestModule\RoadRunnerCli())
+            ->addModule(new TestModule\YiiErrorHandler())
+            ->addModule(new TestModule\NyholmPsr7())
+            ->addModule(new TestModule\Dumper())
+            ->addModule(new TestModule\ExtSockets())
+            ->addModule(new TestModule\ExtMbString())
+            ->addModule(new TestModule\Exception())
+            ->addModule(new TestModule\TemplateEngines\PlainPHP())
+            ->addModule(new TestModule\Http())
+            ->run();
+
+        $result->storeLog();
+    }
+
+    public function testWithoutTranslatorStempler(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->withSkeleton()
+            ->addAnswer(Module\TemplateEngines\Question::class, 1)
+            ->addAnswer(Module\Translator\Question::class, false)
+            ->addModule(new TestModule\Console())
+            ->addModule(new TestModule\RoadRunnerBridge())
+            ->addModule(new TestModule\RoadRunnerCli())
+            ->addModule(new TestModule\YiiErrorHandler())
+            ->addModule(new TestModule\NyholmPsr7())
+            ->addModule(new TestModule\Dumper())
+            ->addModule(new TestModule\ExtSockets())
+            ->addModule(new TestModule\ExtMbString())
+            ->addModule(new TestModule\Exception())
+            ->addModule(new TestModule\TemplateEngines\Stempler())
+            ->addModule(new TestModule\Http())
+            ->run();
+
+        $result->storeLog();
+    }
+
+    public function testWithoutTranslatorTwig(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->withSkeleton()
+            ->addAnswer(Module\TemplateEngines\Question::class, 2)
+            ->addAnswer(Module\Translator\Question::class, false)
+            ->addAnswer(Module\Translator\Question::class, false)
+            ->addModule(new TestModule\Console())
+            ->addModule(new TestModule\RoadRunnerBridge())
+            ->addModule(new TestModule\RoadRunnerCli())
+            ->addModule(new TestModule\YiiErrorHandler())
+            ->addModule(new TestModule\NyholmPsr7())
+            ->addModule(new TestModule\Dumper())
+            ->addModule(new TestModule\ExtSockets())
+            ->addModule(new TestModule\ExtMbString())
+            ->addModule(new TestModule\Exception())
+            ->addModule(new TestModule\TemplateEngines\Twig())
+            ->addModule(new TestModule\Http())
+            ->run();
+
+        $result->storeLog();
+    }
+
+    public function testWithoutTranslatorPlainPhp(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->withSkeleton()
+            ->addAnswer(Module\TemplateEngines\Question::class, 3)
+            ->addAnswer(Module\Translator\Question::class, false)
             ->addModule(new TestModule\Console())
             ->addModule(new TestModule\RoadRunnerBridge())
             ->addModule(new TestModule\RoadRunnerCli())
