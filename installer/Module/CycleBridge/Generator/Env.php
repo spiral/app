@@ -32,9 +32,15 @@ final class Env implements GeneratorInterface
             values: [
                 'DB_CONNECTION' => 'sqlite',
                 'DB_LOG_QUERY_PARAMETERS' => false,
+                'DB_LOG_INTERPOLATED_QUERIES' => false,
                 'DB_WITH_DATETIME_MICROSECONDS' => false,
+                'DB_DATABASE' => 'spiral',
+                'DB_HOST' => '127.0.0.1',
+                'DB_PORT' => 3307,
+                'DB_USERNAME' => 'root',
+                'DB_PASSWORD' => 'password',
             ],
-            comment: 'Database',
+            comment: 'Database connection options',
             priority: 13,
         );
     }

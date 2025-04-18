@@ -43,8 +43,9 @@ final class ConfiguratorTest extends TestCase
                     use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
                     use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
-                    final class Kernel
+                    class Kernel
                     {
+                        #[\Override]
                         public function defineSystemBootloaders(): array
                         {
                             return [
@@ -56,6 +57,7 @@ final class ConfiguratorTest extends TestCase
                             ];
                         }
 
+                        #[\Override]
                         public function defineBootloaders(): array
                         {
                             return [
@@ -80,6 +82,7 @@ final class ConfiguratorTest extends TestCase
                             ];
                         }
 
+                        #[\Override]
                         public function defineAppBootloaders(): array
                         {
                             return [
@@ -121,6 +124,7 @@ final class ConfiguratorTest extends TestCase
 
                     final class Kernel
                     {
+                        #[\Override]
                         public function defineSystemBootloaders(): array
                         {
                             return [
@@ -130,6 +134,7 @@ final class ConfiguratorTest extends TestCase
                             ];
                         }
 
+                        #[\Override]
                         public function defineBootloaders(): array
                         {
                             return [

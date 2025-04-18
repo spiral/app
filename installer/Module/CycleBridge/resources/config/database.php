@@ -55,6 +55,7 @@ return [
             queryCache: env('DB_QUERY_CACHE', true),
             options: [
                 'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                'logInterpolatedQueries' => env('DB_LOG_INTERPOLATED_QUERIES', false),
                 'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
             ],
         ),
@@ -71,6 +72,7 @@ return [
                 queryCache: env('DB_QUERY_CACHE', true),
                 options: [
                     'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                    'logInterpolatedQueries' => env('DB_LOG_INTERPOLATED_QUERIES', false),
                     'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
                 ],
             )
@@ -87,6 +89,7 @@ return [
                 queryCache: env('DB_QUERY_CACHE', true),
                 options: [
                     'logQueryParameters' => env('DB_LOG_QUERY_PARAMETERS', false),
+                    'logInterpolatedQueries' => env('DB_LOG_INTERPOLATED_QUERIES', false),
                     'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
                 ],
             ),
