@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
-final class Kernel extends \Spiral\Framework\Kernel
+/** @psalm-suppress ClassMustBeFinal */
+class Kernel extends \Spiral\Framework\Kernel
 {
     protected const SYSTEM = [];
 

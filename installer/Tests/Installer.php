@@ -86,6 +86,8 @@ final class Installer implements \Stringable
 
         $files->ensureDirectory($appPath);
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
+        $files->copy(__DIR__ . '/Fixtures/psalm.xml', "$appPath/psalm.xml");
+        $files->copy(__DIR__ . '/Fixtures/psalm-baseline.xml', "$appPath/psalm-baseline.xml");
 
         $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
         $composer = new Composer();

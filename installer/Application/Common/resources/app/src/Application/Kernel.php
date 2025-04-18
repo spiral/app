@@ -13,7 +13,8 @@ use Spiral\Prototype\Bootloader\PrototypeBootloader;
 use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
-final class Kernel extends \Spiral\Framework\Kernel
+/** @psalm-suppress ClassMustBeFinal */
+class Kernel extends \Spiral\Framework\Kernel
 {
     #[\Override]
     public function defineSystemBootloaders(): array
