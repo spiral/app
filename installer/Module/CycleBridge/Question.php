@@ -26,7 +26,7 @@ final class Question extends AbstractQuestion
             question: $question,
             required: $required,
             options: $options,
-            default: $default
+            default: $default,
         );
     }
 }

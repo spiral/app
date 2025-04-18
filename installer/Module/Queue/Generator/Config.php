@@ -18,7 +18,7 @@ final class Config implements GeneratorInterface
                 QueueBootloader::class,
             ],
             comment: 'Queue',
-            priority: 13
+            priority: 13,
         );
 
         $context->application->useRoadRunnerPlugin('jobs');
@@ -30,7 +30,7 @@ final class Config implements GeneratorInterface
                 'QUEUE_CONNECTION' => 'sync',
             ],
             comment: 'Queue',
-            priority: 6
+            priority: 6,
         );
     }
 }

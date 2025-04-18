@@ -9,7 +9,6 @@ final class PackageRegistered
     public function __construct(
         public readonly string $name,
         public readonly string $version,
-        public readonly bool $isDev
-    ) {
-    }
+        public readonly bool $isDev,
+    ) {}
 }

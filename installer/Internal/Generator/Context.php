@@ -27,6 +27,5 @@ final class Context
         public readonly ?DomainInterceptorsConfigurator $domainInterceptors = null,
         public readonly ?RoutesBootloaderConfigurator $routesBootloader = null,
         public array $readme = [],
-    ) {
-    }
+    ) {}
 }

@@ -17,27 +17,6 @@ final class PackageTest extends TestCase
     private array $instructions;
     private array $dependencies;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->package = new Package(
-            package: ComposerPackages::Scheduler,
-            resources: $this->resources = [
-                '/foo/bar' => 'baz'
-            ],
-            generators: $this->generators = [
-                new Config()
-            ],
-            readme: $this->instructions = [
-                'foo' => 'bar'
-            ],
-            dependencies: $this->dependencies = [
-                new \Installer\Module\Dumper\Package()
-            ],
-        );
-    }
-
     public function testGetName(): void
     {
         $this->assertSame('spiral-packages/scheduler', $this->package->getName());
@@ -89,5 +68,26 @@ final class PackageTest extends TestCase
         $cycle = new \Installer\Module\CycleBridge\Package();
 
         $this->assertTrue(\str_ends_with($cycle->getResourcesPath(), 'Module/CycleBridge/resources/'));
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->package = new Package(
+            package: ComposerPackages::Scheduler,
+            resources: $this->resources = [
+                '/foo/bar' => 'baz',
+            ],
+            generators: $this->generators = [
+                new Config(),
+            ],
+            readme: $this->instructions = [
+                'foo' => 'bar',
+            ],
+            dependencies: $this->dependencies = [
+                new \Installer\Module\Dumper\Package(),
+            ],
+        );
     }
 }

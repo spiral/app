@@ -11,7 +11,6 @@ final class MiddlewareInjected
     public function __construct(
         public readonly string $class,
         public readonly string $group,
-        public readonly ClassListGroup $middleware
-    ) {
-    }
+        public readonly ClassListGroup $middleware,
+    ) {}
 }

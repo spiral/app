@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
                 'SENTRY_DSN' => null,
             ],
             comment: 'Sentry',
-            priority: 15
+            priority: 15,
         );
     }
 }

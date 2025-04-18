@@ -10,9 +10,8 @@ final class ClassMethodBinding extends Value
 {
     public function __construct(
         public readonly string $alias,
-        public readonly string $methodName
-    ) {
-    }
+        public readonly string $methodName,
+    ) {}
 
     public function render(PhpNamespace $namespace): string
     {

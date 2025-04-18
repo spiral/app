@@ -20,8 +20,7 @@ final class LoggingBootloader extends Bootloader
 {
     public function __construct(
         private readonly ConfiguratorInterface $config,
-    ) {
-    }
+    ) {}
 
     public function init(MonologBootloader $monolog): void
     {

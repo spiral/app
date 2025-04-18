@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
                 'LOCALE' => 'en',
             ],
             comment: 'Internationalization',
-            priority: 19
+            priority: 19,
         );
     }
 }

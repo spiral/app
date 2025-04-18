@@ -11,9 +11,8 @@ final class ManualClassMetadata implements ClassMetadataInterface
     public function __construct(
         public readonly string $name,
         public readonly string $path,
-        public readonly string $namespace
-    ) {
-    }
+        public readonly string $namespace,
+    ) {}
 
     public function getName(): string
     {

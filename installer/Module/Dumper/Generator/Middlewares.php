@@ -22,7 +22,7 @@ final class Middlewares implements GeneratorInterface
 
         $context->routesBootloader?->addGlobalMiddleware(
             middleware: [DumperMiddleware::class],
-            afterMiddleware: ErrorHandlerMiddleware::class
+            afterMiddleware: ErrorHandlerMiddleware::class,
         );
     }
 }

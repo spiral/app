@@ -11,8 +11,7 @@ final class Resource
     public function __construct(
         private readonly string $root,
         private readonly array $directoriesMap = [],
-    ) {
-    }
+    ) {}
 
     /**
      * Copy a resource file or directory to the project root.
@@ -27,7 +26,7 @@ final class Resource
                 $resource = \str_replace($alias, $path, $resource);
             }
         }
-        $copy = function (string $source, string $destination) use (&$copy): \Generator {
+        $copy = static function (string $source, string $destination) use (&$copy): \Generator {
             if (\is_dir($source)) {
                 $handle = \opendir($source);
                 while ($file = \readdir($handle)) {

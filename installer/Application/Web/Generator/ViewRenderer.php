@@ -24,7 +24,7 @@ final class ViewRenderer implements GeneratorInterface
         if ($this->isTemplateEngineInstalled($context->application)) {
             $context->resource->copy(
                 \dirname(__DIR__) . '/Generator/resources/ViewRenderer.php',
-                self::TARGET_PATH
+                self::TARGET_PATH,
             );
             $context->exceptionHandlerBootloader->addBinding(RendererInterface::class, Renderer::class);
         } else {

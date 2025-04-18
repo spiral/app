@@ -20,8 +20,7 @@ final class ReadmeGenerator
         private readonly ApplicationInterface $application,
         private readonly Context $context,
         private readonly FilesInterface $files,
-    ) {
-    }
+    ) {}
 
     public function generate(?EventStorage $eventStorage = null): void
     {

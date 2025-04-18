@@ -13,8 +13,7 @@ final class ComposerStorage implements ComposerStorageInterface
     public function __construct(
         private readonly JsonFile $file,
         private readonly ?EventStorage $eventStorage = null,
-    ) {
-    }
+    ) {}
 
     public function read(): array
     {

@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Readme\Block;
 
-use Stringable;
-
-final class ListBlock implements Stringable
+final class ListBlock implements \Stringable
 {
     /**
-     * @param non-empty-string[]|Stringable[] $items
+     * @param non-empty-string[]|\Stringable[] $items
      * @param non-empty-string|null $title
      */
     public function __construct(
         private readonly array $items,
         private readonly ?string $title = null,
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

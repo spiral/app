@@ -9,8 +9,7 @@ final class LinkString implements \Stringable
     public function __construct(
         private readonly string $content,
         private readonly string $link,
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

@@ -20,7 +20,7 @@ final class Bootloaders implements GeneratorInterface
                     GridBootloader::class,
                 ],
                 comment: 'Data Grid',
-                priority: 16
+                priority: 16,
             );
     }
 }

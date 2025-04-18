@@ -30,8 +30,7 @@ final class ViewRenderer implements RendererInterface
         private readonly ViewsInterface $views,
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly Verbosity $verbosity,
-    ) {
-    }
+    ) {}
 
     public function renderException(Request $request, int $code, \Throwable $exception): ResponseInterface
     {

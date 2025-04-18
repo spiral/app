@@ -12,20 +12,13 @@ class HomeControllerTest extends TestCase
 {
     private FakeHttp $http;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->http = $this->fakeHttp();
-    }
-
     public function testDefaultActionWorks(): void
     {
         $response = $this->http->get('/')->assertOk();
 
         $this->assertStringContainsString(
             'The PHP Framework for future Innovators',
-            \strip_tags((string) $response->getOriginalResponse()->getBody())
+            \strip_tags((string) $response->getOriginalResponse()->getBody()),
         );
     }
 
@@ -39,7 +32,7 @@ class HomeControllerTest extends TestCase
 
         $this->assertStringContainsString(
             'PHP Framework для будущих инноваторов',
-            \strip_tags((string) $response->getOriginalResponse()->getBody())
+            \strip_tags((string) $response->getOriginalResponse()->getBody()),
         );
     }
 
@@ -48,5 +41,12 @@ class HomeControllerTest extends TestCase
         $output = $this->runCommand('views:reset');
 
         $this->assertStringContainsString('cache', $output);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->http = $this->fakeHttp();
     }
 }

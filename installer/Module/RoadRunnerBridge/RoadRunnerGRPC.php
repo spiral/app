@@ -23,12 +23,12 @@ final class RoadRunnerGRPC extends AbstractQuestion
                 name: 'Yes',
                 generators: [
                     new Bootloaders(),
-                ]
+                ],
             ),
         ],
         array $depends = [
             ComposerPackages::RoadRunnerBridge,
-        ]
+        ],
     ) {
         parent::__construct($question, $required, $options, $depends);
     }

@@ -22,7 +22,7 @@ final class Bootloaders implements GeneratorInterface
                 Security\GuardBootloader::class,
             ],
             comment: 'Security and validation',
-            priority: 5
+            priority: 5,
         );
 
         $context->kernel->load->addGroup(
@@ -35,7 +35,7 @@ final class Bootloaders implements GeneratorInterface
                 Http\PaginationBootloader::class,
             ],
             comment: 'HTTP extensions',
-            priority: 6
+            priority: 6,
         );
 
         $context->kernel->load->addGroup(
@@ -43,7 +43,7 @@ final class Bootloaders implements GeneratorInterface
                 RoutesBootloader::class,
             ],
             comment: 'Configure route groups, middleware for route groups',
-            priority: 101
+            priority: 101,
         );
 
         $context->kernel->app->addGroup(
@@ -51,7 +51,7 @@ final class Bootloaders implements GeneratorInterface
                 AppBootloader::class,
             ],
             comment: 'Application domain',
-            priority: 1
+            priority: 1,
         );
     }
 }

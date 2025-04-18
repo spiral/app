@@ -16,7 +16,7 @@ final class Env implements GeneratorInterface
                 'DEFAULT_SERIALIZER_FORMAT' => 'json # csv, xml, yaml',
             ],
             comment: 'Serializer',
-            priority: 17
+            priority: 17,
         );
     }
 }

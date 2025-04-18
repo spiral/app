@@ -46,7 +46,7 @@ final class InstallationResult
                 foreach ($event->group as $group) {
                     if ($group->hasClass($class)) {
                         Assert::fail(
-                            \sprintf('Bootloader "%s" was registered in "%s" section', $class, $event->place->value)
+                            \sprintf('Bootloader "%s" was registered in "%s" section', $class, $event->place->value),
                         );
                     }
                 }
@@ -176,7 +176,7 @@ final class InstallationResult
                             }
 
                             Assert::fail(
-                                \sprintf('Env "%s" was defined with value "%s" instead of "%s"', $name, $v, $value)
+                                \sprintf('Env "%s" was defined with value "%s" instead of "%s"', $name, $v, $value),
                             );
                         }
                     }
@@ -215,8 +215,8 @@ final class InstallationResult
                         'Package "%s" was installed with version "%s" instead of "%s"',
                         $package,
                         $event->version,
-                        $version
-                    )
+                        $version,
+                    ),
                 );
             }
         }
@@ -253,7 +253,7 @@ final class InstallationResult
     public function assertMessageShown(string $message): self
     {
         foreach ($this->events as $event) {
-            if ($event instanceof \Installer\Internal\Console\Output && \str_ends_with((string)$event, $message)) {
+            if ($event instanceof \Installer\Internal\Console\Output && \str_ends_with((string) $event, $message)) {
                 Assert::assertTrue(true);
 
                 return $this;
@@ -349,8 +349,8 @@ final class InstallationResult
                             'File "%s" was copied to "%s" instead of "%s"',
                             $path,
                             $event->getFullDestination(),
-                            $destination
-                        )
+                            $destination,
+                        ),
                     );
                 }
             }
@@ -386,7 +386,7 @@ final class InstallationResult
         $this->files->write(
             filename: \sprintf('%s/logs/install-%s.log', $this->rootPath, $this->appName),
             data: $this->log,
-            ensureDirectory: true
+            ensureDirectory: true,
         );
     }
 

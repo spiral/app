@@ -29,13 +29,13 @@ final class Question extends AbstractQuestion
                 new LaravelValidator(),
             ]),
         ],
-        int $default = self::NONE_OPTION
+        int $default = self::NONE_OPTION,
     ) {
         parent::__construct(
             question: $question,
             required: $required,
             options: $options,
-            default: $default
+            default: $default,
         );
     }
 

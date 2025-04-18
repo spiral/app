@@ -10,7 +10,6 @@ final class ConstantInjected
 {
     public function __construct(
         public readonly string $class,
-        public readonly Constant $constant
-    ) {
-    }
+        public readonly Constant $constant,
+    ) {}
 }

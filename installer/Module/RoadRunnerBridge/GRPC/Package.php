@@ -24,11 +24,11 @@ final class Package extends BasePackage
                 new Bootloaders(),
                 new Skeleton(),
                 new Config(),
-              //  new Services(),
+                //  new Services(),
             ],
             dependencies: [
                 new ExtGRPC(),
-            ]
+            ],
         );
     }
 
@@ -50,6 +50,6 @@ final class Package extends BasePackage
 
     public function getResourcesPath(): string
     {
-        return dirname(__DIR__) . '/resources';
+        return \dirname(__DIR__) . '/resources';
     }
 }

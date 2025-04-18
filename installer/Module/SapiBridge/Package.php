@@ -15,7 +15,7 @@ final class Package extends BasePackage
             package: ComposerPackages::SapiBridge,
             generators: [
                 new Generator\Bootloaders(),
-            ]
+            ],
         );
     }
 }

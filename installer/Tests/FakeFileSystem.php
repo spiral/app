@@ -12,10 +12,9 @@ final class FakeFileSystem implements FilesInterface
     public function __construct(
         private readonly IOInterface $io,
         private readonly FilesInterface $files,
-    ) {
-    }
+    ) {}
 
-    public function ensureDirectory(string $directory, int $mode = null): bool
+    public function ensureDirectory(string $directory, ?int $mode = null): bool
     {
         return $this->files->ensureDirectory($directory, $mode);
     }
@@ -28,8 +27,8 @@ final class FakeFileSystem implements FilesInterface
     public function write(
         string $filename,
         string $data,
-        int $mode = null,
-        bool $ensureDirectory = false
+        ?int $mode = null,
+        bool $ensureDirectory = false,
     ): bool {
         $this->io->write(\sprintf('Writing to %s', $filename));
         $this->io->write($data);
@@ -40,8 +39,8 @@ final class FakeFileSystem implements FilesInterface
     public function append(
         string $filename,
         string $data,
-        int $mode = null,
-        bool $ensureDirectory = false
+        ?int $mode = null,
+        bool $ensureDirectory = false,
     ): bool {
         $this->io->write(\sprintf('Appending to %s', $filename));
         $this->io->write($data);
@@ -77,7 +76,7 @@ final class FakeFileSystem implements FilesInterface
         return $this->files->copy($filename, $destination);
     }
 
-    public function touch(string $filename, int $mode = null): bool
+    public function touch(string $filename, ?int $mode = null): bool
     {
         $this->io->write(\sprintf('Touching %s', $filename));
 
@@ -129,12 +128,12 @@ final class FakeFileSystem implements FilesInterface
         return $this->files->setPermissions($filename, $mode);
     }
 
-    public function getFiles(string $location, string $pattern = null): array
+    public function getFiles(string $location, ?string $pattern = null): array
     {
         return $this->files->getFiles($location, $pattern);
     }
 
-    public function tempFilename(string $extension = '', string $location = null): string
+    public function tempFilename(string $extension = '', ?string $location = null): string
     {
         return $this->files->tempFilename($extension, $location);
     }

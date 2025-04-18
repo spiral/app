@@ -6,7 +6,6 @@ namespace Feature\Application;
 
 use App\Endpoint\Web\Middleware\LocaleSelector;
 use Installer\Application\GRPC\Application;
-use Installer\Module;
 use Installer\Module\Exception\Generator\Skeleton as ExceptionSkeleton;
 use Spiral\Debug\StateCollector\HttpCollector;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
@@ -82,23 +81,23 @@ final class GRPCTest extends InstallerTestCase
 
             ->assertCopied(
                 'Application/Common/resources/app/config/scaffolder.php',
-                'app/config/scaffolder.php'
+                'app/config/scaffolder.php',
             )
             ->assertCopied(
                 'Application/Common/resources/app/src/Application/Bootloader/LoggingBootloader.php',
-                'app/src/Application/Bootloader/LoggingBootloader.php'
+                'app/src/Application/Bootloader/LoggingBootloader.php',
             )
             ->assertCopied(
                 'Application/Common/resources/app/src/Application/Bootloader/ExceptionHandlerBootloader.php',
-                'app/src/Application/Bootloader/ExceptionHandlerBootloader.php'
+                'app/src/Application/Bootloader/ExceptionHandlerBootloader.php',
             )
             ->assertCopied(
                 'Application/Common/resources/app/src/Application/Kernel.php',
-                'app/src/Application/Kernel.php'
+                'app/src/Application/Kernel.php',
             )
             ->assertNotCopied(
                 'Application/Web/Generator/resources/ViewRenderer.php',
-                'app/src/Application/Exception/Renderer/ViewRenderer.php'
+                'app/src/Application/Exception/Renderer/ViewRenderer.php',
             )
 
             ->assertMiddlewareNotRegistered(ErrorHandlerMiddleware::class)

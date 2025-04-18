@@ -16,7 +16,7 @@ final class ReflectionClassMetadataRepositoryTest extends TestCase
 
         $this->assertSame(
             'Tests\Fixtures\RoutesBootloader',
-            $repo->getMetaData(RoutesBootloader::class)->getName()
+            $repo->getMetaData(RoutesBootloader::class)->getName(),
         );
     }
 }

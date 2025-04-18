@@ -50,7 +50,7 @@ final class Configurator extends AbstractConfigurator
         foreach ([$this->system, $this->load, $this->app] as $bootloaders) {
             $bootloaders->updateDeclaration(
                 $this->declaration->getClass($this->class->getName()),
-                $this->namespace
+                $this->namespace,
             );
         }
 
@@ -92,7 +92,7 @@ final class Configurator extends AbstractConfigurator
                 LoggingBootloader::class,
             ],
             comment: 'Application specific logs',
-            priority: 1
+            priority: 1,
         );
 
         $this->load->addGroup(
@@ -100,7 +100,7 @@ final class Configurator extends AbstractConfigurator
                 SnapshotsBootloader::class,
             ],
             comment: 'Core Services',
-            priority: 4
+            priority: 4,
         );
 
         $this->load->addGroup(
@@ -108,7 +108,7 @@ final class Configurator extends AbstractConfigurator
                 PrototypeBootloader::class,
             ],
             comment: 'Fast code prototyping',
-            priority: 1000
+            priority: 1000,
         );
 
         $this->load->addGroup(
@@ -117,7 +117,7 @@ final class Configurator extends AbstractConfigurator
                 ScaffolderBootloader::class,
             ],
             comment: 'Console commands',
-            priority: 101
+            priority: 101,
         );
     }
 }

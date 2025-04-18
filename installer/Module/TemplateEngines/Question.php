@@ -23,28 +23,28 @@ final class Question extends AbstractQuestion
                 name: 'Stempler',
                 packages: [
                     new StemplerPackage(),
-                ]
+                ],
             ),
             new Option(
                 name: 'Twig',
                 packages: [
                     new TwigPackage(),
-                ]
+                ],
             ),
             new Option(
                 name: 'Plain PHP',
                 packages: [
                     new PlainPHPPackage(),
-                ]
+                ],
             ),
         ],
-        int $default = 1
+        int $default = 1,
     ) {
         parent::__construct(
             question: $question,
             required: $required,
             options: $options,
-            default: $default
+            default: $default,
         );
     }
 }

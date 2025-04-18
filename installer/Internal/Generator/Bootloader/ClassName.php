@@ -9,9 +9,8 @@ use Spiral\Reactor\Partial\PhpNamespace;
 final class ClassName extends Value
 {
     public function __construct(
-        public readonly string $class
-    ) {
-    }
+        public readonly string $class,
+    ) {}
 
     public function render(PhpNamespace $namespace): string
     {

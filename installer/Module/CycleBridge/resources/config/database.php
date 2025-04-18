@@ -62,7 +62,7 @@ return [
             connection: new Config\Postgres\TcpConnectionConfig(
                 database: env('DB_DATABASE', 'spiral'),
                 host: env('DB_HOST', '127.0.0.1'),
-                port: (int)env('DB_PORT', 5432),
+                port: (int) env('DB_PORT', 5432),
                 user: env('DB_USERNAME', 'postgres'),
                 password: env('DB_PASSWORD', ''),
             ),
@@ -77,7 +77,7 @@ return [
             connection: new Config\MySQL\TcpConnectionConfig(
                 database: env('DB_DATABASE', 'spiral'),
                 host: env('DB_HOST', '127.0.0.1'),
-                port: (int)env('DB_PORT', 3307),
+                port: (int) env('DB_PORT', 3307),
                 user: env('DB_USERNAME', 'root'),
                 password: env('DB_PASSWORD', ''),
             ),

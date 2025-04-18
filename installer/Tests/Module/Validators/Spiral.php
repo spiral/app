@@ -30,8 +30,8 @@ final class Spiral extends AbstractModule
     {
         return [
             'web' => [
-                ValidationHandlerMiddleware::class
-            ]
+                ValidationHandlerMiddleware::class,
+            ],
         ];
     }
 }

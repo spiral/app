@@ -10,8 +10,7 @@ final class InstallationInstructionRenderer
 {
     public function __construct(
         private readonly string $projectRoot,
-    ) {
-    }
+    ) {}
 
     /**
      * @return \Generator<Output>

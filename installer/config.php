@@ -28,7 +28,7 @@ return [
                 new Module\TemporalBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
                 new Module\SentryBridge\Question(),
-            ]
+            ],
         ),
         new Application\Cli\Application(
             questions: [
@@ -43,7 +43,7 @@ return [
                 new Module\RoadRunnerBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
                 new Module\TemporalBridge\Question(),
-            ]
+            ],
         ),
         new Application\GRPC\Application(
             questions: [
@@ -96,22 +96,22 @@ return [
         new EnvGroup(
             values: ['APP_ENV' => 'local'],
             comment: 'Environment (prod or local)',
-            priority: 1
+            priority: 1,
         ),
         new EnvGroup(
             values: ['DEBUG' => true],
             comment: 'Debug mode set to TRUE disables view caching and enables higher verbosity',
-            priority: 2
+            priority: 2,
         ),
         new EnvGroup(
             values: ['VERBOSITY_LEVEL' => 'verbose # basic, verbose, debug'],
             comment: 'Verbosity level',
-            priority: 3
+            priority: 3,
         ),
         new EnvGroup(
             values: ['ENCRYPTER_KEY' => '{encrypt-key}'],
             comment: 'Set to an application specific value, used to encrypt/decrypt cookies etc',
-            priority: 4
+            priority: 4,
         ),
         new EnvGroup(
             values: [
@@ -119,14 +119,14 @@ return [
                 'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
             ],
             comment: 'Monolog',
-            priority: 5
+            priority: 5,
         ),
         new EnvGroup(
             values: [
                 'TELEMETRY_DRIVER' => 'null',
             ],
             comment: 'Telemetry',
-            priority: 9
+            priority: 9,
         ),
     ],
 ];

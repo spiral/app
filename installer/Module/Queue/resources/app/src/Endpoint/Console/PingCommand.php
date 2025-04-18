@@ -7,10 +7,8 @@ namespace App\Endpoint\Console;
 use App\Endpoint\Job\Ping;
 use Spiral\Console\Attribute\Argument;
 use Spiral\Console\Attribute\AsCommand;
-use Spiral\Console\Attribute\Option;
 use Spiral\Console\Attribute\Question;
 use Spiral\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Spiral\Queue\QueueInterface;
 
 /**

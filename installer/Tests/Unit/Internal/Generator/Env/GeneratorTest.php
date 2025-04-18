@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Internal\Generator\Env;
 
 use Installer\Internal\Generator\Env\Generator;
-use Mockery;
 use Mockery\MockInterface;
 use Spiral\Files\FilesInterface;
 use Tests\TestCase;
@@ -14,18 +13,6 @@ final class GeneratorTest extends TestCase
 {
     private Generator $generator;
     private FilesInterface|MockInterface $files;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->files = Mockery::mock(FilesInterface::class);
-
-        $this->generator = new Generator(
-            projectRoot: '/var/www/',
-            files: $this->files
-        );
-    }
 
     public function testAddGroupWithExistsKey(): void
     {
@@ -42,7 +29,7 @@ final class GeneratorTest extends TestCase
             FOO=BAZ
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
 
         $this->generator->addValue('FOO', 'BAF');
@@ -52,7 +39,7 @@ final class GeneratorTest extends TestCase
             FOO=BAF
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
     }
 
@@ -76,7 +63,7 @@ final class GeneratorTest extends TestCase
             BAZ=BAR
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
 
         $this->generator->addGroup(
@@ -85,7 +72,7 @@ final class GeneratorTest extends TestCase
                 'BAN' => 'BAR',
             ],
             comment: 'Some group2',
-            priority: -1
+            priority: -1,
         );
 
         $this->assertSame(
@@ -100,7 +87,7 @@ final class GeneratorTest extends TestCase
             BAZ=BAR
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
     }
 
@@ -122,7 +109,7 @@ final class GeneratorTest extends TestCase
             BAN=BAZ
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
 
         $this->generator->addValue('FOO', 'BAZ');
@@ -136,7 +123,7 @@ final class GeneratorTest extends TestCase
             BAN=BAZ
 
             ENV,
-            (string)$this->generator
+            (string) $this->generator,
         );
     }
 
@@ -154,7 +141,7 @@ final class GeneratorTest extends TestCase
                 FOO=BAR
 
                 ENV,
-                FilesInterface::RUNTIME
+                FilesInterface::RUNTIME,
             );
 
         $this->files->shouldReceive('copy')
@@ -162,5 +149,17 @@ final class GeneratorTest extends TestCase
             ->with('/var/www/.env.sample', '/var/www/.env');
 
         $this->generator->persist();
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->files = \Mockery::mock(FilesInterface::class);
+
+        $this->generator = new Generator(
+            projectRoot: '/var/www/',
+            files: $this->files,
+        );
     }
 }

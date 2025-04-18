@@ -26,6 +26,14 @@ final class Installer implements \Stringable
     private string $applicationUniqueHash;
     private array $modules = [];
 
+    private function __construct(
+        private readonly FakeInteractions $interactions,
+        private readonly EventStorage $eventStorage,
+        private readonly string $appPath,
+    ) {
+        $this->applicationUniqueHash = \md5(\microtime());
+    }
+
     public static function create(
         Config $config,
         string $applicationClass,
@@ -34,16 +42,8 @@ final class Installer implements \Stringable
         return new self(
             new FakeInteractions($applicationClass, $config),
             new EventStorage(),
-            $appPath
+            $appPath,
         );
-    }
-
-    private function __construct(
-        private readonly FakeInteractions $interactions,
-        private readonly EventStorage $eventStorage,
-        private readonly string $appPath,
-    ) {
-        $this->applicationUniqueHash = \md5(\microtime());
     }
 
     public function withRoadRunner(): self
@@ -134,7 +134,7 @@ final class Installer implements \Stringable
             (new \ReflectionProperty($configurator, 'application'))->getValue($configurator),
             isset($testsResult)
                 ? $testsResult === 0
-                : null
+                : null,
         );
     }
 
@@ -152,7 +152,7 @@ final class Installer implements \Stringable
             'command' => 'install',
             '--working-dir' => $appPath,
             '--no-scripts',
-            '--quiet'
+            '--quiet',
         ]));
     }
 
@@ -165,7 +165,7 @@ final class Installer implements \Stringable
             'command' => 'run-script',
             'script' => 'post-create-project-cmd',
             '--working-dir' => $appPath,
-            '--quiet'
+            '--quiet',
         ]));
     }
 
@@ -178,7 +178,7 @@ final class Installer implements \Stringable
             'command' => 'run-script',
             'script' => 'test',
             '--working-dir' => $appPath,
-            '-v'
+            '-v',
         ]), new NullOutput());
     }
 }

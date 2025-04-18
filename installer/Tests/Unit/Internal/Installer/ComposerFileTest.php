@@ -20,24 +20,6 @@ final class ComposerFileTest extends TestCase
     private ComposerFile $composer;
     private RootPackage $package;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->storage = \Mockery::mock(ComposerStorageInterface::class);
-
-        $this->storage
-            ->shouldReceive('read')
-            ->once()
-            ->andReturn($this->getComposerJson());
-
-        $this->composer = new ComposerFile(
-            $this->storage,
-            $this->package = new RootPackage('spiral/app', '1.0.0', '1.0.0'),
-            $this->getConfig()
-        );
-    }
-
     public function testSetApplicationType(): void
     {
         $this->composer->setApplicationType($type = 1);
@@ -53,7 +35,7 @@ final class ComposerFileTest extends TestCase
             [
                 '[comment] Storing composer.json ...',
                 '[success] composer.json file updated.',
-            ]
+            ],
         );
 
         $this->assertSame($type, $this->composer->getApplicationType());
@@ -71,7 +53,7 @@ final class ComposerFileTest extends TestCase
 
         $this->assertOutputContains(
             $this->composer->persist([], []),
-            []
+            [],
         );
     }
 
@@ -79,14 +61,14 @@ final class ComposerFileTest extends TestCase
     {
         $this->composer->addPackage(
             new Package(
-                ComposerPackages::ExtGRPC
-            )
+                ComposerPackages::ExtGRPC,
+            ),
         );
 
         $this->composer->addPackage(
             new Package(
-                ComposerPackages::Dumper
-            )
+                ComposerPackages::Dumper,
+            ),
         );
 
         $this->storage->shouldReceive('write')
@@ -101,17 +83,35 @@ final class ComposerFileTest extends TestCase
 
         $this->assertOutputContains(
             $this->composer->persist([], []),
-            []
+            [],
         );
 
         $this->assertSame(['ext-grpc', 'spiral/dumper'], $this->composer->getInstalledPackages());
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->storage = \Mockery::mock(ComposerStorageInterface::class);
+
+        $this->storage
+            ->shouldReceive('read')
+            ->once()
+            ->andReturn($this->getComposerJson());
+
+        $this->composer = new ComposerFile(
+            $this->storage,
+            $this->package = new RootPackage('spiral/app', '1.0.0', '1.0.0'),
+            $this->getConfig(),
+        );
+    }
+
     private function assertOutputContains(\Generator $output, array $lines): void
     {
         $output = \array_map(
-            static fn(Output $output): string => (string)$output,
-            \iterator_to_array($output)
+            static fn(Output $output): string => (string) $output,
+            \iterator_to_array($output),
         );
 
         foreach ($lines as $line) {

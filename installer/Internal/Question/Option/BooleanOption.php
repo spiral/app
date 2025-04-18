@@ -14,7 +14,7 @@ final class BooleanOption extends AbstractOption
     public function __construct(
         string $name,
         public readonly bool $value = true,
-        public readonly array $generators = []
+        public readonly array $generators = [],
     ) {
         parent::__construct($name);
     }

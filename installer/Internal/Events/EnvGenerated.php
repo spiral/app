@@ -13,7 +13,6 @@ final class EnvGenerated
      */
     public function __construct(
         public readonly string $path,
-        public readonly array $envs
-    ) {
-    }
+        public readonly array $envs,
+    ) {}
 }

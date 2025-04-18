@@ -23,7 +23,7 @@ final class Bootloaders implements GeneratorInterface
                 TwigBootloader::class,
             ],
             comment: 'Views',
-            priority: 12
+            priority: 12,
         );
     }
 }

@@ -47,19 +47,13 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         ]);
     }
 
-    public function __destruct()
-    {
-        $this->inject();
-        $this->write();
-    }
-
     /**
      * @param class-string[] $middleware
      */
     public function addGlobalMiddleware(
         array $middleware,
         ?string $afterMiddleware = null,
-        ?string $beforeMiddleware = null
+        ?string $beforeMiddleware = null,
     ): void {
         if ($beforeMiddleware !== null) {
             $this->globalMiddleware->prepend($middleware[0], $beforeMiddleware);
@@ -81,7 +75,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         string $name,
         array $middleware,
         ?string $afterMiddleware = null,
-        ?string $beforeMiddleware = null
+        ?string $beforeMiddleware = null,
     ): void {
         if (!isset($this->middlewareGroups[$name])) {
             $this->middlewareGroups[$name] = new ClassListGroup();
@@ -97,6 +91,12 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             $this->middlewareGroups[$name]->append($class, $afterMiddleware);
             $afterMiddleware = $class;
         }
+    }
+
+    public function __destruct()
+    {
+        $this->inject();
+        $this->write();
     }
 
     private function inject(): void
@@ -126,9 +126,9 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
         $string = \implode(
             PHP_EOL,
             \array_map(
-                static fn (string $line) => '    ' . $line,
-                \explode(PHP_EOL, \trim($this->globalMiddleware->render($this->namespace)))
-            )
+                static fn(string $line) => '    ' . $line,
+                \explode(PHP_EOL, \trim($this->globalMiddleware->render($this->namespace))),
+            ),
         );
 
         $string = new Literal($string);
@@ -138,13 +138,13 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             return [
             $string,
             ];
-            PHP
+            PHP,
         );
 
         $this->eventStorage?->addEvent(new MiddlewareInjected(
             $this->class->getName(),
             'global',
-            $this->globalMiddleware
+            $this->globalMiddleware,
         ));
     }
 
@@ -172,9 +172,9 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             $string .= \implode(
                 PHP_EOL,
                 \array_map(
-                    static fn (string $line) => '    ' . $line,
-                    \explode(PHP_EOL, \trim($group->render($this->namespace)))
-                )
+                    static fn(string $line) => '    ' . $line,
+                    \explode(PHP_EOL, \trim($group->render($this->namespace))),
+                ),
             );
 
             $string .= PHP_EOL . '],' . PHP_EOL;
@@ -182,16 +182,16 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             $this->eventStorage?->addEvent(new MiddlewareInjected(
                 $this->class->getName(),
                 $name,
-                $group
+                $group,
             ));
         }
 
         $string = \implode(
             PHP_EOL,
             \array_map(
-                static fn (string $line) => '    ' . $line,
-                \explode(PHP_EOL, $string)
-            )
+                static fn(string $line) => '    ' . $line,
+                \explode(PHP_EOL, $string),
+            ),
         );
 
         $string = new Literal(\rtrim($string));
@@ -201,7 +201,7 @@ final class RoutesBootloaderConfigurator extends BootloaderConfigurator
             return [
             $string
             ];
-            PHP
+            PHP,
         );
     }
 }

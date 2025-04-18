@@ -1,6 +1,7 @@
 /.*/
 !/.github
 /vendor
+/runtime/
 */runtime/
 
 /rr*

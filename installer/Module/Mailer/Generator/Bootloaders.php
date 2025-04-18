@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
                 MailerBootloader::class,
             ],
             comment: 'Mailer',
-            priority: 14
+            priority: 14,
         );
     }
 }

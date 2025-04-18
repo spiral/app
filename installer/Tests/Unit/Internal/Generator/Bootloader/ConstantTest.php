@@ -26,7 +26,7 @@ final class ConstantTest extends TestCase
 
         $constant->inject(
             $declaration->getClass(ExceptionHandlerBootloader::class),
-            $declaration->getNamespaces()->get($reflection->getNamespaceName())
+            $declaration->getNamespaces()->get($reflection->getNamespaceName()),
         );
 
         $this->assertSame(
@@ -51,7 +51,7 @@ final class ConstantTest extends TestCase
             }
 
             PHP,
-            (new Printer())->print($declaration)
+            (new Printer())->print($declaration),
         );
     }
 }

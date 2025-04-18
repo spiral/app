@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
                 HttpBootloader::class,
             ],
             comment: 'HTTP extensions',
-            priority: 6
+            priority: 6,
         );
     }
 }

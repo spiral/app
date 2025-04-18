@@ -8,7 +8,6 @@ final class ReadmeGenerated
 {
     public function __construct(
         public readonly string $path,
-        public readonly string $content
-    ) {
-    }
+        public readonly string $content,
+    ) {}
 }

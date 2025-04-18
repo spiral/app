@@ -20,7 +20,6 @@ final class HomeController
      */
     use PrototypeTrait;
 
-
     #[Route(route: '/', name: 'index')]
     public function index(): string
     {
@@ -33,6 +32,6 @@ final class HomeController
     #[Route(route: '/exception', name: 'exception')]
     public function exception(): never
     {
-        throw new Exception('This is a test exception.');
+        throw new \Exception('This is a test exception.');
     }
 }

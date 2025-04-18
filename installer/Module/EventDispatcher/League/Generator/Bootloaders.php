@@ -23,7 +23,7 @@ final class Bootloaders implements GeneratorInterface
                 EventBootloader::class,
             ],
             comment: 'Event Dispatcher',
-            priority: 8
+            priority: 8,
         );
     }
 }

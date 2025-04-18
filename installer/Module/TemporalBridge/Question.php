@@ -23,7 +23,7 @@ final class Question extends AbstractQuestion
         ],
         array $depends = [
             ComposerPackages::RoadRunnerBridge,
-        ]
+        ],
     ) {
         parent::__construct($question, $required, $options, $depends);
     }

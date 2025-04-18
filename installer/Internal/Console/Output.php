@@ -9,18 +9,7 @@ final class Output implements \Stringable
     public function __construct(
         private readonly string $message,
         private readonly string $type = 'write',
-    ) {
-    }
-
-    public function __toString(): string
-    {
-        return \sprintf('[%s] %s', $this->type, $this->message);
-    }
-
-    public function send(IOInterface $output): void
-    {
-        $output->{$this->type}($this->message);
-    }
+    ) {}
 
     public static function write(string $message): self
     {
@@ -40,5 +29,15 @@ final class Output implements \Stringable
     public static function comment(string $message): self
     {
         return new self($message, 'comment');
+    }
+
+    public function send(IOInterface $output): void
+    {
+        $output->{$this->type}($this->message);
+    }
+
+    public function __toString(): string
+    {
+        return \sprintf('[%s] %s', $this->type, $this->message);
     }
 }

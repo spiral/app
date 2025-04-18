@@ -21,7 +21,7 @@ final class Question extends AbstractQuestion
                 name: 'Yes',
                 generators: [
                     new Config(),
-                ]
+                ],
             ),
         ],
     ) {

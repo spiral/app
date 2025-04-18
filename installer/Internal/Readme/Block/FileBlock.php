@@ -8,8 +8,7 @@ final class FileBlock implements \Stringable
 {
     public function __construct(
         private readonly string $path,
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

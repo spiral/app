@@ -8,11 +8,17 @@ use Composer\Json\JsonFile;
 use Installer\Internal\Config;
 use Installer\Internal\Configurator\ResourceQueue;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use Spiral\Files\Files;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     use MockeryPHPUnitIntegration;
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        \Mockery::close();
+    }
 
     protected function assertResourceQueueContains(ResourceQueue $queue, string $source, string $destination): void
     {
@@ -42,12 +48,5 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $json = new JsonFile(__DIR__ . '/Fixtures/composer.json');
 
         return $json->read();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        \Mockery::close();
     }
 }

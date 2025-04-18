@@ -17,7 +17,7 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->system->addGroup(
             bootloaders: [
                 DumperBootloader::class,
-            ]
+            ],
         );
     }
 }

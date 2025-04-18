@@ -112,8 +112,8 @@ class Package implements HasResourcesInterface
                 \sprintf(
                     'Invalid package name `%s`. The package name must follow this pattern: `%s`.',
                     $string,
-                    'vendor/package-name:version'
-                )
+                    'vendor/package-name:version',
+                ),
             );
         }
 

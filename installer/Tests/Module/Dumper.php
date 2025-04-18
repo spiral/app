@@ -32,8 +32,8 @@ final class Dumper extends AbstractModule
 
         return [
             'global' => [
-                DumperMiddleware::class
-            ]
+                DumperMiddleware::class,
+            ],
         ];
     }
 }

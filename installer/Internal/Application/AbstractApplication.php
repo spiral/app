@@ -44,9 +44,8 @@ abstract class AbstractApplication implements ApplicationInterface
         private readonly array $resources = [],
         private readonly array $generators = [],
         private readonly array $commands = [],
-        private readonly array $readme = []
-    ) {
-    }
+        private readonly array $readme = [],
+    ) {}
 
     public function getName(): string
     {

@@ -14,7 +14,7 @@ final class DomainInterceptorsConfigurator extends BootloaderConfigurator
 {
     public function __construct(
         Writer $writer,
-        ClassMetadataInterface $class = new ReflectionClassMetadata(AppBootloader::class)
+        ClassMetadataInterface $class = new ReflectionClassMetadata(AppBootloader::class),
     ) {
         parent::__construct($class, $writer);
 

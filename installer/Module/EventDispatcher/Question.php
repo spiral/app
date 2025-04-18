@@ -20,7 +20,7 @@ final class Question extends AbstractQuestion
             new Option(name: 'Yes', packages: [
                 new LeaguePackage(),
             ]),
-        ]
+        ],
     ) {
         parent::__construct($question, $required, $options);
     }

@@ -12,13 +12,6 @@ final class ReflectionClassMetadataTest extends TestCase
 {
     private ReflectionClassMetadata $metadata;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->metadata = new ReflectionClassMetadata(RoutesBootloader::class);
-    }
-
     public function testGetClassName(): void
     {
         $this->assertSame('Tests\Fixtures\RoutesBootloader', $this->metadata->getName());
@@ -32,5 +25,12 @@ final class ReflectionClassMetadataTest extends TestCase
     public function testGetNamespace(): void
     {
         $this->assertSame('Tests\Fixtures', $this->metadata->getNamespace());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->metadata = new ReflectionClassMetadata(RoutesBootloader::class);
     }
 }

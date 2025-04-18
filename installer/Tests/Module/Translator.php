@@ -36,8 +36,8 @@ final class Translator extends AbstractModule
     {
         return [
             'global' => [
-                LocaleSelector::class
-            ]
+                LocaleSelector::class,
+            ],
         ];
     }
 }

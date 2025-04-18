@@ -16,7 +16,7 @@ final class ProcessExecutor implements ProcessExecutorInterface
 
         return new Output(
             \str_replace('\'', '', $process->getCommandLine()),
-            $process->getIterator()
+            $process->getIterator(),
         );
     }
 }

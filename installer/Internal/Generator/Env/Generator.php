@@ -7,7 +7,6 @@ namespace Installer\Internal\Generator\Env;
 use Installer\Internal\Events\EnvGenerated;
 use Installer\Internal\EventStorage;
 use Spiral\Files\FilesInterface;
-use Traversable;
 
 final class Generator implements \Stringable, \IteratorAggregate
 {
@@ -20,20 +19,7 @@ final class Generator implements \Stringable, \IteratorAggregate
         private readonly string $projectRoot,
         private readonly FilesInterface $files,
         private readonly ?EventStorage $eventStorage = null,
-    ) {
-    }
-
-    public function __toString(): string
-    {
-        \uasort($this->groups, static fn (EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
-
-        $groups = \array_map(
-            static fn (EnvGroup $group): string => (string)$group,
-            $this->groups
-        );
-
-        return \trim(\implode(PHP_EOL, $groups)) . PHP_EOL;
-    }
+    ) {}
 
     /**
      * @param array<non-empty-string, mixed> $values
@@ -81,8 +67,8 @@ final class Generator implements \Stringable, \IteratorAggregate
     {
         $this->files->write(
             $path = $this->projectRoot . self::FILENAME,
-            $content = (string)$this,
-            FilesInterface::RUNTIME
+            $content = (string) $this,
+            FilesInterface::RUNTIME,
         );
 
         $this->eventStorage?->addEvent(new EnvGenerated($path, $this->groups));
@@ -100,11 +86,23 @@ final class Generator implements \Stringable, \IteratorAggregate
         return $content;
     }
 
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         foreach ($this->groups as $group) {
             yield from $group;
         }
+    }
+
+    public function __toString(): string
+    {
+        \uasort($this->groups, static fn(EnvGroup $a, EnvGroup $b) => $a->priority <=> $b->priority);
+
+        $groups = \array_map(
+            static fn(EnvGroup $group): string => (string) $group,
+            $this->groups,
+        );
+
+        return \trim(\implode(PHP_EOL, $groups)) . PHP_EOL;
     }
 
     private function keyExists(string $key): bool

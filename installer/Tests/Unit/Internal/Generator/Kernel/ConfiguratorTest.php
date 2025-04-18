@@ -16,18 +16,6 @@ final class ConfiguratorTest extends TestCase
     private FilesInterface|\Mockery\MockInterface $files;
     private Configurator $configurator;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->files = \Mockery::mock(FilesInterface::class);
-
-        $this->configurator = new Configurator(
-            new Writer($this->files),
-            new ReflectionClassMetadata(Kernel::class),
-        );
-    }
-
     public function testGenerateWithCustomBootloaders(): void
     {
         $this->configurator->app->append('App\Application\Bootloader\LoggingBootloader');
@@ -171,5 +159,17 @@ final class ConfiguratorTest extends TestCase
         unset($this->configurator);
 
         $this->assertTrue(true);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->files = \Mockery::mock(FilesInterface::class);
+
+        $this->configurator = new Configurator(
+            new Writer($this->files),
+            new ReflectionClassMetadata(Kernel::class),
+        );
     }
 }

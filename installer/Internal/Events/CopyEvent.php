@@ -11,18 +11,7 @@ final class CopyEvent implements \Stringable
         public readonly string $destination,
         public readonly string $sourceRoot = '',
         public readonly string $destinationRoot = '',
-    ) {
-    }
-
-    public function __toString(): string
-    {
-        return \sprintf(
-            'Copy [%s:%s] -> [%s]',
-            $this->getFullSource(),
-            $this->detectType($this->getFullSource()),
-            $this->getFullDestination(),
-        );
-    }
+    ) {}
 
     public function withSourceRoot(string $sourceRoot): self
     {
@@ -78,5 +67,15 @@ final class CopyEvent implements \Stringable
         }
 
         return $type;
+    }
+
+    public function __toString(): string
+    {
+        return \sprintf(
+            'Copy [%s:%s] -> [%s]',
+            $this->getFullSource(),
+            $this->detectType($this->getFullSource()),
+            $this->getFullDestination(),
+        );
     }
 }

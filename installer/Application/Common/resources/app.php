@@ -28,5 +28,5 @@ if ($app === null) {
     exit(255);
 }
 
-$code = (int)$app->serve();
+$code = (int) $app->serve();
 exit($code);

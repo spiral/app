@@ -32,7 +32,7 @@ final class Bootloaders implements GeneratorInterface
                     MigrationsBootloader::class,
                 ],
                 comment: 'Databases',
-                priority: 7
+                priority: 7,
             )
             ->addGroup(
                 bootloaders: [
@@ -41,7 +41,7 @@ final class Bootloaders implements GeneratorInterface
                     AnnotatedBootloader::class,
                 ],
                 comment: 'ORM',
-                priority: 8
+                priority: 8,
             )
             ->append(CommandBootloader::class, FrameworkCommands::class)
             ->append(ScaffolderBootloader::class, FrameworkScaffolder::class);

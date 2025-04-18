@@ -22,8 +22,7 @@ class User
         private string $username,
         #[Column(type: 'string')]
         private string $email,
-    ) {
-    }
+    ) {}
 
     public function getId(): int
     {

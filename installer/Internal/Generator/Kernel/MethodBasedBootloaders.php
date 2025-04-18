@@ -22,12 +22,12 @@ final class MethodBasedBootloaders extends Bootloaders
     {
         \uasort(
             $this->groups,
-            static fn (ClassListGroup $a, ClassListGroup $b) => $a->priority <=> $b->priority
+            static fn(ClassListGroup $a, ClassListGroup $b) => $a->priority <=> $b->priority,
         );
 
         $groups = \array_map(
-            static fn (ClassListGroup $group) => $group->render($namespace),
-            \array_values($this->groups)
+            static fn(ClassListGroup $group) => $group->render($namespace),
+            \array_values($this->groups),
         );
 
         $methodName = self::METHODS_MAP[$this->place->value];
@@ -49,9 +49,9 @@ final class MethodBasedBootloaders extends Bootloaders
         $string = \implode(
             PHP_EOL,
             \array_map(
-                static fn (string $line) => '    ' . $line,
-                \explode(PHP_EOL, $string)
-            )
+                static fn(string $line) => '    ' . $line,
+                \explode(PHP_EOL, $string),
+            ),
         );
 
         $string = new Literal($string);
@@ -61,11 +61,11 @@ final class MethodBasedBootloaders extends Bootloaders
             return [
             $string,
             ];
-            PHP
+            PHP,
         );
 
         $this->eventStorage?->addEvent(
-            new BootloadersInjected($class->getName(), $this->place, $this->groups)
+            new BootloadersInjected($class->getName(), $this->place, $this->groups),
         );
     }
 }

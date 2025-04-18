@@ -8,7 +8,6 @@ final class ComposerUpdated
 {
     public function __construct(
         public readonly string $path,
-        public readonly array $data
-    ) {
-    }
+        public readonly array $data,
+    ) {}
 }

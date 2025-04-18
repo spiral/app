@@ -23,12 +23,12 @@ final class RoadRunnerMetrics extends AbstractQuestion
                 name: 'Yes',
                 generators: [
                     new MetricsBootloader(),
-                ]
+                ],
             ),
         ],
         array $depends = [
             ComposerPackages::RoadRunnerBridge,
-        ]
+        ],
     ) {
         parent::__construct($question, $required, $options, $depends);
     }

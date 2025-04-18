@@ -17,7 +17,7 @@ final class Bootloaders implements GeneratorInterface
         $context->kernel->load->addGroup(
             bootloaders: [SchedulerBootloader::class],
             comment: 'Scheduler',
-            priority: 9
+            priority: 9,
         );
     }
 }

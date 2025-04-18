@@ -17,7 +17,7 @@ final class Middlewares implements GeneratorInterface
 
         $context->routesBootloader?->addGlobalMiddleware(
             middleware: [LocaleSelector::class],
-            beforeMiddleware: ErrorHandlerMiddleware::class
+            beforeMiddleware: ErrorHandlerMiddleware::class,
         );
     }
 }

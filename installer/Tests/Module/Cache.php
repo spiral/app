@@ -17,7 +17,6 @@ final class Cache extends AbstractModule
         ];
     }
 
-
     public function getBootloaders(ApplicationInterface $application): array
     {
         return [

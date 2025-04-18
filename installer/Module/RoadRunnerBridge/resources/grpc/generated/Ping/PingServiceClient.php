@@ -9,9 +9,7 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 
 class PingServiceClient implements PingServiceInterface
 {
-    public function __construct(public InterceptableCore $core)
-    {
-    }
+    public function __construct(public InterceptableCore $core) {}
 
     public function PingUrl(ContextInterface $ctx, PingRequest $in): PingResponse
     {

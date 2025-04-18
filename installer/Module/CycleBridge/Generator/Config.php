@@ -59,7 +59,7 @@ final class Config implements GeneratorInterface
             ],
             default => [
                 Collections::Array->value => new Literal('new ArrayCollectionFactory()'),
-            ]
+            ],
         };
     }
 
@@ -69,7 +69,7 @@ final class Config implements GeneratorInterface
             $application->isPackageInstalled(new DoctrineCollections()) => Collections::Doctrine,
             $application->isPackageInstalled(new IlluminateCollections()) => Collections::Illuminate,
             $application->isPackageInstalled(new LoophpCollections()) => Collections::Loophp,
-            default => Collections::Array
+            default => Collections::Array,
         };
     }
 }
