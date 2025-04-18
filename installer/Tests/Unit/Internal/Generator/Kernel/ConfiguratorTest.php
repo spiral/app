@@ -122,7 +122,7 @@ final class ConfiguratorTest extends TestCase
                     use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
                     use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
-                    final class Kernel
+                    class Kernel
                     {
                         #[\Override]
                         public function defineSystemBootloaders(): array
