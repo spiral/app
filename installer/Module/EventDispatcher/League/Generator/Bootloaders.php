@@ -11,6 +11,7 @@ use Spiral\League\Event\Bootloader\EventBootloader;
 
 final class Bootloaders implements GeneratorInterface
 {
+    #[\Override]
     public function process(Context $context): void
     {
         $context->kernel

@@ -80,14 +80,15 @@ final class Installer implements \Stringable
     public function run(): InstallationResult
     {
         $files = new Files();
+        $rootDir = \dirname(__DIR__, 2);
 
         $appPath = $this->appPath . '/' . $this;
         $composerJson = $appPath . '/composer.json';
 
         $files->ensureDirectory($appPath);
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
-        $files->copy(__DIR__ . '/Fixtures/psalm.xml', "$appPath/psalm.xml");
-        $files->copy(__DIR__ . '/Fixtures/psalm-baseline.xml', "$appPath/psalm-baseline.xml");
+        $files->copy("$rootDir/psalm.xml", "$appPath/psalm.xml");
+        $files->copy("$rootDir/psalm-baseline.xml", "$appPath/psalm-baseline.xml");
 
         $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
         $composer = new Composer();

@@ -21,11 +21,4 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
-    <issueHandlers>
-        <ClassMustBeFinal>
-            <errorLevel type="suppress">
-                <directory name="app/src/Domain/**/Entity"/>
-            </errorLevel>
-        </ClassMustBeFinal>
-    </issueHandlers>
 </psalm>

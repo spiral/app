@@ -25,6 +25,7 @@ final class Question extends AbstractQuestion
         parent::__construct($question, $required, $options);
     }
 
+    #[\Override]
     public function getHelp(): ?string
     {
         return <<<'HELP'

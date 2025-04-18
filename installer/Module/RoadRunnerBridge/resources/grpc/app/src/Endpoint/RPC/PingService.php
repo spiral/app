@@ -22,6 +22,7 @@ final class PingService implements PingServiceInterface
         private readonly LoggerInterface $logger,
     ) {}
 
+    #[\Override]
     public function PingUrl(GRPC\ContextInterface $ctx, PingRequest $in): PingResponse
     {
         $this->logger->info('PingUrl', [
