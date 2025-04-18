@@ -32,6 +32,7 @@ final class ViewRenderer implements RendererInterface
         private readonly Verbosity $verbosity,
     ) {}
 
+    #[\Override]
     public function renderException(Request $request, int $code, \Throwable $exception): ResponseInterface
     {
         // If request accepts json, we will render as a json response
@@ -58,7 +59,7 @@ final class ViewRenderer implements RendererInterface
             $payload['stacktrace'] = $exception->getTraceAsString();
         }
 
-        $response->getBody()->write(\json_encode($payload));
+        $response->getBody()->write((string) \json_encode($payload));
 
         return $response;
     }

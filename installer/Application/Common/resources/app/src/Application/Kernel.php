@@ -13,8 +13,9 @@ use Spiral\Prototype\Bootloader\PrototypeBootloader;
 use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 
-class Kernel extends \Spiral\Framework\Kernel
+final class Kernel extends \Spiral\Framework\Kernel
 {
+    #[\Override]
     public function defineSystemBootloaders(): array
     {
         return [
@@ -24,6 +25,7 @@ class Kernel extends \Spiral\Framework\Kernel
         ];
     }
 
+    #[\Override]
     public function defineBootloaders(): array
     {
         return [

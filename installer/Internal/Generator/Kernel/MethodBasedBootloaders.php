@@ -42,6 +42,7 @@ final class MethodBasedBootloaders extends Bootloaders
             $method = $class->getMethod($methodName);
         } catch (ReactorException) {
             $method = $class->addMethod($methodName);
+            $method->addAttribute(\Override::class);
         }
 
         $method->setReturnType('array');

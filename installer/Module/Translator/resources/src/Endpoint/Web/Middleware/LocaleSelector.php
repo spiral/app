@@ -25,6 +25,7 @@ final class LocaleSelector implements MiddlewareInterface
         $this->availableLocales = $this->translator->getCatalogueManager()->getLocales();
     }
 
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $defaultLocale = $this->translator->getLocale();

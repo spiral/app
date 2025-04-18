@@ -26,6 +26,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -49,6 +50,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -67,6 +69,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -87,6 +90,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -113,6 +117,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -142,6 +147,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -160,6 +166,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -180,6 +187,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -206,6 +214,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -239,6 +248,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineAppBootloaders(): array
                 {
                     return [
@@ -264,6 +274,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineSystemBootloaders(): array
                 {
                     return [

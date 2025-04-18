@@ -15,6 +15,7 @@ use App\Domain\User\Repository\UserRepositoryInterface;
  */
 final class CycleORMUserRepository extends Repository implements UserRepositoryInterface
 {
+    #[\Override]
     public function getById(int $id): User
     {
         $user = $this->findByPK($id);
