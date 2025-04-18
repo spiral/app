@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Migration;
+namespace Installer\Module\CycleBridge\resources\skeleton\database\migrations;
 
 use Cycle\Migrations\Migration;
 

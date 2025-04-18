@@ -13,10 +13,10 @@ final class Env implements GeneratorInterface
     {
         $context->envConfigurator->addGroup(
             values: [
-                'ELASTICSEARCH_VERSION' => '7.16.2',
-                'POSTGRESQL_VERSION' => '13',
-                'TEMPORAL_VERSION' => '1.21.0',
-                'TEMPORAL_UI_VERSION' => '2.16.1',
+                'ELASTICSEARCH_VERSION' => '8.18.0',
+                'POSTGRESQL_VERSION' => '15',
+                'TEMPORAL_VERSION' => '1.27.2',
+                'TEMPORAL_UI_VERSION' => '2.37.1',
             ],
             comment: 'Temporal infrastructure configuration',
             priority: 18,

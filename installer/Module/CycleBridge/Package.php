@@ -23,7 +23,7 @@ final class Package extends BasePackage
     public function __construct(
         array $resources = [
             'config' => 'app/config',
-            'migrations' => 'app/migrations',
+            'database' => 'app/database',
         ],
         array $generators = [
             new Bootloaders(),
