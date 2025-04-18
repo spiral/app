@@ -7,6 +7,7 @@ namespace Installer\Internal\Application;
 use Composer\Package\PackageInterface;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
+use Installer\Internal\Path;
 use Installer\Internal\Question\QuestionInterface;
 
 /**
@@ -39,7 +40,7 @@ interface ApplicationInterface
 
     public function getResources(): array;
 
-    public function getResourcesPath(): string;
+    public function getResourcesPath(): Path;
 
     /**
      * @return array<non-empty-string, non-empty-string[]>

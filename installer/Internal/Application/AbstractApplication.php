@@ -8,6 +8,7 @@ use Composer\Package\PackageInterface;
 use Installer\Application\ApplicationSkeleton;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Package;
+use Installer\Internal\Path;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\Option\Option;
 use Installer\Internal\Question\QuestionInterface;
@@ -97,18 +98,14 @@ abstract class AbstractApplication implements ApplicationInterface
         return $this->resources;
     }
 
-    public function getResourcesPath(): string
+    public function getResourcesPath(): Path
     {
         $refl = new \ReflectionClass($this);
-        $dir = \dirname($refl->getFileName());
+        $dir = Path::create(\dirname($refl->getFileName()));
 
-        $path = \rtrim($dir, '/') . '/resources/';
+        $path = $dir->join('resources');
 
-        if (\is_dir($path)) {
-            return $path;
-        }
-
-        return $dir;
+        return $path->isDir() ? $path : $dir;
     }
 
     public function getGenerators(): \Generator

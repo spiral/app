@@ -49,16 +49,16 @@ final class Config implements GeneratorInterface
     {
         return match ($collections) {
             Collections::Doctrine => [
-                Collections::Doctrine->value => new Literal('new DoctrineCollectionFactory()'),
+                Collections::Doctrine->value => Literal::new('Cycle\ORM\Collection\DoctrineCollectionFactory'),
             ],
             Collections::Illuminate => [
-                Collections::Illuminate->value => new Literal('new IlluminateCollectionFactory()'),
+                Collections::Illuminate->value => Literal::new('Cycle\ORM\Collection\IlluminateCollectionFactory'),
             ],
             Collections::Loophp => [
-                Collections::Loophp->value => new Literal('new LoophpCollectionFactory()'),
+                Collections::Loophp->value => Literal::new('Cycle\ORM\Collection\LoophpCollectionFactory'),
             ],
             default => [
-                Collections::Array->value => new Literal('new ArrayCollectionFactory()'),
+                Collections::Array->value => Literal::new('Cycle\ORM\Collection\ArrayCollectionFactory'),
             ],
         };
     }

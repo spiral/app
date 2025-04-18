@@ -108,7 +108,7 @@ final class AbstractApplicationTest extends TestCase
 
     public function testGetGeneratedResourcePath(): void
     {
-        $this->assertTrue(\str_ends_with($this->app->getResourcesPath(), 'installer/Tests/Fixtures'));
+        $this->assertTrue(\str_ends_with((string) $this->app->getResourcesPath(), 'installer/Tests/Fixtures'));
     }
 
     public function testRoadRunnerPlugins(): void

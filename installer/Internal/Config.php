@@ -51,7 +51,7 @@ final class Config
         $appDirectories = [];
 
         foreach ($this->getApplications() as $application) {
-            $appDirectories[':' . \strtolower($application->getName()) . ':'] = \rtrim($application->getResourcesPath(), '/');
+            $appDirectories[':' . \strtolower($application->getName()) . ':'] = (string) $application->getResourcesPath();
         }
 
         return \array_merge($this->config['directories'], $appDirectories);
