@@ -51,9 +51,11 @@
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
+        "cs:fix": "php-cs-fixer fix -v",
+        "psalm": "psalm",
+        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage",
-        "psalm:config": "psalm"
+        "test-coverage": "phpunit --coverage"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
