@@ -76,7 +76,7 @@ final class ComposerFileTest extends TestCase
             ->withArgs(static function (array $json): bool {
                 return
                     $json['require']['ext-grpc'] === '*'
-                    && $json['require-dev']['spiral/dumper'] === '^3.2.1'
+                    && $json['require-dev']['spiral/dumper'] === '^3.3.1'
                     && \in_array('ext-grpc', $json['extra']['spiral']['packages'])
                     && \in_array('spiral/dumper', $json['extra']['spiral']['packages']);
             });

@@ -24,6 +24,9 @@
             "Tests\\": "Tests"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
