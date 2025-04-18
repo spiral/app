@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-class Kernel extends \Spiral\Framework\Kernel
+final class Kernel extends \Spiral\Framework\Kernel
 {
     protected const SYSTEM = [];
 
