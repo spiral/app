@@ -8,7 +8,7 @@
          stopOnFailure="false"
          stopOnError="false"
          stderr="true"
-         cacheDirectory=".phpunit.cache"
+         cacheDirectory="runtime/.phpunit.cache"
          backupStaticProperties="false"
 >
     <coverage/>
