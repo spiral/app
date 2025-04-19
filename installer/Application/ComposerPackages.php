@@ -21,7 +21,7 @@ enum ComposerPackages: string
     case CycleBridge = 'spiral/cycle-bridge:^2.11';
     case DoctrineCollections = 'doctrine/collections:^2.3';
     case LoophpCollections = 'loophp/collection:^7.6';
-    case IlluminateCollections = 'illuminate/collections:^12.0';
+    case IlluminateCollections = 'illuminate/collections:8 - 12';
     case RoadRunnerGRPC = 'spiral/roadrunner-grpc:^3.5';
     case SpiralValidator = 'spiral/validator:^1.5';
     case SymfonyValidator = 'spiral-packages/symfony-validator:^1.5';
