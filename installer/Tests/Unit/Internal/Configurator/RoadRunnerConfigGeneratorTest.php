@@ -34,14 +34,14 @@ final class RoadRunnerConfigGeneratorTest extends TestCase
         $executor->shouldReceive('execute')
             ->with($expected)
             ->andReturn(
-                new Output('test', (static fn  () => yield Process::OUT => 'test')())
+                new Output('test', (static fn() => yield Process::OUT => 'test')()),
             );
 
         $generator = new RoadRunnerConfigGenerator($executor);
 
         $this->assertSame(
             '[write] test',
-            (string) $generator->generate($plugins)->getIterator()->current()
+            (string) $generator->generate($plugins)->getIterator()->current(),
         );
     }
 }

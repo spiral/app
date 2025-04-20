@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Application\Kernel;
+use Spiral\Core\Container;
+use Spiral\Core\Options;
 
 // If you forgot to configure some of this in your php.ini file,
 // then don't worry, we will set the standard environment
@@ -12,21 +14,22 @@ use App\Application\Kernel;
 \error_reporting((E_ALL | E_STRICT) ^ E_DEPRECATED);
 \ini_set('display_errors', 'stderr');
 
-// Application helper functions. Must be included before the composer autoloader.
-require __DIR__ . '/functions.php';
-
 // Register Composer's auto loader.
 require __DIR__ . '/vendor/autoload.php';
 
 
 // Initialize shared container, bindings, directories and etc.
+$options = new Options();
+$options->allowSingletonsRebinding = false;
+$container = new Container(options: $options);
 $app = Kernel::create(
     directories: ['root' => __DIR__],
+    container: $container,
 )->run();
 
 if ($app === null) {
     exit(255);
 }
 
-$code = (int)$app->serve();
+$code = (int) $app->serve();
 exit($code);

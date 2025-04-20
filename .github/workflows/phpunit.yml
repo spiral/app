@@ -12,7 +12,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./installer
+    working-directory: installer
 
 jobs:
   phpunit:
@@ -23,13 +23,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.2']
+        php: ['8.1', '8.2', '8.3', '8.4']
         os: ['ubuntu-latest']
         stability: ['prefer-lowest', 'prefer-stable']
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
@@ -41,19 +41,11 @@ jobs:
       - name: Validate Composer
         run: composer validate
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Restore Composer Cache
-        uses: actions/cache@v2
+      - name: 📥 Install dependencies with composer
+        uses: ramsey/composer-install@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php }}-composer
-
-      - name: Install Dependencies
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+          dependency-versions: ${{ matrix.stability }}
+          working-directory: installer
 
       - name: Execute Tests
-        run: vendor/bin/phpunit
+        run: composer test

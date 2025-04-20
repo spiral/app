@@ -26,7 +26,7 @@ final class Config implements GeneratorInterface
                 CacheBootloader::class,
             ],
             comment: 'Cache',
-            priority: 13
+            priority: 13,
         );
     }
 
@@ -40,7 +40,7 @@ final class Config implements GeneratorInterface
                 'CACHE_STORAGE' => 'local',
             ],
             comment: 'Cache',
-            priority: 7
+            priority: 7,
         );
     }
 }

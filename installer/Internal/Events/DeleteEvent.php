@@ -7,7 +7,6 @@ namespace Installer\Internal\Events;
 final class DeleteEvent
 {
     public function __construct(
-        public readonly string $path
-    ) {
-    }
+        public readonly string $path,
+    ) {}
 }

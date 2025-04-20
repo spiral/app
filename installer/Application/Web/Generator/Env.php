@@ -17,7 +17,7 @@ final class Env implements GeneratorInterface
                 'SESSION_COOKIE' => 'sid',
             ],
             comment: 'Session',
-            priority: 10
+            priority: 10,
         );
 
         $context->envConfigurator->addGroup(
@@ -26,7 +26,7 @@ final class Env implements GeneratorInterface
                 'AUTH_TOKEN_STORAGE' => 'session',
             ],
             comment: 'Authorization',
-            priority: 11
+            priority: 11,
         );
     }
 }

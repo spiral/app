@@ -15,12 +15,12 @@ final class ClassBindingTest extends TestCase
     {
         $binding = new ClassBinding(
             alias: 'App\Foo',
-            value: 'Baz\Bar'
+            value: 'Baz\Bar',
         );
 
         $this->assertSame(
             'Foo::class => Bar::class',
-            $binding->render($namespace = new PhpNamespace('App'))
+            $binding->render($namespace = new PhpNamespace('App')),
         );
 
         $printer = new Printer();
@@ -34,7 +34,7 @@ final class ClassBindingTest extends TestCase
 
 
             PHP,
-            $printer->printNamespace($namespace->getElement())
+            $printer->printNamespace($namespace->getElement()),
         );
     }
 }

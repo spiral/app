@@ -23,9 +23,7 @@ use Spiral\RoadRunnerBridge\GRPC\Interceptor\ServiceClientCore;
  */
 final class ServiceBootloader extends Bootloader
 {
-    public function __construct(public ConfiguratorInterface $config)
-    {
-    }
+    public function __construct(public ConfiguratorInterface $config) {}
 
     public function init(EnvironmentInterface $env): void
     {
@@ -48,7 +46,7 @@ final class ServiceBootloader extends Bootloader
                 'services' => [
                     PingServiceClient::class => ['host' => $env->get('PING_SERVICE_HOST', '127.0.0.1:9000')],
                 ],
-            ]
+            ],
         );
     }
 
@@ -65,10 +63,10 @@ final class ServiceBootloader extends Bootloader
                 return new PingServiceClient(
                     new InterceptableCore(new ServiceClientCore(
                         $service['host'],
-                        ['credentials' => $service['credentials'] ?? $config->getDefaultCredentials()]
-                    ))
+                        ['credentials' => $service['credentials'] ?? $config->getDefaultCredentials()],
+                    )),
                 );
-            }
+            },
         );
     }
 }

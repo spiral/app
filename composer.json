@@ -10,13 +10,14 @@
     },
     "require": {
         "php": ">=8.1",
-        "spiral/framework": "^3.8",
+        "spiral/framework": "^3.15.7",
         "spiral/roadrunner-cli": "^2.5"
     },
     "require-dev": {
         "composer/composer": "^2.4",
+        "spiral/code-style": "^2.2",
         "spiral/testing": "^2.3",
-        "vimeo/psalm": "^5.9"
+        "vimeo/psalm": "^6.10"
     },
     "autoload": {
         "psr-4": {
@@ -50,9 +51,11 @@
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage",
-        "psalm:config": "psalm"
+        "cs:fix": "php-cs-fixer fix -v",
+        "psalm": "psalm",
+        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

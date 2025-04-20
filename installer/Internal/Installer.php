@@ -29,6 +29,7 @@ final class Installer extends AbstractInstaller
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
     private ApplicationInterface $application;
+
     private readonly InteractionsInterface $interactions;
 
     /**
@@ -69,7 +70,7 @@ final class Installer extends AbstractInstaller
             new IO($event->getIO()),
             Factory::getComposerFile(),
             $event->getComposer(),
-            $interactions
+            $interactions,
         );
 
         $installer->run();
@@ -123,7 +124,7 @@ WELCOME,
                 foreach ($this->resource->copy($output->getFullSource(), $output->getFullDestination()) as $copyTask) {
                     $this->eventStorage?->addEvent($copyTask);
                     if ($this->io->isVerbose()) {
-                        $this->io->write((string)$copyTask);
+                        $this->io->write((string) $copyTask);
                     }
                 }
             } else {

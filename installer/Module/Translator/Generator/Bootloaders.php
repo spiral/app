@@ -22,7 +22,7 @@ final class Bootloaders implements GeneratorInterface
                 TranslatedCacheBootloader::class,
             ],
             comment: 'Internationalization',
-            priority: 13
+            priority: 13,
         );
     }
 }

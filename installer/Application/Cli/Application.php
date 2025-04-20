@@ -62,7 +62,7 @@ final class Application extends AbstractApplication
             ':common:' => '',
         ],
         array $commands = [],
-        array $instructions = []
+        array $instructions = [],
     ) {
         parent::__construct(
             name: $name,
@@ -73,7 +73,7 @@ final class Application extends AbstractApplication
             resources: $resources,
             generators: $generators,
             commands: $commands,
-            readme: $instructions
+            readme: $instructions,
         );
     }
 

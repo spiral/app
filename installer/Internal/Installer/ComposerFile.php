@@ -10,7 +10,6 @@ use Composer\Package\RootPackageInterface;
 use Composer\Package\Version\VersionParser;
 use Installer\Internal\Config;
 use Installer\Internal\Console\Output;
-use Installer\Internal\EventStorage;
 use Installer\Internal\Package;
 use Installer\Internal\Question\Option\BooleanOption;
 use Installer\Internal\Question\QuestionInterface;
@@ -19,10 +18,13 @@ final class ComposerFile
 {
     /** @var Link[] */
     private array $composerRequires = [];
+
     /** @var Link[] */
     private array $composerDevRequires = [];
+
     /** @var array<string, BasePackage::STABILITY_*> */
     private array $stabilityFlags = [];
+
     private array $definition;
 
     public function __construct(
@@ -90,7 +92,7 @@ final class ComposerFile
             'alpha' => BasePackage::STABILITY_ALPHA,
             'beta' => BasePackage::STABILITY_BETA,
             'RC' => BasePackage::STABILITY_RC,
-            default => null
+            default => null,
         };
 
         if ($stability !== null) {
@@ -155,7 +157,7 @@ final class ComposerFile
         unset(
             $this->definition['scripts']['post-install-cmd'],
             $this->definition['scripts']['post-update-cmd'],
-            $this->definition['extra']['spiral']
+            $this->definition['extra']['spiral'],
         );
 
         $this->definition['autoload'] = $autoload;

@@ -18,7 +18,7 @@ final class Package extends BasePackage
             package: ComposerPackages::Scheduler,
             generators: [
                 new Bootloaders(),
-            ]
+            ],
         );
     }
 

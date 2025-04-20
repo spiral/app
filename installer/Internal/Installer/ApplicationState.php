@@ -25,8 +25,7 @@ final class ApplicationState
         private readonly ComposerFile $composer,
         private readonly ResourceQueue $resource,
         private readonly ?EventStorage $eventStorage = null,
-    ) {
-    }
+    ) {}
 
     public function setApplication(ApplicationInterface $application, int $type): void
     {
@@ -57,7 +56,7 @@ final class ApplicationState
         $this->eventStorage?->addEvent(new PackageRegistered(
             $package->getName(),
             $package->getVersion(),
-            $package->isDev()
+            $package->isDev(),
         ));
 
         // Mark package as installed to prevent duplication of resources and dependencies
@@ -99,7 +98,7 @@ final class ApplicationState
         foreach ($this->application->getResources() as $source => $target) {
             yield from $this->resource->copy(
                 $source,
-                $target
+                $target,
             );
         }
 
@@ -109,7 +108,7 @@ final class ApplicationState
             foreach ($package->getResources() as $source => $target) {
                 yield from $this->resource->copy(
                     \rtrim($package->getResourcesPath(), '/') . '/' . \ltrim($source, '/'),
-                    $target
+                    $target,
                 );
             }
         }

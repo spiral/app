@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use Monolog\Logger;
+use Monolog\Level;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware;
@@ -20,8 +20,7 @@ final class LoggingBootloader extends Bootloader
 {
     public function __construct(
         private readonly ConfiguratorInterface $config,
-    ) {
-    }
+    ) {}
 
     public function init(MonologBootloader $monolog): void
     {
@@ -38,7 +37,7 @@ final class LoggingBootloader extends Bootloader
             channel: MonologConfig::DEFAULT_CHANNEL,
             handler: $monolog->logRotate(
                 filename: directory('runtime') . 'logs/error.log',
-                level: Logger::ERROR,
+                level: Level::Error,
                 maxFiles: 25,
                 bubble: false,
             ),

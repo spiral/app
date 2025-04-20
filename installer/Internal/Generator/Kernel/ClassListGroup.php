@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Installer\Internal\Generator\Kernel;
 
 use Spiral\Reactor\Partial\PhpNamespace;
-use Traversable;
 
 final class ClassListGroup implements \IteratorAggregate
 {
@@ -16,9 +15,8 @@ final class ClassListGroup implements \IteratorAggregate
     public function __construct(
         private array $classes = [],
         private readonly ?string $comment = null,
-        public readonly int $priority = 0
-    ) {
-    }
+        public readonly int $priority = 0,
+    ) {}
 
     /**
      * @param class-string $class
@@ -41,9 +39,9 @@ final class ClassListGroup implements \IteratorAggregate
         foreach ($this->classes as $pos => $value) {
             if ($afterClass === $value) {
                 $this->classes = \array_merge(
-                    \array_slice($this->classes, 0, (int)$pos + 1),
+                    \array_slice($this->classes, 0, (int) $pos + 1),
                     [$bootloader],
-                    \array_slice($this->classes, (int)$pos + 1)
+                    \array_slice($this->classes, (int) $pos + 1),
                 );
                 break;
             }
@@ -63,9 +61,9 @@ final class ClassListGroup implements \IteratorAggregate
         foreach ($this->classes as $pos => $value) {
             if ($beforeClass === $value) {
                 $this->classes = \array_merge(
-                    \array_slice($this->classes, 0, (int)$pos),
+                    \array_slice($this->classes, 0, (int) $pos),
                     [$bootloader],
-                    \array_slice($this->classes, (int)$pos)
+                    \array_slice($this->classes, (int) $pos),
                 );
                 break;
             }
@@ -84,7 +82,7 @@ final class ClassListGroup implements \IteratorAggregate
         return $comment . \implode(',' . PHP_EOL, $bootloaders);
     }
 
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         foreach ($this->classes as $class) {
             yield $class;

@@ -22,7 +22,7 @@ final class EnvGroupTest extends TestCase
             FOO=BAR
             BAR=BAZ
             ENV,
-            (string)$group
+            (string) $group,
         );
     }
 
@@ -40,7 +40,7 @@ final class EnvGroupTest extends TestCase
             FOO=BAR
             BAR=BAZ
             ENV,
-            (string)$group
+            (string) $group,
         );
     }
 
@@ -55,7 +55,7 @@ final class EnvGroupTest extends TestCase
             # Some group
             FOO=BAR
             ENV,
-            (string)$group
+            (string) $group,
         );
     }
 
@@ -71,7 +71,7 @@ final class EnvGroupTest extends TestCase
     {
         $group = new EnvGroup(comment: 'Some group');
 
-        $this->assertSame('', (string)$group);
+        $this->assertSame('', (string) $group);
     }
 
     public function testSupportedValueTypes(): void
@@ -83,13 +83,13 @@ final class EnvGroupTest extends TestCase
             'bool' => true,
             'null' => null,
             'array' => ['foo', 'bar'],
-            'stringable' => new class() implements \Stringable {
+            'stringable' => new class implements \Stringable {
                 public function __toString(): string
                 {
                     return 'stringable';
                 }
             },
-            'json' => new class() implements \JsonSerializable {
+            'json' => new class implements \JsonSerializable {
                 public function jsonSerialize(): array
                 {
                     return ['foo' => 'bar'];
@@ -109,15 +109,14 @@ final class EnvGroupTest extends TestCase
             stringable=stringable
             json={"foo":"bar"}
             ENV,
-            (string)$group
+            (string) $group,
         );
     }
-
 
     public function testRenderEmptyGroup(): void
     {
         $group = new EnvGroup();
 
-        $this->assertSame('', (string)$group);
+        $this->assertSame('', (string) $group);
     }
 }

@@ -7,6 +7,6 @@ namespace Tests\Fixtures;
 final class ExceptionHandlerBootloaderWithBindings
 {
     protected const BINDINGS = [
-        'Foo' => 'Bar'
+        'Foo' => 'Bar',
     ];
 }

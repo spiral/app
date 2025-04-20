@@ -18,8 +18,7 @@ abstract class Bootloaders
     public function __construct(
         public readonly BootloaderPlaces $place,
         protected readonly ?EventStorage $eventStorage = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param class-string[] $bootloaders

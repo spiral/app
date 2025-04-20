@@ -10,15 +10,15 @@ use Cycle\ORM\Parser\UncastableInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class UuidTypecast implements CastableInterface, UncastableInterface
+final class UuidTypecast implements CastableInterface, UncastableInterface
 {
     private array $rules = [];
 
     public function __construct(
-        private readonly DatabaseInterface $database
-    ) {
-    }
+        private readonly DatabaseInterface $database,
+    ) {}
 
+    #[\Override]
     public function setRules(array $rules): array
     {
         foreach ($rules as $key => $rule) {
@@ -31,9 +31,10 @@ class UuidTypecast implements CastableInterface, UncastableInterface
         return $rules;
     }
 
+    #[\Override]
     public function cast(array $data): array
     {
-        foreach ($this->rules as $column => $rule) {
+        foreach ($this->rules as $column => $_) {
             if (!isset($data[$column])) {
                 continue;
             }
@@ -44,9 +45,10 @@ class UuidTypecast implements CastableInterface, UncastableInterface
         return $data;
     }
 
+    #[\Override]
     public function uncast(array $data): array
     {
-        foreach ($this->rules as $column => $rule) {
+        foreach ($this->rules as $column => $_) {
             if (!isset($data[$column]) || !$data[$column] instanceof UuidInterface) {
                 continue;
             }

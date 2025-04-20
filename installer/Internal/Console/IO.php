@@ -10,8 +10,7 @@ final class IO implements IOInterface
 {
     public function __construct(
         private readonly ComposerIOInterface $io,
-    ) {
-    }
+    ) {}
 
     public function isVerbose(): bool
     {

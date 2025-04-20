@@ -7,7 +7,7 @@
          processIsolation="false"
          stopOnFailure="false"
          stopOnError="false"
-         cacheDirectory=".phpunit.cache"
+         cacheDirectory="runtime/.phpunit.cache"
          backupStaticProperties="false"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerWarnings="true"

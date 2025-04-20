@@ -21,16 +21,19 @@ final class RoutesBootloader extends BaseRoutesBootloader
         AnnotatedRoutesBootloader::class,
     ];
 
+    #[\Override]
     protected function globalMiddleware(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function middlewareGroups(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function defineRoutes(RoutingConfigurator $routes): void
     {
         // Fallback route if no other route matched

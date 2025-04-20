@@ -26,6 +26,14 @@ final class Installer implements \Stringable
     private string $applicationUniqueHash;
     private array $modules = [];
 
+    private function __construct(
+        private readonly FakeInteractions $interactions,
+        private readonly EventStorage $eventStorage,
+        private readonly string $appPath,
+    ) {
+        $this->applicationUniqueHash = \md5(\microtime());
+    }
+
     public static function create(
         Config $config,
         string $applicationClass,
@@ -34,16 +42,8 @@ final class Installer implements \Stringable
         return new self(
             new FakeInteractions($applicationClass, $config),
             new EventStorage(),
-            $appPath
+            $appPath,
         );
-    }
-
-    private function __construct(
-        private readonly FakeInteractions $interactions,
-        private readonly EventStorage $eventStorage,
-        private readonly string $appPath,
-    ) {
-        $this->applicationUniqueHash = \md5(\microtime());
     }
 
     public function withRoadRunner(): self
@@ -80,12 +80,15 @@ final class Installer implements \Stringable
     public function run(): InstallationResult
     {
         $files = new Files();
+        $rootDir = \dirname(__DIR__, 2);
 
         $appPath = $this->appPath . '/' . $this;
         $composerJson = $appPath . '/composer.json';
 
         $files->ensureDirectory($appPath);
         $files->copy(__DIR__ . '/Fixtures/composer.json', $composerJson);
+        $files->copy("$rootDir/psalm.xml", "$appPath/psalm.xml");
+        $files->copy("$rootDir/psalm-baseline.xml", "$appPath/psalm-baseline.xml");
 
         $buffer = new BufferIO(verbosity: StreamOutput::VERBOSITY_VERBOSE);
         $composer = new Composer();
@@ -134,7 +137,7 @@ final class Installer implements \Stringable
             (new \ReflectionProperty($configurator, 'application'))->getValue($configurator),
             isset($testsResult)
                 ? $testsResult === 0
-                : null
+                : null,
         );
     }
 
@@ -152,7 +155,7 @@ final class Installer implements \Stringable
             'command' => 'install',
             '--working-dir' => $appPath,
             '--no-scripts',
-            '--quiet'
+            '--quiet',
         ]));
     }
 
@@ -165,7 +168,7 @@ final class Installer implements \Stringable
             'command' => 'run-script',
             'script' => 'post-create-project-cmd',
             '--working-dir' => $appPath,
-            '--quiet'
+            '--quiet',
         ]));
     }
 
@@ -178,7 +181,7 @@ final class Installer implements \Stringable
             'command' => 'run-script',
             'script' => 'test',
             '--working-dir' => $appPath,
-            '-v'
+            '-v',
         ]), new NullOutput());
     }
 }

@@ -13,32 +13,20 @@ final class ClassListGroupTest extends TestCase
     protected ClassListGroup $group;
     protected PhpNamespace $namespace;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->group = new ClassListGroup([
-            'App\Bootloader\FirstBootloader',
-            'App\Bootloader\SecondBootloader',
-        ], 'Test Bootloaders group', 0);
-
-        $this->namespace = new PhpNamespace('');
-    }
-
     public function testHasBootloader(): void
     {
         $this->assertTrue(
-            $this->group->hasClass('App\Bootloader\FirstBootloader')
+            $this->group->hasClass('App\Bootloader\FirstBootloader'),
         );
 
         $this->assertFalse(
-            $this->group->hasClass('App\Bootloader\ThirdBootloader')
+            $this->group->hasClass('App\Bootloader\ThirdBootloader'),
         );
 
         $this->group->append('App\Bootloader\ThirdBootloader');
 
         $this->assertTrue(
-            $this->group->hasClass('App\Bootloader\ThirdBootloader')
+            $this->group->hasClass('App\Bootloader\ThirdBootloader'),
         );
     }
 
@@ -53,9 +41,8 @@ final class ClassListGroupTest extends TestCase
             App\Bootloader\FirstBootloader::class,
             App\Bootloader\SecondBootloader::class,
             App\Bootloader\ThirdBootloader::class
-            PHP
-            ,
-            $this->group->render($this->namespace)
+            PHP,
+            $this->group->render($this->namespace),
         );
     }
 
@@ -70,9 +57,8 @@ final class ClassListGroupTest extends TestCase
             App\Bootloader\FirstBootloader::class,
             App\Bootloader\ThirdBootloader::class,
             App\Bootloader\SecondBootloader::class
-            PHP
-            ,
-            $this->group->render($this->namespace)
+            PHP,
+            $this->group->render($this->namespace),
         );
     }
 
@@ -87,9 +73,8 @@ final class ClassListGroupTest extends TestCase
             App\Bootloader\ThirdBootloader::class,
             App\Bootloader\FirstBootloader::class,
             App\Bootloader\SecondBootloader::class
-            PHP
-            ,
-            $this->group->render($this->namespace)
+            PHP,
+            $this->group->render($this->namespace),
         );
     }
 
@@ -104,9 +89,20 @@ final class ClassListGroupTest extends TestCase
             App\Bootloader\FirstBootloader::class,
             App\Bootloader\ThirdBootloader::class,
             App\Bootloader\SecondBootloader::class
-            PHP
-            ,
-            $this->group->render($this->namespace)
+            PHP,
+            $this->group->render($this->namespace),
         );
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->group = new ClassListGroup([
+            'App\Bootloader\FirstBootloader',
+            'App\Bootloader\SecondBootloader',
+        ], 'Test Bootloaders group', 0);
+
+        $this->namespace = new PhpNamespace('');
     }
 }

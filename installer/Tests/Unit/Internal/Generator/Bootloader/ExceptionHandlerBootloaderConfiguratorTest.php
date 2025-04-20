@@ -15,13 +15,6 @@ final class ExceptionHandlerBootloaderConfiguratorTest extends TestCase
 {
     private FilesInterface|\Mockery\MockInterface $files;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->files = \Mockery::mock(FilesInterface::class);
-    }
-
     public function testBindingsWithoutConstant(): void
     {
         $configurator = new ExceptionHandlerBootloaderConfigurator(
@@ -62,5 +55,12 @@ final class ExceptionHandlerBootloaderConfiguratorTest extends TestCase
 
         $this->assertTrue(true);
         unset($configurator);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->files = \Mockery::mock(FilesInterface::class);
     }
 }

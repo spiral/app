@@ -14,8 +14,7 @@ final class CreateUserService
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-    ) {
-    }
+    ) {}
 
     public function create(string $username, string $email): User
     {

@@ -25,7 +25,7 @@ final class Bootloaders implements GeneratorInterface
                 HttpCollectorBootloader::class,
             ],
             comment: 'Sentry and Data collectors',
-            priority: 10
+            priority: 10,
         );
     }
 }

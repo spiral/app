@@ -72,15 +72,15 @@ final class ConsoleTest extends InstallerTestCase
 
             ->assertCopied(
                 'Application/Cli/resources/skeleton/app/src/Endpoint/Console/DoNothing.php',
-                'app/src/Endpoint/Console/DoNothing.php'
+                'app/src/Endpoint/Console/DoNothing.php',
             )
             ->assertCopied(
                 'Module/Exception/resources/app.php',
-                'app.php'
+                'app.php',
             )
             ->assertCopied(
                 'Module/Exception/resources/app/src/Application/Exception/Handler.php',
-                'app/src/Application/Exception/Handler.php'
+                'app/src/Application/Exception/Handler.php',
             )
 
             ->assertMessageShown('Removing Installer from composer.json ...')

@@ -29,7 +29,7 @@ abstract class AbstractInstaller
         $this->config = new Config(__DIR__ . '/../../config.php');
         $this->resource = new Resource(
             $this->projectRoot,
-            $this->config->getDirectories()
+            $this->config->getDirectories(),
         );
     }
 }

@@ -14,12 +14,12 @@ final class ClassMethodBindingTest extends TestCase
     {
         $binding = new ClassMethodBinding(
             alias: 'App\Foo',
-            methodName: 'domainCore'
+            methodName: 'domainCore',
         );
 
         $this->assertSame(
             "Foo::class => [self::class, 'domainCore']",
-            $binding->render($namespace = new PhpNamespace('App'))
+            $binding->render($namespace = new PhpNamespace('App')),
         );
     }
 }

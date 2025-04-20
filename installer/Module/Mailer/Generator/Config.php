@@ -6,7 +6,6 @@ namespace Installer\Module\Mailer\Generator;
 
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
-use Spiral\Queue\Bootloader\QueueBootloader;
 
 final class Config implements GeneratorInterface
 {
@@ -22,7 +21,7 @@ final class Config implements GeneratorInterface
                 'MAILER_FROM' => '"Spiral <sendit@local.host>"',
             ],
             comment: 'Mailer',
-            priority: 12
+            priority: 12,
         );
     }
 }

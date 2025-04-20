@@ -22,6 +22,7 @@ final class Package extends BasePackage
         );
     }
 
+    #[\Override]
     public function getReadme(): array
     {
         return [

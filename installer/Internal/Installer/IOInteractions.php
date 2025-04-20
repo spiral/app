@@ -15,9 +15,8 @@ final class IOInteractions implements InteractionsInterface
     public function __construct(
         private readonly IOInterface $io,
         private readonly Config $config,
-        private readonly ApplicationState $applicationState
-    ) {
-    }
+        private readonly ApplicationState $applicationState,
+    ) {}
 
     public function requestApplicationType(): int
     {
@@ -30,13 +29,13 @@ final class IOInteractions implements InteractionsInterface
 
         foreach ($this->config->getApplications() as $key => $app) {
             if ($app instanceof ApplicationInterface) {
-                $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int)$key + 1, $app->getName());
+                $query[] = \sprintf("  [<comment>%s</comment>] %s\n", (int) $key + 1, $app->getName());
             }
         }
 
         $query[] = \sprintf('  Make your selection <comment>(default: %s)</comment>: ', 1);
 
-        return (int)$this->io->ask(\implode($query), 1) - 1;
+        return (int) $this->io->ask(\implode($query), 1) - 1;
     }
 
     public function promptForOptionalPackages(ApplicationInterface $application): \Generator
@@ -76,9 +75,9 @@ final class IOInteractions implements InteractionsInterface
     private function askQuestion(QuestionInterface $question): int
     {
         do {
-            $answer = $this->io->ask($question->getQuestion(), (string)$question->getDefault());
+            $answer = $this->io->ask($question->getQuestion(), (string) $question->getDefault());
 
-            if (!\in_array(\strtolower((string)$answer), ['?', 'h', 'help'])) {
+            if (!\in_array(\strtolower((string) $answer), ['?', 'h', 'help'])) {
                 break;
             }
 
@@ -91,17 +90,17 @@ final class IOInteractions implements InteractionsInterface
         } while (true);
 
         // Handling "y", "Y", "n", "N"
-        if (\strtolower((string)$answer) === 'n') {
+        if (\strtolower((string) $answer) === 'n') {
             $answer = 0;
         }
-        if (\strtolower((string)$answer) === 'y' && count($question->getOptions()) === 2) {
+        if (\strtolower((string) $answer) === 'y' && \count($question->getOptions()) === 2) {
             $answer = 1;
         }
 
-        if (!$question->hasOption((int)$answer)) {
+        if (!$question->hasOption((int) $answer)) {
             throw new \InvalidArgumentException('Invalid answer! Please select one of the available options.');
         }
 
-        return (int)$answer;
+        return (int) $answer;
     }
 }

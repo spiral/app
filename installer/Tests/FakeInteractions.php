@@ -14,7 +14,7 @@ final class FakeInteractions implements InteractionsInterface
 {
     private readonly int $type;
 
-    /**@var array<array-key, array{0: QuestionInterface, 1: OptionInterface}> */
+    /*@var array<array-key, array{0: QuestionInterface, 1: OptionInterface}> */
     private array $answers = [];
 
     public function __construct(

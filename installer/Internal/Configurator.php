@@ -225,7 +225,7 @@ final class Configurator extends AbstractInstaller
             ) {
                 $this->eventStorage?->addEvent($copyEvent);
                 if ($this->io->isVerbose()) {
-                    $this->io->comment(\sprintf('%s copied.', (string)$copyEvent));
+                    $this->io->comment(\sprintf('%s copied.', (string) $copyEvent));
                 }
             }
         }

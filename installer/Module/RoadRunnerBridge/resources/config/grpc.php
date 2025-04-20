@@ -13,7 +13,7 @@ return [
      * You can download the binary here: https://github.com/roadrunner-server/roadrunner/releases
      * Default: null
      */
-    'binaryPath' => directory('root') . 'protoc-gen-php-grpc',
+    'binaryPath' => directory('root') . 'protoc-gen-php-grpc' . (\PHP_OS_FAMILY === 'Windows' ? '.exe' : ''),
 
     /**
      * Path, where generated DTO files put.

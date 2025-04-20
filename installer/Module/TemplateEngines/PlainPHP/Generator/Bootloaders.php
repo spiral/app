@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
                 ViewsBootloader::class,
             ],
             comment: 'Views',
-            priority: 12
+            priority: 12,
         );
     }
 }

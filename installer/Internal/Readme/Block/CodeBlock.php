@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Installer\Internal\Readme\Block;
 
-use Stringable;
-
-final class CodeBlock implements Stringable
+final class CodeBlock implements \Stringable
 {
     /**
-     * @param non-empty-string|Stringable $content
+     * @param non-empty-string|\Stringable $content
      * @param non-empty-string|null $title
      */
     public function __construct(
-        private readonly string|Stringable $content,
+        private readonly string|\Stringable $content,
         private readonly string $language = 'php',
         private readonly ?string $title = null,
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

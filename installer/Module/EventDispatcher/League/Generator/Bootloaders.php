@@ -11,6 +11,7 @@ use Spiral\League\Event\Bootloader\EventBootloader;
 
 final class Bootloaders implements GeneratorInterface
 {
+    #[\Override]
     public function process(Context $context): void
     {
         $context->kernel
@@ -23,7 +24,7 @@ final class Bootloaders implements GeneratorInterface
                 EventBootloader::class,
             ],
             comment: 'Event Dispatcher',
-            priority: 8
+            priority: 8,
         );
     }
 }

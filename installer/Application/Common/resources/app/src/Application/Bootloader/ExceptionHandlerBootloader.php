@@ -31,8 +31,7 @@ final class ExceptionHandlerBootloader extends Bootloader
 
     public function __construct(
         private readonly ExceptionHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function init(AbstractKernel $kernel): void
     {

@@ -38,13 +38,11 @@ return [
         ],
 
         'local' => [
-            // Alias for ArrayStorage type
-            'type' => 'array',
+            'type' => ArrayStorage::class,
         ],
 
         'file' => [
-            // Alias for FileStorage type
-            'type' => 'file',
+            'type' => FileStorage::class,
             'path' => directory('runtime') . 'cache',
         ],
     ],
@@ -52,7 +50,5 @@ return [
     /**
      * Aliases for storage types
      */
-    'typeAliases' => [
-        'file' => FileStorage::class,
-    ],
+    'typeAliases' => [],
 ];

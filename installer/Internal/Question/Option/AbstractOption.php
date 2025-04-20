@@ -8,8 +8,7 @@ abstract class AbstractOption implements OptionInterface
 {
     public function __construct(
         private readonly string $name,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

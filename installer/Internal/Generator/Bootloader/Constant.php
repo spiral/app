@@ -17,8 +17,7 @@ final class Constant
     public function __construct(
         public readonly string $name,
         public readonly bool $protected = true,
-    ) {
-    }
+    ) {}
 
     public function addValue(Value $binding): void
     {
@@ -43,7 +42,7 @@ final class Constant
         }
 
         $bindings = \array_map(
-            static fn (Value $binding): string => $binding->render($namespace),
+            static fn(Value $binding): string => $binding->render($namespace),
             $this->values,
         );
 

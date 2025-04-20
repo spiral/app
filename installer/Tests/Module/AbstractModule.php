@@ -11,9 +11,8 @@ use Installer\Internal\Package;
 abstract class AbstractModule implements ModuleInterface
 {
     public function __construct(
-        protected readonly ?Package $package = null
-    ) {
-    }
+        protected readonly ?Package $package = null,
+    ) {}
 
     public function getPackage(): ?string
     {
@@ -27,10 +26,10 @@ abstract class AbstractModule implements ModuleInterface
         }
 
         return \array_map(
-            static fn (string|GeneratorInterface $generator): string => \is_string($generator)
+            static fn(string|GeneratorInterface $generator): string => \is_string($generator)
                 ? $generator
                 : $generator::class,
-            $this->package->getGenerators()
+            $this->package->getGenerators(),
         );
     }
 

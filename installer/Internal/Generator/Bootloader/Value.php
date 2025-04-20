@@ -11,8 +11,7 @@ abstract class Value
     public function __construct(
         public readonly string $alias,
         public readonly string $value,
-    ) {
-    }
+    ) {}
 
     abstract public function render(PhpNamespace $namespace): string;
 }

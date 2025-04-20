@@ -7,7 +7,6 @@ namespace Installer\Module\RoadRunnerBridge\Common;
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package as BasePackage;
 use Installer\Internal\Readme\Block\FileBlock;
-use Installer\Internal\Readme\Block\LinkString;
 use Installer\Internal\Readme\Block\ListBlock;
 use Installer\Internal\Readme\Section;
 use Installer\Module\RoadRunnerBridge\Common\Generator\Bootloaders;
@@ -51,6 +50,6 @@ final class Package extends BasePackage
 
     public function getResourcesPath(): string
     {
-        return dirname(__DIR__) . '/resources';
+        return \dirname(__DIR__) . '/resources';
     }
 }

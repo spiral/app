@@ -15,54 +15,21 @@ use Tests\TestCase;
 final class AbstractApplicationTest extends TestCase
 {
     private Application $app;
+
     /** Question[] */
     private array $questions;
+
     /** Package[] */
     private array $packages;
+
     /** string[] */
     private array $instructions;
+
     private array $autoload;
     private array $autoloadDev;
     private array $resources;
     private array $commands;
     private array $generators;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app = new Application(
-            name: 'Foo',
-            packages: $this->packages = [
-                new Package(ComposerPackages::ExtGRPC)
-            ],
-            autoload: $this->autoload = [
-                'psr-4' => [
-                    'Foo\\' => 'src/'
-                ]
-            ],
-            autoloadDev: $this->autoloadDev = [
-                'psr-4' => [
-                    'Baz\\' => 'src/'
-                ]
-            ],
-            questions: $this->questions = [
-                new Question()
-            ],
-            resources: $this->resources = [
-                '/foo/bar' => 'baz'
-            ],
-            generators: $this->generators = [
-                new Config()
-            ],
-            commands: $this->commands = [
-                'foo' => 'bar'
-            ],
-            readme: $this->instructions = [
-                'foo' => 'bar'
-            ]
-        );
-    }
 
     public function testGetName(): void
     {
@@ -73,7 +40,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->packages,
-            $this->app->getPackages()
+            $this->app->getPackages(),
         );
     }
 
@@ -81,7 +48,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->questions,
-            $this->app->getQuestions()
+            $this->app->getQuestions(),
         );
     }
 
@@ -89,7 +56,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->instructions,
-            $this->app->getReadme()
+            $this->app->getReadme(),
         );
     }
 
@@ -97,7 +64,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->resources,
-            $this->app->getResources()
+            $this->app->getResources(),
         );
     }
 
@@ -105,7 +72,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->autoload,
-            $this->app->getAutoload()
+            $this->app->getAutoload(),
         );
     }
 
@@ -113,7 +80,7 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->autoloadDev,
-            $this->app->getAutoloadDev()
+            $this->app->getAutoloadDev(),
         );
     }
 
@@ -127,7 +94,7 @@ final class AbstractApplicationTest extends TestCase
 
         $this->assertSame(
             $this->generators,
-            $generators
+            $generators,
         );
     }
 
@@ -135,13 +102,13 @@ final class AbstractApplicationTest extends TestCase
     {
         $this->assertSame(
             $this->commands,
-            $this->app->getCommands()
+            $this->app->getCommands(),
         );
     }
 
     public function testGetGeneratedResourcePath(): void
     {
-        $this->assertTrue(\str_ends_with($this->app->getResourcesPath(), 'installer/Tests/Fixtures'));
+        $this->assertTrue(\str_ends_with((string) $this->app->getResourcesPath(), 'installer/Tests/Fixtures'));
     }
 
     public function testRoadRunnerPlugins(): void
@@ -197,7 +164,44 @@ final class AbstractApplicationTest extends TestCase
             [
                 'Some default instruction',
             ],
-            $app->getReadme()
+            $app->getReadme(),
+        );
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app = new Application(
+            name: 'Foo',
+            packages: $this->packages = [
+                new Package(ComposerPackages::ExtGRPC),
+            ],
+            autoload: $this->autoload = [
+                'psr-4' => [
+                    'Foo\\' => 'src/',
+                ],
+            ],
+            autoloadDev: $this->autoloadDev = [
+                'psr-4' => [
+                    'Baz\\' => 'src/',
+                ],
+            ],
+            questions: $this->questions = [
+                new Question(),
+            ],
+            resources: $this->resources = [
+                '/foo/bar' => 'baz',
+            ],
+            generators: $this->generators = [
+                new Config(),
+            ],
+            commands: $this->commands = [
+                'foo' => 'bar',
+            ],
+            readme: $this->instructions = [
+                'foo' => 'bar',
+            ],
         );
     }
 }

@@ -18,7 +18,7 @@ class BootloaderConfigurator extends AbstractConfigurator
     public function __construct(
         ClassMetadataInterface $class,
         Writer $writer,
-        protected readonly ?EventStorage $eventStorage = null
+        protected readonly ?EventStorage $eventStorage = null,
     ) {
         parent::__construct($class, $writer);
     }

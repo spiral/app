@@ -11,8 +11,7 @@ final class RoadRunnerConfigGenerator
 {
     public function __construct(
         private readonly ProcessExecutorInterface $executor,
-    ) {
-    }
+    ) {}
 
     /**
      * @param string[] $plugins

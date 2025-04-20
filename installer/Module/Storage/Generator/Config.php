@@ -22,7 +22,7 @@ final class Config implements GeneratorInterface
                 DistributionBootloader::class,
             ],
             comment: 'Storage',
-            priority: 13
+            priority: 13,
         );
 
         $context->resource
@@ -33,7 +33,7 @@ final class Config implements GeneratorInterface
                 'STORAGE_DEFAULT' => 'default',
             ],
             comment: 'Storage',
-            priority: 8
+            priority: 8,
         );
     }
 }

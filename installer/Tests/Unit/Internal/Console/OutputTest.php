@@ -13,7 +13,7 @@ final class OutputTest extends TestCase
     public function testToString(): void
     {
         $output = new Output('Some message', 'type');
-        $this->assertEquals('[type] Some message', (string)$output);
+        $this->assertEquals('[type] Some message', (string) $output);
     }
 
     public function testSend(): void

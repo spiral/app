@@ -16,6 +16,5 @@ final class BootloadersInjected
         public readonly string $class,
         public readonly BootloaderPlaces $place,
         public readonly array $group,
-    ) {
-    }
+    ) {}
 }

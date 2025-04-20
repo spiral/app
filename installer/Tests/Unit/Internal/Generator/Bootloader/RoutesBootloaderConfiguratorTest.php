@@ -15,13 +15,6 @@ final class RoutesBootloaderConfiguratorTest extends TestCase
 {
     private FilesInterface|\Mockery\MockInterface $files;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->files = \Mockery::mock(FilesInterface::class);
-    }
-
     public function testInjectDefaultMiddleware(): void
     {
         $configurator = new RoutesBootloaderConfigurator(
@@ -201,5 +194,12 @@ final class RoutesBootloaderConfiguratorTest extends TestCase
 
         $this->assertTrue(true);
         unset($configurator);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->files = \Mockery::mock(FilesInterface::class);
     }
 }

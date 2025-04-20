@@ -6,7 +6,6 @@ namespace Tests\Unit\Internal\Generator\Kernel;
 
 use Installer\Internal\Generator\Kernel\BootloaderPlaces;
 use Installer\Internal\Generator\Kernel\Bootloaders;
-use Installer\Internal\Generator\Kernel\ConstantBasedBootloaders;
 use Installer\Internal\Generator\Kernel\MethodBasedBootloaders;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Partial\PhpNamespace;
@@ -15,15 +14,6 @@ use Tests\TestCase;
 final class MethodBasedBootloadersTest extends TestCase
 {
     private Bootloaders $bootloaders;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->bootloaders = new MethodBasedBootloaders(
-            BootloaderPlaces::Load
-        );
-    }
 
     public function testAddGroup(): void
     {
@@ -36,6 +26,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -46,9 +37,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
@@ -60,6 +50,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -68,9 +59,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->prepend('App\Bootloader\SecondBootloader');
@@ -79,6 +69,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -89,9 +80,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->prepend('App\Bootloader\ThirdBootloader', 'App\Bootloader\FirstBootloader');
@@ -100,6 +90,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -111,9 +102,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->addGroup([
@@ -127,6 +117,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -143,9 +134,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
@@ -157,6 +147,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -165,9 +156,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->append('App\Bootloader\SecondBootloader');
@@ -176,6 +166,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -186,9 +177,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->append('App\Bootloader\ThirdBootloader', 'App\Bootloader\FirstBootloader');
@@ -197,6 +187,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -208,9 +199,8 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->addGroup([
@@ -224,6 +214,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineBootloaders(): array
                 {
                     return [
@@ -240,16 +231,15 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
     public function testAppBootloaders(): void
     {
         $bootloaders = new MethodBasedBootloaders(
-            BootloaderPlaces::App
+            BootloaderPlaces::App,
         );
 
         $bootloaders->append('Foo');
@@ -258,6 +248,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineAppBootloaders(): array
                 {
                     return [
@@ -266,16 +257,15 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($bootloaders)
+            PHP,
+            $this->renderBootloaders($bootloaders),
         );
     }
 
     public function testSystemBootloaders(): void
     {
         $bootloaders = new MethodBasedBootloaders(
-            BootloaderPlaces::System
+            BootloaderPlaces::System,
         );
 
         $bootloaders->append('Foo');
@@ -284,6 +274,7 @@ final class MethodBasedBootloadersTest extends TestCase
             <<<'PHP'
             class Kernel
             {
+                #[Override]
                 public function defineSystemBootloaders(): array
                 {
                     return [
@@ -292,9 +283,17 @@ final class MethodBasedBootloadersTest extends TestCase
                 }
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($bootloaders)
+            PHP,
+            $this->renderBootloaders($bootloaders),
+        );
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->bootloaders = new MethodBasedBootloaders(
+            BootloaderPlaces::Load,
         );
     }
 

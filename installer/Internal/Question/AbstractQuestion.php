@@ -29,7 +29,7 @@ abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterf
         private readonly bool $required,
         array $options,
         private readonly array $depends = [],
-        private readonly int $default = self::NONE_OPTION
+        private readonly int $default = self::NONE_OPTION,
     ) {
         $this->setOptions($options);
     }
@@ -129,13 +129,13 @@ abstract class AbstractQuestion implements QuestionInterface, HasResourcesInterf
             if ($option instanceof Option && $option->getPackages() === []) {
                 $this->options[0] = $option;
             } else {
-                $this->options[(int)$key + 1] = $option;
+                $this->options[(int) $key + 1] = $option;
             }
         }
 
         if ($this->required !== true && !isset($this->options[0])) {
             $this->options[self::NONE_OPTION] = new Option(
-                name: \count($this->options) === 1 ? 'No' : 'None of the above'
+                name: \count($this->options) === 1 ? 'No' : 'None of the above',
             );
         }
     }

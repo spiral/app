@@ -15,15 +15,6 @@ final class ConstantBasedBootloadersTest extends TestCase
 {
     private Bootloaders $bootloaders;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->bootloaders = new ConstantBasedBootloaders(
-            BootloaderPlaces::Load
-        );
-    }
-
     public function testAddGroup(): void
     {
         $this->bootloaders->addGroup([
@@ -42,9 +33,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
@@ -59,9 +49,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 public const LOAD = [Bootloader\FirstBootloader::class];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->prepend('App\Bootloader\SecondBootloader');
@@ -77,9 +66,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->prepend('App\Bootloader\ThirdBootloader', 'App\Bootloader\FirstBootloader');
@@ -96,9 +84,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->addGroup([
@@ -125,9 +112,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
@@ -142,9 +128,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 public const LOAD = [Bootloader\FirstBootloader::class];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->append('App\Bootloader\SecondBootloader');
@@ -160,9 +145,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->append('App\Bootloader\ThirdBootloader', 'App\Bootloader\FirstBootloader');
@@ -179,9 +163,8 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
 
         $this->bootloaders->addGroup([
@@ -208,16 +191,15 @@ final class ConstantBasedBootloadersTest extends TestCase
                 ];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($this->bootloaders)
+            PHP,
+            $this->renderBootloaders($this->bootloaders),
         );
     }
 
     public function testAppBootloaders(): void
     {
         $bootloaders = new ConstantBasedBootloaders(
-            BootloaderPlaces::App
+            BootloaderPlaces::App,
         );
 
         $bootloaders->append('Foo');
@@ -229,16 +211,15 @@ final class ConstantBasedBootloadersTest extends TestCase
                 public const APP = [\Foo::class];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($bootloaders)
+            PHP,
+            $this->renderBootloaders($bootloaders),
         );
     }
 
     public function testSystemBootloaders(): void
     {
         $bootloaders = new ConstantBasedBootloaders(
-            BootloaderPlaces::System
+            BootloaderPlaces::System,
         );
 
         $bootloaders->append('Foo');
@@ -250,9 +231,17 @@ final class ConstantBasedBootloadersTest extends TestCase
                 public const SYSTEM = [\Foo::class];
             }
 
-            PHP
-            ,
-            $this->renderBootloaders($bootloaders)
+            PHP,
+            $this->renderBootloaders($bootloaders),
+        );
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->bootloaders = new ConstantBasedBootloaders(
+            BootloaderPlaces::Load,
         );
     }
 

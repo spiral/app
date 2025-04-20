@@ -20,9 +20,9 @@ final class PingService implements PingServiceInterface
 {
     public function __construct(
         private readonly LoggerInterface $logger,
-    ) {
-    }
+    ) {}
 
+    #[\Override]
     public function PingUrl(GRPC\ContextInterface $ctx, PingRequest $in): PingResponse
     {
         $this->logger->info('PingUrl', [
@@ -33,7 +33,7 @@ final class PingService implements PingServiceInterface
         $createdAt->fromDateTime(new \DateTime());
 
         return new PingResponse([
-            'status' => rand(0, 1) === 1 ? 200 : 500,
+            'status' => \mt_rand(0, 1) === 1 ? 200 : 500,
             'created_at' => $createdAt,
         ]);
     }

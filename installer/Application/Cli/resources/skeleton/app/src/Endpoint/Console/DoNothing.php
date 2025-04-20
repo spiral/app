@@ -31,7 +31,7 @@ final class DoNothing extends Command
     #[Option(
         shortcut: 't',
         description: 'Number of times to repeat',
-        mode: InputOption::VALUE_OPTIONAL
+        mode: InputOption::VALUE_OPTIONAL,
     )]
     private int $times = 10;
 
@@ -40,7 +40,7 @@ final class DoNothing extends Command
         $this->info(\sprintf(
             'The task "%s" has been successfully completed "%d" times!',
             $this->name,
-            $this->times
+            $this->times,
         ));
 
         return self::SUCCESS;

@@ -31,14 +31,14 @@ final class CollectionsQuestion extends AbstractQuestion
         array $depends = [
             ComposerPackages::CycleBridge,
         ],
-        int $default = self::NONE_OPTION
+        int $default = self::NONE_OPTION,
     ) {
         parent::__construct(
             question: $question,
             required: $required,
             options: $options,
             depends: $depends,
-            default: $default
+            default: $default,
         );
     }
 }

@@ -16,7 +16,7 @@
     "require-dev": {
         "composer/composer": "^2.4",
         "spiral/testing": "^2.3",
-        "vimeo/psalm": "^5.9"
+        "vimeo/psalm": "^6.10"
     },
     "autoload": {
         "psr-4": {
@@ -48,9 +48,11 @@
         ],
         "rr:download": "rr get-binary",
         "rr:download-protoc": "rr download-protoc-binary",
-        "test": "vendor/bin/phpunit --no-output",
-        "test-coverage": "vendor/bin/phpunit --coverage",
-        "psalm:config": "psalm"
+        "cs:fix": "php-cs-fixer fix -v",
+        "psalm": "psalm",
+        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

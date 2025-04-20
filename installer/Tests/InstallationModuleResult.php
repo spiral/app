@@ -23,7 +23,7 @@ final class InstallationModuleResult
      * @param array<AbstractModule> $installedModules
      */
     public function __construct(
-        private readonly array $installedModules
+        private readonly array $installedModules,
     ) {
         $this->collectModules();
     }
@@ -53,8 +53,8 @@ final class InstallationModuleResult
             if ($module->getResourcesPath() !== null) {
                 foreach ($module->getCopiedResources($application) as $path => $destination) {
                     $result->assertCopied(
-                        \rtrim($module->getResourcesPath(), '/') . '/'. \ltrim($path, '/'),
-                        $destination
+                        \rtrim($module->getResourcesPath(), '/') . '/' . \ltrim($path, '/'),
+                        $destination,
                     );
                 }
             }

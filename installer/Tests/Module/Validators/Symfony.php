@@ -30,8 +30,8 @@ final class Symfony extends AbstractModule
     {
         return [
             'web' => [
-                ValidationHandlerMiddleware::class
-            ]
+                ValidationHandlerMiddleware::class,
+            ],
         ];
     }
 }

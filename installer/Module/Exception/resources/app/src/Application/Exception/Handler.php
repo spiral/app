@@ -12,6 +12,7 @@ use Spiral\Exceptions\ExceptionHandler;
  */
 final class Handler extends ExceptionHandler
 {
+    #[\Override]
     protected function bootBasicHandlers(): void
     {
         parent::bootBasicHandlers();

@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Installer\Internal\Configurator;
 
 use Installer\Internal\Events\CopyEvent;
-use splQueue;
-use Traversable;
 
 final class ResourceQueue implements \IteratorAggregate, \Countable
 {
     /**
-     * @param splQueue<CopyEvent> $queue
+     * @param \splQueue<CopyEvent> $queue
      */
     public function __construct(
         private string $sourceRoot = '',
-        private readonly splQueue $queue = new splQueue(),
+        private readonly \splQueue $queue = new \splQueue(),
         private readonly array $directoriesMap = [],
     ) {
-        $queue->setIteratorMode(SplQueue::IT_MODE_DELETE);
+        $queue->setIteratorMode(\SplQueue::IT_MODE_DELETE);
     }
 
     public function setSourceRoot(string $sourceRoot): self
@@ -41,16 +39,16 @@ final class ResourceQueue implements \IteratorAggregate, \Countable
                 source: \ltrim($source, '/'),
                 destination: \ltrim($destination, '/'),
                 sourceRoot: \rtrim($this->sourceRoot, '/'),
-            )
+            ),
         );
 
         return $this;
     }
 
     /**
-     * @return Traversable<array-key, CopyEvent>
+     * @return \Traversable<array-key, CopyEvent>
      */
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         foreach ($this->queue as $item) {
             yield $item;

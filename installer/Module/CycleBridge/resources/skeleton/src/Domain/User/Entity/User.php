@@ -8,6 +8,7 @@ use App\Infrastructure\Persistence\CycleORMUserRepository;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 
+/** @psalm-suppress ClassMustBeFinal */
 #[Entity(
     repository: CycleORMUserRepository::class,
 )]
@@ -22,8 +23,7 @@ class User
         private string $username,
         #[Column(type: 'string')]
         private string $email,
-    ) {
-    }
+    ) {}
 
     public function getId(): int
     {

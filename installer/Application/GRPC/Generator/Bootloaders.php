@@ -19,7 +19,7 @@ final class Bootloaders implements GeneratorInterface
                 Security\GuardBootloader::class,
             ],
             comment: 'Security and validation',
-            priority: 5
+            priority: 5,
         );
     }
 }

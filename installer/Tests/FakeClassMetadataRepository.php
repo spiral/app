@@ -15,8 +15,7 @@ final class FakeClassMetadataRepository implements ClassMetadataRepositoryInterf
 {
     public function __construct(
         private readonly string $appPath,
-    ) {
-    }
+    ) {}
 
     public function getMetaData(string $class): ClassMetadataInterface
     {
@@ -24,22 +23,22 @@ final class FakeClassMetadataRepository implements ClassMetadataRepositoryInterf
             AppBootloader::class => new ManualClassMetadata(
                 name: 'AppBootloader',
                 path: $this->appPath . '/app/src/Application/Bootloader/AppBootloader.php',
-                namespace: 'App\Application\Bootloader'
+                namespace: 'App\Application\Bootloader',
             ),
             ExceptionHandlerBootloader::class => new ManualClassMetadata(
                 name: 'ExceptionHandlerBootloader',
                 path: $this->appPath . '/app/src/Application/Bootloader/ExceptionHandlerBootloader.php',
-                namespace: 'App\Application\Bootloader'
+                namespace: 'App\Application\Bootloader',
             ),
             RoutesBootloader::class => new ManualClassMetadata(
                 name: 'RoutesBootloader',
                 path: $this->appPath . '/app/src/Application/Bootloader/RoutesBootloader.php',
-                namespace: 'App\Application\Bootloader'
+                namespace: 'App\Application\Bootloader',
             ),
             Kernel::class => new ManualClassMetadata(
                 name: 'Kernel',
                 path: $this->appPath . '/app/src/Application/Kernel.php',
-                namespace: 'App\Application'
+                namespace: 'App\Application',
             ),
         };
     }

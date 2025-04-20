@@ -16,7 +16,7 @@ use Spiral\Console\Command;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[AsCommand(name: 'create:user', description: 'Create a new user')]
-class CreateUserCommand extends Command
+final class CreateUserCommand extends Command
 {
     #[Argument(description: 'User name')]
     #[Question(question: 'Provide username')]

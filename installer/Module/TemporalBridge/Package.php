@@ -10,6 +10,7 @@ use Installer\Internal\Readme\Block\ListBlock;
 use Installer\Internal\Readme\Section;
 use Installer\Module\TemporalBridge\Generator\Bootloaders;
 use Installer\Module\TemporalBridge\Generator\Env;
+use Installer\Module\TemporalBridge\Generator\Skeleton;
 
 final class Package extends BasePackage
 {
