@@ -7,7 +7,7 @@ namespace Installer\Internal\Generator\Bootloader;
 use App\Application\Bootloader\AppBootloader;
 use Installer\Internal\ClassMetadataInterface;
 use Installer\Internal\ReflectionClassMetadata;
-use Spiral\Core\CoreInterface;
+use Spiral\Interceptors\HandlerInterface;
 use Spiral\Reactor\Writer;
 
 final class DomainInterceptorsConfigurator extends BootloaderConfigurator
@@ -18,7 +18,7 @@ final class DomainInterceptorsConfigurator extends BootloaderConfigurator
     ) {
         parent::__construct($class, $writer);
 
-        $this->append('SINGLETONS', new ClassMethodBinding(CoreInterface::class, 'domainCore'));
+        $this->append('SINGLETONS', new ClassMethodBinding(HandlerInterface::class, 'domainCore'));
     }
 
     public function addInterceptor(string $class): void

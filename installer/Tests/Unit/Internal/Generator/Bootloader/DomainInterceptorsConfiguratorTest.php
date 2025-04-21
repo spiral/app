@@ -35,11 +35,11 @@ final class DomainInterceptorsConfiguratorTest extends TestCase
 
                     namespace Tests\Fixtures;
 
-                    use Spiral\Core\CoreInterface;
+                    use Spiral\Interceptors\HandlerInterface;
 
                     final class RoutesBootloader
                     {
-                        protected const SINGLETONS = [CoreInterface::class => [self::class, 'domainCore']];
+                        protected const SINGLETONS = [HandlerInterface::class => [self::class, 'domainCore']];
                     }
 
                     PHP;
@@ -73,11 +73,11 @@ final class DomainInterceptorsConfiguratorTest extends TestCase
                     namespace Tests\Fixtures;
 
                     use App\Interceptor\FirstInterceptor;
-                    use Spiral\Core\CoreInterface;
+                    use Spiral\Interceptors\HandlerInterface;
 
                     final class RoutesBootloader
                     {
-                        protected const SINGLETONS = [CoreInterface::class => [self::class, 'domainCore']];
+                        protected const SINGLETONS = [HandlerInterface::class => [self::class, 'domainCore']];
 
                         protected const INTERCEPTORS = [
                             FirstInterceptor::class,

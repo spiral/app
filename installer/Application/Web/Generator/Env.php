@@ -28,5 +28,12 @@ final class Env implements GeneratorInterface
             comment: 'Authorization',
             priority: 11,
         );
+
+        $context->envConfigurator->addGroup(
+            values: [
+                'VIEW_CACHE' => false,
+            ],
+            comment: 'View component options',
+        );
     }
 }

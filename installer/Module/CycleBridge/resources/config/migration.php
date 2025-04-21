@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Spiral\Boot\Environment\AppEnvironment;
+
 /**
  * Migrations configuration.
  *
@@ -21,5 +23,5 @@ return [
     /**
      * When set to true no confirmation will be requested on migration run.
      */
-    'safe' => env('APP_ENV') === 'local',
+    'safe' => env('SAFE_MIGRATIONS', spiral(AppEnvironment::class)->isProduction()),
 ];

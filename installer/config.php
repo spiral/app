@@ -128,5 +128,15 @@ return [
             comment: 'Telemetry',
             priority: 9,
         ),
+        new EnvGroup(
+            values: [
+                'TOKENIZER_CACHE_TARGETS' => false,
+                'TOKENIZER_LOAD_CLASSES' => false,
+                'TOKENIZER_LOAD_ENUMS' => false,
+                'TOKENIZER_LOAD_INTERFACES' => false,
+            ],
+            comment: 'Tokenizer',
+            priority: 9,
+        ),
     ],
 ];
