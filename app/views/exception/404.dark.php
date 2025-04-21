@@ -9,7 +9,7 @@
 
     <p class="main-description">[[Sorry, but the page you are looking for is not found. Please, make sure you have typed the correct URL.]]</p>
     <div class="version">
-        <span>Spiral Framework @spiralVersion</span>
+        <span>@spiralVersion</span>
         <span>@phpVersion</span>
         @if($debug)
         <span>[[This view file is located in]] <b>app/views/exception/404.dark.php</b>.</span>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          backupGlobals="false"
          colors="true"
@@ -8,7 +8,7 @@
          stopOnFailure="false"
          stopOnError="false"
          stderr="true"
-         cacheDirectory=".phpunit.cache"
+         cacheDirectory="runtime/.phpunit.cache"
          backupStaticProperties="false"
 >
     <coverage/>
@@ -26,11 +26,15 @@
         </include>
     </source>
     <php>
-        <env name="DB_DRIVER" value="sqlite" />
+        <env name="DB_CONNECTION" value="sqlite" />
+        <env name="DB_LOG_QUERY_PARAMETERS" value="true" />
+        <env name="CYCLE_SCHEMA_CACHE" value="true" />
         <env name="QUEUE_CONNECTION" value="sync" />
         <env name="CACHE_STORAGE" value="local" />
         <env name="APP_ENV" value="testing" />
+        <env name="TOKENIZER_CACHE_TARGETS" value="true" />
         <env name="TELEMETRY_DRIVER" value="null" />
+        <env name="BROADCAST_DRIVER" value="log" />
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>
     </php>

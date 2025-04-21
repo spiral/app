@@ -1,12 +1,19 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="1"
+    errorLevel="2"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    hoistConstants="true"
+    findUnusedPsalmSuppress="false"
+    findUnusedVariablesAndParams="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
+    ensureArrayStringOffsetsExist="true"
+    addParamDefaultToDocblockType="true"
+    strictBinaryOperands="true"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="app/src"/>
@@ -14,11 +21,4 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
-    <issueHandlers>
-        <PropertyNotSetInConstructor>
-            <errorLevel type="suppress">
-                <directory name="app/src/Endpoint/Console"/>
-            </errorLevel>
-        </PropertyNotSetInConstructor>
-    </issueHandlers>
 </psalm>

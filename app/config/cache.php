@@ -5,8 +5,12 @@ declare(strict_types=1);
 use Spiral\Cache\Storage\ArrayStorage;
 use Spiral\Cache\Storage\FileStorage;
 
+/**
+ * Configuration for cache component.
+ *
+ * @link https://spiral.dev/docs/basics-cache
+ */
 return [
-
     /**
      * The default cache connection that gets used while using this caching library.
      */
@@ -16,7 +20,11 @@ return [
      * Aliases, if you want to use domain specific storages.
      */
     'aliases' => [
-        'user-data' => 'rr-local',
+        // 'user-data' => [
+        //     'storage' => 'rr-local',
+        //     'prefix' => 'user_'
+        // ],
+        // 'blog-data' => 'rr-local',
     ],
 
     /**
@@ -24,29 +32,23 @@ return [
      */
     'storages' => [
 
-        'local' => [
-            // Alias for ArrayStorage type
-            'type' => 'array',
-        ],
-
-        'file' => [
-            // Alias for FileStorage type
-            'type' => 'file',
-            'path' => directory('runtime') . 'cache',
-        ],
-
         'rr-local' => [
             'type' => 'roadrunner',
             'driver' => 'local',
         ],
 
+        'local' => [
+            'type' => ArrayStorage::class,
+        ],
+
+        'file' => [
+            'type' => FileStorage::class,
+            'path' => directory('runtime') . 'cache',
+        ],
     ],
 
     /**
-     * Aliases for storage types.
+     * Aliases for storage types
      */
-    'typeAliases' => [
-        'array' => ArrayStorage::class,
-        'file' => FileStorage::class,
-    ],
+    'typeAliases' => [],
 ];

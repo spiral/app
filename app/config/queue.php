@@ -2,29 +2,33 @@
 
 declare(strict_types=1);
 
-use App\Endpoint\Job\PingHandler;
 use Spiral\Queue\Driver\SyncDriver;
 use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
 
+/**
+ * Queue configuration
+ *
+ * @link https://spiral.dev/docs/queue-configuration and https://spiral.dev/docs/queue-roadrunner
+ */
 return [
     /**
-     *  Default queue connection name.
+     *  Default queue connection name
      */
-    'default' => env('QUEUE_CONNECTION', 'ping-queue'),
+    'default' => env('QUEUE_CONNECTION', 'in-memory'),
 
     /**
-     *  Aliases for queue connections, if you want to use domain specific queues.
+     *  Aliases for queue connections, if you want to use domain specific queues
      */
     'aliases' => [
-        'ping-queue' => 'in-memory',
-        'rating-queue' => 'sync',
+        // 'mail-queue' => 'in-memory',
+        // 'rating-queue' => 'sync',
     ],
 
     /**
-     * Queue connections.
-     * Drivers: "sync", "roadrunner".
+     * Queue connections
+     * Drivers: "sync", "roadrunner"
      *
-     * @link https://spiral.dev/docs/queue-configuration/#3.7/en
+     * @link https://spiral.dev/docs/queue-configuration
      */
     'connections' => [
         'sync' => [
@@ -46,12 +50,26 @@ return [
     'pipelines' => [
         'memory' => [
             'connector' => new MemoryCreateInfo('local'),
+            // Run consumer for this pipeline on startup (by default)
+            // You can pause consumer for this pipeline via console command
+            // php app.php queue:pause local
             'consume' => true,
         ],
-    ],
-
-    'driverAliases' => [
-        'sync' => SyncDriver::class,
+        // 'amqp' => [
+        //     'connector' => new AMQPCreateInfo('bus', ...),
+        //     // Don't consume jobs for this pipeline on start
+        //     // You can run consumer for this pipeline via console command
+        //     // php app.php queue:resume local
+        //     'consume' => false
+        // ],
+        //
+        // 'beanstalk' => [
+        //     'connector' => new BeanstalkCreateInfo('bus', ...),
+        // ],
+        //
+        // 'sqs' => [
+        //     'connector' => new SQSCreateInfo('amazon', ...),
+        // ],
     ],
 
     /**
@@ -59,7 +77,7 @@ return [
      *
      * @link https://spiral.dev/docs/queue-jobs/#job-payload-serialization
      */
-    'defaultSerializer' => 'symfony-json',
+    'defaultSerializer' => 'json',
 
     'registry' => [
         /**
@@ -71,8 +89,9 @@ return [
          * @link https://spiral.dev/docs/queue-jobs#job-handler-registry
          */
         'handlers' => [
-            // 'ping' => PingHandler::class
+            // 'ping' => \App\Endpoint\Job\Ping::class
         ],
+
         /**
          * Mapping of job names to serializers. When a job is pushed to the queue, it will be serialized using the
          * serializer specified in this mapping and then deserialized using the same serializer when the job is
@@ -81,7 +100,24 @@ return [
          * @link https://spiral.dev/docs/queue-jobs#changing-serializer
          */
         'serializers' => [
-            // 'ping' => 'symfony-json',
+            // 'ping' => 'json',
+            // \App\Endpoint\Job\Ping::class => 'json',
         ],
+    ],
+
+    /**
+     * Spiral provides a way for developers to customize the behavior of their job processing pipeline through the use
+     * of interceptors. An interceptor is a piece of code that is executed before or after a job is pushed or consumed,
+     * and which allows developers to hook into the job processing pipeline to perform some action.
+     *
+     * @link https://spiral.dev/docs/queue-interceptors
+     */
+    'interceptors' => [
+        // 'push' => [],
+        // 'consume' => [],
+    ],
+
+    'driverAliases' => [
+        'sync' => SyncDriver::class,
     ],
 ];

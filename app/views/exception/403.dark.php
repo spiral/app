@@ -8,7 +8,7 @@
     </h1>
 
     <div class="version">
-        <span>Spiral Framework @spiralVersion</span>
+        <span>@spiralVersion</span>
         <span>@phpVersion</span>
         @if($debug)
         <span>[[This view file is located in]] <b>app/views/exception/404.dark.php</b>.</span>

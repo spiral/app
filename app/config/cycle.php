@@ -2,9 +2,14 @@
 
 declare(strict_types=1);
 
-use Cycle\ORM\Collection\ArrayCollectionFactory;
-use Cycle\ORM\Collection\DoctrineCollectionFactory;
+use Cycle\ORM\Parser\Typecast;
+use Cycle\ORM\SchemaInterface;
 
+/**
+ * Configuration for Cycle ORM.
+ *
+ * @link https://spiral.dev/docs/basics-orm#orm
+ */
 return [
     'schema' => [
         /**
@@ -18,28 +23,28 @@ return [
 
         /**
          * The CycleORM provides the ability to manage default settings for
-         * every schema with not defined segments.
+         * every schema with not defined segments
          */
         'defaults' => [
             // SchemaInterface::MAPPER => \Cycle\ORM\Mapper\Mapper::class,
             // SchemaInterface::REPOSITORY => \Cycle\ORM\Select\Repository::class,
             // SchemaInterface::SCOPE => null,
-            // SchemaInterface::TYPECAST_HANDLER => [
-            //    \Cycle\ORM\Parser\Typecast::class
-            // ],
+            SchemaInterface::TYPECAST_HANDLER => [
+               Typecast::class, \App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class,
+            ],
         ],
 
         'collections' => [
             'default' => 'doctrine',
             'factories' => [
-                'array' => new ArrayCollectionFactory(),
-                'doctrine' => new DoctrineCollectionFactory(),
+                'array' => new Cycle\ORM\Collection\ArrayCollectionFactory(),
+                'doctrine' => new Cycle\ORM\Collection\DoctrineCollectionFactory(),
             ],
         ],
 
         /**
          * Schema generators (Optional)
-         * null (default) - Will be used schema generators defined in bootloaders.
+         * null (default) - Will be used schema generators defined in bootloaders
          */
         'generators' => null,
 
@@ -61,7 +66,7 @@ return [
     'warmup' => env('CYCLE_SCHEMA_WARMUP', false),
 
     /**
-     * Custom relation types for entities.
+     * Custom relation types for entities
      */
     'customRelations' => [
         // \Cycle\ORM\Relation::EMBEDDED => [

@@ -10,6 +10,6 @@ final class FrameworkDirectives extends AbstractDirective
 {
     public function renderSpiralVersion(): string
     {
-        return '<?php echo \App\Application\Kernel::VERSION; ?>';
+        return '<?= "Spiral Framework 3" ?>';
     }
 }

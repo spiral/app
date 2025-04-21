@@ -6,115 +6,141 @@ namespace App\Application;
 
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
+use Spiral\Bootloader\Http\HttpBootloader;
+use Spiral\Bootloader\I18nBootloader;
+use Spiral\Bootloader\Views\TranslatedCacheBootloader;
+use Spiral\Cache\Bootloader\CacheBootloader;
 use Spiral\Cycle\Bootloader as CycleBridge;
-use Spiral\DotEnv\Bootloader as DotEnv;
-use Spiral\Monolog\Bootloader as Monolog;
-use Spiral\Nyholm\Bootloader as Nyholm;
-use Spiral\Prototype\Bootloader as Prototype;
+use Spiral\Debug\Bootloader\DumperBootloader;
+use Spiral\DotEnv\Bootloader\DotenvBootloader;
+use Spiral\Events\Bootloader\EventsBootloader;
+use Spiral\League\Event\Bootloader\EventBootloader;
+use Spiral\Monolog\Bootloader\MonologBootloader;
+use Spiral\Nyholm\Bootloader\NyholmBootloader;
+use Spiral\Prototype\Bootloader\PrototypeBootloader;
+use Spiral\Queue\Bootloader\QueueBootloader;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
-use Spiral\Scaffolder\Bootloader as Scaffolder;
-use Spiral\Stempler\Bootloader as Stempler;
-use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
+use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
+use Spiral\SendIt\Bootloader\MailerBootloader;
+use Spiral\Stempler\Bootloader\StemplerBootloader;
+use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 use Spiral\Views\Bootloader\ViewsBootloader;
 use Spiral\YiiErrorHandler\Bootloader\YiiErrorHandlerBootloader;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 class Kernel extends \Spiral\Framework\Kernel
 {
-    public const VERSION = 'v3.7.0';
+    #[\Override]
+    public function defineSystemBootloaders(): array
+    {
+        return [
+            CoreBootloader::class,
+            DotenvBootloader::class,
+            TokenizerListenerBootloader::class,
+
+            DumperBootloader::class,
+        ];
+    }
 
     /**
      * List of components and extensions to be automatically registered
      * within system container on application start.
      */
-    protected function defineBootloaders(): array
+    #[\Override]
+    public function defineBootloaders(): array
     {
         return [
             // Logging and exceptions handling
-            Monolog\MonologBootloader::class,
+            MonologBootloader::class,
             YiiErrorHandlerBootloader::class,
+            Bootloader\ExceptionHandlerBootloader::class,
 
             // Application specific logs
             Bootloader\LoggingBootloader::class,
 
+            // RoadRunner
+            RoadRunnerBridge\LoggerBootloader::class,
+            RoadRunnerBridge\QueueBootloader::class,
+            RoadRunnerBridge\HttpBootloader::class,
+            RoadRunnerBridge\CacheBootloader::class,
+
             // Core Services
             Framework\SnapshotsBootloader::class,
-            Framework\I18nBootloader::class,
 
             // Security and validation
             Framework\Security\EncrypterBootloader::class,
-            // ValidationBootloader::class,
-            // Framework\Security\FiltersBootloader::class,
-            // Framework\Security\GuardBootloader::class,
+            Framework\Security\FiltersBootloader::class,
+            Framework\Security\GuardBootloader::class,
 
             // HTTP extensions
-            Nyholm\NyholmBootloader::class,
+            HttpBootloader::class,
             Framework\Http\RouterBootloader::class,
             Framework\Http\JsonPayloadsBootloader::class,
-            // Framework\Http\CookiesBootloader::class,
-            // Framework\Http\SessionBootloader::class,
-            // Framework\Http\CsrfBootloader::class,
-            // Framework\Http\PaginationBootloader::class,
-
-            // RoadRunner
-            RoadRunnerBridge\CacheBootloader::class,
-            RoadRunnerBridge\HttpBootloader::class,
-            RoadRunnerBridge\QueueBootloader::class,
+            Framework\Http\CookiesBootloader::class,
+            Framework\Http\SessionBootloader::class,
+            Framework\Http\CsrfBootloader::class,
+            Framework\Http\PaginationBootloader::class,
 
             // Databases
             CycleBridge\DatabaseBootloader::class,
             CycleBridge\MigrationsBootloader::class,
-            // CycleBridge\DisconnectsBootloader::class,
 
             // ORM
-            // CycleBridge\SchemaBootloader::class,
-            // CycleBridge\CycleOrmBootloader::class,
-            // CycleBridge\AnnotatedBootloader::class,
-            // CycleBridge\CommandBootloader::class,
+            CycleBridge\SchemaBootloader::class,
+            CycleBridge\CycleOrmBootloader::class,
+            CycleBridge\AnnotatedBootloader::class,
 
-            // DataGrid
-            // CycleBridge\DataGridBootloader::class,
+            // Event Dispatcher
+            EventsBootloader::class,
+            EventBootloader::class,
 
-            // Auth
-            // CycleBridge\AuthTokensBootloader::class,
-
-            // Entity checker
-            // CycleBridge\ValidationBootloader::class,
-
-            // Views and view translation
+            // Views
             ViewsBootloader::class,
-            Framework\Views\TranslatedCacheBootloader::class,
+            StemplerBootloader::class,
 
-            // Extensions and bridges
-            Stempler\StemplerBootloader::class,
+            // Queue
+            QueueBootloader::class,
 
-            // Framework commands
+            // Cache
+            CacheBootloader::class,
+
+            // Internationalization
+            I18nBootloader::class,
+            TranslatedCacheBootloader::class,
+
+            // Mailer
+            MailerBootloader::class,
+
+            NyholmBootloader::class,
+
+            // Console commands
             Framework\CommandBootloader::class,
-            Scaffolder\ScaffolderBootloader::class,
-
-            // Debug and debug extensions
-            // Framework\DebugBootloader::class,
-            // Framework\Debug\LogCollectorBootloader::class,
-            // Framework\Debug\HttpCollectorBootloader::class,
-
             RoadRunnerBridge\CommandBootloader::class,
-
-            Bootloader\RoutesBootloader::class,
-            Bootloader\CustomStemplerDirectivesBootloader::class,
-            Bootloader\ExceptionHandlerBootloader::class,
+            CycleBridge\CommandBootloader::class,
+            ScaffolderBootloader::class,
+            RoadRunnerBridge\ScaffolderBootloader::class,
+            CycleBridge\ScaffolderBootloader::class,
 
             // Fast code prototyping
-            Prototype\PrototypeBootloader::class,
+            PrototypeBootloader::class,
 
-            \Spiral\Serializer\Symfony\Bootloader\SerializerBootloader::class,
+            // Configure route groups, middleware for route groups
+            Bootloader\RoutesBootloader::class,
+            Bootloader\CustomStemplerDirectivesBootloader::class,
         ];
     }
 
-    protected function defineSystemBootloaders(): array
+    #[\Override]
+    public function defineAppBootloaders(): array
     {
         return [
-            CoreBootloader::class,
-            TokenizerBootloader::class,
-            DotEnv\DotenvBootloader::class,
+            // User Domain
+            Bootloader\PersistenceBootloader::class,
+
+            // Application domain
+            Bootloader\AppBootloader::class,
         ];
     }
 }

@@ -10,6 +10,10 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Spiral\Translator\Translator;
 
+/**
+ * The middleware that sets the application locale based on the "Accept-Language" header.
+ * List of available locales is taken from the translator.
+ */
 final class LocaleSelector implements MiddlewareInterface
 {
     /** @var string[] */
@@ -18,10 +22,10 @@ final class LocaleSelector implements MiddlewareInterface
     public function __construct(
         private readonly Translator $translator,
     ) {
-        /** @psalm-suppress MixedPropertyTypeCoercion */
         $this->availableLocales = $this->translator->getCatalogueManager()->getLocales();
     }
 
+    #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $defaultLocale = $this->translator->getLocale();
@@ -41,9 +45,6 @@ final class LocaleSelector implements MiddlewareInterface
         }
     }
 
-    /**
-     * @return \Generator<int, string, mixed, null>
-     */
     public function fetchLocales(ServerRequestInterface $request): \Generator
     {
         $header = $request->getHeaderLine('accept-language');

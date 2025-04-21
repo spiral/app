@@ -10,6 +10,6 @@ final class PhpDirectives extends AbstractDirective
 {
     public function renderPhpVersion(): string
     {
-        return '<?php echo \'PHP \' . PHP_VERSION; ?>';
+        return '<?= "PHP " . PHP_VERSION ?>';
     }
 }

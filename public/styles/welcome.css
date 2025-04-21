@@ -18,7 +18,7 @@
 .item__title {
     margin: 0 0 11px;
     font-weight: 900;
-    font-size: 12px;
+    font-size: .75em;
     line-height: 150%;
 }
 
@@ -34,7 +34,7 @@
 
 .item__text {
     margin: 0;
-    font-size: 12px;
+    font-size: .75em;
     line-height: 150%;
 }
 

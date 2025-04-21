@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="@{locale}">
+<html lang="@{locale|en}">
 <head>
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,7 +79,7 @@
             margin: 0 auto 38px;
             max-width: 635px;
             font-weight: 600;
-            font-size: 200px;
+            font-size: 12.5em;
             text-align: center;
             color: #3F87D2;
         }
@@ -88,7 +88,7 @@
             margin: 0 auto 38px;
             max-width: 635px;
             font-weight: 900;
-            font-size: 36px;
+            font-size: 2.25em;
             line-height: 150%;
             text-align: center;
         }
@@ -101,14 +101,14 @@
         .main-description {
             margin: 0 auto 47px;
             max-width: 803px;
-            font-size: 16px;
+            font-size: 1em;
             line-height: 150%;
             text-align: center;
         }
 
         .version {
             margin-bottom: 25px;
-            font-size: 12px;
+            font-size: .75em;
             line-height: 150%;
             display: flex;
             justify-content: center;
@@ -140,17 +140,17 @@
         @media (max-width: 1024px) {
             .main-title {
                 margin-bottom: 17px;
-                font-size: 32px;
+                font-size: 2em;
                 line-height: 122%;
             }
 
             .error-code-text {
-                font-size: 160px;
+                font-size: 10em;
             }
 
             .main-description {
                 margin-bottom: 34px;
-                font-size: 14px;
+                font-size: .85em;
             }
 
             .item {
@@ -160,11 +160,11 @@
 
         @media (max-width: 768px) {
             .main-title {
-                font-size: 26px;
+                font-size: 1.5em;
             }
 
             .error-code-text {
-                font-size: 80px;
+                font-size: 5em;
             }
 
             .version {
