@@ -63,7 +63,7 @@ return [
         // ],
     ],
 
-    'warmup' => tr(env('RR_MODE')) === null ? false : env('CYCLE_SCHEMA_WARMUP', false),
+    'warmup' => env('RR_MODE') === null ? false : env('CYCLE_SCHEMA_WARMUP', false),
 
     /**
      * Custom relation types for entities
