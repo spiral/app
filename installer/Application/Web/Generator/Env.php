@@ -13,6 +13,14 @@ final class Env implements GeneratorInterface
     {
         $context->envConfigurator->addGroup(
             values: [
+                'VIEW_CACHE' => false,
+            ],
+            comment: 'View component options',
+            priority: 9,
+        );
+
+        $context->envConfigurator->addGroup(
+            values: [
                 'SESSION_LIFETIME' => 86400,
                 'SESSION_COOKIE' => 'sid',
             ],
@@ -27,13 +35,6 @@ final class Env implements GeneratorInterface
             ],
             comment: 'Authorization',
             priority: 11,
-        );
-
-        $context->envConfigurator->addGroup(
-            values: [
-                'VIEW_CACHE' => false,
-            ],
-            comment: 'View component options',
         );
     }
 }
