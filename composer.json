@@ -16,7 +16,7 @@
     "require-dev": {
         "composer/composer": "^2.4",
         "spiral/code-style": "^2.2",
-        "spiral/testing": "^2.3",
+        "spiral/testing": "^3.0",
         "vimeo/psalm": "^6.10"
     },
     "autoload": {
