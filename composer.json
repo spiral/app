@@ -9,7 +9,7 @@
         "source": "https://github.com/spiral/app"
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.4",
         "ext-mbstring": "*",
         "doctrine/collections": "^2.3",
         "spiral-packages/league-event": "^1.0.1",
