@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "spiral/code-style": "^2.2",
-        "spiral/testing": "^2.3",
+        "spiral/testing": "^3.0",
         "spiral/dumper": "^3.3.1",
         "vimeo/psalm": "^6.10"
     },
