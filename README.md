@@ -20,7 +20,7 @@ This makes it super simple for you to get started with Spiral.
 
 Make sure that your server is configured with following PHP version and extensions:
 
-* PHP 8.1+, 64bit
+* PHP 8.4+, 64bit
 * [mb-string](https://www.php.net/manual/en/intro.mbstring.php) extension
 
 ## Installation
