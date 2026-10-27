@@ -75,7 +75,7 @@ return [
                     'logInterpolatedQueries' => env('DB_LOG_INTERPOLATED_QUERIES', false),
                     'withDatetimeMicroseconds' => env('DB_WITH_DATETIME_MICROSECONDS', false),
                 ],
-            )
+            ),
         ] : []),
         ...(\extension_loaded('pdo_mysql') ? [
             'mysql' => new Config\MySQLDriverConfig(
