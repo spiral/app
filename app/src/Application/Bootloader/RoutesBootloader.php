@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Bootloader;
 
 use App\Endpoint\Web\Middleware\LocaleSelector;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use App\Endpoint\Web\PageNotFoundController;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
@@ -47,7 +45,7 @@ final class RoutesBootloader extends BaseRoutesBootloader
             'web' => [
                 CookiesMiddleware::class,
                 SessionMiddleware::class,
-                CsrfMiddleware::class
+                CsrfMiddleware::class,
             ],
         ];
     }
