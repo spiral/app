@@ -15,7 +15,6 @@ use Spiral\Interceptors\HandlerInterface;
 final class AppBootloader extends DomainBootloader
 {
     protected const SINGLETONS = [HandlerInterface::class => [self::class, 'domainCore']];
-
     protected const INTERCEPTORS = [
         CycleInterceptor::class,
         GuardInterceptor::class,
