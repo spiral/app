@@ -9,14 +9,15 @@
         "source": "https://github.com/spiral/app"
     },
     "require": {
-        "php": ">=8.1",
-        "spiral/framework": "^3.8",
-        "spiral/roadrunner-cli": "^2.5"
+        "php": ">=8.4",
+        "roadrunner/cli": "^3.0.1",
+        "spiral/framework": "^3.18"
     },
     "require-dev": {
-        "composer/composer": "^2.4",
-        "spiral/testing": "^2.3",
-        "vimeo/psalm": "^6.10"
+        "composer/composer": "^2.10",
+        "llm/skills": "^1.15",
+        "spiral/testing": "^3.1",
+        "vimeo/psalm": "^6.20"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +35,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+            "llm/skills": true,
             "spiral/composer-publish-plugin": true
         }
     },
@@ -47,7 +49,6 @@
             "php app.php configure --quiet"
         ],
         "rr:download": "rr get-binary",
-        "rr:download-protoc": "rr download-protoc-binary",
         "cs:fix": "php-cs-fixer fix -v",
         "psalm": "psalm",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",

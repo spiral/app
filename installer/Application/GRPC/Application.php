@@ -63,7 +63,7 @@ final class Application extends AbstractApplication
             ':common:' => '',
         ],
         array $commands = [
-            'rr download-protoc-binary',
+            'dload get --no-interaction',
         ],
         array $instructions = [
         ],

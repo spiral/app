@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<dload xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="vendor/internal/dload/dload.xsd"
+       temp-dir="./runtime">
+    <actions>
+        <download software="buf" version="^1.50"/>
+        <download software="protoc" version="^36.0"/>
+        <download software="protoc-gen-php-grpc" version="^3.0"/>
+    </actions>
+</dload>
