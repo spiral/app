@@ -94,6 +94,7 @@ final class Configurator extends AbstractInstaller
 
         // We don't need MIT license file in the application, that's why we remove it.
         $this->removeLicense();
+        $this->removeChangelog();
         $this->removeGitHubActions();
         $this->removeInstaller();
 
@@ -281,6 +282,24 @@ final class Configurator extends AbstractInstaller
     private function removeLicense(): void
     {
         $file = $this->projectRoot . 'LICENSE';
+
+        $this->eventStorage?->addEvent(
+            new DeleteEvent($file),
+        );
+
+        $this->files->delete($file);
+    }
+
+    /**
+     * The changelog belongs to the installer releases, not to the application.
+     */
+    private function removeChangelog(): void
+    {
+        $file = $this->projectRoot . 'CHANGELOG.md';
+
+        if (!$this->files->isFile($file)) {
+            return;
+        }
 
         $this->eventStorage?->addEvent(
             new DeleteEvent($file),
