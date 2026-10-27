@@ -30,11 +30,15 @@ final class RoadRunnerGRPC extends AbstractModule
     public function getCopiedResources(ApplicationInterface $application): array
     {
         if (!$application->hasSkeleton()) {
-            return ['config/grpc.php', 'app/config/grpc.php'];
+            return [
+                'config/grpc.php' => 'app/config/grpc.php',
+                'grpc/dload.xml' => 'dload.xml',
+            ];
         }
 
         return [
             'config/grpc_services.php' => 'app/config/grpc.php',
+            'grpc/dload.xml' => 'dload.xml',
             'grpc/proto' => 'proto',
             'grpc/generated' => 'generated',
             'grpc/app' => 'app',
