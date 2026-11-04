@@ -19,7 +19,7 @@ enum ComposerPackages: string
     case NyholmBridge = 'spiral/nyholm-bridge:^1.3';
     case SapiBridge = 'spiral/sapi-bridge:^1.1.1';
     case CycleBridge = 'spiral/cycle-bridge:^2.13';
-    case DoctrineCollections = 'doctrine/collections:^3.1';
+    case DoctrineCollections = 'doctrine/collections:^2.3 || ^3.1';
     case LoophpCollections = 'loophp/collection:^7.6';
     case IlluminateCollections = 'illuminate/collections:8 - 13';
     case RoadRunnerGRPC = 'roadrunner/grpc:^3.8';
