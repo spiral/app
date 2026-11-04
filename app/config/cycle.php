@@ -30,15 +30,15 @@ return [
             // SchemaInterface::REPOSITORY => \Cycle\ORM\Select\Repository::class,
             // SchemaInterface::SCOPE => null,
             SchemaInterface::TYPECAST_HANDLER => [
-               Typecast::class, \App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class,
+                Typecast::class, \App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class,
             ],
         ],
 
         'collections' => [
             'default' => 'doctrine',
             'factories' => [
-                'array' => new Cycle\ORM\Collection\ArrayCollectionFactory(),
-                'doctrine' => new Cycle\ORM\Collection\DoctrineCollectionFactory(),
+                'array' => new \Cycle\ORM\Collection\ArrayCollectionFactory(),
+                'doctrine' => new \Cycle\ORM\Collection\DoctrineCollectionFactory(),
             ],
         ],
 

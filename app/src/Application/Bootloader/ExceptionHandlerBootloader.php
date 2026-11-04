@@ -13,7 +13,6 @@ use Spiral\Exceptions\Renderer\ConsoleRenderer;
 use Spiral\Exceptions\Renderer\JsonRenderer;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
-use Spiral\Http\ErrorHandler\PlainRenderer;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\EnvSuppressErrors;
 use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
@@ -35,8 +34,7 @@ final class ExceptionHandlerBootloader extends Bootloader
 
     public function __construct(
         private readonly ExceptionHandler $handler,
-    ) {
-    }
+    ) {}
 
     public function init(AbstractKernel $kernel): void
     {
