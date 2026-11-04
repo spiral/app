@@ -18,5 +18,7 @@ final class Config implements GeneratorInterface
             $context->resource
                 ->copy('config/grpc.php', 'app/config/grpc.php');
         }
+
+        $context->resource->copy('grpc/dload.xml', 'dload.xml');
     }
 }

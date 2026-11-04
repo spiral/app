@@ -8,7 +8,9 @@ use App\Infrastructure\Persistence\CycleORMUserRepository;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 
-/** @psalm-suppress ClassMustBeFinal */
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 #[Entity(
     repository: CycleORMUserRepository::class,
 )]

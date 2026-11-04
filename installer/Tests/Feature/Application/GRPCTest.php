@@ -106,10 +106,10 @@ final class GRPCTest extends InstallerTestCase
             ->assertMiddlewareNotRegistered(LocaleSelector::class)
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
-            ->assertCommandExecuted('rr download-protoc-binary')
+            ->assertCommandExecuted('dload get --no-interaction')
             ->assertReadmeContains('### GRPC')
             ->assertReadmeContains('- Configuration file: `app/config/grpc.php`')
-            ->assertReadmeContains('Download or update protoc-gen GRPC plugin')
+            ->assertReadmeContains('Download or update gRPC code generation tools')
             ->assertReadmeContains('Generate gRPC proto files');
     }
 }
