@@ -12,14 +12,17 @@ use Composer\Composer;
 use Composer\Factory;
 use Composer\Json\JsonFile;
 use Composer\Script\Event;
+use Installer\Application\ComposerPackages;
 use Installer\Internal\Application\AbstractApplication;
 use Installer\Internal\Application\ApplicationInterface;
+use Installer\Internal\Configurator\DloadConfigGenerator;
 use Installer\Internal\Configurator\InstallationInstructionRenderer;
 use Installer\Internal\Configurator\ResourceQueue;
 use Installer\Internal\Configurator\RoadRunnerConfigGenerator;
 use Installer\Internal\Console\IO;
 use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Events\DeleteEvent;
+use Installer\Internal\Events\DloadConfigGenerated;
 use Installer\Internal\Generator\Bootloader\RoutesBootloaderConfigurator;
 use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Internal\Installer\AbstractInstaller;
@@ -87,6 +90,7 @@ final class Configurator extends AbstractInstaller
     {
         $this->runGenerators();
         $this->createRoadRunnerConfig();
+        $this->downloadBinaries();
         $this->runCommands();
         $this->showInstructions();
 
@@ -251,6 +255,42 @@ final class Configurator extends AbstractInstaller
         $generator = new RoadRunnerConfigGenerator($this->processExecutor);
 
         $process = $generator->generate($this->application->getRoadRunnerPlugins());
+        $this->eventStorage?->addEvent($process);
+
+        foreach ($process as $output) {
+            $this->eventStorage?->addEvent($output);
+            $output->send($this->io);
+        }
+
+        // Point the gRPC server at the proto file of the gRPC skeleton
+        $config = $this->projectRoot . '.rr.yaml';
+        $proto = 'proto/service.proto';
+        if (
+            $this->application->isRoadRunnerPluginRequired('grpc')
+            && $this->files->isFile($config)
+            && $this->files->isFile($this->projectRoot . $proto)
+        ) {
+            $this->files->write($config, $generator->replaceProto($this->files->read($config), $proto));
+        }
+    }
+
+    /**
+     * Lists the binaries in `dload.xml` and downloads them.
+     */
+    private function downloadBinaries(): void
+    {
+        if (!$this->application->isPackageInstalled(new Package(ComposerPackages::RoadRunnerBridge))) {
+            return;
+        }
+
+        $generator = new DloadConfigGenerator();
+        $software = $generator->software($this->application->getRoadRunnerPlugins());
+        $path = $this->projectRoot . 'dload.xml';
+
+        $this->files->write($path, $generator->render($software));
+        $this->eventStorage?->addEvent(new DloadConfigGenerated($path, $software));
+
+        $process = $this->processExecutor->execute('dload get --no-interaction');
         $this->eventStorage?->addEvent($process);
 
         foreach ($process as $output) {

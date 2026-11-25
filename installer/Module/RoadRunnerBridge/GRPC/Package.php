@@ -28,7 +28,6 @@ final class Package extends BasePackage
             ],
             dependencies: [
                 new ExtGRPC(),
-                new DloadPackage(),
             ],
         );
     }

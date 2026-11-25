@@ -93,6 +93,8 @@ final class WebTest extends InstallerTestCase
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('rr make-config -p http')
+            ->assertCommandExecuted('dload get --no-interaction')
+            ->assertDloadSoftware('rr')
             ->assertReadmeContains('RoadRunnerBridge')
             ->assertReadmeContains(
                 'The settings for RoadRunner are in a file `.rr.yaml` at the main folder of the app.',

@@ -84,6 +84,8 @@ final class ConsoleTest extends InstallerTestCase
             )
 
             ->assertMessageShown('Removing Installer from composer.json ...')
-            ->assertMessageShown('Installation complete!');
+            ->assertMessageShown('Installation complete!')
+            ->assertDloadNotGenerated()
+            ->assertCommandNotExecuted('dload get --no-interaction');
     }
 }

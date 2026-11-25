@@ -48,10 +48,9 @@
         "post-create-project-cmd": [
             "php app.php encrypt:key -m .env",
             "php app.php configure --quiet",
-            "rr get-binary --quiet",
             "composer dump-autoload"
         ],
-        "rr:download": "rr get-binary",
+        "rr:download": "dload get",
         "cs:fix": "php-cs-fixer fix -v",
         "psalm": "psalm",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",

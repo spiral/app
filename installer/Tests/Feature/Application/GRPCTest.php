@@ -107,6 +107,7 @@ final class GRPCTest extends InstallerTestCase
             ->assertMessageShown('Removing Installer from composer.json ...')
             ->assertMessageShown('Installation complete!')
             ->assertCommandExecuted('dload get --no-interaction')
+            ->assertDloadSoftware('rr', 'buf', 'protoc', 'protoc-gen-php-grpc')
             ->assertReadmeContains('### GRPC')
             ->assertReadmeContains('- Configuration file: `app/config/grpc.php`')
             ->assertReadmeContains('Download or update gRPC code generation tools')

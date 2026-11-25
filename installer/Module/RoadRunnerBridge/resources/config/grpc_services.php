@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use GRPC\Ping\PingServiceInterface;
+use Spiral\Grpc\Client\Config\ConnectionConfig;
+use Spiral\Grpc\Client\Config\ServiceConfig;
+
 /**
  * Configuration for gRPC.
  *
@@ -41,4 +45,19 @@ return [
      * Default: null
      */
     'servicesBasePath' => directory('root') . 'proto',
+
+    /**
+     * Clients of remote gRPC services: each listed interface is bound in the container.
+     *
+     * @link https://github.com/spiral/grpc-client
+     */
+    'client' => [
+        'interceptors' => [],
+        'services' => [
+            new ServiceConfig(
+                connections: new ConnectionConfig(env('PING_SERVICE_HOST', '127.0.0.1:9001')),
+                interfaces: [PingServiceInterface::class],
+            ),
+        ],
+    ],
 ];

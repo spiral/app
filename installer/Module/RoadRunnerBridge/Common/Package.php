@@ -29,6 +29,7 @@ final class Package extends BasePackage
             dependencies: [
                 new RoadRunnerCliPackage(),
                 new ExtSocketsPackage(),
+                new DloadPackage(),
             ],
         );
     }

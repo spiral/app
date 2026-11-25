@@ -62,9 +62,7 @@ final class Application extends AbstractApplication
         array $resources = [
             ':common:' => '',
         ],
-        array $commands = [
-            'dload get --no-interaction',
-        ],
+        array $commands = [],
         array $instructions = [
         ],
     ) {

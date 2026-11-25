@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Installer\Module\RoadRunnerBridge\GRPC;
+namespace Installer\Module\RoadRunnerBridge\Common;
 
 use Installer\Application\ComposerPackages;
 use Installer\Internal\Package;
