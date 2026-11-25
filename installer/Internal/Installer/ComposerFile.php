@@ -16,6 +16,11 @@ use Installer\Internal\Question\QuestionInterface;
 
 final class ComposerFile
 {
+    /**
+     * Replaces the description of the installer in the composer.json of the application.
+     */
+    private const APPLICATION_DESCRIPTION = 'Spiral Skeleton Application';
+
     /** @var Link[] */
     private array $composerRequires = [];
 
@@ -160,10 +165,37 @@ final class ComposerFile
             $this->definition['extra']['spiral'],
         );
 
+        $this->definition['description'] = self::APPLICATION_DESCRIPTION;
         $this->definition['autoload'] = $autoload;
         $this->definition['autoload-dev'] = $autoloadDev;
 
+        foreach (['require', 'require-dev'] as $section) {
+            if (isset($this->definition[$section])) {
+                $this->definition[$section] = self::sortPackages($this->definition[$section]);
+            }
+        }
+
         $this->storage->write($this->definition);
+    }
+
+    /**
+     * Orders packages as Composer does with `sort-packages`: php, extensions, libraries, then the rest.
+     *
+     * @param array<non-empty-string, string> $packages
+     * @return array<non-empty-string, string>
+     */
+    private static function sortPackages(array $packages): array
+    {
+        $prefix = static fn(string $name): string => match (true) {
+            $name === 'php' || \str_starts_with($name, 'php-') => '0-' . $name,
+            \str_starts_with($name, 'ext-') => '2-' . $name,
+            \str_starts_with($name, 'lib-') => '3-' . $name,
+            default => '5-' . $name,
+        };
+
+        \uksort($packages, static fn(string $a, string $b): int => \strnatcmp($prefix($a), $prefix($b)));
+
+        return $packages;
     }
 
     /**

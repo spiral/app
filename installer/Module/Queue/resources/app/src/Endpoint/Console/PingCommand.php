@@ -30,6 +30,9 @@ final class PingCommand extends Command
 
     public function __invoke(QueueInterface $queue): int
     {
+        // Put your command logic here
+        $this->info(\sprintf('Pinging %s...', $this->site));
+
         $id = $queue->push(Ping::class, [
             'site' => $this->site,
         ]);

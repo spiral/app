@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Installer\Module\TemplateEngines\Stempler\Generator;
 
+use App\Application\Bootloader\CustomStemplerDirectivesBootloader;
 use Installer\Internal\Generator\Context;
 use Installer\Internal\Generator\GeneratorInterface;
 use Spiral\Stempler\Bootloader\StemplerBootloader;
@@ -24,6 +25,14 @@ final class Bootloaders implements GeneratorInterface
             ],
             comment: 'Views',
             priority: 12,
+        );
+
+        $context->kernel->app->addGroup(
+            bootloaders: [
+                CustomStemplerDirectivesBootloader::class,
+            ],
+            comment: 'Stempler directives used in the views',
+            priority: 2,
         );
     }
 }

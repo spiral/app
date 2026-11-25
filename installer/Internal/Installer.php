@@ -15,6 +15,7 @@ use Installer\Internal\Console\IOInterface;
 use Installer\Internal\Console\Output;
 use Installer\Internal\Events\CopyEvent;
 use Installer\Internal\Installer\AbstractInstaller;
+use Installer\Internal\Installer\Answers;
 use Installer\Internal\Installer\ApplicationState;
 use Installer\Internal\Installer\ComposerFile;
 use Installer\Internal\Installer\ComposerStorage;
@@ -57,7 +58,12 @@ final class Installer extends AbstractInstaller
             $this->eventStorage,
         );
 
-        $this->interactions = $interactions ?? new IOInteractions($this->io, $this->config, $this->applicationState);
+        $this->interactions = $interactions ?? new IOInteractions(
+            $this->io,
+            $this->config,
+            $this->applicationState,
+            Answers::fromEnv(),
+        );
     }
 
     /**

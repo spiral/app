@@ -30,6 +30,22 @@ composer create-project spiral/app my-app
 
 After the project has been installed, open **README.md** file and follow the instructions.
 
+### Installation without prompts
+
+Pass the answers in the `SPIRAL_INSTALLER_ANSWERS` environment variable, e.g. in CI or a Dockerfile:
+
+```bash
+SPIRAL_INSTALLER_ANSWERS='{"application": "Web", "questions": {"CycleBridge": 1, "EventDispatcher": 1, "Validators": 0}}' \
+  composer create-project spiral/app my-app --no-interaction
+```
+
+- `application` is the preset name: `Web`, `Cli` or `gRPC`.
+- A question key is the class name of the question without the `Installer\Module\` (or `Installer\Application\`) prefix
+  and the `\Question` suffix, with `/` instead of `\`: `CycleBridge`, `CycleBridge/CollectionsQuestion`,
+  `RoadRunnerBridge/RoadRunnerMetrics`, `ApplicationSkeleton`. Keys are case-insensitive.
+- An answer is the option number as shown in the prompt; `0` declines.
+- Questions without an answer are asked as usual, or get their default answer with `--no-interaction`.
+
 Good luck with your future project!
 
 ## License:

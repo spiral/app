@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Module\TemplateEngines;
 
+use App\Application\Bootloader\CustomStemplerDirectivesBootloader;
 use Installer\Internal\Application\ApplicationInterface;
 use Installer\Module\TemplateEngines\Stempler\Package;
 use Tests\Module\AbstractModule;
@@ -22,6 +23,7 @@ final class Stempler extends AbstractModule
         return [
             ViewsBootloader::class,
             StemplerBootloader::class,
+            CustomStemplerDirectivesBootloader::class,
         ];
     }
 }
