@@ -71,7 +71,7 @@
             </a>
         </nav>
     </div>
-    <div class="version"><span>Spiral Framework 3</span> <span>PHP @php echo PHP_VERSION; @endphp</span></div>
+    <div class="version"><span>@spiralVersion</span> <span>@phpVersion</span></div>
 
     <div class="logo">
         <a href="https://spiral.dev/">

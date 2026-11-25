@@ -7,6 +7,7 @@ namespace App\Application\Exception\Renderer;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Spiral\Boot\Environment\AppEnvironment;
 use Spiral\Exceptions\Verbosity;
 use Spiral\Http\ErrorHandler\RendererInterface;
 use Spiral\Http\Header\AcceptHeader;
@@ -30,6 +31,7 @@ final class ViewRenderer implements RendererInterface
         private readonly ViewsInterface $views,
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly Verbosity $verbosity,
+        private readonly AppEnvironment $env,
     ) {}
 
     #[\Override]
@@ -76,7 +78,12 @@ final class ViewRenderer implements RendererInterface
             $view = $this->views->get(self::DEFAULT_VIEW);
         }
 
-        $content = $view->render(['code' => $code, 'exception' => $exception]);
+        $content = $view->render([
+            'code' => $code,
+            'exception' => $exception,
+            // Development hints in the error pages are hidden in production
+            'debug' => !$this->env->isProduction(),
+        ]);
         $response->getBody()->write($content);
 
         return $response;

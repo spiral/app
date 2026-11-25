@@ -107,6 +107,37 @@ final class ComposerFileTest extends TestCase
         );
     }
 
+    public function testRemoveInstallerSortsPackagesAndSetsDescription(): void
+    {
+        $this->composer->addPackage(new Package(ComposerPackages::LeagueEvent));
+        $this->composer->addPackage(new Package(ComposerPackages::ExtSockets));
+        $this->composer->addPackage(new Package(ComposerPackages::CycleBridge));
+
+        $written = null;
+        $this->storage->shouldReceive('write')
+            ->once()
+            ->withArgs(static function (array $json) use (&$written): bool {
+                $written = $json;
+
+                return true;
+            });
+
+        \iterator_to_array($this->composer->removeInstaller([], []));
+
+        $this->assertSame('Spiral Skeleton Application', $written['description']);
+        $this->assertSame(
+            [
+                'php',
+                'ext-sockets',
+                'roadrunner/cli',
+                'spiral-packages/league-event',
+                'spiral/cycle-bridge',
+                'spiral/framework',
+            ],
+            \array_keys($written['require']),
+        );
+    }
+
     private function assertOutputContains(\Generator $output, array $lines): void
     {
         $output = \array_map(
