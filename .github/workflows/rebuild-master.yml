@@ -1,0 +1,81 @@
+# Rebuilds the master branch: installs the application from the installer with the answers
+# in .github/master-preset.json and opens a pull request with the result.
+
+on:  # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      ref:
+        description: Installer tag or branch to build the application from
+        required: true
+        type: string
+
+name: 🏗️ Rebuild master
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    name: Rebuild master from ${{ inputs.ref }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: 📦 Check out the installer
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+          path: src
+          persist-credentials: false
+
+      - name: 📦 Check out master
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          path: master
+          persist-credentials: false
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, sockets, pdo_sqlite
+          coverage: none
+
+      - name: 🏗️ Install the application
+        env:
+          # DLoad downloads RoadRunner during the installation
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf src/.git
+          export SPIRAL_INSTALLER_ANSWERS="$(cat src/.github/master-preset.json)"
+          composer create-project spiral/app build dev-build --no-interaction --no-progress \
+            --repository='{"type": "path", "url": "src", "options": {"symlink": false, "versions": {"spiral/app": "dev-build"}}}'
+
+      - name: 🧪 Run the application tests
+        working-directory: build
+        run: composer test
+
+      - name: 🔄 Replace master with the build
+        run: |
+          rsync -a --delete \
+            --exclude .git --exclude LICENSE \
+            --exclude vendor --exclude runtime --exclude .env --exclude composer.lock \
+            --exclude .agents --exclude .claude --exclude .phpunit.cache --exclude .phpunit.result.cache \
+            --exclude rr --exclude buf --exclude protoc --exclude protoc-gen-php-grpc \
+            build/ master/
+
+      - name: 📬 Open a pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          path: master
+          token: ${{ github.token }}
+          base: master
+          branch: chore/rebuild-master
+          delete-branch: true
+          commit-message: 'chore: rebuild from installer ${{ inputs.ref }}'
+          title: 'chore: rebuild from installer ${{ inputs.ref }}'
+          body: |
+            The application installed from the installer `${{ inputs.ref }}` with the answers in
+            `.github/master-preset.json` of the installer branch. The application tests pass.
