@@ -16,6 +16,9 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - name: 🎉 Create release
         uses: googleapis/release-please-action@v5
@@ -25,3 +28,14 @@ jobs:
           config-file: .github/.release-please-config.json
           manifest-file: .github/version.json
           target-branch: installer
+
+  # A release published with GITHUB_TOKEN triggers no other workflow, so the rebuild is a job here
+  rebuild-master:
+    needs: release
+    if: needs.release.outputs.release_created == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/rebuild-master.yml
+    with:
+      ref: ${{ needs.release.outputs.tag_name }}

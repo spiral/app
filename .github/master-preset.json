@@ -1,0 +1,22 @@
+{
+    "application": "Web",
+    "questions": {
+        "ApplicationSkeleton": 1,
+        "SapiBridge": 0,
+        "CycleBridge": 1,
+        "CycleBridge/CollectionsQuestion": 1,
+        "Validators": 0,
+        "Queue": 1,
+        "Cache": 1,
+        "Mailer": 1,
+        "Storage": 0,
+        "TemplateEngines": 1,
+        "DataGridBridge": 0,
+        "EventDispatcher": 1,
+        "Scheduler": 0,
+        "Translator": 1,
+        "TemporalBridge": 0,
+        "RoadRunnerBridge/RoadRunnerMetrics": 0,
+        "SentryBridge": 0
+    }
+}
