@@ -62,9 +62,7 @@ final class Application extends AbstractApplication
         array $resources = [
             ':common:' => '',
         ],
-        array $commands = [
-            'rr download-protoc-binary',
-        ],
+        array $commands = [],
         array $instructions = [
         ],
     ) {

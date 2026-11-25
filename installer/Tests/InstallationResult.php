@@ -9,6 +9,7 @@ use Installer\Internal\Events\BootloadersInjected;
 use Installer\Internal\Events\ConstantInjected;
 use Installer\Internal\Events\CopyEvent;
 use Installer\Internal\Events\DeleteEvent;
+use Installer\Internal\Events\DloadConfigGenerated;
 use Installer\Internal\Events\EnvGenerated;
 use Installer\Internal\Events\MiddlewareInjected;
 use Installer\Internal\Events\PackageRegistered;
@@ -281,6 +282,35 @@ final class InstallationResult
         foreach ($this->events as $event) {
             if ($event instanceof Output && $event->command === $command) {
                 Assert::fail(\sprintf('Command "%s" was not executed', $command));
+            }
+        }
+
+        Assert::assertTrue(true);
+
+        return $this;
+    }
+
+    /**
+     * @param non-empty-string ...$software Exact list of software aliases in `dload.xml`
+     */
+    public function assertDloadSoftware(string ...$software): self
+    {
+        foreach ($this->events as $event) {
+            if ($event instanceof DloadConfigGenerated) {
+                Assert::assertSame($software, \array_keys($event->software));
+
+                return $this;
+            }
+        }
+
+        Assert::fail('dload.xml was not generated');
+    }
+
+    public function assertDloadNotGenerated(): self
+    {
+        foreach ($this->events as $event) {
+            if ($event instanceof DloadConfigGenerated) {
+                Assert::fail('dload.xml was generated');
             }
         }
 

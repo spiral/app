@@ -9,17 +9,19 @@ declare(strict_types=1);
  */
 return [
     /**
-     * Path to protoc-gen-php-grpc library.
-     * You can download the binary here: https://github.com/roadrunner-server/roadrunner/releases
-     * Default: null
+     * Paths to the buf, protoc and protoc-gen-php-grpc binaries used by the "grpc:generate" console command.
+     * Download them with `vendor/bin/dload get` (see dload.xml).
+     * Default: null (looks for `<root>/<name>[.exe]`, then in PATH)
      */
-    'binaryPath' => directory('root') . 'protoc-gen-php-grpc' . (\PHP_OS_FAMILY === 'Windows' ? '.exe' : ''),
+    'bufPath' => null,
+    'protocPath' => null,
+    'pluginPath' => null,
 
     /**
      * Path, where generated DTO files put.
      * Default: null
      */
-    'generatedPath' => directory('root') . '/generated',
+    'generatedPath' => directory('root') . 'generated',
 
     /**
      * Base namespace for generated proto files.
@@ -36,5 +38,5 @@ return [
      * Root path for all proto files in which imports will be searched.
      * Default: null
      */
-    'servicesBasePath' => directory('root') . '/proto',
+    'servicesBasePath' => directory('root') . 'proto',
 ];

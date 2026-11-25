@@ -1,10 +1,10 @@
-### Download or update protoc-gen GRPC plugin
+### Download or update gRPC code generation tools
 
-Allows to install the latest version of the `protoc-gen-php-grpc` file compatible with your environment (operating
-system, processor architecture, runtime, etc...).
+The `grpc:generate` command compiles proto files with [buf](https://buf.build). It needs the `buf`, `protoc` and
+`protoc-gen-php-grpc` binaries, which are listed in `dload.xml` next to RoadRunner and downloaded with it:
 
 ```bash
-composer rr:download-protoc
-# or
-./vendor/bin/rr download-protoc-binary
+./vendor/bin/dload get
 ```
+
+Keep the `protoc` major in `dload.xml` in line with the installed `google/protobuf` package (5.36 → protoc 36.x).

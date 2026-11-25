@@ -35,11 +35,12 @@ final class UuidTypecast implements CastableInterface, UncastableInterface
     public function cast(array $data): array
     {
         foreach ($this->rules as $column => $_) {
-            if (!isset($data[$column])) {
+            $value = $data[$column] ?? null;
+            if ($value === null || $value instanceof UuidInterface) {
                 continue;
             }
 
-            $data[$column] = Uuid::fromString($data[$column]);
+            $data[$column] = Uuid::fromString((string) $value);
         }
 
         return $data;

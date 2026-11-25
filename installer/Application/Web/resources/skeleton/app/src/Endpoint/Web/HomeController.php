@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Endpoint\Web;
 
-use Exception;
-use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Router\Annotation\Route;
+use Spiral\Views\ViewsInterface;
 
 /**
  * Simple home page controller. It renders home page template and also provides
@@ -14,11 +13,9 @@ use Spiral\Router\Annotation\Route;
  */
 final class HomeController
 {
-    /**
-     * Read more about Prototyping:
-     * @link https://spiral.dev/docs/basics-prototype/#installation
-     */
-    use PrototypeTrait;
+    public function __construct(
+        private readonly ViewsInterface $views,
+    ) {}
 
     #[Route(route: '/', name: 'index')]
     public function index(): string

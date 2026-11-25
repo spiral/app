@@ -44,4 +44,14 @@ final class RoadRunnerConfigGeneratorTest extends TestCase
             (string) $generator->generate($plugins)->getIterator()->current(),
         );
     }
+
+    public function testReplaceProto(): void
+    {
+        $generator = new RoadRunnerConfigGenerator(\Mockery::mock(ProcessExecutorInterface::class));
+
+        $this->assertSame(
+            "grpc:\n    proto:\n        - proto/service.proto\n",
+            $generator->replaceProto("grpc:\n    proto:\n        - proto/helloworld.proto\n", 'proto/service.proto'),
+        );
+    }
 }

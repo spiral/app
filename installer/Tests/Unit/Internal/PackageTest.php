@@ -29,7 +29,7 @@ final class PackageTest extends TestCase
 
     public function testGetVersion(): void
     {
-        $this->assertSame('^2.1', $this->package->getVersion());
+        $this->assertSame('^2.8', $this->package->getVersion());
     }
 
     public function testGetResources(): void

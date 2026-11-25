@@ -7,7 +7,6 @@ use Spiral\RoadRunner\Jobs\Queue\AMQPCreateInfo;
 use Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo;
 use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
 use Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo;
-use Spiral\RoadRunnerBridge\Queue\Queue;
 
 /**
  * Queue configuration

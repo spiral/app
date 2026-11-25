@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Controller;
 
 use Spiral\Bootloader\I18nBootloader;
-use Tests\TestCase;
 use Spiral\Testing\Http\FakeHttp;
+use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
 {

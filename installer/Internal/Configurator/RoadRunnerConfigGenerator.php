@@ -25,4 +25,13 @@ final class RoadRunnerConfigGenerator
 
         return $this->executor->execute('rr make-config' . $options);
     }
+
+    /**
+     * `rr make-config` lists the placeholder `proto/helloworld.proto` in the `grpc` section;
+     * RoadRunner refuses to start while a listed proto file is missing.
+     */
+    public function replaceProto(string $config, string $proto): string
+    {
+        return \str_replace('proto/helloworld.proto', $proto, $config);
+    }
 }
