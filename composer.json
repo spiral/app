@@ -23,6 +23,7 @@
         "spiral/translator": "^3.18"
     },
     "require-dev": {
+        "internal/dload": "^1.19",
         "llm/skills": "^1.15",
         "spiral/code-style": "^2.4",
         "spiral/dumper": "^3.3.1",
@@ -53,14 +54,14 @@
         "post-update-cmd": [
             "php app.php encrypt:key -m .env",
             "php app.php configure --quiet",
-            "rr get-binary --quiet",
+            "dload get --no-interaction",
             "composer dump-autoload"
         ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "rr serve"
         ],
-        "rr:download": "rr get-binary",
+        "rr:download": "dload get",
         "cs:fix": "php-cs-fixer fix -v",
         "psalm": "psalm",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
