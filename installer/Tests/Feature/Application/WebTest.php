@@ -240,4 +240,33 @@ final class WebTest extends InstallerTestCase
 
         $result->storeLog();
     }
+
+    public function testWithTemporal(): void
+    {
+        $result = $this
+            ->install(Application::class)
+            ->withSkeleton()
+            ->addAnswer(Module\TemplateEngines\Question::class, 3)
+            ->addAnswer(Module\Translator\Question::class, false)
+            ->addAnswer(Module\TemporalBridge\Question::class, true)
+            ->addModule(new TestModule\Console())
+            ->addModule(new TestModule\RoadRunnerBridge())
+            ->addModule(new TestModule\RoadRunnerCli())
+            ->addModule(new TestModule\YiiErrorHandler())
+            ->addModule(new TestModule\NyholmPsr7())
+            ->addModule(new TestModule\Dumper())
+            ->addModule(new TestModule\ExtSockets())
+            ->addModule(new TestModule\ExtMbString())
+            ->addModule(new TestModule\Exception())
+            ->addModule(new TestModule\TemplateEngines\PlainPHP())
+            ->addModule(new TestModule\Http())
+            ->addModule(new TestModule\TemporalBridge())
+            ->run();
+
+        $result->storeLog();
+
+        $result
+            ->assertCommandExecuted('rr make-config -p http -p temporal')
+            ->assertDloadSoftware('rr');
+    }
 }

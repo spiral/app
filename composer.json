@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "composer/composer": "^2.10",
-        "llm/skills": "^1.15",
+        "llm/skills": "^1.23",
         "spiral/code-style": "^2.4",
         "spiral/testing": "^2.12 || ^3.1",
         "vimeo/psalm": "^7.0"

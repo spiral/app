@@ -25,8 +25,7 @@ return [
                 new Module\EventDispatcher\Question(),
                 new Module\Scheduler\Question(),
                 new Module\Translator\Question(default: 1),
-                // Hidden until spiral/temporal-bridge supports spiral/roadrunner-bridge 5
-                //new Module\TemporalBridge\Question(),
+                new Module\TemporalBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
                 new Module\SentryBridge\Question(),
             ],
@@ -43,7 +42,7 @@ return [
                 new Module\Translator\Question(),
                 new Module\RoadRunnerBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
-                //new Module\TemporalBridge\Question(),
+                new Module\TemporalBridge\Question(),
             ],
         ),
         new Application\GRPC\Application(
@@ -58,7 +57,7 @@ return [
                 new Module\Mailer\Question(),
                 new Module\Storage\Question(),
                 new Module\Scheduler\Question(),
-                //new Module\TemporalBridge\Question(),
+                new Module\TemporalBridge\Question(),
                 new Module\RoadRunnerBridge\RoadRunnerMetrics(),
                 new Module\SentryBridge\Question(),
             ],

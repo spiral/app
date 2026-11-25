@@ -6,7 +6,7 @@ namespace Installer\Application;
 
 enum ComposerPackages: string
 {
-    case YiiErrorHandler = 'spiral-packages/yii-error-handler-bridge:^1.1.3';
+    case YiiErrorHandler = 'spiral-packages/yii-error-handler-bridge:^1.2';
     case ExtMbString = 'ext-mbstring:*';
     case ExtGRPC = 'ext-grpc:*';
     case ExtSockets = 'ext-sockets:*';
@@ -27,7 +27,7 @@ enum ComposerPackages: string
     case SymfonyValidator = 'spiral-packages/symfony-validator:^1.5';
     case LaravelValidator = 'spiral-packages/laravel-validator:^1.2';
     case Scheduler = 'spiral-packages/scheduler:^2.8';
-    case TemporalBridge = 'spiral/temporal-bridge:^3.3';
+    case TemporalBridge = 'spiral/temporal-bridge:^3.4';
     case SentryBridge = 'spiral/sentry-bridge:^2.5';
     case StemplerBridge = 'spiral/stempler-bridge:^3.18';
     case TwigBridge = 'spiral/twig-bridge:^2.0.1';
