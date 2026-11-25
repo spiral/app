@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Endpoint\Web;
 
 use Spiral\Boot\Environment\AppEnvironment;
-use Spiral\Prototype\Traits\PrototypeTrait;
+use Spiral\Views\ViewsInterface;
 
 final class PageNotFoundController
 {
-    use PrototypeTrait;
+    public function __construct(
+        private readonly ViewsInterface $views,
+    ) {}
 
     public function __invoke(string $path, AppEnvironment $env): string
     {
