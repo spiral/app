@@ -24,6 +24,7 @@ final class Package extends BasePackage
         array $resources = [
             'config' => 'app/config',
             'database' => 'app/database',
+            'src' => 'app/src',
         ],
         array $generators = [
             new Bootloaders(),
@@ -33,7 +34,15 @@ final class Package extends BasePackage
             new Skeleton(),
         ],
     ) {
-        parent::__construct(ComposerPackages::CycleBridge, $resources, $generators);
+        parent::__construct(
+            package: ComposerPackages::CycleBridge,
+            resources: $resources,
+            generators: $generators,
+            dependencies: [
+                new EntityBehaviorPackage(),
+                new TransactionPackage(),
+            ],
+        );
     }
 
     public function getReadme(): array

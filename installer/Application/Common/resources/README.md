@@ -70,7 +70,8 @@ If you chose to install the default application skeleton, your project will have
 - Infrastructure
     - Persistence
         - CycleUserRepository.php
-    - CycleORM
+    - Cycle
+        - ORMBootloader.php
         - Typecaster
             - UuidTypecast.php
     - Interceptor
@@ -92,8 +93,8 @@ If you chose to install the default application skeleton, your project will have
   handling user-related errors.
 
 - **Infrastructure**: This directory contains the infrastructure code for your application, including the Persistence
-  directory for database-related code, the CycleORM directory for ORM-related code, and the Interceptor directory for
-  global interceptors.
+  directory for database-related code, the Cycle directory for the ORM bootloader and typecasters, and the Interceptor
+  directory for global interceptors.
 
 The project structure we provided is a common structure used in many PHP applications, and it can serve as a starting
 point for your projects By following this structure, you can organize your code in a logical and maintainable

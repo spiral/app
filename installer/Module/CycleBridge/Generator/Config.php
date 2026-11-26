@@ -10,12 +10,21 @@ use Installer\Internal\Generator\GeneratorInterface;
 use Installer\Module\CycleBridge\Collections\DoctrineCollections;
 use Installer\Module\CycleBridge\Collections\IlluminateCollections;
 use Installer\Module\CycleBridge\Collections\LoophpCollections;
-use Nette\PhpGenerator\Dumper;
-use Nette\PhpGenerator\Literal;
 
 final class Config implements GeneratorInterface
 {
     private const FILENAME = 'cycle.php';
+    private const TYPECAST_HANDLER = <<<'PHP'
+                    // SchemaInterface::TYPECAST_HANDLER => [
+                    //    :typecasters:,
+                    // ],
+        PHP;
+    private const FACTORIES = [
+        'array' => 'ArrayCollectionFactory',
+        'doctrine' => 'DoctrineCollectionFactory',
+        'illuminate' => 'IlluminateCollectionFactory',
+        'loophp' => 'LoophpCollectionFactory',
+    ];
 
     public function process(Context $context): void
     {
@@ -25,10 +34,18 @@ final class Config implements GeneratorInterface
             $context->applicationRoot . 'app/config/' . self::FILENAME,
         );
 
-        $typecasters = ['\Cycle\ORM\Parser\Typecast::class'];
-
+        // The skeleton entities use the UUID typecast, so the handler is enabled with the skeleton
         if ($context->application->hasSkeleton()) {
-            $typecasters[] = '\App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class';
+            $config = \str_replace(
+                self::TYPECAST_HANDLER,
+                \implode(PHP_EOL, [
+                    '            \Cycle\ORM\SchemaInterface::TYPECAST_HANDLER => [',
+                    '                \Cycle\ORM\Parser\Typecast::class,',
+                    '                \App\Infrastructure\Cycle\Typecaster\UuidTypecast::class,',
+                    '            ],',
+                ]),
+                $config,
+            );
         }
 
         \file_put_contents(
@@ -36,31 +53,31 @@ final class Config implements GeneratorInterface
             \str_replace(
                 [':typecasters:', ':collections:', "':collectionsFactory:'"],
                 [
-                    \implode(', ', $typecasters),
+                    '\Cycle\ORM\Parser\Typecast::class',
                     $collections->value,
-                    (new Dumper())->dump($this->getFactory($collections)),
+                    $this->renderFactories($collections),
                 ],
                 $config,
             ),
         );
     }
 
-    private function getFactory(Collections $collections): array
+    /**
+     * The array factory is always available, the installed collections package adds its own.
+     */
+    private function renderFactories(Collections $collections): string
     {
-        return match ($collections) {
-            Collections::Doctrine => [
-                Collections::Doctrine->value => Literal::new('Cycle\ORM\Collection\DoctrineCollectionFactory'),
-            ],
-            Collections::Illuminate => [
-                Collections::Illuminate->value => Literal::new('Cycle\ORM\Collection\IlluminateCollectionFactory'),
-            ],
-            Collections::Loophp => [
-                Collections::Loophp->value => Literal::new('Cycle\ORM\Collection\LoophpCollectionFactory'),
-            ],
-            default => [
-                Collections::Array->value => Literal::new('Cycle\ORM\Collection\ArrayCollectionFactory'),
-            ],
-        };
+        $lines = ['['];
+        foreach (\array_unique([Collections::Array->value, $collections->value]) as $name) {
+            $lines[] = \sprintf(
+                "                '%s' => new \\Cycle\\ORM\\Collection\\%s(),",
+                $name,
+                self::FACTORIES[$name],
+            );
+        }
+        $lines[] = '            ]';
+
+        return \implode(PHP_EOL, $lines);
     }
 
     private function getInstalledCollections(ApplicationInterface $application): Collections
