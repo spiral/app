@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/spiral/app/compare/4.0.0...4.0.1) (2026-11-26)
+
+
+### Bug Fixes
+
+* align the installed application and the READMEs with master ([#167](https://github.com/spiral/app/issues/167)) ([b1d8218](https://github.com/spiral/app/commit/b1d8218e45883a4580c1fc4e940a040a8ae259e8))
+
 ## [4.0.0](https://github.com/spiral/app/compare/3.9.0...4.0.0) (2026-11-25)
 
 
