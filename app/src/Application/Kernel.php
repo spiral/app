@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Infrastructure\Cycle\ORMBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
 use Spiral\Bootloader\Http\HttpBootloader;
 use Spiral\Bootloader\I18nBootloader;
 use Spiral\Bootloader\Views\TranslatedCacheBootloader;
 use Spiral\Cache\Bootloader\CacheBootloader;
-use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\Debug\Bootloader\DumperBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Events\Bootloader\EventsBootloader;
@@ -44,10 +44,6 @@ class Kernel extends \Spiral\Framework\Kernel
         ];
     }
 
-    /**
-     * List of components and extensions to be automatically registered
-     * within system container on application start.
-     */
     #[\Override]
     public function defineBootloaders(): array
     {
@@ -83,14 +79,8 @@ class Kernel extends \Spiral\Framework\Kernel
             Framework\Http\CsrfBootloader::class,
             Framework\Http\PaginationBootloader::class,
 
-            // Databases
-            CycleBridge\DatabaseBootloader::class,
-            CycleBridge\MigrationsBootloader::class,
-
-            // ORM
-            CycleBridge\SchemaBootloader::class,
-            CycleBridge\CycleOrmBootloader::class,
-            CycleBridge\AnnotatedBootloader::class,
+            // Databases and ORM
+            ORMBootloader::class,
 
             // Event Dispatcher
             EventsBootloader::class,
@@ -118,17 +108,14 @@ class Kernel extends \Spiral\Framework\Kernel
             // Console commands
             Framework\CommandBootloader::class,
             RoadRunnerBridge\CommandBootloader::class,
-            CycleBridge\CommandBootloader::class,
             ScaffolderBootloader::class,
             RoadRunnerBridge\ScaffolderBootloader::class,
-            CycleBridge\ScaffolderBootloader::class,
 
             // Fast code prototyping
             PrototypeBootloader::class,
 
             // Configure route groups, middleware for route groups
             Bootloader\RoutesBootloader::class,
-            Bootloader\CustomStemplerDirectivesBootloader::class,
         ];
     }
 
@@ -141,6 +128,9 @@ class Kernel extends \Spiral\Framework\Kernel
 
             // Application domain
             Bootloader\AppBootloader::class,
+
+            // Stempler directives used in the views
+            Bootloader\CustomStemplerDirectivesBootloader::class,
         ];
     }
 }

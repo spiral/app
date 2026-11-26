@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CycleORM\Typecaster;
+namespace App\Infrastructure\Cycle\Typecaster;
 
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\Parser\CastableInterface;
@@ -35,11 +35,12 @@ final class UuidTypecast implements CastableInterface, UncastableInterface
     public function cast(array $data): array
     {
         foreach ($this->rules as $column => $_) {
-            if (!isset($data[$column])) {
+            $value = $data[$column] ?? null;
+            if ($value === null || $value instanceof UuidInterface) {
                 continue;
             }
 
-            $data[$column] = Uuid::fromString($data[$column]);
+            $data[$column] = Uuid::fromString((string) $value);
         }
 
         return $data;

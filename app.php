@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Exception\Handler;
 use App\Application\Kernel;
 use Spiral\Core\Container;
 use Spiral\Core\Options;
@@ -17,12 +18,15 @@ use Spiral\Core\Options;
 // Register Composer's auto loader.
 require __DIR__ . '/vendor/autoload.php';
 
+
 // Initialize shared container, bindings, directories and etc.
 $options = new Options();
 $options->allowSingletonsRebinding = false;
+$options->validateArguments = false;
 $container = new Container(options: $options);
 $app = Kernel::create(
     directories: ['root' => __DIR__],
+    exceptionHandler: Handler::class,
     container: $container,
 )->run();
 

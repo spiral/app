@@ -5,7 +5,8 @@
 */runtime/
 
 /rr*
-/protoc-gen-php-grpc*
+/buf*
+/protoc*
 
 /.env
 /*.cache

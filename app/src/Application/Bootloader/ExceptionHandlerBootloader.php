@@ -27,9 +27,6 @@ final class ExceptionHandlerBootloader extends Bootloader
 {
     protected const BINDINGS = [
         SuppressErrorsInterface::class => EnvSuppressErrors::class,
-
-        // This is a renderer for the default exception handler
-        // when DEBUG is set to false
         RendererInterface::class => ViewRenderer::class,
     ];
 
