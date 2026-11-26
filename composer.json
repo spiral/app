@@ -52,7 +52,26 @@
         ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "rr serve"
+            "@putenv APP_ENV=prod",
+            "@putenv DEBUG=false",
+            "@putenv VERBOSITY_LEVEL=basic",
+            "@putenv TOKENIZER_CACHE_TARGETS=true",
+            "@putenv VIEW_CACHE=true",
+            "@putenv CYCLE_SCHEMA_CACHE=true",
+            "@putenv CYCLE_SCHEMA_WARMUP=true",
+            "@php app.php cache:clean",
+            "./rr serve"
+        ],
+        "serve:dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "@putenv APP_ENV=local",
+            "@putenv DEBUG=true",
+            "@putenv VERBOSITY_LEVEL=verbose",
+            "@putenv TOKENIZER_CACHE_TARGETS=false",
+            "@putenv VIEW_CACHE=false",
+            "@putenv CYCLE_SCHEMA_CACHE=false",
+            "@putenv CYCLE_SCHEMA_WARMUP=false",
+            "./rr serve"
         ],
         "rr:download": "dload get",
         "cs:fix": "php-cs-fixer fix -v",

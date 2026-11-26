@@ -33,7 +33,18 @@ cp .env.sample .env
 php app.php encrypt:key -m .env
 php app.php configure
 composer rr:download
-composer serve
+composer serve:dev
 ```
 
 Open http://127.0.0.1:8080 in the browser.
+
+### Development and production
+
+Both commands start RoadRunner and override the matching variables of `.env`:
+
+| Command | Environment |
+|---|---|
+| `composer serve:dev` | `APP_ENV=local`, debug mode with detailed errors; the tokenizer, view and ORM schema caches are off, so code changes apply after a worker restart |
+| `composer serve` | `APP_ENV=prod`, no debug mode, basic error verbosity; the tokenizer, view and ORM schema caches are on and cleared before the start |
+
+To run the application in production without Composer, set the same variables in `.env`: `APP_ENV=prod`, `DEBUG=false`, `VERBOSITY_LEVEL=basic`, `TOKENIZER_CACHE_TARGETS=true`, `VIEW_CACHE=true`, `CYCLE_SCHEMA_CACHE=true`, `CYCLE_SCHEMA_WARMUP=true`. Run `php app.php cache:clean` after each deploy.
