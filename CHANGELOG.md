@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.0](https://github.com/spiral/app/compare/4.0.1...4.1.0) (2026-11-26)
+
+
+### Features
+
+* **cycle:** boot Cycle ORM from the application ORMBootloader ([#170](https://github.com/spiral/app/issues/170)) ([3554647](https://github.com/spiral/app/commit/35546472e3bf412d0dfdb40dae833f8ae2106503))
+* **cycle:** install cycle/entity-behavior and cycle/transaction ([3554647](https://github.com/spiral/app/commit/35546472e3bf412d0dfdb40dae833f8ae2106503))
+
 ## [4.0.1](https://github.com/spiral/app/compare/4.0.0...4.0.1) (2026-11-26)
 
 
