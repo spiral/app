@@ -65,8 +65,6 @@ jobs:
             --exclude .agents --exclude .claude --exclude .phpunit.cache --exclude .phpunit.result.cache \
             --exclude rr --exclude buf --exclude protoc --exclude protoc-gen-php-grpc \
             build/ master/
-          # Files that differ from a freshly installed application, such as the README of the repository
-          cp -r src/.github/master/. master/
 
       - name: 📬 Open a pull request
         uses: peter-evans/create-pull-request@v8
