@@ -13,7 +13,7 @@ final class Env implements GeneratorInterface
     {
         $context->envConfigurator->addValue(
             'MONOLOG_DEFAULT_CHANNEL',
-            'default # Use "roadrunner" channel if you want to use RoadRunner logger',
+            'default # Use "roadrunner" channel for the RoadRunner logger or "remote" for JSON records over TCP to MONOLOG_REMOTE_URL',
         );
     }
 }

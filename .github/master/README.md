@@ -54,6 +54,7 @@ Open the Trap web UI at http://127.0.0.1:5007; the [Buggregator plugin](https://
 | What | Sent to Trap by |
 |---|---|
 | `dump()` and `trap()` | `VAR_DUMPER_FORMAT=server`, `VAR_DUMPER_SERVER=127.0.0.1:9912` |
+| Logs of the default channel | `MONOLOG_DEFAULT_CHANNEL=remote`, `MONOLOG_REMOTE_URL=127.0.0.1:9913` |
 | Emails | `MAILER_DSN=smtp://127.0.0.1:1025` |
 | Sentry events | `SENTRY_DSN=http://sentry@127.0.0.1:8000/1`, with [spiral/sentry-bridge](https://github.com/spiral/sentry-bridge) installed |
 | OpenTelemetry traces, logs and metrics | `OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318`, `OTEL_EXPORTER_OTLP_PROTOCOL=http/json`, with [spiral/otel-bridge](https://github.com/spiral/otel-bridge) installed |
