@@ -7,6 +7,7 @@
 <div align="center">
 
 [![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://spiral.dev/docs)
+[![Discord](https://img.shields.io/discord/538114875570913290?style=for-the-badge&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 [![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/spiral)
 
 </div>
@@ -44,7 +45,18 @@ Both commands start RoadRunner and override the matching variables of `.env`:
 
 | Command | Environment |
 |---|---|
-| `composer serve:dev` | `APP_ENV=local`, debug mode with detailed errors; the tokenizer, view and ORM schema caches are off, so code changes apply after a worker restart |
+| `composer serve:dev` | `APP_ENV=local`, debug mode with detailed errors; the tokenizer, view and ORM schema caches are off, so code changes apply after a worker restart; starts the Buggregator Trap debug server |
 | `composer serve` | `APP_ENV=prod`, no debug mode, basic error verbosity; the tokenizer, view and ORM schema caches are on and cleared before the start |
+
+### Debugging with Buggregator Trap
+
+`composer serve:dev` runs [Buggregator Trap](https://github.com/buggregator/trap) next to the application and points the application at it. Open its web UI at http://127.0.0.1:5007; the [Buggregator plugin](https://github.com/buggregator/phpstorm-plugin) for PhpStorm connects to the same port.
+
+| What | Sent to Trap by |
+|---|---|
+| `dump()` and `trap()` | `VAR_DUMPER_FORMAT=server`, `VAR_DUMPER_SERVER=127.0.0.1:9912` |
+| Emails | `MAILER_DSN=smtp://127.0.0.1:1025` |
+| Sentry events | `SENTRY_DSN=http://sentry@127.0.0.1:8000/1`, with [spiral/sentry-bridge](https://github.com/spiral/sentry-bridge) installed |
+| OpenTelemetry traces, logs and metrics | `OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318`, `OTEL_EXPORTER_OTLP_PROTOCOL=http/json`, with [spiral/otel-bridge](https://github.com/spiral/otel-bridge) installed |
 
 To run the application in production without Composer, set the same variables in `.env`: `APP_ENV=prod`, `DEBUG=false`, `VERBOSITY_LEVEL=basic`, `TOKENIZER_CACHE_TARGETS=true`, `VIEW_CACHE=true`, `CYCLE_SCHEMA_CACHE=true`, `CYCLE_SCHEMA_WARMUP=true`. Run `php app.php cache:clean` after each deploy.
