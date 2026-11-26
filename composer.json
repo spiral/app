@@ -14,6 +14,7 @@
         "spiral/framework": "^3.18"
     },
     "require-dev": {
+        "buggregator/trap": "^1.22",
         "composer/composer": "^2.10",
         "llm/skills": "^1.23",
         "spiral/code-style": "^2.4",
@@ -52,7 +53,32 @@
         ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "rr serve"
+            "@putenv APP_ENV=prod",
+            "@putenv DEBUG=false",
+            "@putenv VERBOSITY_LEVEL=basic",
+            "@putenv TOKENIZER_CACHE_TARGETS=true",
+            "@putenv VIEW_CACHE=true",
+            "@putenv CYCLE_SCHEMA_CACHE=true",
+            "@putenv CYCLE_SCHEMA_WARMUP=true",
+            "@php app.php cache:clean",
+            "./rr serve"
+        ],
+        "serve:dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "@putenv APP_ENV=local",
+            "@putenv DEBUG=true",
+            "@putenv VERBOSITY_LEVEL=verbose",
+            "@putenv TOKENIZER_CACHE_TARGETS=false",
+            "@putenv VIEW_CACHE=false",
+            "@putenv CYCLE_SCHEMA_CACHE=false",
+            "@putenv CYCLE_SCHEMA_WARMUP=false",
+            "@putenv VAR_DUMPER_FORMAT=server",
+            "@putenv VAR_DUMPER_SERVER=127.0.0.1:9912",
+            "@putenv MAILER_DSN=smtp://127.0.0.1:1025",
+            "@putenv SENTRY_DSN=http://sentry@127.0.0.1:8000/1",
+            "@putenv OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318",
+            "@putenv OTEL_EXPORTER_OTLP_PROTOCOL=http/json",
+            "./rr serve -o \"service.trap.command=php vendor/bin/trap --ui=5007\""
         ],
         "rr:download": "dload get",
         "cs:fix": "php-cs-fixer fix -v",
