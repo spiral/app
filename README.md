@@ -1,34 +1,38 @@
-# Spiral application installer
+<p align="center">
+    <a href="https://spiral.dev"><img alt="Spiral Framework" src="https://user-images.githubusercontent.com/773481/228578125-8e0ad713-905f-4450-a473-5839bd650472.png" style="width: 6in; display: block"></a>
+</p>
 
-[**Documentation
-**](https://spiral.dev/docs) | [Discord](https://discord.gg/V6EK4he) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/overview-contributing/)
+<p align="center">Interactive installer of Spiral Framework applications</p>
 
-![Installer](https://user-images.githubusercontent.com/773481/208850084-891a9d6f-3e70-4a06-af57-4e63c37c9c47.png)
+<div align="center">
 
-### Hello developer!
+[![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://spiral.dev/docs/start-installation)
+[![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/spiral)
 
-Are you looking for an easier way to install [Spiral Framework](https://github.com/spiral/framework/)?
+</div>
 
-This package streamlines the installation process by allowing you to install only the desired components and packages 
-for your application. Our installer handles all dependencies and configurations, making the process as smooth and 
-hassle-free as possible.
+<br />
 
-This makes it super simple for you to get started with Spiral.
+The installer creates a [Spiral Framework](https://github.com/spiral/framework) application with only the components you pick: Web, CLI or gRPC application, Cycle ORM, template engine, queues, cache, mailer, Temporal and others. It requires the packages and writes their configs, bootloaders and environment variables. Applications on RoadRunner also get the RoadRunner binary.
 
-## Server Requirements
+## Get Started
 
-Make sure that your server is configured with following PHP version and extensions:
-
-* PHP 8.2+, 64bit
-* [mb-string](https://www.php.net/manual/en/intro.mbstring.php) extension
-
-## Installation
+### Installation
 
 ```bash
 composer create-project spiral/app my-app
 ```
 
-After the project has been installed, open **README.md** file and follow the instructions.
+[![PHP](https://img.shields.io/packagist/php-v/spiral/app.svg?style=flat-square&logo=php)](https://packagist.org/packages/spiral/app)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spiral/app.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/spiral/app)
+[![License](https://img.shields.io/packagist/l/spiral/app.svg?style=flat-square)](LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/spiral/app.svg?style=flat-square)](https://packagist.org/packages/spiral/app/stats)
+
+The application needs the [mbstring](https://www.php.net/manual/en/book.mbstring.php) extension, and the [sockets](https://www.php.net/manual/en/book.sockets.php) extension when it runs on RoadRunner.
+
+![Installer](https://user-images.githubusercontent.com/773481/208850084-891a9d6f-3e70-4a06-af57-4e63c37c9c47.png)
+
+When the installation completes, open `README.md` of the new project: it describes the next steps for the installed components.
 
 ### Installation without prompts
 
@@ -40,15 +44,10 @@ SPIRAL_INSTALLER_ANSWERS='{"application": "Web", "questions": {"CycleBridge": 1,
 ```
 
 - `application` is the preset name: `Web`, `Cli` or `gRPC`.
-- A question key is the class name of the question without the `Installer\Module\` (or `Installer\Application\`) prefix
-  and the `\Question` suffix, with `/` instead of `\`: `CycleBridge`, `CycleBridge/CollectionsQuestion`,
-  `RoadRunnerBridge/RoadRunnerMetrics`, `ApplicationSkeleton`. Keys are case-insensitive.
+- A question key is the class name of the question without the `Installer\Module\` (or `Installer\Application\`) prefix and the `\Question` suffix, with `/` instead of `\`: `CycleBridge`, `CycleBridge/CollectionsQuestion`, `RoadRunnerBridge/RoadRunnerMetrics`, `ApplicationSkeleton`. Keys are case-insensitive.
 - An answer is the option number as shown in the prompt; `0` declines.
 - Questions without an answer are asked as usual, or get their default answer with `--no-interaction`.
 
-Good luck with your future project!
+## Ready-made application
 
-## License:
-
-MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained
-by [Spiral Scout](https://spiralscout.com).
+The [`master`](https://github.com/spiral/app/tree/master) branch holds a Web application installed from the latest release with the answers in [`.github/master-preset.json`](https://github.com/spiral/app/blob/installer/.github/master-preset.json). Each release rebuilds it.
