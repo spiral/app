@@ -1,29 +1,29 @@
-# Spiral HTTP Application Skeleton [![Latest Stable Version](https://poser.pugx.org/spiral/app/version)](https://packagist.org/packages/spiral/app)
+<p align="center">
+    <a href="https://spiral.dev"><img alt="Spiral Framework" src="https://user-images.githubusercontent.com/773481/228578125-8e0ad713-905f-4450-a473-5839bd650472.png" style="width: 6in; display: block"></a>
+</p>
 
-Spiral Framework is a High-Performance PHP Full-Stack framework and group of over sixty PSR-compatible components.
+<p align="center">Spiral Framework Web application skeleton</p>
 
-![Github cover spiral application](https://user-images.githubusercontent.com/773481/208879494-75df40ec-483c-4efb-b621-fed863927e96.jpg)
+<div align="center">
 
-[**Documentation**](https://spiral.dev/docs) | [Discord](https://discord.gg/TFeEmCs) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/about-contributing/)
+[![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://spiral.dev/docs)
+[![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/spiral)
 
-### Hello developer!
+</div>
 
-This branch is a ready-to-run Web application: RoadRunner, Cycle ORM, Stempler, queues, cache, mailer,
-events and translations, with the sample pages. It is built automatically by the
-[installer](https://github.com/spiral/app/tree/installer) on each release.
+<br />
 
-To pick only the components you need, use the installer:
+A ready-to-run Web application on [RoadRunner](https://roadrunner.dev) with Cycle ORM, Stempler templates, queues, cache, mailer, events, translations and sample pages. The [installer](https://github.com/spiral/app/tree/installer) rebuilds this branch on each release.
+
+To pick only the components you need, install the application with the installer instead:
 
 ```bash
 composer create-project spiral/app my-app
 ```
 
-## Server Requirements
+## Get Started
 
-* PHP 8.2+, 64bit
-* [mb-string](https://www.php.net/manual/en/intro.mbstring.php) and [sockets](https://www.php.net/manual/en/intro.sockets.php) extensions
-
-## Running this application
+The application needs PHP 8.2+ with the [mbstring](https://www.php.net/manual/en/book.mbstring.php) and [sockets](https://www.php.net/manual/en/book.sockets.php) extensions.
 
 ```bash
 git clone https://github.com/spiral/app.git my-app
@@ -37,10 +37,3 @@ composer serve
 ```
 
 Open http://127.0.0.1:8080 in the browser.
-
-Good luck with your future project!
-
-## License:
-
-MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained
-by [Spiral Scout](https://spiralscout.com).
