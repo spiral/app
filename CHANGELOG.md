@@ -1,5 +1,23 @@
 # Changelog
 
+## [4.2.0](https://github.com/spiral/app/compare/4.1.0...4.2.0) (2026-11-26)
+
+
+### Features
+
+* add `composer serve:dev` with Buggregator Trap and production settings to `composer serve` ([#172](https://github.com/spiral/app/issues/172)) ([cd77e84](https://github.com/spiral/app/commit/cd77e840951ef532b8ff06ded5ab2f7d2509a98f))
+* add the `remote` log channel and send the logs to Buggregator Trap with `composer serve:dev` ([#174](https://github.com/spiral/app/issues/174)) ([87463e0](https://github.com/spiral/app/commit/87463e0a99fa53d9741ad2dfa54ca4ae677e53da))
+
+
+### Bug Fixes
+
+* run the RoadRunner binary from the serve scripts instead of the roadrunner/cli command ([cd77e84](https://github.com/spiral/app/commit/cd77e840951ef532b8ff06ded5ab2f7d2509a98f))
+
+
+### Documentation
+
+* add the Discord badge to the READMEs ([cd77e84](https://github.com/spiral/app/commit/cd77e840951ef532b8ff06ded5ab2f7d2509a98f))
+
 ## [4.1.0](https://github.com/spiral/app/compare/4.0.1...4.1.0) (2026-11-26)
 
 
