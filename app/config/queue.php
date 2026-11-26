@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Spiral\Queue\Driver\SyncDriver;
+use Spiral\RoadRunner\Jobs\Queue\AMQPCreateInfo;
+use Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo;
 use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
+use Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo;
 
 /**
  * Queue configuration

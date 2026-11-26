@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Exception;
 
 use Spiral\Exceptions\ExceptionHandler;
-use Spiral\Exceptions\Renderer\ConsoleRenderer;
 
 /**
  * In this class you can override default exception handler behavior,
@@ -17,7 +16,6 @@ final class Handler extends ExceptionHandler
     protected function bootBasicHandlers(): void
     {
         parent::bootBasicHandlers();
-        $this->addRenderer(new ConsoleRenderer());
         // $this->addRenderer(new CustomRenderer());
         // $this->addReporter(new CustomReporter());
     }

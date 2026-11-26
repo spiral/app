@@ -1,9 +1,6 @@
 version: '3'
 rpc:
     listen: 'tcp://127.0.0.1:6001'
-server:
-  command: 'php app.php'
-  relay: pipes
 http:
     address: '0.0.0.0:8080'
     middleware:
@@ -15,18 +12,26 @@ http:
             - .php
             - .htaccess
     pool:
-#        num_workers: 1
-#        debug: true
+        num_workers: 1
         supervisor:
-            max_worker_memory: 200
+            max_worker_memory: 100
+server:
+    command: 'php app.php'
+    relay: pipes
 jobs:
     pool:
         num_workers: 2
-    supervisor:
-        max_worker_memory: 200
-    consume: [ ]
+        supervisor:
+            max_worker_memory: 100
+    consume:
+        - local
+    pipelines:
+        local:
+            driver: memory
+            config:
+                priority: 10
+                prefetch: 10
 kv:
     local:
         driver: memory
-        config:
-            interval: 60
+        config: {}

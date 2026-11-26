@@ -7,7 +7,6 @@ namespace App\Application\Bootloader;
 use App\Endpoint\Web\Middleware\LocaleSelector;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use App\Endpoint\Web\PageNotFoundController;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Cookies\Middleware\CookiesMiddleware;
 use Spiral\Csrf\Middleware\CsrfMiddleware;
@@ -57,8 +56,9 @@ final class RoutesBootloader extends BaseRoutesBootloader
     {
         // Fallback route if no other route matched
         // Will show 404 page
-        $routes->default('/<path:.*>')
-            ->controller(PageNotFoundController::class)
-            ->defaults(['action' => '__invoke']);
+        // $routes->default('/<path:.*>')
+        //    ->callable(function (ServerRequestInterface $r, ResponseInterface $response) {
+        //        return $response->withStatus(404)->withBody('Not found');
+        //    });
     }
 }

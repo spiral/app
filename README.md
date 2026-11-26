@@ -1,39 +1,39 @@
-# Spiral HTTP Application Skeleton [![Latest Stable Version](https://poser.pugx.org/spiral/app/version)](https://packagist.org/packages/spiral/app)
+<p align="center">
+    <a href="https://spiral.dev"><img alt="Spiral Framework" src="https://user-images.githubusercontent.com/773481/228578125-8e0ad713-905f-4450-a473-5839bd650472.png" style="width: 6in; display: block"></a>
+</p>
 
-Spiral Framework is a High-Performance PHP Full-Stack framework and group of over sixty PSR-compatible components.
+<p align="center">Spiral Framework Web application skeleton</p>
 
-![Github cover spiral application](https://user-images.githubusercontent.com/773481/208879494-75df40ec-483c-4efb-b621-fed863927e96.jpg)
+<div align="center">
 
-[**Documentation**](https://spiral.dev/docs) | [Discord](https://discord.gg/TFeEmCs) | [Twitter](https://twitter.com/spiralphp) | [Contributing](https://spiral.dev/docs/about-contributing/)
+[![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://spiral.dev/docs)
+[![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/spiral)
 
-### Hello developer!
+</div>
 
-Are you looking for an easier way to install Spiral Framework?
+<br />
 
-This package streamlines the installation process by allowing you to install only the desired components and packages
-for your application. Our installer handles all dependencies and configurations, making the process as smooth and
-hassle-free as possible.
+A ready-to-run Web application on [RoadRunner](https://roadrunner.dev) with Cycle ORM, Stempler templates, queues, cache, mailer, events, translations and sample pages. The [installer](https://github.com/spiral/app/tree/installer) rebuilds this branch on each release.
 
-This makes it super simple for you to get started with Spiral.
-
-## Server Requirements
-
-Make sure that your server is configured with following PHP version and extensions:
-
-* PHP 8.4+, 64bit
-* [mb-string](https://www.php.net/manual/en/intro.mbstring.php) extension
-
-## Installation
+To pick only the components you need, install the application with the installer instead:
 
 ```bash
 composer create-project spiral/app my-app
 ```
 
-After the project has been installed, open **README.md** file and follow the instructions.
+## Get Started
 
-Good luck with your future project!
+The application needs PHP 8.2+ with the [mbstring](https://www.php.net/manual/en/book.mbstring.php) and [sockets](https://www.php.net/manual/en/book.sockets.php) extensions.
 
-## License:
+```bash
+git clone https://github.com/spiral/app.git my-app
+cd my-app
+composer install
+cp .env.sample .env
+php app.php encrypt:key -m .env
+php app.php configure
+composer rr:download
+composer serve
+```
 
-MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained
-by [Spiral Scout](https://spiralscout.com).
+Open http://127.0.0.1:8080 in the browser.

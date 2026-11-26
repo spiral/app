@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence;
 
-use Cycle\ORM\Select\Repository;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Exception\UserNotFoundException;
 use App\Domain\User\Repository\UserRepositoryInterface;
+use Cycle\ORM\Select\Repository;
 
 /**
  * @template TUser of User

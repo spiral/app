@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Cycle\ORM\Parser\Typecast;
-use Cycle\ORM\SchemaInterface;
 
 /**
  * Configuration for Cycle ORM.
@@ -29,16 +27,17 @@ return [
             // SchemaInterface::MAPPER => \Cycle\ORM\Mapper\Mapper::class,
             // SchemaInterface::REPOSITORY => \Cycle\ORM\Select\Repository::class,
             // SchemaInterface::SCOPE => null,
-            SchemaInterface::TYPECAST_HANDLER => [
-               Typecast::class, \App\Infrastructure\CycleORM\Typecaster\UuidTypecast::class,
+            \Cycle\ORM\SchemaInterface::TYPECAST_HANDLER => [
+                \Cycle\ORM\Parser\Typecast::class,
+                \App\Infrastructure\Cycle\Typecaster\UuidTypecast::class,
             ],
         ],
 
         'collections' => [
             'default' => 'doctrine',
             'factories' => [
-                'array' => new Cycle\ORM\Collection\ArrayCollectionFactory(),
-                'doctrine' => new Cycle\ORM\Collection\DoctrineCollectionFactory(),
+                'array' => new \Cycle\ORM\Collection\ArrayCollectionFactory(),
+                'doctrine' => new \Cycle\ORM\Collection\DoctrineCollectionFactory(),
             ],
         ],
 
