@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CycleORM\Typecaster;
+namespace App\Infrastructure\Cycle\Typecaster;
 
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\Parser\CastableInterface;
