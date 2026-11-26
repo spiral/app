@@ -115,7 +115,8 @@ return [
         ),
         new EnvGroup(
             values: [
-                'MONOLOG_DEFAULT_CHANNEL' => 'default',
+                'MONOLOG_DEFAULT_CHANNEL' => 'default # Use "remote" channel to send JSON records over TCP to MONOLOG_REMOTE_URL',
+                'MONOLOG_REMOTE_URL' => '127.0.0.1:9913',
                 'MONOLOG_DEFAULT_LEVEL' => 'DEBUG # DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY',
             ],
             comment: 'Monolog',

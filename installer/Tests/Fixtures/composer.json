@@ -70,6 +70,8 @@
             "@putenv VIEW_CACHE=false",
             "@putenv CYCLE_SCHEMA_CACHE=false",
             "@putenv CYCLE_SCHEMA_WARMUP=false",
+            "@putenv MONOLOG_DEFAULT_CHANNEL=remote",
+            "@putenv MONOLOG_REMOTE_URL=127.0.0.1:9913",
             "@putenv VAR_DUMPER_FORMAT=server",
             "@putenv VAR_DUMPER_SERVER=127.0.0.1:9912",
             "@putenv MAILER_DSN=smtp://127.0.0.1:1025",
